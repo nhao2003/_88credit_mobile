@@ -1,5 +1,4 @@
 import 'package:flutter_pw_validator/Resource/Strings.dart';
-import 'package:get/get.dart';
 
 extension StringX on String {
   /// Viết hoa chữ cái đầu
@@ -56,16 +55,16 @@ extension StringX on String {
 
 class ValidateString implements FlutterPwValidatorStrings {
   @override
-  final String atLeast = 'Ít nhất - ký tự'.tr;
+  final String atLeast = 'Ít nhất - ký tự';
   @override
-  final String uppercaseLetters = '- Ký tự viết hoa'.tr;
+  final String uppercaseLetters = '- Ký tự viết hoa';
   @override
-  final String numericCharacters = '- Ký tự số'.tr;
+  final String numericCharacters = '- Ký tự số';
   @override
-  final String specialCharacters = '- Ký tự đặt biệt'.tr;
+  final String specialCharacters = '- Ký tự đặt biệt';
   @override
-  final String lowercaseLetters = '- Ký tự viết thường'.tr;
+  final String lowercaseLetters = '- Ký tự viết thường';
 
   @override
-  final String normalLetters = '- Ký tự thường'.tr;
+  final String normalLetters = '- Ký tự thường';
 }

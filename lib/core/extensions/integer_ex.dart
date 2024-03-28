@@ -1,28 +1,35 @@
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 
 extension PercentSized on int {
-  double get hp => (Get.height * (this / 100));
-  double get wp => (Get.width * (this / 100));
+  double get hp => (WidgetsBinding
+          .instance.platformDispatcher.views.first.physicalSize.height *
+      (this / 100));
+  double get wp => (WidgetsBinding
+          .instance.platformDispatcher.views.first.physicalSize.width *
+      (this / 100));
 }
 
 extension ResponsiveText on int {
-  double get sp => (Get.width / 100 * (this / 3));
+  double get sp => (WidgetsBinding
+          .instance.platformDispatcher.views.first.physicalSize.width /
+      100 *
+      (this / 3));
 }
 
 String formatMoney(int amount, {bool isLease = false}) {
   String suffix = '';
   if (isLease) {
-    suffix = '/${'month'.tr}';
+    suffix = '/${'month'}';
   }
   if (amount >= 1000000000) {
     double value = amount / 1000000000;
-    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3)} ${'billion'.tr}$suffix';
+    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3)} ${'billion'}$suffix';
   } else if (amount >= 1000000) {
     double value = amount / 1000000;
-    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3)} ${'million'.tr}$suffix';
+    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3)} ${'million'}$suffix';
   } else {
     double value = amount / 1000;
-    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1)} ${'thousand'.tr}$suffix';
+    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1)} ${'thousand'}$suffix';
   }
 }
 

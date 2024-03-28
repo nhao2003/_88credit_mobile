@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeX on DateTime {
@@ -27,20 +26,20 @@ extension DateTimeX on DateTime {
   /// get string day before
   String get dayBeforeString {
     int days = daysBetween(this, DateTime.now());
-    if (days == 0) return "Today".tr;
-    if (days == 1) return "Yesterday".tr;
-    if (days <= 30) return "$days ${"days ago".tr}";
+    if (days == 0) return "Today";
+    if (days == 1) return "Yesterday";
+    if (days <= 30) return "$days ${"days ago"}";
     if (days > 30) {
-      if (days ~/ 30 == 1) return "1 month ago".tr;
+      if (days ~/ 30 == 1) return "1 month ago";
       if (days ~/ 30 > 1 && days <= 365) {
-        return "${days ~/ 30} ${"months ago".tr}";
+        return "${days ~/ 30} ${"months ago"}";
       }
     }
     if (days > 365) {
-      if (days ~/ 365 == 1) return "1 year ago".tr;
-      return "${days ~/ 365} ${"years ago".tr}";
+      if (days ~/ 365 == 1) return "1 year ago";
+      return "${days ~/ 365} ${"years ago"}";
     }
-    return "$days ${"days ago".tr}";
+    return "$days ${"days ago"}";
   }
 
   // get time has passed since post
@@ -49,22 +48,22 @@ extension DateTimeX on DateTime {
 
     if (difference.inDays >= 365) {
       int years = (difference.inDays / 365).floor();
-      return '${years.toString()} ${'year${years > 1 ? 's' : ''}'.tr} ${'ago'.tr}';
+      return '${years.toString()} ${'year${years > 1 ? 's' : ''}'} ${'ago'}';
     } else if (difference.inDays >= 30) {
       int months = (difference.inDays / 30).floor();
-      return '${months.toString()} ${'month${months > 1 ? 's' : ''}'.tr} ${'ago'.tr}';
+      return '${months.toString()} ${'month${months > 1 ? 's' : ''}'} ${'ago'}';
     } else if (difference.inDays >= 1) {
       if (difference.inDays == 1) {
-        return 'Yesterday'.tr;
+        return 'Yesterday';
       } else {
-        return '${difference.inDays.toString()} ${'day${difference.inDays > 1 ? 's' : ''}'.tr} ${'ago'.tr}';
+        return '${difference.inDays.toString()} ${'day${difference.inDays > 1 ? 's' : ''}'} ${'ago'}';
       }
     } else if (difference.inHours >= 1) {
-      return '${difference.inHours.toString()} ${'hour${difference.inHours > 1 ? 's' : ''}'.tr} ${'ago'.tr}';
+      return '${difference.inHours.toString()} ${'hour${difference.inHours > 1 ? 's' : ''}'} ${'ago'}';
     } else if (difference.inMinutes >= 1) {
-      return '${difference.inMinutes.toString()} ${'minute${difference.inMinutes > 1 ? 's' : ''}'.tr} ${'ago'.tr}';
+      return '${difference.inMinutes.toString()} ${'minute${difference.inMinutes > 1 ? 's' : ''}'} ${'ago'}';
     } else {
-      return 'Just now'.tr;
+      return 'Just now';
     }
   }
 
@@ -73,22 +72,22 @@ extension DateTimeX on DateTime {
 
     if (difference.inDays >= 365) {
       int years = (difference.inDays / 365).floor();
-      return '${years.toString()} ${'năm${years > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+      return '${years.toString()} ${'năm${years > 1 ? '' : ''}'} ${'trước'}';
     } else if (difference.inDays >= 30) {
       int months = (difference.inDays / 30).floor();
-      return '${months.toString()} ${'tháng${months > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+      return '${months.toString()} ${'tháng${months > 1 ? '' : ''}'} ${'trước'}';
     } else if (difference.inDays >= 1) {
       if (difference.inDays == 1) {
-        return 'Hôm qua'.tr;
+        return 'Hôm qua';
       } else {
-        return '${difference.inDays.toString()} ${'ngày${difference.inDays > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+        return '${difference.inDays.toString()} ${'ngày${difference.inDays > 1 ? '' : ''}'} ${'trước'}';
       }
     } else if (difference.inHours >= 1) {
-      return '${difference.inHours.toString()} ${'giờ${difference.inHours > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+      return '${difference.inHours.toString()} ${'giờ${difference.inHours > 1 ? '' : ''}'} ${'trước'}';
     } else if (difference.inMinutes >= 1) {
-      return '${difference.inMinutes.toString()} ${'phút${difference.inMinutes > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+      return '${difference.inMinutes.toString()} ${'phút${difference.inMinutes > 1 ? '' : ''}'} ${'trước'}';
     } else {
-      return 'Bây giờ'.tr;
+      return 'Bây giờ';
     }
   }
 

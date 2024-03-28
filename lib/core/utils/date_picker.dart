@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class DatePickerHelper {
-  static Future<DateTime?> getDatePicker() async {
+  static Future<DateTime?> getDatePicker(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-      context: Get.context!,
+      context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
