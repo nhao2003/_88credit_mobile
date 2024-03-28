@@ -1,5 +1,6 @@
 import 'package:_88credit_mobile/config/theme/app_color.dart';
 import 'package:_88credit_mobile/config/theme/text_styles.dart';
+import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 
 ThemeData appTheme() {
