@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class BaseScreen extends StatelessWidget {
-  const BaseScreen({super.key});
+class Base2Screen extends StatelessWidget {
+  const Base2Screen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Base Screen 1'),
+        title: const Text('Base Screen 2'),
       ),
       body: ElevatedButton(
-        onPressed: () => context.go("/base2"),
+        onPressed: () => context.go("/"),
         child: const Text("Go to Settings page"),
       ),
     );
