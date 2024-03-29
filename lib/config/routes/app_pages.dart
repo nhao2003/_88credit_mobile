@@ -1,21 +1,45 @@
-import 'package:_88credit_mobile/features/presentation/modules/base/screens/base1_screen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/base/screens/base_screen.dart';
+import 'package:_88credit_mobile/config/routes/app_routes.dart';
+import 'package:_88credit_mobile/features/presentation/modules/login/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
+
 class AppPages {
-  static var router = GoRouter(
-    routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => const BaseScreen(),
-      ),
-      GoRoute(
-        path: '/base2',
-        builder: (context, state) => const Base2Screen(),
-      ),
-    ],
-  );
+  static final RouteObserver<Route> routeObserver = RouteObserver<Route>();
+  static List<String> history = [];
+
+  static List<PageEntity> pages() {
+    return [
+      PageEntity(
+        path: AppRoutes.login,
+        page: const LoginScreen(),
+        bloc: BlocProvider(create: (context) => AuthBloc()),
+      )
+    ];
+  }
+
+  static List<dynamic> blocer(BuildContext context) {
+    List<dynamic> blocerList = [];
+    pages().forEach((element) {
+      blocerList.add(element.bloc);
+    });
+    return blocerList;
+  }
+
+  static GoRouter router() {
+    List<GoRoute> routes = [];
+    pages().forEach((element) {
+      routes.add(GoRoute(
+        path: element.path,
+        builder: (context, state) => element.page,
+      ));
+    });
+    return GoRouter(
+      routes: routes,
+    );
+  }
 }
 
 class PageEntity<T> {
