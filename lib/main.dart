@@ -13,20 +13,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: AppPages.router,
-
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: Scaffold(
-      //   appBar: AppBar(
-      //     title: const Text('Flutter Demo'),
-      //   ),
-      //   body: const Center(
-      //     child: Text('Hello, World!'),
-      //   ),
-      // ),
     );
   }
 }
