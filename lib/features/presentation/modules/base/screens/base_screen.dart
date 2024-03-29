@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class BaseScreen extends StatelessWidget {
   const BaseScreen({super.key});
@@ -11,7 +10,7 @@ class BaseScreen extends StatelessWidget {
         title: const Text('Base Screen 1'),
       ),
       body: ElevatedButton(
-        onPressed: () => context.push("/base2"),
+        onPressed: () {},
         child: const Text("Go to Settings page"),
       ),
     );

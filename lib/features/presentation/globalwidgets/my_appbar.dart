@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import '../../../config/theme/app_color.dart';
 
 // ignore: must_be_immutable
@@ -39,7 +38,7 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 color: AppColors.black,
                 onPressed: () {
-                  context.pop();
+                  Navigator.of(context).pop();
                 },
               ),
             )

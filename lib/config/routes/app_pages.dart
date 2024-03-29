@@ -2,8 +2,6 @@ import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
-
 import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
 
 class AppPages {
@@ -28,16 +26,16 @@ class AppPages {
     return blocerList;
   }
 
-  static GoRouter router() {
-    List<GoRoute> routes = [];
-    pages().forEach((element) {
-      routes.add(GoRoute(
-        path: element.path,
-        builder: (context, state) => element.page,
-      ));
-    });
-    return GoRouter(
-      routes: routes,
+  static MaterialPageRoute generateRouteSettings(RouteSettings settings) {
+    if (settings.name == null) {
+      return MaterialPageRoute(
+        builder: (context) => const LoginScreen(),
+        settings: settings,
+      );
+    }
+    return MaterialPageRoute(
+      builder: (context) => const LoginScreen(),
+      settings: settings,
     );
   }
 }

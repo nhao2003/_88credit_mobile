@@ -2,8 +2,6 @@ import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../globalwidgets/my_appbar.dart';
@@ -48,7 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 5.hp),
               // Logo
               const ImageLogo(),
               // Text file Email
@@ -126,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(top: 20, bottom: 20),
                       ),
                       onPressed: () {
-                        context.push(AppRoutes.fogot);
+                        Navigator.of(context).pushNamed(AppRoutes.fogot);
                       },
                       child: const Text('Quên mật khẩu?')),
                 ],
@@ -163,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   const Text("Chưa có tài khoản? "),
                   TextButton(
                       onPressed: () async {
-                        context.push(AppRoutes.register);
+                        Navigator.of(context).pushNamed(AppRoutes.register);
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.symmetric(horizontal: 0),
