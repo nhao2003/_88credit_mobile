@@ -11,7 +11,7 @@ class Base2Screen extends StatelessWidget {
         title: const Text('Base Screen 2'),
       ),
       body: ElevatedButton(
-        onPressed: () => context.go("/"),
+        onPressed: () => context.pop(),
         child: const Text("Go to Settings page"),
       ),
     );

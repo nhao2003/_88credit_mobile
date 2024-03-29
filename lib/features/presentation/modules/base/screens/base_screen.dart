@@ -11,7 +11,7 @@ class BaseScreen extends StatelessWidget {
         title: const Text('Base Screen 1'),
       ),
       body: ElevatedButton(
-        onPressed: () => context.go("/base2"),
+        onPressed: () => context.push("/base2"),
         child: const Text("Go to Settings page"),
       ),
     );
