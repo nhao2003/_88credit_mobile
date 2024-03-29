@@ -1,0 +1,180 @@
+import 'package:_88credit_mobile/config/routes/app_routes.dart';
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
+import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../../config/theme/app_color.dart';
+import '../../../../../config/theme/text_styles.dart';
+import '../../../globalwidgets/my_appbar.dart';
+import '../widgets/image_logo.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final loginFormGlobalKey = GlobalKey<FormState>();
+  final _emailFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
+  var loginEmail = TextEditingController(text: "user@example.com");
+  var loginPassword = TextEditingController(text: "haonek2003");
+
+  @override
+  void dispose() {
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    loginEmail.text = "user@example.com";
+    loginPassword.text = "haonek2003";
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: MyAppbar(
+        title: "Đăng nhập",
+        isShowBack: false,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Form(
+          key: loginFormGlobalKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 5.hp),
+              // Logo
+              const ImageLogo(),
+              // Text file Email
+              TextFormField(
+                focusNode: _emailFocusNode,
+                // controller: controller.loginEmail,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                style: AppTextStyles.regular14,
+                decoration: const InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Nhập Email',
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+                    // errorText: (controller.loginError.value == '')
+                    //     ? null
+                    //     : controller.loginError.value,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    )),
+                // validator: (value) =>
+                //     (value!.isEmail) ? null : 'Invalid email address',
+                onTapOutside: (event) {
+                  _emailFocusNode.unfocus();
+                },
+                onFieldSubmitted: (_) {
+                  // chuyen qua textfill tiep theo
+                  FocusScope.of(context).requestFocus(_passwordFocusNode);
+                },
+              ),
+              const SizedBox(height: 15),
+              // text field password
+              TextFormField(
+                focusNode: _passwordFocusNode,
+                textInputAction: TextInputAction.done,
+                controller: loginPassword,
+                // obscureText: isObscureLogin.value,
+                autocorrect: false,
+                enableSuggestions: false,
+                style: AppTextStyles.regular14,
+                decoration: InputDecoration(
+                    labelText: 'Mật khẩu',
+                    hintText: 'Nhập mật khẩu',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 18.0, horizontal: 20.0),
+                    suffixIcon: IconButton(
+                      icon: const Icon(
+                        // !controller.isObscureLogin.value
+                        //     ? Icons.visibility
+                        //     : Icons.visibility_off,
+                        Icons.visibility,
+                        color: AppColors.green,
+                      ),
+                      onPressed: () {},
+                    ),
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    )),
+                validator: (value) => (!(value == null || value == ''))
+                    ? null
+                    : 'Làm ơn nhập mật khẩu',
+                onTapOutside: (event) {
+                  _passwordFocusNode.unfocus();
+                },
+              ),
+
+              // quen mat khau
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      ),
+                      onPressed: () {
+                        context.push(AppRoutes.fogot);
+                      },
+                      child: const Text('Quên mật khẩu?')),
+                ],
+              ),
+
+              // button login
+              ElevatedButton(
+                onPressed: () {},
+                // controller.isLoading.value
+                //     ? null
+                //     : () {
+                //         controller.handleLogin();
+                //         //Get.toNamed(AppRoutes.bottomBar);
+                //       },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.green,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  textStyle: const TextStyle(color: AppColors.white),
+                  elevation: 10,
+                  minimumSize: Size(100.wp, 55),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Đăng nhập',
+                  style: AppTextStyles.bold14.colorEx(AppColors.white),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Chưa có tài khoản? "),
+                  TextButton(
+                      onPressed: () async {
+                        context.push(AppRoutes.register);
+                      },
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
+                      ),
+                      child: const Text('Đăng ký ngay')),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
