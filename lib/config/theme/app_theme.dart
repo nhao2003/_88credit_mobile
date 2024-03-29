@@ -4,7 +4,7 @@ import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  ThemeData appTheme() {
+  static ThemeData appTheme() {
     return ThemeData(
       scaffoldBackgroundColor: AppColors.white,
       //fontFamily: 'Muli',
@@ -14,7 +14,7 @@ class AppTheme {
     );
   }
 
-  AppBarTheme appBarTheme() {
+  static AppBarTheme appBarTheme() {
     return AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,
