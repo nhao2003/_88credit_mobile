@@ -2,7 +2,6 @@ import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
@@ -45,7 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       appBar: MyAppbar(title: "Đăng ký"),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Form(
           key: registerFormGlobalKey,
           child: Column(
@@ -91,9 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: AppTextStyles.regular14,
                     autocorrect: false,
                     enableSuggestions: false,
-                    onChanged: (value) {
-                      //checkCanShowValidator(value);
-                    },
+                    onChanged: (value) {},
                     decoration: InputDecoration(
                         hintText: 'Mật khẩu',
                         labelText: 'Nhập mật khẩu',
@@ -132,31 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   );
                 },
               ),
-              const SizedBox(height: 10),
-              // Visibility(
-              //   visible: controller.validatorVisibility.value,
-              //   child: FlutterPwValidator(
-              //       controller: controller.registerPassword,
-              //       strings: ValidateString(),
-              //       minLength: 8,
-              //       successColor: AppColors.green,
-              //       failureColor: AppColors.red,
-              //       uppercaseCharCount: 1,
-              //       lowercaseCharCount: 1,
-              //       specialCharCount: 1,
-              //       numericCharCount: 1,
-              //       width: 400,
-              //       height: 180,
-              //       onSuccess: () {
-              //         controller.hideValidator();
-              //         controller.validatorSusscess.value = true;
-              //       },
-              //       onFail: () {
-              //         controller.showValidator();
-              //         controller.validatorSusscess.value = false;
-              //       }),
-              // ),
-              const SizedBox(height: 5),
+              const SizedBox(height: 15),
               BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   return TextFormField(

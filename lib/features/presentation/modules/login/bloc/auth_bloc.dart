@@ -11,8 +11,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthIsLoggedIn>(_isLoggedIn);
     on<AuthLogin>(_onAuthLogin);
     on<AuthSignup>(_onAuthSignup);
-    on<TogglePasswordVisibility>(togglePasswordVisibility);
-    on<ToggleConfirmPasswordVisibility>(toggleConfirmPasswordVisibility);
+    on<TogglePasswordVisibility>(_togglePasswordVisibility);
+    on<ToggleConfirmPasswordVisibility>(_toggleConfirmPasswordVisibility);
   }
 
   void _isLoggedIn(
@@ -42,14 +42,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(state.copyWith(status: AuthStatus.success));
   }
 
-  void togglePasswordVisibility(
+  void _togglePasswordVisibility(
     AuthEvent event,
     Emitter<AuthState> emit,
   ) {
     emit(state.copyWith(isShowPassword: !state.isShowPassword));
   }
 
-  void toggleConfirmPasswordVisibility(
+  void _toggleConfirmPasswordVisibility(
     AuthEvent event,
     Emitter<AuthState> emit,
   ) {
