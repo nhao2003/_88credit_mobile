@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/core/utils/validate_utils.dart';
 import 'package:flutter_pw_validator/Resource/Strings.dart';
 
 extension StringX on String {
@@ -51,6 +52,16 @@ extension StringX on String {
     s = s.replaceAll(RegExp(r'[đ]'), 'd');
     return s;
   }
+
+  bool get isEmail => ValidateUtils.isEmail(this);
+
+  bool get isPhoneNumber => ValidateUtils.isPhoneNumber(this);
+
+  bool get isURL => ValidateUtils.isURL(this);
+
+  bool get isUsername => ValidateUtils.isUsername(this);
+
+  bool get isDateTime => ValidateUtils.isDateTime(this);
 }
 
 class ValidateString implements FlutterPwValidatorStrings {

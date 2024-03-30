@@ -1,7 +1,10 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
+import 'package:_88credit_mobile/core/extensions/string_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
+import 'package:_88credit_mobile/features/presentation/modules/login/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../globalwidgets/my_appbar.dart';
@@ -16,8 +19,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final loginFormGlobalKey = GlobalKey<FormState>();
+
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
+
   var loginEmail = TextEditingController(text: "user@example.com");
   var loginPassword = TextEditingController(text: "haonek2003");
 
@@ -51,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
               // Text file Email
               TextFormField(
                 focusNode: _emailFocusNode,
-                // controller: controller.loginEmail,
+                controller: loginEmail,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 style: AppTextStyles.regular14,
@@ -60,15 +65,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     hintText: 'Nhập Email',
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
-                    // errorText: (controller.loginError.value == '')
-                    //     ? null
-                    //     : controller.loginError.value,
                     floatingLabelBehavior: FloatingLabelBehavior.always,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     )),
-                // validator: (value) =>
-                //     (value!.isEmail) ? null : 'Invalid email address',
+                validator: (value) =>
+                    (value!.isEmail) ? null : 'Invalid email address',
                 onTapOutside: (event) {
                   _emailFocusNode.unfocus();
                 },
@@ -79,38 +81,45 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 15),
               // text field password
-              TextFormField(
-                focusNode: _passwordFocusNode,
-                textInputAction: TextInputAction.done,
-                controller: loginPassword,
-                // obscureText: isObscureLogin.value,
-                autocorrect: false,
-                enableSuggestions: false,
-                style: AppTextStyles.regular14,
-                decoration: InputDecoration(
-                    labelText: 'Mật khẩu',
-                    hintText: 'Nhập mật khẩu',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 18.0, horizontal: 20.0),
-                    suffixIcon: IconButton(
-                      icon: const Icon(
-                        // !controller.isObscureLogin.value
-                        //     ? Icons.visibility
-                        //     : Icons.visibility_off,
-                        Icons.visibility,
-                        color: AppColors.green,
-                      ),
-                      onPressed: () {},
-                    ),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    )),
-                validator: (value) => (!(value == null || value == ''))
-                    ? null
-                    : 'Làm ơn nhập mật khẩu',
-                onTapOutside: (event) {
-                  _passwordFocusNode.unfocus();
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return TextFormField(
+                    focusNode: _passwordFocusNode,
+                    textInputAction: TextInputAction.done,
+                    controller: loginPassword,
+                    obscureText: state.isShowPassword,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    style: AppTextStyles.regular14,
+                    decoration: InputDecoration(
+                        labelText: 'Mật khẩu',
+                        hintText: 'Nhập mật khẩu',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18.0, horizontal: 20.0),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            !state.isShowPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: AppColors.green,
+                          ),
+                          onPressed: () {
+                            context
+                                .read<AuthBloc>()
+                                .add(TogglePasswordVisibility());
+                          },
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        )),
+                    validator: (value) => (!(value == null || value == ''))
+                        ? null
+                        : 'Làm ơn nhập mật khẩu',
+                    onTapOutside: (event) {
+                      _passwordFocusNode.unfocus();
+                    },
+                  );
                 },
               ),
 

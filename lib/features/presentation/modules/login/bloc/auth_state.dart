@@ -1,23 +1,26 @@
 part of 'auth_bloc.dart';
 
-sealed class AuthState extends Equatable {
-  const AuthState();
+enum AuthStatus { initial, loading, success, failure }
+
+final class AuthState extends Equatable {
+  final AuthStatus status;
+  final bool isShowPassword;
+
+  const AuthState({
+    this.status = AuthStatus.initial,
+    this.isShowPassword = false,
+  });
+
+  AuthState copyWith({
+    AuthStatus? status,
+    bool? isShowPassword,
+  }) {
+    return AuthState(
+      status: status ?? this.status,
+      isShowPassword: isShowPassword ?? this.isShowPassword,
+    );
+  }
 
   @override
-  List<Object> get props => [];
-}
-
-final class AuthInitial extends AuthState {}
-
-final class AuthLoading extends AuthState {}
-
-final class AuthSuccess extends AuthState {}
-
-final class AuthFailure extends AuthState {
-  final String message;
-
-  const AuthFailure(this.message);
-
-  @override
-  List<Object> get props => [message];
+  List<Object> get props => [status, isShowPassword];
 }

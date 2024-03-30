@@ -29,3 +29,5 @@ final class AuthSignup extends AuthEvent {
 }
 
 final class AuthIsLoggedIn extends AuthEvent {}
+
+final class TogglePasswordVisibility extends AuthEvent {}
