@@ -30,8 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
-    loginEmail.text = "user@example.com";
-    loginPassword.text = "haonek2003";
+    loginEmail.dispose();
+    loginPassword.dispose();
     super.dispose();
   }
 

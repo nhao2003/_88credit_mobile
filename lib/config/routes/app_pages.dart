@@ -1,5 +1,6 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/login_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/login/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
@@ -14,6 +15,11 @@ class AppPages {
         path: AppRoutes.login,
         page: const LoginScreen(),
         bloc: BlocProvider(create: (context) => AuthBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.register,
+        page: const RegisterScreen(),
+        bloc: BlocProvider(create: (context) => AuthBloc()),
       )
     ];
   }
@@ -27,11 +33,14 @@ class AppPages {
   }
 
   static MaterialPageRoute generateRouteSettings(RouteSettings settings) {
-    if (settings.name == null) {
-      return MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-        settings: settings,
-      );
+    if (settings.name != null) {
+      var result = pages().where((element) => element.path == settings.name);
+      if (result.isNotEmpty) {
+        return MaterialPageRoute(
+          builder: (context) => result.first.page,
+          settings: settings,
+        );
+      }
     }
     return MaterialPageRoute(
       builder: (context) => const LoginScreen(),
