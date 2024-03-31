@@ -1,5 +1,4 @@
 import 'package:_88credit_mobile/core/utils/validate_utils.dart';
-import 'package:flutter_pw_validator/Resource/Strings.dart';
 
 extension StringX on String {
   /// Viết hoa chữ cái đầu
@@ -62,20 +61,4 @@ extension StringX on String {
   bool get isUsername => ValidateUtils.isUsername(this);
 
   bool get isDateTime => ValidateUtils.isDateTime(this);
-}
-
-class ValidateString implements FlutterPwValidatorStrings {
-  @override
-  final String atLeast = 'Ít nhất - ký tự';
-  @override
-  final String uppercaseLetters = '- Ký tự viết hoa';
-  @override
-  final String numericCharacters = '- Ký tự số';
-  @override
-  final String specialCharacters = '- Ký tự đặt biệt';
-  @override
-  final String lowercaseLetters = '- Ký tự viết thường';
-
-  @override
-  final String normalLetters = '- Ký tự thường';
 }

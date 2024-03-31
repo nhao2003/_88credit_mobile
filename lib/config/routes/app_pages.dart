@@ -1,4 +1,5 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
+import 'package:_88credit_mobile/features/presentation/modules/login/screens/forgot_password.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/login_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/register_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,12 @@ class AppPages {
         path: AppRoutes.register,
         page: const RegisterScreen(),
         bloc: BlocProvider(create: (context) => AuthBloc()),
-      )
+      ),
+      PageEntity(
+        path: AppRoutes.fogot,
+        page: const ForgotPasswordScreen(),
+        bloc: BlocProvider(create: (context) => AuthBloc()),
+      ),
     ];
   }
 
