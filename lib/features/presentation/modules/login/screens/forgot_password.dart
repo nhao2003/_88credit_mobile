@@ -57,7 +57,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 5.hp),
               // Logo
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
