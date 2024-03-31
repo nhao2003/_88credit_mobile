@@ -9,8 +9,8 @@ final class AuthState extends Equatable {
 
   const AuthState({
     this.status = AuthStatus.initial,
-    this.isShowPassword = false,
-    this.isShowComfirmPassword = false,
+    this.isShowPassword = true,
+    this.isShowComfirmPassword = true,
   });
 
   AuthState copyWith({
@@ -27,6 +27,5 @@ final class AuthState extends Equatable {
   }
 
   @override
-  List<Object> get props =>
-      [status, isShowPassword, isShowComfirmPassword];
+  List<Object> get props => [status, isShowPassword, isShowComfirmPassword];
 }

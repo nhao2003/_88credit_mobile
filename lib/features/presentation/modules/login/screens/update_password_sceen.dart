@@ -1,11 +1,13 @@
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../../../globalwidgets/my_appbar.dart';
+import '../bloc/auth_bloc.dart';
 
 class UpdatePasswordScreen extends StatefulWidget {
   const UpdatePasswordScreen({super.key});
@@ -66,83 +68,97 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
               ),
               const SizedBox(height: 30),
 // text feild new password
-              TextFormField(
-                focusNode: _newpassFocusNode,
-                textInputAction: TextInputAction.next,
-                controller: newPasswordTextController,
-                // obscureText: controller.isObscureResetPass.value,
-                keyboardType: TextInputType.visiblePassword,
-                autocorrect: false,
-                enableSuggestions: false,
-                style: AppTextStyles.regular14,
-                decoration: InputDecoration(
-                    labelText: 'Mật khẩu mới',
-                    hintText: 'Nhập mật khẩu mới',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 18.0, horizontal: 20.0),
-                    suffixIcon: IconButton(
-                      icon: const Icon(
-                        // !controller.isObscureResetPass.value
-                        //     ? Icons.visibility
-                        //     : Icons.visibility_off,
-                        Icons.visibility,
-                        color: AppColors.green,
-                      ),
-                      onPressed: () {},
-                    ),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    )),
-                validator: (value) => (!(value == null || value == ''))
-                    ? null
-                    : 'Làm ơn nhập mật khẩu',
-                onTapOutside: (event) {
-                  _newpassFocusNode.unfocus();
-                },
-                onFieldSubmitted: (_) {
-                  // chuyen qua textfill tiep theo
-                  FocusScope.of(context).requestFocus(_reNewpassFocusNode);
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return TextFormField(
+                    focusNode: _newpassFocusNode,
+                    textInputAction: TextInputAction.next,
+                    controller: newPasswordTextController,
+                    obscureText: state.isShowPassword,
+                    keyboardType: TextInputType.visiblePassword,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    style: AppTextStyles.regular14,
+                    decoration: InputDecoration(
+                        labelText: 'Mật khẩu mới',
+                        hintText: 'Nhập mật khẩu mới',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18.0, horizontal: 20.0),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            !state.isShowPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: AppColors.green,
+                          ),
+                          onPressed: () {
+                            context.read<AuthBloc>().add(
+                                  TogglePasswordVisibility(),
+                                );
+                          },
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        )),
+                    validator: (value) => (!(value == null || value == ''))
+                        ? null
+                        : 'Làm ơn nhập mật khẩu',
+                    onTapOutside: (event) {
+                      _newpassFocusNode.unfocus();
+                    },
+                    onFieldSubmitted: (_) {
+                      // chuyen qua textfill tiep theo
+                      FocusScope.of(context).requestFocus(_reNewpassFocusNode);
+                    },
+                  );
                 },
               ),
 // text feild repeat password
               const SizedBox(height: 15),
-              TextFormField(
-                focusNode: _reNewpassFocusNode,
-                textInputAction: TextInputAction.done,
-                controller: reNewPasswordTextController,
-                // obscureText: controller.isObscureRepeatPassReset.value,
-                keyboardType: TextInputType.visiblePassword,
-                autocorrect: false,
-                enableSuggestions: false,
-                style: AppTextStyles.regular14,
-                decoration: InputDecoration(
-                    labelText: 'Nhập lại mật khẩu mới',
-                    hintText: 'Nhập lại mật khẩu mới',
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 18.0, horizontal: 20.0),
-                    suffixIcon: IconButton(
-                      icon: const Icon(
-                        // !controller.isObscureRepeatPassReset.value
-                        //     ? Icons.visibility
-                        //     : Icons.visibility_off,
-                        Icons.visibility,
-                        color: AppColors.green,
-                      ),
-                      onPressed: () {},
-                    ),
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    )),
-                validator: (value) {
-                  if (value != newPasswordTextController.text) {
-                    return "Mật khẩu không khớp";
-                  }
-                  return null;
-                },
-                onTapOutside: (event) {
-                  _reNewpassFocusNode.unfocus();
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return TextFormField(
+                    focusNode: _reNewpassFocusNode,
+                    textInputAction: TextInputAction.done,
+                    controller: reNewPasswordTextController,
+                    obscureText: state.isShowComfirmPassword,
+                    keyboardType: TextInputType.visiblePassword,
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    style: AppTextStyles.regular14,
+                    decoration: InputDecoration(
+                        labelText: 'Nhập lại mật khẩu mới',
+                        hintText: 'Nhập lại mật khẩu mới',
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18.0, horizontal: 20.0),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            !state.isShowComfirmPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: AppColors.green,
+                          ),
+                          onPressed: () {
+                            context.read<AuthBloc>().add(
+                                  ToggleConfirmPasswordVisibility(),
+                                );
+                          },
+                        ),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        )),
+                    validator: (value) {
+                      if (value != newPasswordTextController.text) {
+                        return "Mật khẩu không khớp";
+                      }
+                      return null;
+                    },
+                    onTapOutside: (event) {
+                      _reNewpassFocusNode.unfocus();
+                    },
+                  );
                 },
               ),
               const SizedBox(height: 15),
