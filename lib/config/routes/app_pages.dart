@@ -6,11 +6,9 @@ import 'package:_88credit_mobile/features/presentation/modules/login/screens/upd
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
+import '../../features/presentation/modules/login/screens/update_info_screen.dart';
 
 class AppPages {
-  static final RouteObserver<Route> routeObserver = RouteObserver<Route>();
-  static List<String> history = [];
-
   static List<PageEntity> pages() {
     return [
       PageEntity(
@@ -33,8 +31,16 @@ class AppPages {
         page: const UpdatePasswordScreen(),
         bloc: BlocProvider(create: (context) => AuthBloc()),
       ),
+      PageEntity(
+        path: AppRoutes.updateInfo,
+        page: const UpdateInfoScreen(),
+        bloc: BlocProvider(create: (context) => AuthBloc()),
+      ),
     ];
   }
+
+  static final RouteObserver<Route> routeObserver = RouteObserver<Route>();
+  static List<String> history = [];
 
   static List<dynamic> blocer(BuildContext context) {
     List<dynamic> blocerList = [];

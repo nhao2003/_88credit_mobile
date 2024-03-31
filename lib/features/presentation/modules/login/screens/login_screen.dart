@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
+    loginFormGlobalKey.currentState?.dispose();
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
     loginEmail.dispose();
