@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
+import '../widgets/image_not_found.dart';
 
-class BaseScreen extends StatelessWidget {
-  const BaseScreen({super.key});
+class ErrorScreen extends StatelessWidget {
+  const ErrorScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Base Screen 1'),
+        title: const Text('Error Screen'),
       ),
-      body: ElevatedButton(
-        onPressed: () {},
-        child: const Text("Go to Settings page"),
-      ),
+      body: const ImageNotFound(),
     );
   }
 }

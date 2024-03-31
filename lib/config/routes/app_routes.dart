@@ -2,6 +2,9 @@ abstract class AppRoutes {
   // splashScreen
   static const splashScreen = '/splashScreen';
 
+  // error
+  static const error = '/error';
+
   // login
   static const login = '/login';
   static const register = '/login/register';

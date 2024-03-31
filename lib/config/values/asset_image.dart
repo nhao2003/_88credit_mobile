@@ -21,6 +21,7 @@ class Assets {
   static const String contract = '$imagePath/contract.png';
   static const String defaultImage = '$imagePath/default-image.jpg';
   static const String addVideo = '$imagePath/add-video.png';
+  static const String notFound = '$imagePath/no-results.png';
 
   // icon
   static const String home = '$iconPath/home (1).png';
