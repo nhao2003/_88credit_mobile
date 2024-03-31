@@ -1,19 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 
 extension PercentSized on double {
-  double get hp => (WidgetsBinding
-          .instance.platformDispatcher.views.first.physicalSize.height *
-      (this / 100));
-  double get wp => (WidgetsBinding
-          .instance.platformDispatcher.views.first.physicalSize.width *
-      (this / 100));
+  double get hp => (Responsive.heightScreen * (this / 100));
+  double get wp => (Responsive.widthScreen * (this / 100));
 }
 
 extension ResponsiveText on double {
-  double get sp => (WidgetsBinding
-          .instance.platformDispatcher.views.first.physicalSize.width /
-      100 *
-      (this / 3));
+  double get sp => (Responsive.widthScreen / 100 * (this / 3));
 }
 
 String formatMoney(double amount) {

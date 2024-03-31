@@ -19,7 +19,7 @@ class OTPBottomSheet extends StatelessWidget {
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Container(
-        height: 20.hp,
+        height: 70.hp,
         width: double.infinity,
         padding: const EdgeInsets.only(top: 10),
         child: Column(

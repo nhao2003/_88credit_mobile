@@ -1,7 +1,8 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
-import 'package:_88credit_mobile/features/presentation/modules/login/screens/forgot_password.dart';
+import 'package:_88credit_mobile/features/presentation/modules/login/screens/forgot_password_sceen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/login_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/register_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/login/screens/update_password_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
@@ -25,6 +26,11 @@ class AppPages {
       PageEntity(
         path: AppRoutes.fogot,
         page: const ForgotPasswordScreen(),
+        bloc: BlocProvider(create: (context) => AuthBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.resetPassword,
+        page: const UpdatePasswordScreen(),
         bloc: BlocProvider(create: (context) => AuthBloc()),
       ),
     ];

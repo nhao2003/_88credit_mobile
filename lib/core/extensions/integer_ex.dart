@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 
 extension PercentSized on int {
-  double get hp => (WidgetsBinding
-          .instance.platformDispatcher.views.first.physicalSize.height *
-      (this / 100));
-  double get wp => (WidgetsBinding
-          .instance.platformDispatcher.views.first.physicalSize.width *
-      (this / 100));
+  double get hp => (Responsive.heightScreen * (this / 100));
+  double get wp => (Responsive.widthScreen * (this / 100));
 }
 
 extension ResponsiveText on int {
-  double get sp => (WidgetsBinding
+  double get sp => (screenSize.width / 100 * (this / 3));
+}
+
+Size get screenSize =>
+    WidgetsBinding.instance.platformDispatcher.views.first.physicalSize;
+
+mixin Responsive {
+  static final double widthScreen = WidgetsBinding
           .instance.platformDispatcher.views.first.physicalSize.width /
-      100 *
-      (this / 3));
+      WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
+
+  static final double heightScreen = WidgetsBinding
+          .instance.platformDispatcher.views.first.physicalSize.height /
+      WidgetsBinding.instance.platformDispatcher.views.first.devicePixelRatio;
 }
 
 String formatMoney(int amount, {bool isLease = false}) {
