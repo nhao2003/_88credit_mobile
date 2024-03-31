@@ -1,4 +1,6 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
+import 'package:_88credit_mobile/features/presentation/modules/bottom_bar/bloc/bar_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/bottom_bar/bottom_bar_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/home/bloc/home_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/home/screens/home_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/forgot_password_sceen.dart';
@@ -37,6 +39,11 @@ class AppPages {
         path: AppRoutes.updateInfo,
         page: const UpdateInfoScreen(),
         bloc: BlocProvider(create: (context) => AuthBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.bottomBar,
+        page: const BottomBarScreen(),
+        bloc: BlocProvider(create: (context) => BarBloc()),
       ),
       PageEntity(
         path: AppRoutes.home,

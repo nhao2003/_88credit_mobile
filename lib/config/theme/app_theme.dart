@@ -7,7 +7,6 @@ class AppTheme {
   static ThemeData appTheme() {
     return ThemeData(
       scaffoldBackgroundColor: AppColors.white,
-      //fontFamily: 'Muli',
       appBarTheme: appBarTheme(),
       colorScheme: ColorScheme.fromSeed(seedColor: AppColors.green),
       useMaterial3: true,

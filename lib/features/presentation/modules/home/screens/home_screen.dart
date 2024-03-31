@@ -1,4 +1,3 @@
-import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/text_styles.dart';
