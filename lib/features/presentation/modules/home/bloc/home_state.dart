@@ -1,6 +1,9 @@
 part of 'home_bloc.dart';
 
+enum BlogStatus { initial, success, failure }
+
 final class HomeState extends Equatable {
+  final BlogStatus status;
   final String nameUser;
   final List<BlogEntity> blogs;
   final int unreadMessCount;
@@ -12,6 +15,7 @@ final class HomeState extends Equatable {
   final int borrowedUsed;
 
   const HomeState({
+    this.status = BlogStatus.initial,
     this.nameUser = "Minh Phan",
     this.blogs = const [],
     this.unreadMessCount = 1,
@@ -24,6 +28,7 @@ final class HomeState extends Equatable {
   });
 
   HomeState copyWith({
+    BlogStatus? status,
     String? nameUser,
     List<BlogEntity>? blogs,
     int? unreadMessCount,
@@ -35,6 +40,7 @@ final class HomeState extends Equatable {
     int? borrowedUsed,
   }) {
     return HomeState(
+      status: status ?? this.status,
       nameUser: nameUser ?? this.nameUser,
       blogs: blogs ?? this.blogs,
       unreadMessCount: unreadMessCount ?? this.unreadMessCount,
@@ -49,6 +55,7 @@ final class HomeState extends Equatable {
 
   @override
   List<Object> get props => [
+        status,
         nameUser,
         blogs,
         unreadMessCount,

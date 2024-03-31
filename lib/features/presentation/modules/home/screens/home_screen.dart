@@ -1,9 +1,11 @@
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
-import '../../../../domain/entities/blog.dart';
 import '../../../globalwidgets/carousel_ad.dart';
+import '../bloc/home_bloc.dart';
 import '../widgets/blog_card.dart';
 import '../widgets/border_image_button.dart';
 import '../widgets/home_appbar.dart';
@@ -11,9 +13,14 @@ import '../widgets/load_limit_card.dart';
 import '../widgets/report_card.dart';
 import '../widgets/util_card.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final List<String> imgList = [
     'https://tinnhiemmang.vn/storage/photos/shares/tin-tuc/tt2022/10211a.jpg',
     'https://cdn.tima.vn/content-image/2020/4/2020440_vay-40tr-khong-the-chap.jpg',
@@ -21,6 +28,12 @@ class HomeScreen extends StatelessWidget {
     'https://image.congan.com.vn/thumbnail/CATP-480-2023-4-28/nhung-app-vay-tien-bi-bat-1_637_382_326.jpg',
     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1em0CudPUva4SQdZ522Qx6UA6jsDed5OA0w&usqp=CAU',
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(FetchBlogs());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,37 +117,40 @@ class HomeScreen extends StatelessWidget {
 
               // tin tuc
               const SizedBox(height: 10),
-              // Container(
-              //   width: 100.wp,
-              //   constraints: BoxConstraints(maxHeight: 25.hp),
-              //   child: FutureBuilder<List<BlogEntity>>(
-              //     future: controller.getBlogs(),
-              //     builder: (context, snapShot) {
-              //       if (!snapShot.hasData) {
-              //         return const Center(
-              //           child: CircularProgressIndicator(),
-              //         );
-              //       } else {
-              //         List<BlogEntity> data = snapShot.data!;
-              //         return ListView.separated(
-              //           shrinkWrap: true,
-              //           itemCount: data.length,
-              //           scrollDirection: Axis.horizontal,
-              //           separatorBuilder: (BuildContext context, int index) =>
-              //               const SizedBox(
-              //             width: 10,
-              //           ),
-              //           itemBuilder: (BuildContext context, int index) {
-              //             return BlogCard(
-              //               key: UniqueKey(),
-              //               blog: data[index],
-              //             );
-              //           },
-              //         );
-              //       }
-              //     },
-              //   ),
-              // ),
+              Container(
+                width: 100.wp,
+                constraints: BoxConstraints(maxHeight: 25.hp),
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    switch (state.status) {
+                      case BlogStatus.initial:
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      case BlogStatus.success:
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          itemCount: state.blogs.length,
+                          scrollDirection: Axis.horizontal,
+                          separatorBuilder: (BuildContext context, int index) =>
+                              const SizedBox(
+                            width: 10,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            return BlogCard(
+                              key: UniqueKey(),
+                              blog: state.blogs[index],
+                            );
+                          },
+                        );
+                      case BlogStatus.failure:
+                        return const Center(
+                          child: Text("Failed to fetch posts"),
+                        );
+                    }
+                  },
+                ),
+              ),
 
               // cac tien ich khac
               const SizedBox(height: 15),

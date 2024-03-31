@@ -9,7 +9,7 @@ import 'package:_88credit_mobile/features/presentation/modules/login/screens/reg
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/update_password_sceen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../features/presentation/modules/base/screens/base_screen.dart';
+import '../../features/presentation/modules/error/screens/error_screen.dart';
 import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
 import '../../features/presentation/modules/login/screens/update_info_screen.dart';
 
