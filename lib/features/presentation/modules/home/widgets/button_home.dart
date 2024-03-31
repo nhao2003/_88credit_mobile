@@ -1,6 +1,6 @@
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
+import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
-import 'package:_88credit_flutter/core/extensions/integer_ex.dart';
-import 'package:_88credit_flutter/core/extensions/textstyle_ex.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 

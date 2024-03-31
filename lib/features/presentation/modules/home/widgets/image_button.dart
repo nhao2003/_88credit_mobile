@@ -1,11 +1,9 @@
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:_88credit_flutter/config/theme/text_styles.dart';
-import 'package:_88credit_flutter/core/extensions/integer_ex.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-import '../home_controller.dart';
+import '../../../../../config/theme/text_styles.dart';
 
 // ignore: must_be_immutable
 class ImageButton extends StatefulWidget {
@@ -18,8 +16,6 @@ class ImageButton extends StatefulWidget {
 }
 
 class _ImageButtonState extends State<ImageButton> {
-  final HomeController controller = Get.find<HomeController>();
-
   @override
   Widget build(BuildContext context) {
     return ZoomTapAnimation(

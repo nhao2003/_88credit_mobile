@@ -21,8 +21,8 @@ class HomeAppbar extends StatelessWidget {
             //   width: 30,
             //   height: 30,
             // ),
-            SizedBox(width: 2),
-            // Hello text
+            // const SizedBox(width: 2),
+            // // Hello text
             // Text(
             //   controller.getGreeting() == Greeting.evening
             //       ? 'Chào buổi tối, ${controller.nameUser}!'
