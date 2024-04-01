@@ -24,7 +24,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
       }
     } catch (e) {
-      emit(
+      return emit(
         state.copyWith(
           status: BlogStatus.failure,
         ),

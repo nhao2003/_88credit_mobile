@@ -5,6 +5,7 @@ import '../../../../config/routes/app_routes.dart';
 import '../../../../config/theme/app_color.dart';
 import '../../../../config/values/asset_image.dart';
 import '../home/screens/home_screen.dart';
+import '../post/screens/post_screen.dart';
 import 'bloc/bar_bloc.dart';
 
 class BottomBarScreen extends StatefulWidget {
@@ -27,8 +28,7 @@ class _BottomBarScreenState extends State<BottomBarScreen>
 
     _pages = [
       const HomeScreen(),
-      // PostScreen(),
-      const Scaffold(),
+      const PostScreen(),
       const Scaffold(),
       // ContractScreen(),
       // AccountScreen(),

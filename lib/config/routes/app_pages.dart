@@ -7,6 +7,8 @@ import 'package:_88credit_mobile/features/presentation/modules/login/screens/for
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/login_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/register_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/screens/update_password_sceen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/post/bloc/post_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/post/screens/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/presentation/modules/error/screens/error_screen.dart';
@@ -51,6 +53,11 @@ class AppPages {
         page: const HomeScreen(),
         bloc: BlocProvider(create: (context) => HomeBloc()),
       ),
+      PageEntity(
+        path: AppRoutes.post,
+        page: const PostScreen(),
+        bloc: BlocProvider(create: (context) => PostBloc()),
+      )
     ];
   }
 
