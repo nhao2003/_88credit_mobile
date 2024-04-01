@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../domain/entities/blog.dart';
 part 'home_event.dart';
 part 'home_state.dart';
@@ -14,7 +14,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _onFetchBlogs(FetchBlogs event, Emitter<HomeState> emit) async {
     try {
       if (state.status == BlogStatus.initial) {
-        print('fetching blogs');
         final blog = await _fetchBlogs();
         return emit(
           state.copyWith(

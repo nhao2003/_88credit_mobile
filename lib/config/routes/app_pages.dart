@@ -48,7 +48,7 @@ class AppPages {
       ),
       PageEntity(
         path: AppRoutes.home,
-        page: HomeScreen(),
+        page: const HomeScreen(),
         bloc: BlocProvider(create: (context) => HomeBloc()),
       ),
     ];

@@ -26,7 +26,7 @@ class _BottomBarScreenState extends State<BottomBarScreen>
     super.initState();
 
     _pages = [
-      HomeScreen(),
+      const HomeScreen(),
       // PostScreen(),
       const Scaffold(),
       const Scaffold(),
