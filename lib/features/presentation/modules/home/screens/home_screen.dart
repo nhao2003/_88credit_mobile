@@ -21,14 +21,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final List<String> imgList = [
-    'https://tinnhiemmang.vn/storage/photos/shares/tin-tuc/tt2022/10211a.jpg',
-    'https://cdn.tima.vn/content-image/2020/4/2020440_vay-40tr-khong-the-chap.jpg',
-    'https://cdn.tuoitre.vn/471584752817336320/2023/9/20/photo-1695177142803-16951771434652004020101.jpg',
-    'https://image.congan.com.vn/thumbnail/CATP-480-2023-4-28/nhung-app-vay-tien-bi-bat-1_637_382_326.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1em0CudPUva4SQdZ522Qx6UA6jsDed5OA0w&usqp=CAU',
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -82,10 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
               // quang cao
               const SizedBox(height: 15),
-              CarouselAd(
-                imgList: imgList,
-                aspectRatio: 2.59,
-                indicatorSize: 6,
+              BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  return CarouselAd(
+                    imgList: state.listAds,
+                    aspectRatio: 2.59,
+                    indicatorSize: 6,
+                  );
+                },
               ),
 
               // text tin tuc

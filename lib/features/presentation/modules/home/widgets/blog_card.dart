@@ -2,6 +2,7 @@ import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/entities/blog.dart';
@@ -20,6 +21,8 @@ class BlogCard extends StatelessWidget {
     return ZoomTapAnimation(
       child: InkWell(
         onTap: () {
+          Navigator.of(context)
+              .pushNamed(AppRoutes.getBlogRoute(blog.id), arguments: blog);
           // Get.to(() => BlogDetailScreen(), arguments: blog);
         },
         splashColor: AppColors.green,

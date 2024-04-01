@@ -6,6 +6,8 @@ import '../../../config/theme/app_color.dart';
 import '../../../config/values/asset_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../domain/entities/advertisement.dart';
+
 class CarouselAd extends StatefulWidget {
   const CarouselAd(
       {super.key,
@@ -13,7 +15,7 @@ class CarouselAd extends StatefulWidget {
       required this.aspectRatio,
       required this.indicatorSize});
 
-  final List<String> imgList;
+  final List<AdvertisementEnity> imgList;
   final double aspectRatio;
   final double indicatorSize;
 
@@ -37,16 +39,16 @@ class _CarouselAdState extends State<CarouselAd> {
     return SizedBox(
         child: Stack(
       children: [
-        GestureDetector(
-          onTap: () {
-            launchWebURL('https://flutter.dev');
-          },
-          child: CarouselSlider(
-            items: widget.imgList
-                .map((item) => ClipRRect(
+        CarouselSlider(
+          items: widget.imgList
+              .map((item) => GestureDetector(
+                    onTap: () {
+                      launchWebURL(item.link);
+                    },
+                    child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                       child: CachedNetworkImage(
-                        imageUrl: item,
+                        imageUrl: item.thumbnail,
                         fit: BoxFit.cover,
                         width: 100.wp,
                         errorWidget: (context, _, __) {
@@ -56,19 +58,19 @@ class _CarouselAdState extends State<CarouselAd> {
                           );
                         },
                       ),
-                    ))
-                .toList(),
-            carouselController: _controller,
-            options: CarouselOptions(
-              aspectRatio: widget.aspectRatio,
-              viewportFraction: 1,
-              autoPlay: true,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
-              },
-            ),
+                    ),
+                  ))
+              .toList(),
+          carouselController: _controller,
+          options: CarouselOptions(
+            aspectRatio: widget.aspectRatio,
+            viewportFraction: 1,
+            autoPlay: true,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _current = index;
+              });
+            },
           ),
         ),
         Positioned(

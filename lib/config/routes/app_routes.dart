@@ -20,6 +20,11 @@ abstract class AppRoutes {
 
   // blog
   static const blog = '/blog';
+  // post detail
+  static const blogDetail = '/blog/:id';
+  static String getBlogRoute(String id) {
+    return '/blog/$id';
+  }
 
   // contract
   static const contract = '/contract';
