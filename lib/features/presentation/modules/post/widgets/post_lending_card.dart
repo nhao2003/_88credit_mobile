@@ -1,4 +1,5 @@
 import 'package:_88credit_mobile/core/extensions/date_ex.dart';
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -195,7 +196,7 @@ class PostLendingCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${post.loanAmount} - ${post.maxLoanAmount} VND",
+                                "${post.loanAmount!.toInt().formatNumberWithCommas} - ${post.maxLoanAmount!.toInt().formatNumberWithCommas} VND",
                                 style: AppTextStyles.bold12
                                     .colorEx(AppColors.black),
                               ),

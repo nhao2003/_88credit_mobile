@@ -50,8 +50,8 @@ class _PostScreenState extends State<PostScreen> {
         body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            LendingTabScreen(),
             BorrowTabScreen(),
+            LendingTabScreen(),
           ],
         ),
       ),

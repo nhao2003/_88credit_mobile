@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/features/domain/enums/post_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,11 +11,14 @@ class BaseListPosts extends StatefulWidget {
   final Widget? Function(PostEntity post) buildItem;
   final String titleNull;
   final Widget? cardSort;
-  const BaseListPosts(
-      {required this.buildItem,
-      this.cardSort,
-      this.titleNull = "Chưa có tin đã đăng",
-      super.key});
+  final PostTypes postType;
+  const BaseListPosts({
+    required this.buildItem,
+    this.cardSort,
+    this.titleNull = "Chưa có tin đã đăng",
+    required this.postType,
+    super.key,
+  });
 
   @override
   State<BaseListPosts> createState() => _BaseListPostsState();
@@ -42,11 +46,11 @@ class _BaseListPostsState extends State<BaseListPosts> {
   }
 
   Future fetchMore() async {
-    context.read<PostBloc>().add(FetchMorePostEnvent());
+    context.read<PostBloc>().add(FetchMorePostEnvent(widget.postType));
   }
 
   Future refresh() async {
-    context.read<PostBloc>().add(RefreshPostEnvent());
+    context.read<PostBloc>().add(RefreshPostEnvent(widget.postType));
   }
 
   @override
@@ -63,45 +67,53 @@ class _BaseListPostsState extends State<BaseListPosts> {
                       child: widget.cardSort,
                     )
                   : const SizedBox(),
-              Expanded(
-                child: state.lendingStatus == PostLendingStatus.loading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : state.lendingPosts.isEmpty
-                        ? Center(
-                            child: Text(
-                              widget.titleNull,
-                              style: AppTextStyles.bold20
-                                  .copyWith(color: AppColors.green),
-                            ),
-                          )
-                        : ListView.builder(
-                            controller: scrollController,
-                            itemCount: state.lendingPosts.length + 1,
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              if (index < state.lendingPosts.length) {
-                                return widget
-                                    .buildItem(state.lendingPosts[index]);
-                              } else {
-                                return state.hasMore
-                                    ? const Padding(
-                                        padding: EdgeInsets.all(12.0),
-                                        child: Center(
-                                          child: CircularProgressIndicator(),
-                                        ),
-                                      )
-                                    : const SizedBox(height: 20);
-                              }
-                            },
-                          ),
-              ),
+              widget.postType == PostTypes.borrowing
+                  ? buildListPost(
+                      state.status, state.borrowingPosts, state.hasMore)
+                  : buildListPost(
+                      state.status, state.lendingPosts, state.hasMore),
             ],
           ),
         );
       },
+    );
+  }
+
+  Widget buildListPost(
+      PostFetchStatus status, List<PostEntity> posts, bool hasMore) {
+    return Expanded(
+      child: status == PostFetchStatus.loading
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : posts.isEmpty
+              ? Center(
+                  child: Text(
+                    widget.titleNull,
+                    style:
+                        AppTextStyles.bold20.copyWith(color: AppColors.green),
+                  ),
+                )
+              : ListView.builder(
+                  controller: scrollController,
+                  itemCount: posts.length + 1,
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    if (index < posts.length) {
+                      return widget.buildItem(posts[index]);
+                    } else {
+                      return hasMore
+                          ? const Padding(
+                              padding: EdgeInsets.all(12.0),
+                              child: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                            )
+                          : const SizedBox(height: 20);
+                    }
+                  },
+                ),
     );
   }
 }

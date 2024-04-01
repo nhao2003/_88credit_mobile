@@ -25,19 +25,19 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     GetLendingPostEnvent event,
     Emitter<PostState> emit,
   ) async {
-    emit(state.copyWith(lendingStatus: PostLendingStatus.loading));
+    emit(state.copyWith(status: PostFetchStatus.loading));
     try {
       final posts = await _getPostsLending();
       emit(
         state.copyWith(
-          lendingStatus: PostLendingStatus.success,
+          status: PostFetchStatus.success,
           lendingPosts: posts.second,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          lendingStatus: PostLendingStatus.failure,
+          status: PostFetchStatus.failure,
         ),
       );
     }
@@ -80,50 +80,53 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     GetBorrowingPostEnvent event,
     Emitter<PostState> emit,
   ) async {
-    emit(state.copyWith(borrowingStatus: PostBorrowingStatus.loading));
+    emit(state.copyWith(status: PostFetchStatus.loading));
     try {
       final posts = await _getPostsBorrowing();
       emit(
         state.copyWith(
-          borrowingStatus: PostBorrowingStatus.success,
-          borrowingPosts: posts,
+          status: PostFetchStatus.success,
+          borrowingPosts: posts.second,
         ),
       );
     } catch (e) {
       emit(
         state.copyWith(
-          borrowingStatus: PostBorrowingStatus.failure,
+          status: PostFetchStatus.failure,
         ),
       );
     }
   }
 
-  Future<List<PostEntity>> _getPostsBorrowing() async {
+  Future<Pair<int, List<PostEntity>>> _getPostsBorrowing() async {
     await Future.delayed(const Duration(seconds: 2));
-    return List.generate(
-      5,
-      (index) => PostEntity(
-        id: index.toString(),
-        user: user,
-        type: PostTypes.borrowing,
-        loanReasonType: LoanReasonTypes.business,
-        loanReason: 'Business',
-        status: PostStatus.approved,
-        title: 'Title $index',
-        description: 'Description $index',
-        images: const [
-          'https://img.cand.com.vn/resize/800x800/NewFiles/Images/2022/06/15/vay_tien_khong_tra_co_bi_di_tu_2-1655284202853.jpg',
-        ],
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        interestRate: 0.1,
-        loanAmount: 1000,
-        tenureMonths: 12,
-        overdueInterestRate: 0.2,
-        maxInterestRate: 0.3,
-        maxLoanAmount: 2000,
-        maxTenureMonths: 24,
-        maxOverdueInterestRate: 0.4,
+    return Pair(
+      1,
+      List.generate(
+        5,
+        (index) => PostEntity(
+          id: index.toString(),
+          user: user,
+          type: PostTypes.borrowing,
+          loanReasonType: LoanReasonTypes.business,
+          loanReason: 'Business',
+          status: PostStatus.approved,
+          title: 'Title $index',
+          description: 'Description $index',
+          images: const [
+            'https://img.cand.com.vn/resize/800x800/NewFiles/Images/2022/06/15/vay_tien_khong_tra_co_bi_di_tu_2-1655284202853.jpg',
+          ],
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+          interestRate: 0.1,
+          loanAmount: 2000,
+          tenureMonths: 12,
+          overdueInterestRate: 0.2,
+          maxInterestRate: 0.3,
+          maxLoanAmount: 2000,
+          maxTenureMonths: 24,
+          maxOverdueInterestRate: 0.4,
+        ),
       ),
     );
   }
@@ -138,7 +141,8 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         firstName: 'John',
         lastName: 'Doe',
         gender: true,
-        avatar: 'https://www.google.com',
+        avatar:
+            'https://i.pinimg.com/736x/8a/6a/a8/8a6aa88d7b7efd82c7ddbf296dc401eb.jpg',
         dob: '1990-01-01',
         phone: '0123456789',
         lastActiveAt: DateTime.now(),
@@ -157,23 +161,35 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     page = 1;
     hasMore = true;
     emit(state.copyWith(
-      lendingStatus: PostLendingStatus.loading,
+      status: PostFetchStatus.loading,
       lendingPosts: [],
       hasMore: hasMore,
     ));
-    await _getPostsLending().then((value) {
-      numOfPage = value.first;
-      state.lendingPosts.clear();
-      final newPosts = value.second;
-      state.lendingPosts.addAll(newPosts);
-      numOfPage == 1 ? hasMore = false : hasMore = true;
+    if (event.postType == PostTypes.lending) {
+      await _getPostsLending().then((value) {
+        numOfPage = value.first;
+        final newPosts = value.second;
+        numOfPage == 1 ? hasMore = false : hasMore = true;
 
-      return emit(state.copyWith(
-        lendingStatus: PostLendingStatus.success,
-        lendingPosts: state.lendingPosts,
-        hasMore: hasMore,
-      ));
-    });
+        emit(state.copyWith(
+          status: PostFetchStatus.success,
+          lendingPosts: newPosts,
+          hasMore: hasMore,
+        ));
+      });
+    } else {
+      await _getPostsBorrowing().then((value) {
+        numOfPage = value.first;
+        final newPosts = value.second;
+        numOfPage == 1 ? hasMore = false : hasMore = true;
+
+        emit(state.copyWith(
+          status: PostFetchStatus.success,
+          borrowingPosts: newPosts,
+          hasMore: hasMore,
+        ));
+      });
+    }
   }
 
   Future<void> _fetchMore(
@@ -182,26 +198,40 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   ) async {
     page++;
     emit(state.copyWith(
-      lendingStatus: PostLendingStatus.loading,
+      status: PostFetchStatus.loading,
     ));
     if (page < numOfPage) {
       // Fetch more data and add to the list
-      await _getPostsLending().then((value) {
-        numOfPage = value.first;
-        final newPosts = value.second;
-        state.lendingPosts.addAll(newPosts);
-        hasMore = true;
-        return emit(state.copyWith(
-          lendingStatus: PostLendingStatus.success,
-          lendingPosts: state.lendingPosts,
-          hasMore: hasMore,
-        ));
-      });
+      if (event.postType == PostTypes.lending) {
+        await _getPostsLending().then((value) {
+          numOfPage = value.first;
+          final newPosts = value.second;
+          state.lendingPosts.addAll(newPosts);
+          hasMore = true;
+          return emit(state.copyWith(
+            status: PostFetchStatus.success,
+            lendingPosts: state.lendingPosts,
+            hasMore: hasMore,
+          ));
+        });
+      } else {
+        await _getPostsBorrowing().then((value) {
+          numOfPage = value.first;
+          final newPosts = value.second;
+          state.borrowingPosts.addAll(newPosts);
+          hasMore = true;
+          return emit(state.copyWith(
+            status: PostFetchStatus.success,
+            borrowingPosts: state.borrowingPosts,
+            hasMore: hasMore,
+          ));
+        });
+      }
     } else {
       // No more pages to fetch
       hasMore = false;
       emit(state.copyWith(
-        lendingStatus: PostLendingStatus.success,
+        status: PostFetchStatus.success,
         lendingPosts: state.lendingPosts,
         hasMore: hasMore,
       ));
