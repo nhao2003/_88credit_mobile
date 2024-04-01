@@ -1,8 +1,11 @@
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
+import '../bloc/home_bloc.dart';
 
 class ReportCard extends StatefulWidget {
   const ReportCard({super.key});
@@ -12,13 +15,8 @@ class ReportCard extends StatefulWidget {
 }
 
 class _ReportCardState extends State<ReportCard> {
-  bool isShowLended = false;
-
-  bool isShowBorrowed = false;
-
-  final lendedUsed = 1000000;
-
-  final borrowedUsed = 1000000;
+  bool isShowLended = true;
+  bool isShowBorrowed = true;
 
   @override
   Widget build(BuildContext context) {
@@ -33,72 +31,80 @@ class _ReportCardState extends State<ReportCard> {
           color: AppColors.grey200,
         ),
       ),
-      child: Column(
-        children: [
-          Row(
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          return Column(
             children: [
-              Text.rich(
-                TextSpan(
-                  text: 'Đã vay:    ',
-                  style: AppTextStyles.medium14.colorEx(AppColors.black),
-                  children: <InlineSpan>[
+              Row(
+                children: [
+                  Text.rich(
                     TextSpan(
-                      text: isShowLended ? "****** VNĐ" : '$lendedUsed VNĐ',
-                      style: AppTextStyles.bold14.colorEx(AppColors.green),
-                    )
-                  ],
-                ),
+                      text: 'Đã vay:    ',
+                      style: AppTextStyles.medium14.colorEx(AppColors.black),
+                      children: <InlineSpan>[
+                        TextSpan(
+                          text: isShowLended
+                              ? "****** VNĐ"
+                              : '${state.lendedUsed.formatNumberWithCommas} VNĐ',
+                          style: AppTextStyles.bold14.colorEx(AppColors.green),
+                        )
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  InkResponse(
+                    onTap: () {
+                      setState(() {
+                        isShowLended = !isShowLended;
+                      });
+                    },
+                    child: Image.asset(
+                      isShowLended ? Assets.eyeOff : Assets.eye,
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                ],
               ),
-              const Spacer(),
-              InkResponse(
-                onTap: () {
-                  setState(() {
-                    isShowLended = !isShowLended;
-                  });
-                },
-                child: Image.asset(
-                  isShowLended ? Assets.eyeOff : Assets.eye,
-                  width: 20,
-                  height: 20,
-                ),
+              const Divider(
+                height: 20,
+                thickness: 1,
+                color: AppColors.grey200,
               ),
-            ],
-          ),
-          const Divider(
-            height: 20,
-            thickness: 1,
-            color: AppColors.grey200,
-          ),
-          Row(
-            children: [
-              Text.rich(
-                TextSpan(
-                  text: 'Cho vay:  ',
-                  style: AppTextStyles.medium14.colorEx(AppColors.black),
-                  children: <InlineSpan>[
+              Row(
+                children: [
+                  Text.rich(
                     TextSpan(
-                      text: isShowBorrowed ? "****** VNĐ" : '$borrowedUsed VNĐ',
-                      style: AppTextStyles.bold14.colorEx(AppColors.green),
-                    )
-                  ],
-                ),
-              ),
-              const Spacer(),
-              InkResponse(
-                onTap: () {
-                  setState(() {
-                    isShowBorrowed = !isShowBorrowed;
-                  });
-                },
-                child: Image.asset(
-                  isShowBorrowed ? Assets.eyeOff : Assets.eye,
-                  width: 20,
-                  height: 20,
-                ),
-              ),
+                      text: 'Cho vay:  ',
+                      style: AppTextStyles.medium14.colorEx(AppColors.black),
+                      children: <InlineSpan>[
+                        TextSpan(
+                          text: isShowBorrowed
+                              ? "****** VNĐ"
+                              : '${state.borrowedUsed.formatNumberWithCommas} VNĐ',
+                          style: AppTextStyles.bold14.colorEx(AppColors.green),
+                        )
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  InkResponse(
+                    onTap: () {
+                      setState(() {
+                        isShowBorrowed = !isShowBorrowed;
+                      });
+                    },
+                    child: Image.asset(
+                      isShowBorrowed ? Assets.eyeOff : Assets.eye,
+                      width: 20,
+                      height: 20,
+                    ),
+                  ),
+                ],
+              )
             ],
-          )
-        ],
+          );
+        },
       ),
     );
   }

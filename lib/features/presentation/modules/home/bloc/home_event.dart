@@ -8,3 +8,12 @@ sealed class HomeEvent extends Equatable {
 }
 
 final class FetchBlogs extends HomeEvent {}
+
+final class ChangeTabEvent extends HomeEvent {
+  final int index;
+
+  const ChangeTabEvent({required this.index});
+
+  @override
+  List<Object> get props => [index];
+}

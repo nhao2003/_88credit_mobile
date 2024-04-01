@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,8 +37,8 @@ class LoadLimitCard extends StatelessWidget {
               const SizedBox(height: 5),
               Text(
                 state.currentIndexTab == 0
-                    ? "${state.lendLimit} VNĐ"
-                    : "${state.borrowLimit} VNĐ",
+                    ? "${state.lendLimit.formatNumberWithCommas} VNĐ"
+                    : "${state.borrowLimit.formatNumberWithCommas} VNĐ",
                 style: AppTextStyles.bold30.colorEx(AppColors.green),
               ),
               const SizedBox(height: 10),

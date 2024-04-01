@@ -8,6 +8,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeState()) {
     on<HomeEvent>((event, emit) {});
     on<FetchBlogs>(_onFetchBlogs);
+    on<ChangeTabEvent>(_onChangeTab);
   }
 
   Future<void> _onFetchBlogs(FetchBlogs event, Emitter<HomeState> emit) async {
@@ -47,5 +48,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         createdAt: DateTime.now(),
       ),
     );
+  }
+
+  void _onChangeTab(ChangeTabEvent event, Emitter<HomeState> emit) {
+    emit(state.copyWith(currentIndexTab: event.index));
   }
 }
