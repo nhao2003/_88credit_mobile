@@ -8,6 +8,7 @@ import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../../../../domain/entities/post.dart';
+import 'save_button.dart';
 
 // ignore: must_be_immutable
 class PostBorrowCard extends StatelessWidget {
@@ -259,26 +260,7 @@ class PostBorrowCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      // SizedBox(
-                      //   height: 20,
-                      //   child: Obx(
-                      //     () => IconButton(
-                      //       padding: const EdgeInsets.all(0),
-                      //       icon: Icon(
-                      //         isLiked.value
-                      //             ? Icons.bookmark
-                      //             : Icons.bookmark_border_outlined,
-                      //         size: 25,
-                      //       ),
-                      //       color: isLiked.value
-                      //           ? AppColors.yellow
-                      //           : AppColors.grey400,
-                      //       onPressed: () {
-                      //         toggleIsLiked();
-                      //       },
-                      //     ),
-                      //   ),
-                      // ),
+                      const SaveButton(),
                     ],
                   ),
                 ],

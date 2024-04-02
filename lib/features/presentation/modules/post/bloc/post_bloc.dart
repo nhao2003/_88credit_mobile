@@ -31,7 +31,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       emit(
         state.copyWith(
           status: PostFetchStatus.success,
-          lendingPosts: [],
+          lendingPosts: posts.second,
         ),
       );
     } catch (e) {
@@ -158,6 +158,17 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     RefreshPostEnvent event,
     Emitter<PostState> emit,
   ) async {
+    if (event.postType == PostTypes.lending) {
+      await refreshLending(event, emit);
+    } else {
+      await refreshBorrowing(event, emit);
+    }
+  }
+
+  Future refreshLending(
+    RefreshPostEnvent event,
+    Emitter<PostState> emit,
+  ) async {
     page = 1;
     hasMore = true;
     emit(state.copyWith(
@@ -165,31 +176,41 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       lendingPosts: [],
       hasMore: hasMore,
     ));
-    if (event.postType == PostTypes.lending) {
-      await _getPostsLending().then((value) {
-        numOfPage = value.first;
-        final newPosts = value.second;
-        numOfPage == 1 ? hasMore = false : hasMore = true;
+    await _getPostsLending().then((value) {
+      numOfPage = value.first;
+      final newPosts = value.second;
+      numOfPage == 1 ? hasMore = false : hasMore = true;
 
-        emit(state.copyWith(
-          status: PostFetchStatus.success,
-          lendingPosts: newPosts,
-          hasMore: hasMore,
-        ));
-      });
-    } else {
-      await _getPostsBorrowing().then((value) {
-        numOfPage = value.first;
-        final newPosts = value.second;
-        numOfPage == 1 ? hasMore = false : hasMore = true;
+      emit(state.copyWith(
+        status: PostFetchStatus.success,
+        lendingPosts: newPosts,
+        hasMore: hasMore,
+      ));
+    });
+  }
 
-        emit(state.copyWith(
-          status: PostFetchStatus.success,
-          borrowingPosts: newPosts,
-          hasMore: hasMore,
-        ));
-      });
-    }
+  Future refreshBorrowing(
+    RefreshPostEnvent event,
+    Emitter<PostState> emit,
+  ) async {
+    page = 1;
+    hasMore = true;
+    emit(state.copyWith(
+      status: PostFetchStatus.loading,
+      borrowingPosts: [],
+      hasMore: hasMore,
+    ));
+    await _getPostsBorrowing().then((value) {
+      numOfPage = value.first;
+      final newPosts = value.second;
+      numOfPage == 1 ? hasMore = false : hasMore = true;
+
+      emit(state.copyWith(
+        status: PostFetchStatus.success,
+        borrowingPosts: newPosts,
+        hasMore: hasMore,
+      ));
+    });
   }
 
   Future<void> _fetchMore(
@@ -233,6 +254,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       emit(state.copyWith(
         status: PostFetchStatus.success,
         lendingPosts: state.lendingPosts,
+        borrowingPosts: state.borrowingPosts,
         hasMore: hasMore,
       ));
     }
