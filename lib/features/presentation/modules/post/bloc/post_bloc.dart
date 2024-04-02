@@ -31,7 +31,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       emit(
         state.copyWith(
           status: PostFetchStatus.success,
-          lendingPosts: posts.second,
+          lendingPosts: [],
         ),
       );
     } catch (e) {

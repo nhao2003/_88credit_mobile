@@ -87,12 +87,17 @@ class _BaseListPostsState extends State<BaseListPosts> {
               child: CircularProgressIndicator(),
             )
           : posts.isEmpty
-              ? Center(
-                  child: Text(
-                    widget.titleNull,
-                    style:
-                        AppTextStyles.bold20.copyWith(color: AppColors.green),
-                  ),
+              ? Stack(
+                  children: <Widget>[
+                    ListView(),
+                    Center(
+                      child: Text(
+                        widget.titleNull,
+                        style: AppTextStyles.bold20
+                            .copyWith(color: AppColors.green),
+                      ),
+                    ),
+                  ],
                 )
               : ListView.builder(
                   controller: scrollController,
