@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../../config/theme/app_color.dart';
+import '../../../globalwidgets/keep_page_alive.dart';
 import '../../../globalwidgets/my_tab_appbar.dart';
 import 'borrow_tab_screen.dart';
 import 'lending_tab_screen.dart';
@@ -50,8 +51,8 @@ class _PostScreenState extends State<PostScreen> {
         body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            BorrowTabScreen(),
-            LendingTabScreen(),
+            KeepPageAlive(child: BorrowTabScreen()),
+            KeepPageAlive(child: LendingTabScreen()),
           ],
         ),
       ),

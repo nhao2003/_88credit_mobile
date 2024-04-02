@@ -75,7 +75,10 @@ class _BottomBarScreenState extends State<BottomBarScreen>
     return BlocBuilder<BarBloc, BarState>(
       builder: (context, state) {
         return Scaffold(
-          body: _pages[state.index],
+          body: IndexedStack(
+            index: state.index,
+            children: _pages,
+          ),
           bottomNavigationBar: ConvexAppBar(
             onTap: (index) {
               if (index == 2) {
