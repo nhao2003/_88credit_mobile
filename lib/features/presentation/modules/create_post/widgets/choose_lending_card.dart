@@ -1,14 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:get/get.dart';
-
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
-import '../create_post_controller.dart';
 
 class ChooseLendingCard extends StatelessWidget {
-  ChooseLendingCard({super.key});
-
-  final CreatePostController controller = Get.find<CreatePostController>();
+  const ChooseLendingCard({super.key});
 
   @override
   Widget build(BuildContext context) {

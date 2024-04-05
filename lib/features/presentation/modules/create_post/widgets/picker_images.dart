@@ -1,12 +1,11 @@
 import 'dart:io';
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
+import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:_88credit_flutter/config/theme/text_styles.dart';
-import 'package:_88credit_flutter/core/extensions/integer_ex.dart';
-import 'package:_88credit_flutter/core/extensions/textstyle_ex.dart';
 import '../../../../../config/theme/app_color.dart';
+import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../create_post_controller.dart';
 
@@ -26,7 +25,7 @@ class PickerImages extends StatelessWidget {
                 title: const Text("Thư viện"),
                 onTap: () {
                   controller.imgFromGallery();
-                  Get.back();
+                  Navigator.pop(context);
                 },
               ),
               ListTile(
@@ -34,7 +33,7 @@ class PickerImages extends StatelessWidget {
                 title: const Text("Máy ảnh"),
                 onTap: () {
                   controller.imgFromCamera();
-                  Get.back();
+                  Navigator.pop(context);
                 },
               )
             ],

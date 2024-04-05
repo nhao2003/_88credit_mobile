@@ -1,21 +1,18 @@
-import 'package:_88credit_flutter/core/extensions/textstyle_ex.dart';
-import 'package:_88credit_flutter/features/domain/enums/loan_reason_types.dart';
-import 'package:_88credit_flutter/features/presentation/modules/create_post/create_post_controller.dart';
-import 'package:_88credit_flutter/features/presentation/modules/create_post/widgets/base_row_text_dropdown.dart';
-import 'package:_88credit_flutter/features/presentation/modules/create_post/widgets/picker_images.dart';
+import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
-import '../../../global_widgets/base_dropdown_button.dart';
-import '../../../global_widgets/base_textfield.dart';
+import '../../../../domain/enums/loan_reason_types.dart';
+import '../../../globalwidgets/base_dropdown_button.dart';
+import '../../../globalwidgets/base_textfield.dart';
+import 'base_row_text_dropdown.dart';
+import 'picker_images.dart';
 
 class BorrowingForm extends StatelessWidget {
   final bool isvisible;
 
   BorrowingForm({required this.isvisible, super.key});
 
-  final CreatePostController controller = Get.find<CreatePostController>();
   final FocusNode _moneyFocusNode = FocusNode();
   final FocusNode _interestFocusNode = FocusNode();
   final FocusNode _overdueFocusNode = FocusNode();
@@ -57,7 +54,7 @@ class BorrowingForm extends StatelessWidget {
                 },
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Số tiền không được rỗng'.tr,
+                    : 'Số tiền không được rỗng',
               ),
               const SizedBox(height: 10),
               Text(
@@ -112,7 +109,7 @@ class BorrowingForm extends StatelessWidget {
                 onChangeTimeValue: controller.setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Lãi suất không được rỗng'.tr,
+                    : 'Lãi suất không được rỗng',
               ),
               const SizedBox(height: 10),
               Text(
@@ -181,9 +178,8 @@ class BorrowingForm extends StatelessWidget {
                 onSaved: (value) {
                   controller.borrowingLoanReason = value!.trim();
                 },
-                validator: (value) => (value!.trim().isNotEmpty)
-                    ? null
-                    : 'Lý do không được rỗng'.tr,
+                validator: (value) =>
+                    (value!.trim().isNotEmpty) ? null : 'Lý do không được rỗng',
               ),
               const SizedBox(height: 5),
               Text(

@@ -1,7 +1,13 @@
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
+import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
+import '../../../globalwidgets/base_card.dart';
 import '../../../globalwidgets/my_appbar.dart';
+import '../widgets/borrowing_form.dart';
+import '../widgets/choose_lending_card.dart';
+import '../widgets/lending_form.dart';
 import '../widgets/post_info_card.dart';
 
 class CreatePostScreen extends StatelessWidget {
@@ -20,7 +26,7 @@ class CreatePostScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               // choose is lease
-              BaseCard(
+              const BaseCard(
                 title: "Loại bài đăng",
                 isvisible: true,
                 child: ChooseLendingCard(),
@@ -31,15 +37,11 @@ class CreatePostScreen extends StatelessWidget {
                 isvisible: true,
                 child: PostInfoCard(),
               ),
-              Obx(
-                () => BorrowingForm(
-                  isvisible: !controller.isLending.value,
-                ),
+              BorrowingForm(
+                isvisible: !controller.isLending.value,
               ),
-              Obx(
-                () => LendingForm(
-                  isvisible: controller.isLending.value,
-                ),
+              LendingForm(
+                isvisible: controller.isLending.value,
               ),
               // dang bai ============================================
               Padding(
@@ -71,7 +73,7 @@ class CreatePostScreen extends StatelessWidget {
                           ),
                         )
                       : Text(
-                          'Đăng bài'.tr,
+                          'Đăng bài',
                           style: AppTextStyles.bold14.colorEx(AppColors.white),
                         ),
                 ),

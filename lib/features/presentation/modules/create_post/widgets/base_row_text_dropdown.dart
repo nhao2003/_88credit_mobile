@@ -1,7 +1,7 @@
-import 'package:_88credit_flutter/core/extensions/integer_ex.dart';
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:flutter/material.dart';
-import '../../../global_widgets/base_dropdown_button.dart';
-import '../../../global_widgets/base_textfield.dart';
+import '../../../globalwidgets/base_dropdown_button.dart';
+import '../../../globalwidgets/base_textfield.dart';
 
 class BaseRowTextDropdown extends StatelessWidget {
   const BaseRowTextDropdown({

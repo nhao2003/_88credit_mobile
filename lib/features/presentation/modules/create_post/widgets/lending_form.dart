@@ -1,19 +1,16 @@
-import 'package:_88credit_flutter/core/extensions/textstyle_ex.dart';
-import 'package:_88credit_flutter/features/presentation/modules/create_post/create_post_controller.dart';
-import 'package:_88credit_flutter/features/presentation/modules/create_post/widgets/picker_images.dart';
+import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
-import '../../../global_widgets/base_textfield.dart';
+import '../../../globalwidgets/base_textfield.dart';
 import 'base_row_text_dropdown.dart';
+import 'picker_images.dart';
 
 class LendingForm extends StatelessWidget {
   final bool isvisible;
 
   LendingForm({required this.isvisible, super.key});
 
-  final CreatePostController controller = Get.find<CreatePostController>();
   final FocusNode _moneyFocusNode = FocusNode();
   final FocusNode _maxMoneyFocusNode = FocusNode();
   final FocusNode _interestFocusNode = FocusNode();
@@ -85,7 +82,7 @@ class LendingForm extends StatelessWidget {
                 },
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Số tiền không được rỗng'.tr,
+                    : 'Số tiền không được rỗng',
               ),
               const SizedBox(height: 10),
               Text(
@@ -112,7 +109,7 @@ class LendingForm extends StatelessWidget {
                 onChangeTimeValue: controller.setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Lãi suất không được rỗng'.tr,
+                    : 'Lãi suất không được rỗng',
               ),
               const SizedBox(height: 10),
               BaseRowTextDropdown(
@@ -160,7 +157,7 @@ class LendingForm extends StatelessWidget {
                 onChangeTimeValue: controller.setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Kỳ hạn không được rỗng'.tr,
+                    : 'Kỳ hạn không được rỗng',
               ),
               const SizedBox(height: 10),
               BaseRowTextDropdown(
@@ -182,7 +179,7 @@ class LendingForm extends StatelessWidget {
                 onChangeTimeValue: controller.setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Kỳ hạn không được rỗng'.tr,
+                    : 'Kỳ hạn không được rỗng',
               ),
               const SizedBox(height: 10),
               Text(
@@ -209,7 +206,7 @@ class LendingForm extends StatelessWidget {
                 onChangeTimeValue: controller.setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Lãi suất không được rỗng'.tr,
+                    : 'Lãi suất không được rỗng',
               ),
               const SizedBox(height: 10),
               BaseRowTextDropdown(
@@ -232,7 +229,7 @@ class LendingForm extends StatelessWidget {
                 onChangeTimeValue: controller.setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Lãi suất không được rỗng'.tr,
+                    : 'Lãi suất không được rỗng',
               ),
               const SizedBox(height: 5),
               Text(
