@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../config/theme/app_color.dart';
 import '../../../../config/values/asset_image.dart';
+import '../account/screens/account_screen.dart';
 import '../home/screens/home_screen.dart';
 import '../post/screens/post_screen.dart';
 import 'bloc/bar_bloc.dart';
@@ -31,9 +32,8 @@ class _BottomBarScreenState extends State<BottomBarScreen>
       const PostScreen(),
       const Scaffold(),
       // ContractScreen(),
-      // AccountScreen(),
       const Scaffold(),
-      const Scaffold(),
+      const AccountScreen(),
     ];
 
     _tab = [
