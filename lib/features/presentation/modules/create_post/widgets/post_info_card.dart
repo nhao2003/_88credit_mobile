@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../../globalwidgets/base_textfield.dart';
-import '../create_post_controller.dart';
 
 class PostInfoCard extends StatelessWidget {
   PostInfoCard({super.key});
 
+  final infoFormKey = GlobalKey<FormState>();
   final _titleFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
+
+  final titleTextController = TextEditingController();
+  final descriptionTextController = TextEditingController();
+  String? title;
+  String? description;
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: controller.infoFormKey,
+      key: infoFormKey,
       child: Column(
         children: [
           const SizedBox(height: 5),
@@ -23,15 +28,14 @@ class PostInfoCard extends StatelessWidget {
             maxLength: 255,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.next,
-            controller: controller.titleTextController,
+            controller: titleTextController,
             labelText: 'Tiêu đề',
             hintText: 'Nhập tiều đề',
             onSaved: (value) {
-              controller.title = value!.trim();
+              title = value!.trim();
             },
-            validator: (value) => (value!.trim().isNotEmpty)
-                ? null
-                : 'Tiêu đề không được rỗng'.tr,
+            validator: (value) =>
+                (value!.trim().isNotEmpty) ? null : 'Tiêu đề không được rỗng',
           ),
           const SizedBox(height: 10),
           BaseTextField(
@@ -41,14 +45,14 @@ class PostInfoCard extends StatelessWidget {
             maxLength: 1000,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
-            controller: controller.descriptionTextController,
+            controller: descriptionTextController,
             labelText: 'Mô tả chi tiết',
             hintText: 'Mô tả chi tiết',
             onSaved: (value) {
-              controller.description = value!.trim();
+              description = value!.trim();
             },
             validator: (value) =>
-                (value!.trim().isNotEmpty) ? null : 'Mô tả không được rỗng'.tr,
+                (value!.trim().isNotEmpty) ? null : 'Mô tả không được rỗng',
           ),
         ],
       ),

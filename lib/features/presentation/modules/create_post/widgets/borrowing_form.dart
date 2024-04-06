@@ -13,10 +13,34 @@ class BorrowingForm extends StatelessWidget {
 
   BorrowingForm({required this.isvisible, super.key});
 
+  final borrowingFormKey = GlobalKey<FormState>();
+
   final FocusNode _moneyFocusNode = FocusNode();
   final FocusNode _interestFocusNode = FocusNode();
   final FocusNode _overdueFocusNode = FocusNode();
   final FocusNode _timeFocusNode = FocusNode();
+
+  final borrowingLoanAmountTextController = TextEditingController();
+  double? borrowingLoanAmount;
+  final borrowingInterestRateTextController = TextEditingController();
+  double? borrowingInterestRate;
+  final borrowingOverdueInterestRateTextController = TextEditingController();
+  double? borrowingOverdueInterestRate;
+  final borrowingTenureMonthsTextController = TextEditingController();
+  int? borrowingTenureMonths;
+  LoanReasonTypes borrowingLoanReasonType = LoanReasonTypes.other;
+  void setLoanReason(LoanReasonTypes value) {
+    borrowingLoanReasonType = value;
+  }
+
+  final borrowingLoanReasonTextController = TextEditingController();
+  String? borrowingLoanReason;
+
+  List<String> timeTypes = ["Tháng", "Năm"];
+  String timeValue = 'Tháng';
+  void setTimeValue(String? value) {
+    timeValue = value!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +55,7 @@ class BorrowingForm extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         child: Form(
-          key: controller.borrowingFormKey,
+          key: borrowingFormKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -46,11 +70,11 @@ class BorrowingForm extends StatelessWidget {
                 maxLines: 1,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
-                controller: controller.borrowingLoanAmountTextController,
+                controller: borrowingLoanAmountTextController,
                 labelText: 'Số tiền mong muốn (VNĐ)',
                 hintText: "Nhập số tiền mong muốn",
                 onSaved: (value) {
-                  controller.borrowingLoanAmount = double.parse(value!.trim());
+                  borrowingLoanAmount = double.parse(value!.trim());
                 },
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
@@ -68,20 +92,19 @@ class BorrowingForm extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 labelText: 'Lãi suất mong muốn',
                 hintText: "Nhập lãi suất mong muốn",
-                controller: controller.borrowingInterestRateTextController,
+                controller: borrowingInterestRateTextController,
                 onSaved: (value) {
                   try {
-                    controller.borrowingInterestRate =
-                        double.parse(value!.trim());
+                    borrowingInterestRate = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
                 },
-                timeValue: controller.timeValue.value,
-                onChangeTimeValue: controller.setTimeValue,
+                timeValue: timeValue,
+                onChangeTimeValue: setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Lãi suất không được rỗng'.tr,
+                    : 'Lãi suất không được rỗng',
               ),
               const SizedBox(height: 10),
               Text(
@@ -95,18 +118,16 @@ class BorrowingForm extends StatelessWidget {
                 textInputAction: TextInputAction.next,
                 labelText: 'Lãi suất quá hạn',
                 hintText: "Nhập lãi suất quá hạn",
-                controller:
-                    controller.borrowingOverdueInterestRateTextController,
+                controller: borrowingOverdueInterestRateTextController,
                 onSaved: (value) {
                   try {
-                    controller.borrowingOverdueInterestRate =
-                        double.parse(value!.trim());
+                    borrowingOverdueInterestRate = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
                 },
-                timeValue: controller.timeValue.value,
-                onChangeTimeValue: controller.setTimeValue,
+                timeValue: timeValue,
+                onChangeTimeValue: setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
                     : 'Lãi suất không được rỗng',
@@ -123,19 +144,19 @@ class BorrowingForm extends StatelessWidget {
                 textInputAction: TextInputAction.done,
                 labelText: 'Kỳ hạn mong muốn',
                 hintText: "Nhập kỳ hạn mong muốn",
-                controller: controller.borrowingTenureMonthsTextController,
+                controller: borrowingTenureMonthsTextController,
                 onSaved: (value) {
                   try {
-                    controller.borrowingTenureMonths = int.parse(value!.trim());
+                    borrowingTenureMonths = int.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
                 },
-                timeValue: controller.timeValue.value,
-                onChangeTimeValue: controller.setTimeValue,
+                timeValue: timeValue,
+                onChangeTimeValue: setTimeValue,
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
-                    : 'Kỳ hạn không được rỗng'.tr,
+                    : 'Kỳ hạn không được rỗng',
               ),
               const SizedBox(height: 10),
               Text(
@@ -146,7 +167,7 @@ class BorrowingForm extends StatelessWidget {
               BaseDropdownButton(
                 title: "Loại lý do vay",
                 hint: "Chọn loại lý do vay",
-                value: controller.borrowingLoanReasonType.value,
+                value: borrowingLoanReasonType,
                 items: LoanReasonTypes.toMap().entries.map((entry) {
                   return DropdownMenuItem(
                     value: entry.key,
@@ -158,7 +179,7 @@ class BorrowingForm extends StatelessWidget {
                 }).toList(),
                 onChanged: (value) {
                   if (value != null) {
-                    controller.setLoanReason(value as LoanReasonTypes);
+                    setLoanReason(value as LoanReasonTypes);
                   }
                 },
                 onSaved: (value) {
@@ -172,11 +193,11 @@ class BorrowingForm extends StatelessWidget {
                 maxLength: 1000,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.done,
-                controller: controller.borrowingLoanReasonTextController,
+                controller: borrowingLoanReasonTextController,
                 labelText: 'Mô tả lý do vay',
                 hintText: 'Mô tả lý do vay',
                 onSaved: (value) {
-                  controller.borrowingLoanReason = value!.trim();
+                  borrowingLoanReason = value!.trim();
                 },
                 validator: (value) =>
                     (value!.trim().isNotEmpty) ? null : 'Lý do không được rỗng',
