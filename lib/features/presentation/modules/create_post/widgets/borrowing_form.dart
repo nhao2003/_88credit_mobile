@@ -208,7 +208,7 @@ class BorrowingForm extends StatelessWidget {
                 style: AppTextStyles.bold14.colorEx(Colors.black),
               ),
               const SizedBox(height: 10),
-              const PickerImages(),
+              PickerImages(),
             ],
           ),
         ),

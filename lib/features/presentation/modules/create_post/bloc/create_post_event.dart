@@ -17,3 +17,23 @@ class TogglePageEvent extends CreatePostEvent {
 }
 
 class SendPostEvent extends CreatePostEvent {}
+
+class AddFileImageEvent extends CreatePostEvent {
+  final File file;
+
+  const AddFileImageEvent(this.file);
+
+  @override
+  List<Object> get props => [file];
+}
+
+class RemoveFileImageEvent extends CreatePostEvent {
+  final int index;
+
+  const RemoveFileImageEvent(this.index);
+
+  @override
+  List<Object> get props => [index];
+}
+
+class CheckLengthPhoto extends CreatePostEvent {}
