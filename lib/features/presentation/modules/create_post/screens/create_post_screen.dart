@@ -19,6 +19,9 @@ class CreatePostScreen extends StatelessWidget {
   final borrowingFormKey = GlobalKey<FormState>();
   final lendingFormKey = GlobalKey<FormState>();
 
+  final titleTextController = TextEditingController();
+  final descriptionTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +46,11 @@ class CreatePostScreen extends StatelessWidget {
                   BaseCard(
                     title: "Thông tin bài đăng",
                     isvisible: true,
-                    child: PostInfoCard(infoFormKey),
+                    child: PostInfoCard(
+                      infoFormKey: infoFormKey,
+                      titleTextController: titleTextController,
+                      descriptionTextController: descriptionTextController,
+                    ),
                   ),
                   BorrowingForm(
                     isvisible: !state.isLending,
@@ -62,7 +69,10 @@ class CreatePostScreen extends StatelessWidget {
                           ? null
                           : () {
                               context.read<CreatePostBloc>().add(
-                                    SendPostEvent(),
+                                    SendPostEvent(
+                                      titleTextController.text.trim(),
+                                      descriptionTextController.text.trim(),
+                                    ),
                                   );
                             },
                       style: ElevatedButton.styleFrom(

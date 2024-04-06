@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import '../../../globalwidgets/base_textfield.dart';
 
 class PostInfoCard extends StatelessWidget {
-  GlobalKey<FormState> infoFormKey;
-  PostInfoCard(this.infoFormKey, {super.key});
+  final GlobalKey<FormState> infoFormKey;
+  final TextEditingController titleTextController;
+  final TextEditingController descriptionTextController;
+
+  PostInfoCard({
+    required this.infoFormKey,
+    required this.titleTextController,
+    required this.descriptionTextController,
+    super.key,
+  });
 
   final _titleFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
-
-  final titleTextController = TextEditingController();
-  final descriptionTextController = TextEditingController();
-  String? title;
-  String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +34,6 @@ class PostInfoCard extends StatelessWidget {
             controller: titleTextController,
             labelText: 'Tiêu đề',
             hintText: 'Nhập tiều đề',
-            onSaved: (value) {
-              title = value!.trim();
-            },
             validator: (value) =>
                 (value!.trim().isNotEmpty) ? null : 'Tiêu đề không được rỗng',
           ),
@@ -48,9 +48,6 @@ class PostInfoCard extends StatelessWidget {
             controller: descriptionTextController,
             labelText: 'Mô tả chi tiết',
             hintText: 'Mô tả chi tiết',
-            onSaved: (value) {
-              description = value!.trim();
-            },
             validator: (value) =>
                 (value!.trim().isNotEmpty) ? null : 'Mô tả không được rỗng',
           ),

@@ -10,21 +10,22 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<TogglePageEvent>((event, emit) {
       emit(state.copyWith(isLending: event.isLending));
     });
-    on<SendPostEvent>((event, emit) {
-      _senPost(event, emit);
-    });
+    on<SendPostEvent>(_sendPost);
     on<CheckLengthPhoto>(checkLengthPhoto);
     on<AddFileImageEvent>(_addImageFile);
     on<RemoveFileImageEvent>(_removeImageFile);
   }
 
-  void _senPost(
-    CreatePostEvent event,
+  void _sendPost(
+    SendPostEvent event,
     Emitter<CreatePostState> emit,
   ) async {
     emit(state.copyWith(status: CreatePostStatus.loading));
-    await Future.delayed(const Duration(seconds: 2));
-    emit(state.copyWith(status: CreatePostStatus.success));
+    await Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+      print('title: ${event.title}');
+      print('description: ${event.description}');
+      emit(state.copyWith(status: CreatePostStatus.success));
+    });
   }
 
   void checkLengthPhoto(

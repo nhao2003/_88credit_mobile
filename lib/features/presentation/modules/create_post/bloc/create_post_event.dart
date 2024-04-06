@@ -16,7 +16,15 @@ class TogglePageEvent extends CreatePostEvent {
   List<Object> get props => [isLending];
 }
 
-class SendPostEvent extends CreatePostEvent {}
+class SendPostEvent extends CreatePostEvent {
+  final String title;
+  final String description;
+
+  const SendPostEvent(this.title, this.description);
+
+  @override
+  List<Object> get props => [title, description];
+}
 
 class AddFileImageEvent extends CreatePostEvent {
   final File file;

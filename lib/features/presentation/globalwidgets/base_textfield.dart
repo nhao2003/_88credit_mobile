@@ -15,7 +15,7 @@ class BaseTextField extends StatelessWidget {
     required this.labelText,
     required this.hintText,
     this.validator,
-    required this.onSaved,
+    this.onSaved,
     this.onChanged,
     super.key,
   });
@@ -60,12 +60,7 @@ class BaseTextField extends StatelessWidget {
       onTapOutside: (event) {
         if (focusNode != null) focusNode!.unfocus();
       },
-      onSaved: onSaved,
-      onChanged: (value) {
-        onSaved!(value);
-      },
       onFieldSubmitted: (value) {
-        onSaved!(value);
         FocusScope.of(context).requestFocus(nexFocusNode);
       },
       validator: validator,
