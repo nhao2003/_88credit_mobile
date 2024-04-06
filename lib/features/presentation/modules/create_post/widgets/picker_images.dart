@@ -28,16 +28,16 @@ class PickerImages extends StatelessWidget {
                 leading: const Icon(Icons.photo_library),
                 title: const Text("Thư viện"),
                 onTap: () {
-                  imgFromGallery(context);
-                  Navigator.pop(context);
+                  imgFromGallery(context)
+                      .then((value) => Navigator.pop(context));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.photo_camera),
                 title: const Text("Máy ảnh"),
                 onTap: () {
-                  imgFromCamera(context);
-                  Navigator.pop(context);
+                  imgFromCamera(context)
+                      .then((value) => Navigator.pop(context));
                 },
               )
             ],
@@ -145,7 +145,6 @@ class PickerImages extends StatelessWidget {
                                         ? GestureDetector(
                                             onTap: () {
                                               _showPicker(context);
-                                              //imgFromGallery();
                                             },
                                             child: Container(
                                               padding:

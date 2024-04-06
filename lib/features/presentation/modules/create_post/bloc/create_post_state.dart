@@ -11,7 +11,7 @@ final class CreatePostState extends Equatable {
   const CreatePostState({
     this.isLending = false,
     this.status = CreatePostStatus.initial,
-    this.photoController = false,
+    this.photoController = true,
     this.photo = const [],
     this.imageUrlList = const [],
   });
