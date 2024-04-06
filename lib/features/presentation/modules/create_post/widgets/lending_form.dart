@@ -8,10 +8,10 @@ import 'picker_images.dart';
 
 class LendingForm extends StatelessWidget {
   final bool isvisible;
+  final GlobalKey<FormState> lendingFormKey;
 
-  LendingForm({required this.isvisible, super.key});
-
-  final lendingFormKey = GlobalKey<FormState>();
+  LendingForm(
+      {required this.isvisible, required this.lendingFormKey, super.key});
 
   final FocusNode _moneyFocusNode = FocusNode();
   final FocusNode _maxMoneyFocusNode = FocusNode();

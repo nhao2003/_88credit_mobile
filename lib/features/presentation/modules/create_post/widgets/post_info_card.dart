@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '../../../globalwidgets/base_textfield.dart';
 
 class PostInfoCard extends StatelessWidget {
-  PostInfoCard({super.key});
+  GlobalKey<FormState> infoFormKey;
+  PostInfoCard(this.infoFormKey, {super.key});
 
-  final infoFormKey = GlobalKey<FormState>();
   final _titleFocusNode = FocusNode();
   final _descriptionFocusNode = FocusNode();
 

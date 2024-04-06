@@ -10,10 +10,10 @@ import 'picker_images.dart';
 
 class BorrowingForm extends StatelessWidget {
   final bool isvisible;
+  final GlobalKey<FormState> borrowingFormKey;
 
-  BorrowingForm({required this.isvisible, super.key});
-
-  final borrowingFormKey = GlobalKey<FormState>();
+  BorrowingForm(
+      {required this.isvisible, required this.borrowingFormKey, super.key});
 
   final FocusNode _moneyFocusNode = FocusNode();
   final FocusNode _interestFocusNode = FocusNode();

@@ -13,7 +13,11 @@ import '../widgets/lending_form.dart';
 import '../widgets/post_info_card.dart';
 
 class CreatePostScreen extends StatelessWidget {
-  const CreatePostScreen({super.key});
+  CreatePostScreen({super.key});
+
+  final infoFormKey = GlobalKey<FormState>();
+  final borrowingFormKey = GlobalKey<FormState>();
+  final lendingFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +43,15 @@ class CreatePostScreen extends StatelessWidget {
                   BaseCard(
                     title: "Thông tin bài đăng",
                     isvisible: true,
-                    child: PostInfoCard(),
+                    child: PostInfoCard(infoFormKey),
                   ),
                   BorrowingForm(
                     isvisible: !state.isLending,
+                    borrowingFormKey: borrowingFormKey,
                   ),
                   LendingForm(
                     isvisible: state.isLending,
+                    lendingFormKey: lendingFormKey,
                   ),
                   // dang bai ============================================
                   Padding(

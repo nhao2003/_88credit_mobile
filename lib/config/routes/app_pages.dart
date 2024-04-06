@@ -76,7 +76,7 @@ class AppPages {
       ),
       PageEntity(
         path: AppRoutes.createPost,
-        page: const CreatePostScreen(),
+        page: CreatePostScreen(),
         bloc: BlocProvider(create: (context) => CreatePostBloc()),
       ),
     ];
