@@ -12,29 +12,28 @@ class BorrowingForm extends StatelessWidget {
   final bool isvisible;
   final GlobalKey<FormState> borrowingFormKey;
 
-  BorrowingForm(
-      {required this.isvisible, required this.borrowingFormKey, super.key});
-
   final FocusNode _moneyFocusNode = FocusNode();
   final FocusNode _interestFocusNode = FocusNode();
   final FocusNode _overdueFocusNode = FocusNode();
   final FocusNode _timeFocusNode = FocusNode();
 
-  final borrowingLoanAmountTextController = TextEditingController();
-  double? borrowingLoanAmount;
-  final borrowingInterestRateTextController = TextEditingController();
-  double? borrowingInterestRate;
-  final borrowingOverdueInterestRateTextController = TextEditingController();
-  double? borrowingOverdueInterestRate;
-  final borrowingTenureMonthsTextController = TextEditingController();
-  int? borrowingTenureMonths;
+  final TextEditingController borrowingLoanAmountTextController;
+  final TextEditingController borrowingInterestRateTextController;
+  final TextEditingController borrowingOverdueInterestRateTextController;
+  final TextEditingController borrowingTenureMonthsTextController;
   LoanReasonTypes borrowingLoanReasonType = LoanReasonTypes.other;
   void setLoanReason(LoanReasonTypes value) {
     borrowingLoanReasonType = value;
   }
 
-  final borrowingLoanReasonTextController = TextEditingController();
-  String? borrowingLoanReason;
+  final TextEditingController borrowingLoanReasonTextController;
+
+  BorrowingForm({
+    required this.isvisible,
+    required this.borrowingFormKey,
+    
+    super.key,
+  });
 
   List<String> timeTypes = ["Tháng", "Năm"];
   String timeValue = 'Tháng';

@@ -22,6 +22,12 @@ class CreatePostScreen extends StatelessWidget {
   final titleTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
 
+  final borrowingLoanAmountTextController = TextEditingController();
+  final borrowingInterestRateTextController = TextEditingController();
+  final borrowingOverdueInterestRateTextController = TextEditingController();
+  final borrowingTenureMonthsTextController = TextEditingController();
+  final borrowingLoanReasonTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
