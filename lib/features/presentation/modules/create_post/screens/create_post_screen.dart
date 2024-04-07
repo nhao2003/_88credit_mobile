@@ -28,6 +28,15 @@ class CreatePostScreen extends StatelessWidget {
   final borrowingTenureMonthsTextController = TextEditingController();
   final borrowingLoanReasonTextController = TextEditingController();
 
+  final lendingLoanAmountTextController = TextEditingController();
+  final lendingMaxLoanAmountTextController = TextEditingController();
+  final lendingInterestRateTextController = TextEditingController();
+  final lendingMaxInterestRateTextController = TextEditingController();
+  final lendingTenureMonthsTextController = TextEditingController();
+  final lendingMaxTenureMonthsTextController = TextEditingController();
+  final lendingOverdueInterestRateTextController = TextEditingController();
+  final lendingMaxOverdueInterestRateTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,10 +70,36 @@ class CreatePostScreen extends StatelessWidget {
                   BorrowingForm(
                     isvisible: !state.isLending,
                     borrowingFormKey: borrowingFormKey,
+                    borrowingLoanAmountTextController:
+                        borrowingLoanAmountTextController,
+                    borrowingInterestRateTextController:
+                        borrowingInterestRateTextController,
+                    borrowingOverdueInterestRateTextController:
+                        borrowingOverdueInterestRateTextController,
+                    borrowingTenureMonthsTextController:
+                        borrowingTenureMonthsTextController,
+                    borrowingLoanReasonTextController:
+                        borrowingLoanReasonTextController,
                   ),
                   LendingForm(
                     isvisible: state.isLending,
                     lendingFormKey: lendingFormKey,
+                    lendingLoanAmountTextController:
+                        lendingLoanAmountTextController,
+                    lendingMaxLoanAmountTextController:
+                        lendingMaxLoanAmountTextController,
+                    lendingInterestRateTextController:
+                        lendingInterestRateTextController,
+                    lendingMaxInterestRateTextController:
+                        lendingMaxInterestRateTextController,
+                    lendingTenureMonthsTextController:
+                        lendingTenureMonthsTextController,
+                    lendingMaxTenureMonthsTextController:
+                        lendingMaxTenureMonthsTextController,
+                    lendingOverdueInterestRateTextController:
+                        lendingOverdueInterestRateTextController,
+                    lendingMaxOverdueInterestRateTextController:
+                        lendingMaxOverdueInterestRateTextController,
                   ),
                   // dang bai ============================================
                   Padding(

@@ -8,12 +8,15 @@ final class CreatePostState extends Equatable {
   final bool photoController;
   final List<File> photo;
   final List<String> imageUrlList;
+  final LoanReasonTypes loanReasonType;
+
   const CreatePostState({
     this.isLending = false,
     this.status = CreatePostStatus.initial,
     this.photoController = true,
     this.photo = const [],
     this.imageUrlList = const [],
+    this.loanReasonType = LoanReasonTypes.other,
   });
 
   CreatePostState copyWith({
@@ -22,6 +25,7 @@ final class CreatePostState extends Equatable {
     bool? photoController,
     List<File>? photo,
     List<String>? imageUrlList,
+    LoanReasonTypes? loanReasonType,
   }) {
     return CreatePostState(
       isLending: isLending ?? this.isLending,
@@ -29,6 +33,7 @@ final class CreatePostState extends Equatable {
       photoController: photoController ?? this.photoController,
       photo: photo ?? this.photo,
       imageUrlList: imageUrlList ?? this.imageUrlList,
+      loanReasonType: loanReasonType ?? this.loanReasonType,
     );
   }
 
@@ -39,5 +44,6 @@ final class CreatePostState extends Equatable {
         photoController,
         photo,
         imageUrlList,
+        loanReasonType,
       ];
 }

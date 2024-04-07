@@ -45,3 +45,12 @@ class RemoveFileImageEvent extends CreatePostEvent {
 }
 
 class CheckLengthPhoto extends CreatePostEvent {}
+
+class ChangeLoanReasonEvent extends CreatePostEvent {
+  final LoanReasonTypes loanReason;
+
+  const ChangeLoanReasonEvent(this.loanReason);
+
+  @override
+  List<Object> get props => [loanReason];
+}

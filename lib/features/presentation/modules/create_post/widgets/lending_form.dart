@@ -10,9 +10,6 @@ class LendingForm extends StatelessWidget {
   final bool isvisible;
   final GlobalKey<FormState> lendingFormKey;
 
-  LendingForm(
-      {required this.isvisible, required this.lendingFormKey, super.key});
-
   final FocusNode _moneyFocusNode = FocusNode();
   final FocusNode _maxMoneyFocusNode = FocusNode();
   final FocusNode _interestFocusNode = FocusNode();
@@ -22,28 +19,34 @@ class LendingForm extends StatelessWidget {
   final FocusNode _overdueFocusNode = FocusNode();
   final FocusNode _maxOverdueFocusNode = FocusNode();
 
-  final lendingLoanAmountTextController = TextEditingController();
-  double? lendingLoanAmount;
-  final lendingMaxLoanAmountTextController = TextEditingController();
-  double? lendingMaxLoanAmount;
-  final lendingInterestRateTextController = TextEditingController();
-  double? lendingInterestRate;
-  final lendingMaxInterestRateTextController = TextEditingController();
-  double? lendingMaxInterestRate;
-  final lendingTenureMonthsTextController = TextEditingController();
-  int? lendingTenureMonths;
-  final lendingMaxTenureMonthsTextController = TextEditingController();
-  int? lendingMaxTenureMonths;
-  final lendingOverdueInterestRateTextController = TextEditingController();
-  double? lendingOverdueInterestRate;
-  final lendingMaxOverdueInterestRateTextController = TextEditingController();
-  double? lendingMaxOverdueInterestRate;
+  final TextEditingController lendingLoanAmountTextController;
+  final TextEditingController lendingMaxLoanAmountTextController;
+  final TextEditingController lendingInterestRateTextController;
+  final TextEditingController lendingMaxInterestRateTextController;
+  final TextEditingController lendingTenureMonthsTextController;
+  final TextEditingController lendingMaxTenureMonthsTextController;
+  final TextEditingController lendingOverdueInterestRateTextController;
+  final TextEditingController lendingMaxOverdueInterestRateTextController;
 
-  List<String> timeTypes = ["Tháng", "Năm"];
+  final List<String> timeTypes = ["Tháng", "Năm"];
   String timeValue = 'Tháng';
   void setTimeValue(String? value) {
     timeValue = value!;
   }
+
+  LendingForm({
+    required this.isvisible,
+    required this.lendingFormKey,
+    required this.lendingLoanAmountTextController,
+    required this.lendingMaxLoanAmountTextController,
+    required this.lendingInterestRateTextController,
+    required this.lendingMaxInterestRateTextController,
+    required this.lendingTenureMonthsTextController,
+    required this.lendingMaxTenureMonthsTextController,
+    required this.lendingOverdueInterestRateTextController,
+    required this.lendingMaxOverdueInterestRateTextController,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +81,7 @@ class LendingForm extends StatelessWidget {
                 hintText: "Nhập số tiền tối thiểu cho vay",
                 onSaved: (value) {
                   try {
-                    lendingLoanAmount = double.parse(value!.trim());
+                    // lendingLoanAmount = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -99,7 +102,7 @@ class LendingForm extends StatelessWidget {
                 hintText: "Nhập số tiền tối đa cho vay",
                 onSaved: (value) {
                   try {
-                    lendingMaxLoanAmount = double.parse(value!.trim());
+                    // lendingMaxLoanAmount = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -123,7 +126,7 @@ class LendingForm extends StatelessWidget {
                 controller: lendingInterestRateTextController,
                 onSaved: (value) {
                   try {
-                    lendingInterestRate = double.parse(value!.trim());
+                    // lendingInterestRate = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -144,7 +147,7 @@ class LendingForm extends StatelessWidget {
                 controller: lendingMaxInterestRateTextController,
                 onSaved: (value) {
                   try {
-                    lendingMaxInterestRate = double.parse(value!.trim());
+                    // lendingMaxInterestRate = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -170,7 +173,7 @@ class LendingForm extends StatelessWidget {
                 controller: lendingTenureMonthsTextController,
                 onSaved: (value) {
                   try {
-                    lendingTenureMonths = int.parse(value!.trim());
+                    // lendingTenureMonths = int.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -191,7 +194,7 @@ class LendingForm extends StatelessWidget {
                 controller: lendingMaxTenureMonthsTextController,
                 onSaved: (value) {
                   try {
-                    lendingMaxTenureMonths = int.parse(value!.trim());
+                    // lendingMaxTenureMonths = int.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -217,7 +220,7 @@ class LendingForm extends StatelessWidget {
                 controller: lendingOverdueInterestRateTextController,
                 onSaved: (value) {
                   try {
-                    lendingOverdueInterestRate = double.parse(value!.trim());
+                    // lendingOverdueInterestRate = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -238,7 +241,7 @@ class LendingForm extends StatelessWidget {
                 controller: lendingMaxOverdueInterestRateTextController,
                 onSaved: (value) {
                   try {
-                    lendingMaxOverdueInterestRate = double.parse(value!.trim());
+                    // lendingMaxOverdueInterestRate = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }

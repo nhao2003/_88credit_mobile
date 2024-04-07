@@ -1,10 +1,12 @@
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../globalwidgets/base_dropdown_button.dart';
 import '../../../globalwidgets/base_textfield.dart';
+import '../bloc/create_post_bloc.dart';
 import 'base_row_text_dropdown.dart';
 import 'picker_images.dart';
 
@@ -21,25 +23,24 @@ class BorrowingForm extends StatelessWidget {
   final TextEditingController borrowingInterestRateTextController;
   final TextEditingController borrowingOverdueInterestRateTextController;
   final TextEditingController borrowingTenureMonthsTextController;
-  LoanReasonTypes borrowingLoanReasonType = LoanReasonTypes.other;
-  void setLoanReason(LoanReasonTypes value) {
-    borrowingLoanReasonType = value;
-  }
-
   final TextEditingController borrowingLoanReasonTextController;
 
-  BorrowingForm({
-    required this.isvisible,
-    required this.borrowingFormKey,
-    
-    super.key,
-  });
-
-  List<String> timeTypes = ["Tháng", "Năm"];
+  final List<String> timeTypes = ["Tháng", "Năm"];
   String timeValue = 'Tháng';
   void setTimeValue(String? value) {
     timeValue = value!;
   }
+
+  BorrowingForm({
+    required this.isvisible,
+    required this.borrowingFormKey,
+    required this.borrowingLoanAmountTextController,
+    required this.borrowingInterestRateTextController,
+    required this.borrowingOverdueInterestRateTextController,
+    required this.borrowingTenureMonthsTextController,
+    required this.borrowingLoanReasonTextController,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,7 @@ class BorrowingForm extends StatelessWidget {
                 labelText: 'Số tiền mong muốn (VNĐ)',
                 hintText: "Nhập số tiền mong muốn",
                 onSaved: (value) {
-                  borrowingLoanAmount = double.parse(value!.trim());
+                  // borrowingLoanAmount = double.parse(value!.trim());
                 },
                 validator: (value) => (value!.trim().isNotEmpty)
                     ? null
@@ -94,7 +95,7 @@ class BorrowingForm extends StatelessWidget {
                 controller: borrowingInterestRateTextController,
                 onSaved: (value) {
                   try {
-                    borrowingInterestRate = double.parse(value!.trim());
+                    // borrowingInterestRate = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -120,7 +121,7 @@ class BorrowingForm extends StatelessWidget {
                 controller: borrowingOverdueInterestRateTextController,
                 onSaved: (value) {
                   try {
-                    borrowingOverdueInterestRate = double.parse(value!.trim());
+                    // borrowingOverdueInterestRate = double.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -146,7 +147,7 @@ class BorrowingForm extends StatelessWidget {
                 controller: borrowingTenureMonthsTextController,
                 onSaved: (value) {
                   try {
-                    borrowingTenureMonths = int.parse(value!.trim());
+                    // borrowingTenureMonths = int.parse(value!.trim());
                   } catch (e) {
                     print(e);
                   }
@@ -163,26 +164,32 @@ class BorrowingForm extends StatelessWidget {
                 style: AppTextStyles.bold14.colorEx(Colors.black),
               ),
               const SizedBox(height: 10),
-              BaseDropdownButton(
-                title: "Loại lý do vay",
-                hint: "Chọn loại lý do vay",
-                value: borrowingLoanReasonType,
-                items: LoanReasonTypes.toMap().entries.map((entry) {
-                  return DropdownMenuItem(
-                    value: entry.key,
-                    child: Text(
-                      entry.value,
-                      overflow: TextOverflow.visible,
-                    ),
+              BlocBuilder<CreatePostBloc, CreatePostState>(
+                builder: (context, state) {
+                  return BaseDropdownButton(
+                    title: "Loại lý do vay",
+                    hint: "Chọn loại lý do vay",
+                    value: state.loanReasonType,
+                    items: LoanReasonTypes.toMap().entries.map((entry) {
+                      return DropdownMenuItem(
+                        value: entry.key,
+                        child: Text(
+                          entry.value,
+                          overflow: TextOverflow.visible,
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      if (value != null) {
+                        context.read<CreatePostBloc>().add(
+                              ChangeLoanReasonEvent(value as LoanReasonTypes),
+                            );
+                      }
+                    },
+                    onSaved: (value) {
+                      if (value == null) return;
+                    },
                   );
-                }).toList(),
-                onChanged: (value) {
-                  if (value != null) {
-                    setLoanReason(value as LoanReasonTypes);
-                  }
-                },
-                onSaved: (value) {
-                  if (value == null) return;
                 },
               ),
               const SizedBox(height: 15),
@@ -196,7 +203,7 @@ class BorrowingForm extends StatelessWidget {
                 labelText: 'Mô tả lý do vay',
                 hintText: 'Mô tả lý do vay',
                 onSaved: (value) {
-                  borrowingLoanReason = value!.trim();
+                  // borrowingLoanReason = value!.trim();
                 },
                 validator: (value) =>
                     (value!.trim().isNotEmpty) ? null : 'Lý do không được rỗng',
