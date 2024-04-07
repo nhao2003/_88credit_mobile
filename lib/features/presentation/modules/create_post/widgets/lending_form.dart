@@ -6,6 +6,7 @@ import '../../../globalwidgets/base_textfield.dart';
 import 'base_row_text_dropdown.dart';
 import 'picker_images.dart';
 
+// ignore: must_be_immutable
 class LendingForm extends StatelessWidget {
   final bool isvisible;
   final GlobalKey<FormState> lendingFormKey;
