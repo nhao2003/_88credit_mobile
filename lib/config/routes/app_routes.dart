@@ -29,6 +29,8 @@ abstract class AppRoutes {
   // contract
   static const contract = '/contract';
 
+  static const request = '/request';
+
   static const createRequest = '/contract/createRequest';
   // request detail
   static const requestDetail = '/contract/request/:id';

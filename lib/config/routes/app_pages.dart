@@ -1,22 +1,24 @@
-import 'package:_88credit_mobile/config/routes/app_routes.dart';
-import 'package:_88credit_mobile/features/presentation/modules/account/screens/account_screen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/bottom_bar/bloc/bar_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/bottom_bar/bottom_bar_screen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/contract/bloc/contract/contract_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/contract/request/screens/contract_screen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/create_post/bloc/create_post_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/home/bloc/home_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/home/screens/home_screen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/login/screens/forgot_password_sceen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/login/screens/login_screen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/login/screens/register_screen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/login/screens/update_password_sceen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/post/bloc/post_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/post/screens/post_screen.dart';
-import 'package:_88credit_mobile/features/presentation/modules/post_detail/bloc/post_detail_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/post_detail/screens/post_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'app_routes.dart';
+import '../../features/presentation/modules/account/screens/account_screen.dart';
+import '../../features/presentation/modules/bottom_bar/bloc/bar_bloc.dart';
+import '../../features/presentation/modules/bottom_bar/bottom_bar_screen.dart';
+import '../../features/presentation/modules/contract/bloc/contract/contract_bloc.dart';
+import '../../features/presentation/modules/contract/bloc/request/request_bloc.dart';
+import '../../features/presentation/modules/contract/request/screens/contract_screen.dart';
+import '../../features/presentation/modules/contract/request/screens/request_tab_screen.dart';
+import '../../features/presentation/modules/create_post/bloc/create_post_bloc.dart';
+import '../../features/presentation/modules/home/bloc/home_bloc.dart';
+import '../../features/presentation/modules/home/screens/home_screen.dart';
+import '../../features/presentation/modules/login/screens/forgot_password_sceen.dart';
+import '../../features/presentation/modules/login/screens/login_screen.dart';
+import '../../features/presentation/modules/login/screens/register_screen.dart';
+import '../../features/presentation/modules/login/screens/update_password_sceen.dart';
+import '../../features/presentation/modules/post/bloc/post_bloc.dart';
+import '../../features/presentation/modules/post/screens/post_screen.dart';
+import '../../features/presentation/modules/post_detail/bloc/post_detail_bloc.dart';
+import '../../features/presentation/modules/post_detail/screens/post_detail_screen.dart';
 import '../../features/presentation/modules/account/bloc/account_bloc.dart';
 import '../../features/presentation/modules/create_post/screens/create_post_screen.dart';
 import '../../features/presentation/modules/error/screens/error_screen.dart';
@@ -85,6 +87,11 @@ class AppPages {
         path: AppRoutes.contract,
         page: const ContractScreen(),
         bloc: BlocProvider(create: (context) => ContractBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.request,
+        page: const RequestTabScreen(),
+        bloc: BlocProvider(create: (context) => RequestBloc()),
       ),
     ];
   }
