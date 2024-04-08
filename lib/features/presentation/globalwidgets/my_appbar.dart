@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../config/theme/app_color.dart';
 
-// ignore: must_be_immutable
 class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
-  MyAppbar({
+  const MyAppbar({
     required this.title,
     this.isShowBack = true,
     this.actions,
@@ -11,8 +10,8 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   });
 
   final String title;
-  bool? isShowBack;
-  List<Widget>? actions;
+  final bool? isShowBack;
+  final List<Widget>? actions;
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override

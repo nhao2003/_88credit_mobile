@@ -2,6 +2,8 @@ import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/features/presentation/modules/account/screens/account_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/bottom_bar/bloc/bar_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/bottom_bar/bottom_bar_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/contract/bloc/contract/contract_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/contract/request/screens/contract_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/create_post/bloc/create_post_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/home/bloc/home_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/home/screens/home_screen.dart';
@@ -78,6 +80,11 @@ class AppPages {
         path: AppRoutes.createPost,
         page: CreatePostScreen(),
         bloc: BlocProvider(create: (context) => CreatePostBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.contract,
+        page: const ContractScreen(),
+        bloc: BlocProvider(create: (context) => ContractBloc()),
       ),
     ];
   }
