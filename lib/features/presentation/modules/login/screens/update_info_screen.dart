@@ -85,7 +85,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
     emailUpdateInfoTextController.text = getEmail();
 
     return Scaffold(
-      appBar: MyAppbar(title: "Cập nhập thông tin"),
+      appBar: const MyAppbar(title: "Cập nhập thông tin"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(30),
         child: Form(

@@ -55,56 +55,61 @@ class _ApprovedRequestTabState extends State<ApprovedRequestTab> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: BlocBuilder<RequestBloc, RequestState>(
-        builder: (context, state) {
-          return RefreshIndicator(
-            onRefresh: refresh,
-            child: Column(
-              children: [
-                Expanded(
-                  child: state.status == RequestFetchStatus.loading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : state.requestsApproved.isEmpty
-                          ? Stack(
-                              children: <Widget>[
-                                ListView(),
-                                Center(
-                                  child: Text(
-                                    titleNull,
-                                    style: AppTextStyles.bold20
-                                        .copyWith(color: AppColors.green),
-                                  ),
-                                ),
-                              ],
-                            )
-                          : ListView.builder(
-                              controller: scrollController,
-                              itemCount: state.requestsApproved.length + 1,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                if (index < state.requestsApproved.length) {
-                                  return buildItem(
-                                      state.requestsApproved[index]);
-                                } else {
-                                  return state.hasMore
-                                      ? const Padding(
-                                          padding: EdgeInsets.all(12.0),
-                                          child: Center(
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        )
-                                      : const SizedBox(height: 20);
-                                }
-                              },
+      child: RefreshIndicator(
+        onRefresh: refresh,
+        child: Column(
+          children: [
+            Expanded(
+              child: BlocBuilder<RequestBloc, RequestState>(
+                builder: (context, state) {
+                  switch (state.status) {
+                    case RequestFetchStatus.loading:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case RequestFetchStatus.success:
+                      if (state.requestsApproved.isEmpty) {
+                        return Stack(
+                          children: <Widget>[
+                            ListView(),
+                            Center(
+                              child: Text(
+                                titleNull,
+                                style: AppTextStyles.bold20
+                                    .copyWith(color: AppColors.green),
+                              ),
                             ),
-                ),
-              ],
+                          ],
+                        );
+                      }
+                      return ListView.builder(
+                        controller: scrollController,
+                        itemCount: state.requestsApproved.length + 1,
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          if (index < state.requestsApproved.length) {
+                            return buildItem(state.requestsApproved[index]);
+                          } else {
+                            return state.hasMore
+                                ? const Padding(
+                                    padding: EdgeInsets.all(12.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                : const SizedBox(height: 20);
+                          }
+                        },
+                      );
+                    default:
+                      return const SizedBox();
+                  }
+                },
+              ),
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

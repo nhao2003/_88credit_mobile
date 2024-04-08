@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(
+      appBar: const MyAppbar(
         title: "Đăng nhập",
         isShowBack: false,
       ),
