@@ -2,7 +2,12 @@ import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../../config/theme/app_color.dart';
+import '../../../../globalwidgets/keep_page_alive.dart';
 import '../widgets/approved_request_tab.dart';
+import '../widgets/pending_request_tab.dart';
+import '../widgets/reject_request_tab.dart';
+import '../widgets/sent_request_tab.dart';
+import '../widgets/waiting_payment_request_tab.dart';
 
 class RequestTabScreen extends StatefulWidget {
   const RequestTabScreen({super.key});
@@ -76,16 +81,11 @@ class _RequestTabScreenState extends State<RequestTabScreen>
               physics: const NeverScrollableScrollPhysics(),
               controller: _tabController,
               children: const [
-                ApprovedRequestTab(),
-                Scaffold(),
-                Scaffold(),
-                Scaffold(),
-                Scaffold(),
-
-                // WaitingPaymentRequestTab(),
-                // PendingRequestTab(),
-                // SentRequestTab(),
-                // RejectRequestTab(),
+                KeepPageAlive(child: ApprovedRequestTab()),
+                KeepPageAlive(child: WaitingPaymentRequestTab()),
+                KeepPageAlive(child: PendingRequestTab()),
+                KeepPageAlive(child: SentRequestTab()),
+                KeepPageAlive(child: RejectRequestTab()),
               ],
             ),
           ),

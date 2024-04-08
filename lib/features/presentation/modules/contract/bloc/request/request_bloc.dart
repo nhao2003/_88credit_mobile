@@ -119,25 +119,29 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     hasMore = true;
     emit(state.copyWith(
       status: RequestFetchStatus.loading,
-      requestsApproved: [],
       hasMore: hasMore,
     ));
 
     final Pair<int, List<LoanRequestEntity>> result;
     switch (event.requestStatusType) {
       case RequestStatusTypes.approved:
+        emit(state.copyWith(requestsApproved: []));
         result = await _getRequestApproved();
         break;
       case RequestStatusTypes.pending:
+        emit(state.copyWith(requestsPending: []));
         result = await _getRequestPending();
         break;
       case RequestStatusTypes.rejected:
+        emit(state.copyWith(requestsRejected: []));
         result = await _getRequestRejected();
         break;
       case RequestStatusTypes.sent:
+        emit(state.copyWith(requestsSent: []));
         result = await _getRequestSent();
         break;
       case RequestStatusTypes.waitingPayment:
+        emit(state.copyWith(requestsWaitingPayment: []));
         result = await _getRequestWaitingPayment();
         break;
     }
@@ -146,37 +150,21 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     final newPosts = result.second;
     numOfPage == 1 ? hasMore = false : hasMore = true;
 
+    emit(state.copyWith(
+      status: RequestFetchStatus.success,
+      hasMore: hasMore,
+    ));
     switch (event.requestStatusType) {
       case RequestStatusTypes.approved:
-        return emit(state.copyWith(
-          status: RequestFetchStatus.success,
-          requestsApproved: newPosts,
-          hasMore: hasMore,
-        ));
+        return emit(state.copyWith(requestsApproved: newPosts));
       case RequestStatusTypes.pending:
-        return emit(state.copyWith(
-          status: RequestFetchStatus.success,
-          requestsApproved: newPosts,
-          hasMore: hasMore,
-        ));
+        return emit(state.copyWith(requestsPending: newPosts));
       case RequestStatusTypes.rejected:
-        return emit(state.copyWith(
-          status: RequestFetchStatus.success,
-          requestsApproved: newPosts,
-          hasMore: hasMore,
-        ));
+        return emit(state.copyWith(requestsRejected: newPosts));
       case RequestStatusTypes.sent:
-        return emit(state.copyWith(
-          status: RequestFetchStatus.success,
-          requestsApproved: newPosts,
-          hasMore: hasMore,
-        ));
+        return emit(state.copyWith(requestsSent: newPosts));
       case RequestStatusTypes.waitingPayment:
-        return emit(state.copyWith(
-          status: RequestFetchStatus.success,
-          requestsApproved: newPosts,
-          hasMore: hasMore,
-        ));
+        return emit(state.copyWith(requestsWaitingPayment: newPosts));
     }
   }
 
@@ -214,37 +202,22 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
 
       numOfPage = result.first;
       hasMore = true;
+      emit(state.copyWith(
+        status: RequestFetchStatus.success,
+        hasMore: hasMore,
+      ));
       switch (event.requestStatusType) {
         case RequestStatusTypes.approved:
-          return emit(state.copyWith(
-            status: RequestFetchStatus.success,
-            requestsApproved: state.requestsApproved,
-            hasMore: hasMore,
-          ));
+          return emit(state.copyWith(requestsApproved: state.requestsApproved));
         case RequestStatusTypes.pending:
-          return emit(state.copyWith(
-            status: RequestFetchStatus.success,
-            requestsPending: state.requestsPending,
-            hasMore: hasMore,
-          ));
+          return emit(state.copyWith(requestsPending: state.requestsPending));
         case RequestStatusTypes.rejected:
-          return emit(state.copyWith(
-            status: RequestFetchStatus.success,
-            requestsRejected: state.requestsRejected,
-            hasMore: hasMore,
-          ));
+          return emit(state.copyWith(requestsRejected: state.requestsRejected));
         case RequestStatusTypes.sent:
-          return emit(state.copyWith(
-            status: RequestFetchStatus.success,
-            requestsSent: state.requestsSent,
-            hasMore: hasMore,
-          ));
+          return emit(state.copyWith(requestsSent: state.requestsSent));
         case RequestStatusTypes.waitingPayment:
           return emit(state.copyWith(
-            status: RequestFetchStatus.success,
-            requestsWaitingPayment: state.requestsWaitingPayment,
-            hasMore: hasMore,
-          ));
+              requestsWaitingPayment: state.requestsWaitingPayment));
       }
     } else {
       hasMore = false;
