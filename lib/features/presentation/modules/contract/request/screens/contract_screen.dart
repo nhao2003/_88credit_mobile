@@ -1,8 +1,10 @@
+import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../config/theme/app_color.dart';
 import '../../../../../../config/theme/text_styles.dart';
 import '../../../../globalwidgets/my_tab_appbar.dart';
+import 'request_tab_screen.dart';
 
 class ContractScreen extends StatelessWidget {
   const ContractScreen({super.key});
@@ -21,15 +23,15 @@ class ContractScreen extends StatelessWidget {
         body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            // RequestTabScreen(),
+            RequestTabScreen(),
             // ContractTabScreen(),
-            Scaffold(),
+            // Scaffold(),
             Scaffold(),
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            // controller.navToCreateRequest();
+            Navigator.of(context).pushNamed(AppRoutes.createRequest);
           },
           backgroundColor: AppColors.green,
           extendedPadding:
