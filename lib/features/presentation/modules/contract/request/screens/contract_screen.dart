@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../config/theme/app_color.dart';
 import '../../../../../../config/theme/text_styles.dart';
 import '../../../../globalwidgets/my_tab_appbar.dart';
+import '../../contract/screens/contract_tab_screen.dart';
 import 'request_tab_screen.dart';
 
 class ContractScreen extends StatelessWidget {
@@ -24,9 +25,7 @@ class ContractScreen extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           children: [
             RequestTabScreen(),
-            // ContractTabScreen(),
-            // Scaffold(),
-            Scaffold(),
+            ContractTabScreen(),
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
