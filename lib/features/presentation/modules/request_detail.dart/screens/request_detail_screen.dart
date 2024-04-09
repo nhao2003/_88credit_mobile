@@ -1,6 +1,8 @@
 import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
@@ -13,6 +15,7 @@ import '../../../globalwidgets/header_title.dart';
 import '../../../globalwidgets/image_card.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../../post_detail/widgets/description_card.dart';
+import '../bloc/request_detail_bloc.dart';
 import '../widgets/credit_card.dart';
 import '../widgets/dialog_cancel.dart';
 import '../widgets/loan_amount_card.dart';
@@ -30,7 +33,6 @@ class RequestDetailScreen extends StatefulWidget {
 
 class _RequestDetailScreenState extends State<RequestDetailScreen> {
   LoanRequestEntity post = const LoanRequestEntity();
-  LoanContractRequestStatus status = LoanContractRequestStatus.pending;
 
   void showCommentForm(BuildContext context) {
     showDialog(
@@ -43,14 +45,9 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void copyToClipboard(String text) async {
+  void copyToClipboard(String text, BuildContext context) async {
     await Clipboard.setData(ClipboardData(text: text));
-    if (!mounted) return;
+    if (!context.mounted) return;
     context.snackBar(
       "Đã sao chép",
     );
@@ -59,7 +56,8 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
   @override
   Widget build(BuildContext context) {
     post = ModalRoute.of(context)!.settings.arguments as LoanRequestEntity;
-    status = post.status!;
+    context.read<RequestDetailBloc>().add(ChangeRequestStatus(post.status!));
+
     return Scaffold(
       appBar: MyAppbar(
         title: "Chi tiết yêu cầu",
@@ -117,7 +115,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                   BankFormat.formatCardNumber(post.senderBankCard!.cardNumber!),
               logoBank: post.senderBankCard!.bank!.logo,
               hanleChooseCard: () {
-                copyToClipboard(post.senderBankCard!.cardNumber!);
+                copyToClipboard(post.senderBankCard!.cardNumber!, context);
               },
             ),
             const SizedBox(height: 20),
@@ -155,48 +153,53 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                 ],
               ),
             const SizedBox(height: 20),
-            // Obx(
-            //   () => controller.isConfirming.value
-            //       ? const Center(child: CircularProgressIndicator())
-            //       : status.value == LoanContractRequestStatus.pending
-            //           ? Row(
-            //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //               children: [
-            //                 BaseButton(
-            //                   title: "Từ chối",
-            //                   colorButton: AppColors.red,
-            //                   width: 43.wp,
-            //                   isLoading: isLoading,
-            //                   onClick: () {
-            //                     showCommentForm(context);
-            //                   },
-            //                 ),
-            //                 BaseButton(
-            //                   title: "Đồng ý",
-            //                   width: 43.wp,
-            //                   isLoading: isLoading,
-            //                   onClick: () async {
-            //                     controller.confirmRequest(post).then((value) {
-            //                       status.value = LoanContractRequestStatus
-            //                           .waitingForPayment;
-            //                       setState(() {});
-            //                     });
-            //                   },
-            //                 ),
-            //               ],
-            //             )
-            //           : status.value ==
-            //                   LoanContractRequestStatus.waitingForPayment
-            //               ? BaseButton(
-            //                   title: "Thanh toán",
-            //                   width: 100.wp,
-            //                   isLoading: isLoading,
-            //                   onClick: () async {
-            //                     await controller.payContractFee(post);
-            //                   },
-            //                 )
-            //               : const SizedBox(),
-            // )
+
+            // Button
+            BlocBuilder<RequestDetailBloc, RequestDetailState>(
+              builder: (context, state) {
+                if (state.confirmStatus == ConfirmStatus.loading) {
+                  return const CircularProgressIndicator();
+                }
+                if (state.requestStatus == LoanContractRequestStatus.pending) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      BaseButton(
+                        title: "Từ chối",
+                        colorButton: AppColors.red,
+                        width: 43.wp,
+                        isLoading: state.rejectStatus == RejectStatus.loading,
+                        onClick: () {
+                          showCommentForm(context);
+                        },
+                      ),
+                      BaseButton(
+                        title: "Đồng ý",
+                        width: 43.wp,
+                        isLoading: state.confirmStatus == ConfirmStatus.loading,
+                        onClick: () async {
+                          context
+                              .read<RequestDetailBloc>()
+                              .add(ConfirmRequest(post));
+                        },
+                      ),
+                    ],
+                  );
+                }
+                if (state.requestStatus ==
+                    LoanContractRequestStatus.waitingForPayment) {
+                  BaseButton(
+                    title: "Thanh toán",
+                    width: 100.wp,
+                    isLoading: state.paymentStatus == PaymentStatus.loading,
+                    onClick: () async {
+                      // await controller.payContractFee(post);
+                    },
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
           ],
         ),
       ),

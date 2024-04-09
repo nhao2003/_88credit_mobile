@@ -23,7 +23,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(),
+      getRequests(LoanContractRequestStatus.paid),
     );
   }
 
@@ -31,7 +31,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(),
+      getRequests(LoanContractRequestStatus.pending),
     );
   }
 
@@ -39,7 +39,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(),
+      getRequests(LoanContractRequestStatus.rejected),
     );
   }
 
@@ -47,7 +47,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(),
+      getRequests(LoanContractRequestStatus.pending),
     );
   }
 
@@ -55,16 +55,16 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(),
+      getRequests(LoanContractRequestStatus.waitingForPayment),
     );
   }
 
-  List<LoanRequestEntity> getRequests() {
+  List<LoanRequestEntity> getRequests(LoanContractRequestStatus? status) {
     return List.generate(
       5,
       (index) => LoanRequestEntity(
         id: index.toString(),
-        status: LoanContractRequestStatus.paid,
+        status: status,
         sender: user,
         receiver: user,
         description: 'Description $index',

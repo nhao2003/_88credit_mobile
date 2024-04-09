@@ -59,7 +59,7 @@ class _BaseListRequestsState extends State<BaseListRequests> {
       case RequestStatusTypes.pending:
         return state.requestsPending;
       case RequestStatusTypes.rejected:
-        return state.requestsApproved;
+        return state.requestsRejected;
       case RequestStatusTypes.sent:
         return state.requestsSent;
       case RequestStatusTypes.waitingPayment:

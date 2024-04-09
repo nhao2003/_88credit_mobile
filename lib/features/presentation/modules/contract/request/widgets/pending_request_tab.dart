@@ -17,7 +17,7 @@ class PendingRequestTab extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: BaseListRequests(
         titleNull: "Chưa có tin đã đăng",
-        requestType: RequestStatusTypes.approved,
+        requestType: RequestStatusTypes.pending,
       ),
     );
   }
