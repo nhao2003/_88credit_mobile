@@ -1,6 +1,8 @@
+import 'package:_88credit_mobile/features/domain/entities/bank_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../../../../core/resources/pair.dart';
+import '../../../../../domain/entities/bank.dart';
 import '../../../../../domain/entities/loan_request.dart';
 import '../../../../../domain/entities/user.dart';
 import '../../../../../domain/enums/loan_contract_request_status.dart';
@@ -82,14 +84,35 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
             'https://static.ttbc-hcm.gov.vn/images/upload/lienphuong/04102021//cccd_bodm.jpg',
         senderBankCardId: '1',
         receiverBankCardId: '2',
-        senderBankCard: null,
-        receiverBankCard: null,
+        senderBankCard: bankCard,
+        receiverBankCard: bankCard,
         rejectedReason: null,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
       ),
     );
   }
+
+  BankCardEntity get bankCard => BankCardEntity(
+        id: '1',
+        isPrimary: true,
+        userId: '1',
+        bankId: '1',
+        cardNumber: '1234567890',
+        branch: 'Branch',
+        bank: bank,
+        createdAt: DateTime.now(),
+        deletedAt: null,
+      );
+  BankEntity get bank => const BankEntity(
+        id: '1',
+        name: 'Bank',
+        shortName: 'Bank',
+        logo:
+            'https://baobitrungthanh.com/wp-content/uploads/2024/01/logo-ngan-hang-agribank-40.jpg',
+        code: '123',
+        bin: '123',
+      );
 
   UserEntity get user => UserEntity(
         id: '1',

@@ -1,3 +1,5 @@
+import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/bloc/request_detail_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/screens/request_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'app_routes.dart';
@@ -92,6 +94,11 @@ class AppPages {
         path: AppRoutes.request,
         page: const RequestTabScreen(),
         bloc: BlocProvider(create: (context) => RequestBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.requestDetail,
+        page: const RequestDetailScreen(),
+        bloc: BlocProvider(create: (context) => RequestDetailBloc()),
       ),
     ];
   }

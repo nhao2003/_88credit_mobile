@@ -135,6 +135,9 @@ dependencies:
   # loading
   flutter_easyloading: ^3.0.5
 
+  # snackbar
+  animated_snack_bar: ^0.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

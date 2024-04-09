@@ -1,3 +1,4 @@
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 
 extension BuildContextX on BuildContext {
@@ -9,4 +10,17 @@ extension BuildContextX on BuildContext {
 
   // Để lấy size của safe area (context.padding)
   EdgeInsets get padding => MediaQuery.of(this).padding;
+
+  // show SnackBar
+
+  void snackBar(String message,
+      {AnimatedSnackBarType? type = AnimatedSnackBarType.success}) {
+    return AnimatedSnackBar.material(
+      "Đã copy",
+      type: AnimatedSnackBarType.success,
+      animationDuration: const Duration(milliseconds: 800),
+      duration: const Duration(seconds: 2),
+      animationCurve: Curves.bounceOut,
+    ).show(this);
+  }
 }
