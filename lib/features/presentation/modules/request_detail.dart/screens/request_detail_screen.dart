@@ -56,6 +56,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
   @override
   Widget build(BuildContext context) {
     post = ModalRoute.of(context)!.settings.arguments as LoanRequestEntity;
+    print(post.status!);
     context.read<RequestDetailBloc>().add(ChangeRequestStatus(post.status!));
 
     return Scaffold(
@@ -157,7 +158,9 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
             // Button
             BlocBuilder<RequestDetailBloc, RequestDetailState>(
               builder: (context, state) {
-                if (state.confirmStatus == ConfirmStatus.loading) {
+                if (state.confirmStatus == ConfirmStatus.loading ||
+                    state.rejectStatus == RejectStatus.loading ||
+                    state.paymentStatus == PaymentStatus.loading) {
                   return const CircularProgressIndicator();
                 }
                 if (state.requestStatus == LoanContractRequestStatus.pending) {
@@ -188,7 +191,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                 }
                 if (state.requestStatus ==
                     LoanContractRequestStatus.waitingForPayment) {
-                  BaseButton(
+                  return BaseButton(
                     title: "Thanh toán",
                     width: 100.wp,
                     isLoading: state.paymentStatus == PaymentStatus.loading,
