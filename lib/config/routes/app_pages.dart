@@ -1,3 +1,5 @@
+import 'package:_88credit_mobile/features/presentation/modules/create_request.dart/bloc/create_request_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/create_request.dart/screens/create_request_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/bloc/request_detail_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/screens/request_detail_screen.dart';
 import 'package:flutter/material.dart';
@@ -99,6 +101,11 @@ class AppPages {
         path: AppRoutes.requestDetail,
         page: const RequestDetailScreen(),
         bloc: BlocProvider(create: (context) => RequestDetailBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.createRequest,
+        page: const CreateRequestScreen(),
+        bloc: BlocProvider(create: (context) => CreateRequestBloc()),
       ),
     ];
   }

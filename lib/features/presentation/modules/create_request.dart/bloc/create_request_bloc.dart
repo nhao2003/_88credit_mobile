@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:_88credit_mobile/features/domain/entities/bank_card.dart';
 import 'package:_88credit_mobile/features/domain/entities/user.dart';
 import 'package:bloc/bloc.dart';
@@ -13,6 +15,23 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
   CreateRequestBloc() : super(const CreateRequestState()) {
     on<CreateRequestEvent>((event, emit) {
       // TODO: implement event handler
+    });
+    on<ChangeReceiver>((event, emit) {
+      emit(state.copyWith(receiver: event.receiver));
+    });
+    on<GetPrimaryBankCard>((event, emit) {});
+    on<PostRequest>((event, emit) {});
+    on<ChangePortrait>((event, emit) {
+      emit(state.copyWith(portrait: event.portrait));
+    });
+    on<ChangeIdCardFrontPhoto>((event, emit) {
+      emit(state.copyWith(idCardFrontPhoto: event.idCardFrontPhoto));
+    });
+    on<ChangeIdCardBackPhoto>((event, emit) {
+      emit(state.copyWith(idCardBackPhoto: event.idCardBackPhoto));
+    });
+    on<ChangeVideo>((event, emit) {
+      emit(state.copyWith(video: event.video));
     });
   }
 
