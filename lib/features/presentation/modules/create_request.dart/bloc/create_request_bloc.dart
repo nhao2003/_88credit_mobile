@@ -1,13 +1,38 @@
+import 'package:_88credit_mobile/features/domain/entities/bank_card.dart';
+import 'package:_88credit_mobile/features/domain/entities/user.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+
+import '../../../../domain/enums/role.dart';
+import '../../../../domain/enums/user_status.dart';
 
 part 'create_request_event.dart';
 part 'create_request_state.dart';
 
 class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
-  CreateRequestBloc() : super(CreateRequestInitial()) {
+  CreateRequestBloc() : super(const CreateRequestState()) {
     on<CreateRequestEvent>((event, emit) {
       // TODO: implement event handler
     });
   }
+
+  UserEntity receiverDefault = UserEntity(
+    id: "3b05eb4a-346f-481c-a682-58e24e06d32e",
+    status: UserStatus.verified,
+    isIdentityVerified: true,
+    role: Role.user,
+    email: "user3@example.com",
+    address: null,
+    firstName: "Alex",
+    lastName: "Johnson",
+    gender: false,
+    avatar: "https://picsum.photos/200/300?random=4",
+    dob: null,
+    phone: "123456789",
+    lastActiveAt: DateTime.parse("2023-12-06T01:53:30.033Z"),
+    createdAt: DateTime.parse("2023-12-06T01:53:30.033Z"),
+    updatedAt: null,
+    bannedUtil: null,
+    banReason: null,
+  );
 }

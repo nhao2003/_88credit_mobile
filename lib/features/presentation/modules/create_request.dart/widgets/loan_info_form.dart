@@ -7,10 +7,29 @@ import '../../../../../config/theme/text_styles.dart';
 import '../../../globalwidgets/base_dropdown_button.dart';
 import '../../../globalwidgets/base_textfield.dart';
 
+// ignore: must_be_immutable
 class LoanInfoForm extends StatelessWidget {
   final bool isvisible;
 
-  LoanInfoForm({required this.isvisible, super.key});
+  final TextEditingController loanAmountTextController;
+  final TextEditingController interestRateTextController;
+  final TextEditingController overdueInterestRateTextController;
+  final TextEditingController tenureMonthsTextController;
+  LoanReasonTypes loanReasonType;
+  final TextEditingController loanReasonTextController;
+  final TextEditingController discriptionTextController;
+
+  LoanInfoForm({
+    required this.isvisible,
+    required this.loanAmountTextController,
+    required this.interestRateTextController,
+    required this.overdueInterestRateTextController,
+    required this.tenureMonthsTextController,
+    required this.loanReasonType,
+    required this.loanReasonTextController,
+    required this.discriptionTextController,
+    super.key,
+  });
 
   final FocusNode _discriptionFocusNode = FocusNode();
   final FocusNode _moneyFocusNode = FocusNode();
@@ -18,6 +37,12 @@ class LoanInfoForm extends StatelessWidget {
   final FocusNode _overInterestFocusNode = FocusNode();
   final FocusNode _timeFocusNode = FocusNode();
   final FocusNode _loanReasonFocusNode = FocusNode();
+
+  List<String> timeTypes = ["Tháng", "Năm"];
+  String timeValue = 'Tháng';
+  void setTimeValue(String? value) {
+    timeValue = value!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +72,14 @@ class LoanInfoForm extends StatelessWidget {
               nexFocusNode: _moneyFocusNode,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
-              controller: controller.discriptionTextController,
+              controller: discriptionTextController,
               labelText: 'Mô tả yêu cầu vay',
               hintText: 'Mô tả yêu cầu vay',
               onSaved: (value) {
-                controller.discription = value!.trim();
+                // discription = value!.trim();
               },
-              validator: (value) => (value!.trim().isNotEmpty)
-                  ? null
-                  : 'Yêu cầu không được rỗng',
+              validator: (value) =>
+                  (value!.trim().isNotEmpty) ? null : 'Yêu cầu không được rỗng',
             ),
             const SizedBox(height: 5),
             Text(
@@ -69,19 +93,18 @@ class LoanInfoForm extends StatelessWidget {
               maxLines: 1,
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.next,
-              controller: controller.loanAmountTextController,
+              controller: loanAmountTextController,
               labelText: 'Số tiền cần vay (VNĐ)',
               hintText: "Nhập số tiền mong muốn",
               onSaved: (value) {
-                try {
-                  controller.loanAmount = double.parse(value!.trim());
-                } catch (e) {
-                  controller.tenureMonths = 0;
-                }
+                // try {
+                //   loanAmount = double.parse(value!.trim());
+                // } catch (e) {
+                //   tenureMonths = 0;
+                // }
               },
-              validator: (value) => (value!.trim().isNotEmpty)
-                  ? null
-                  : 'Số tiền không được rỗng',
+              validator: (value) =>
+                  (value!.trim().isNotEmpty) ? null : 'Số tiền không được rỗng',
             ),
             const SizedBox(height: 10),
             Text(
@@ -95,16 +118,16 @@ class LoanInfoForm extends StatelessWidget {
               textInputAction: TextInputAction.next,
               labelText: 'Lãi suất mong muốn',
               hintText: "Nhập lãi suất mong muốn",
-              controller: controller.interestRateTextController,
+              controller: interestRateTextController,
               onSaved: (value) {
-                try {
-                  controller.interestRate = double.parse(value!.trim());
-                } catch (e) {
-                  controller.tenureMonths = 0;
-                }
+                // try {
+                //   interestRate = double.parse(value!.trim());
+                // } catch (e) {
+                //   tenureMonths = 0;
+                // }
               },
-              timeValue: controller.timeValue.value,
-              onChangeTimeValue: controller.setTimeValue,
+              timeValue: timeValue,
+              onChangeTimeValue: setTimeValue,
               validator: (value) => (value!.trim().isNotEmpty)
                   ? null
                   : 'Lãi suất không được rỗng',
@@ -121,16 +144,16 @@ class LoanInfoForm extends StatelessWidget {
               textInputAction: TextInputAction.next,
               labelText: 'Lãi suất quá hạn',
               hintText: "Nhập lãi suất quá hạn",
-              controller: controller.overdueInterestRateTextController,
+              controller: overdueInterestRateTextController,
               onSaved: (value) {
-                try {
-                  controller.overdueInterestRate = double.parse(value!.trim());
-                } catch (e) {
-                  controller.tenureMonths = 0;
-                }
+                // try {
+                //   overdueInterestRate = double.parse(value!.trim());
+                // } catch (e) {
+                //   tenureMonths = 0;
+                // }
               },
-              timeValue: controller.timeValue.value,
-              onChangeTimeValue: controller.setTimeValue,
+              timeValue: timeValue,
+              onChangeTimeValue: setTimeValue,
               validator: (value) => (value!.trim().isNotEmpty)
                   ? null
                   : 'Lãi suất quá hạn không được rỗng',
@@ -147,19 +170,18 @@ class LoanInfoForm extends StatelessWidget {
               textInputAction: TextInputAction.done,
               labelText: 'Kỳ hạn mong muốn',
               hintText: "Nhập kỳ hạn mong muốn",
-              controller: controller.tenureMonthsTextController,
+              controller: tenureMonthsTextController,
               onSaved: (value) {
-                try {
-                  controller.tenureMonths = int.parse(value!.trim());
-                } catch (e) {
-                  controller.tenureMonths = 0;
-                }
+                // try {
+                //   tenureMonths = int.parse(value!.trim());
+                // } catch (e) {
+                //   tenureMonths = 0;
+                // }
               },
-              timeValue: controller.timeValue.value,
-              onChangeTimeValue: controller.setTimeValue,
-              validator: (value) => (value!.trim().isNotEmpty)
-                  ? null
-                  : 'Kỳ hạn không được rỗng',
+              timeValue: timeValue,
+              onChangeTimeValue: setTimeValue,
+              validator: (value) =>
+                  (value!.trim().isNotEmpty) ? null : 'Kỳ hạn không được rỗng',
             ),
             const SizedBox(height: 10),
             Text(
@@ -170,7 +192,7 @@ class LoanInfoForm extends StatelessWidget {
             BaseDropdownButton(
               title: "Loại lý do vay",
               hint: "Chọn loại lý do vay",
-              value: controller.loanReasonType.value,
+              value: loanReasonType,
               items: LoanReasonTypes.toMap().entries.map((entry) {
                 return DropdownMenuItem(
                   value: entry.key,
@@ -182,7 +204,8 @@ class LoanInfoForm extends StatelessWidget {
               }).toList(),
               onChanged: (value) {
                 if (value != null) {
-                  controller.setLoanReason(value as LoanReasonTypes);
+                  // setLoanReason(value as LoanReasonTypes);
+                  loanReasonType = value as LoanReasonTypes;
                 }
               },
               onSaved: (value) {
@@ -197,15 +220,14 @@ class LoanInfoForm extends StatelessWidget {
               focusNode: _loanReasonFocusNode,
               keyboardType: TextInputType.text,
               textInputAction: TextInputAction.done,
-              controller: controller.loanReasonTextController,
+              controller: loanReasonTextController,
               labelText: 'Mô tả lý do vay',
               hintText: 'Mô tả lý do vay',
               onSaved: (value) {
-                controller.loanReason = value!.trim();
+                // loanReason = value!.trim();
               },
-              validator: (value) => (value!.trim().isNotEmpty)
-                  ? null
-                  : 'Lý do không được rỗng',
+              validator: (value) =>
+                  (value!.trim().isNotEmpty) ? null : 'Lý do không được rỗng',
             ),
           ],
         ),

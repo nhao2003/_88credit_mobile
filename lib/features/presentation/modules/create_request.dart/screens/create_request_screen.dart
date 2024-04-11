@@ -4,6 +4,10 @@ import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
+import '../../../../domain/entities/user.dart';
+import '../../../../domain/enums/loan_reason_types.dart';
+import '../../../../domain/enums/role.dart';
+import '../../../../domain/enums/user_status.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../../request_detail.dart/widgets/credit_card.dart';
 import '../../request_detail.dart/widgets/user_card.dart';
@@ -18,45 +22,51 @@ class CreateRequestScreen extends StatefulWidget {
 }
 
 class _CreateRequestScreenState extends State<CreateRequestScreen> {
+  // create Request
+  final requestFormKey = GlobalKey<FormState>();
+
   @override
   void initState() {
-    if (Get.arguments != null) {
-      controller.receiver.value = Get.arguments;
-    }
-    controller.getPrimaryBankCard();
     super.initState();
   }
 
+  final loanAmountTextController = TextEditingController();
+  final interestRateTextController = TextEditingController();
+  final overdueInterestRateTextController = TextEditingController();
+  final tenureMonthsTextController = TextEditingController();
+  final LoanReasonTypes loanReasonType = LoanReasonTypes.other;
+  final loanReasonTextController = TextEditingController();
+  final discriptionTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      receiver = ModalRoute.of(context)!.settings.arguments as UserEntity;
+    }
     return Scaffold(
       appBar: const MyAppbar(title: "Tạo yêu cầu vay"),
       body: ListView(
         children: [
           Form(
-            key: controller.requestFormKey,
+            key: requestFormKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                Obx(
-                  () => Padding(
-                    padding:
-                        const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: UserCard(
-                      title: "Người cho vay",
-                      name: controller.receiver.value.fullName,
-                      avatar: controller.receiver.value.avatar,
-                      buttonText: "Thay đổi",
-                      navToProfile: () {
-                        Navigator.of(context).pushNamed(AppRoutes.changeUser);
-                      },
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                  child: UserCard(
+                    title: "Người cho vay",
+                    name: receiver.fullName,
+                    avatar: receiver.avatar,
+                    buttonText: "Thay đổi",
+                    navToProfile: () {
+                      Navigator.of(context).pushNamed(AppRoutes.changeUser);
+                    },
                   ),
                 ),
 
-                Obx(
-                  () => Padding(
+                Padding(
                     padding:
                         const EdgeInsets.only(left: 20, right: 20, top: 10),
                     child: controller.isGetingPrimaryBankCard.value
@@ -102,8 +112,6 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
                                 },
                                 buttonText: "Đổi thẻ",
                               ),
-                  ),
-                ),
                 // Thong tin bai dang
                 LoanInfoForm(
                   isvisible: true,

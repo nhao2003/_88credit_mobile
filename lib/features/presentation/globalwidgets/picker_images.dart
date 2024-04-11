@@ -7,6 +7,7 @@ import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import '../../../config/theme/app_color.dart';
 import '../../../config/values/asset_image.dart';
 
+// ignore: must_be_immutable
 class PickerImage extends StatefulWidget {
   PickerImage({
     required this.imageFile,

@@ -6,3 +6,12 @@ sealed class CreateRequestEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class ChangeReceiver extends CreateRequestEvent {
+  final UserEntity receiver;
+
+  const ChangeReceiver(this.receiver);
+
+  @override
+  List<Object> get props => [receiver];
+}

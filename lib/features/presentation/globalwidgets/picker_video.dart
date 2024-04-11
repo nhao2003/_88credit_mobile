@@ -8,6 +8,7 @@ import '../../../config/theme/app_color.dart';
 import '../../../config/theme/text_styles.dart';
 import '../../../config/values/asset_image.dart';
 
+// ignore: must_be_immutable
 class PickerVideo extends StatefulWidget {
   PickerVideo({
     required this.videoFile,
