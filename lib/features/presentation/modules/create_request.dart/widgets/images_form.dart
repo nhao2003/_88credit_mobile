@@ -15,8 +15,6 @@ class ImagesForm extends StatelessWidget {
 
   ImagesForm({required this.isvisible, super.key});
 
-  // hinh anh
-
   // portrait
   final ImagePicker _picker = ImagePicker();
 
@@ -51,6 +49,10 @@ class ImagesForm extends StatelessWidget {
     return File(pickedImages!.path);
   }
 
+  void callEvent(BuildContext context, CreateRequestEvent event) {
+    context.read<CreateRequestBloc>().add(event);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -77,17 +79,16 @@ class ImagesForm extends StatelessWidget {
                   imageFile: state.portrait,
                   imgFromCamera: () {
                     imgFromCamera().then((value) {
-                      context.read<CreateRequestBloc>().add(
-                            ChangePortrait(value),
-                          );
+                      callEvent(context, ChangePortrait(value));
                     });
                   },
                   imgFromGallery: () {
                     imgFromGallery().then((value) {
-                      context.read<CreateRequestBloc>().add(
-                            ChangePortrait(value),
-                          );
+                      callEvent(context, ChangePortrait(value));
                     });
+                  },
+                  deleteFile: () {
+                    callEvent(context, const ChangePortrait(null));
                   },
                 ),
                 const SizedBox(height: 10),
@@ -100,17 +101,16 @@ class ImagesForm extends StatelessWidget {
                   imageFile: state.idCardFrontPhoto,
                   imgFromCamera: () {
                     imgFromCamera().then((value) {
-                      context.read<CreateRequestBloc>().add(
-                            ChangeIdCardFrontPhoto(value),
-                          );
+                      callEvent(context, ChangeIdCardFrontPhoto(value));
                     });
                   },
                   imgFromGallery: () {
                     imgFromGallery().then((value) {
-                      context.read<CreateRequestBloc>().add(
-                            ChangeIdCardFrontPhoto(value),
-                          );
+                      callEvent(context, ChangeIdCardFrontPhoto(value));
                     });
+                  },
+                  deleteFile: () {
+                    callEvent(context, const ChangeIdCardFrontPhoto(null));
                   },
                 ),
                 const SizedBox(height: 5),
@@ -123,17 +123,16 @@ class ImagesForm extends StatelessWidget {
                   imageFile: state.idCardBackPhoto,
                   imgFromCamera: () {
                     imgFromCamera().then((value) {
-                      context.read<CreateRequestBloc>().add(
-                            ChangeIdCardBackPhoto(value),
-                          );
+                      callEvent(context, ChangeIdCardBackPhoto(value));
                     });
                   },
                   imgFromGallery: () {
                     imgFromGallery().then((value) {
-                      context.read<CreateRequestBloc>().add(
-                            ChangeIdCardBackPhoto(value),
-                          );
+                      callEvent(context, ChangeIdCardBackPhoto(value));
                     });
+                  },
+                  deleteFile: () {
+                    callEvent(context, const ChangeIdCardBackPhoto(null));
                   },
                 ),
                 const SizedBox(height: 5),
@@ -146,17 +145,16 @@ class ImagesForm extends StatelessWidget {
                   videoFile: state.video,
                   videoFromCamera: () async {
                     await videoFromCamera().then((value) {
-                      context.read<CreateRequestBloc>().add(
-                            ChangeVideo(value),
-                          );
+                      callEvent(context, ChangeVideo(value));
                     });
                   },
                   videoFromGallery: () async {
                     await videoFromGallery().then((value) {
-                      context.read<CreateRequestBloc>().add(
-                            ChangeVideo(value),
-                          );
+                      callEvent(context, ChangeVideo(value));
                     });
+                  },
+                  deleteFile: () {
+                    callEvent(context, const ChangeVideo(null));
                   },
                 ),
               ],

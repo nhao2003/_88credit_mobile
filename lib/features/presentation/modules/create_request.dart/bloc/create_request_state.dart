@@ -31,10 +31,10 @@ final class CreateRequestState extends Equatable {
     GetPrimaryBankCardStatus? getPrimaryBankCardStatus,
     BankCardEntity? primaryBankCard,
     CreateRequestStatus? status,
-    File? portrait,
-    File? idCardFrontPhoto,
-    File? idCardBackPhoto,
-    File? video,
+    ValueGetter<File?>? portrait,
+    ValueGetter<File?>? idCardFrontPhoto,
+    ValueGetter<File?>? idCardBackPhoto,
+    ValueGetter<File?>? video,
   }) {
     return CreateRequestState(
       receiver: receiver ?? this.receiver,
@@ -42,10 +42,12 @@ final class CreateRequestState extends Equatable {
           getPrimaryBankCardStatus ?? this.getPrimaryBankCardStatus,
       primaryBankCard: primaryBankCard ?? this.primaryBankCard,
       createRequestStatus: status ?? createRequestStatus,
-      portrait: portrait ?? this.portrait,
-      idCardFrontPhoto: idCardFrontPhoto ?? this.idCardFrontPhoto,
-      idCardBackPhoto: idCardBackPhoto ?? this.idCardBackPhoto,
-      video: video ?? this.video,
+      portrait: portrait != null ? portrait() : this.portrait,
+      idCardFrontPhoto:
+          idCardFrontPhoto != null ? idCardFrontPhoto() : this.idCardFrontPhoto,
+      idCardBackPhoto:
+          idCardBackPhoto != null ? idCardBackPhoto() : this.idCardBackPhoto,
+      video: video != null ? video() : this.video,
     );
   }
 

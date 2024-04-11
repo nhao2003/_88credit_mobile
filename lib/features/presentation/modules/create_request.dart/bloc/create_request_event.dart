@@ -4,7 +4,7 @@ sealed class CreateRequestEvent extends Equatable {
   const CreateRequestEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class ChangeReceiver extends CreateRequestEvent {
@@ -23,37 +23,37 @@ class GetPrimaryBankCard extends CreateRequestEvent {
 class PostRequest extends CreateRequestEvent {}
 
 class ChangePortrait extends CreateRequestEvent {
-  final File portrait;
+  final File? portrait;
 
   const ChangePortrait(this.portrait);
 
   @override
-  List<Object> get props => [portrait];
+  List<Object?> get props => [portrait];
 }
 
 class ChangeIdCardFrontPhoto extends CreateRequestEvent {
-  final File idCardFrontPhoto;
+  final File? idCardFrontPhoto;
 
   const ChangeIdCardFrontPhoto(this.idCardFrontPhoto);
 
   @override
-  List<Object> get props => [idCardFrontPhoto];
+  List<Object?> get props => [idCardFrontPhoto];
 }
 
 class ChangeIdCardBackPhoto extends CreateRequestEvent {
-  final File idCardBackPhoto;
+  final File? idCardBackPhoto;
 
   const ChangeIdCardBackPhoto(this.idCardBackPhoto);
 
   @override
-  List<Object> get props => [idCardBackPhoto];
+  List<Object?> get props => [idCardBackPhoto];
 }
 
 class ChangeVideo extends CreateRequestEvent {
-  final File video;
+  final File? video;
 
   const ChangeVideo(this.video);
 
   @override
-  List<Object> get props => [video];
+  List<Object?> get props => [video];
 }

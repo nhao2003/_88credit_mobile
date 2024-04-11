@@ -14,12 +14,14 @@ class PickerVideo extends StatefulWidget {
     required this.videoFile,
     required this.videoFromGallery,
     required this.videoFromCamera,
+    required this.deleteFile,
     super.key,
   });
 
   File? videoFile;
   final Future<void> Function() videoFromGallery;
   final Future<void> Function() videoFromCamera;
+  final Function deleteFile;
 
   @override
   State<PickerVideo> createState() => _PickerVideoState();
@@ -161,7 +163,8 @@ class _PickerVideoState extends State<PickerVideo> {
                                   color: AppColors.green,
                                 ),
                                 onPressed: () {
-                                  widget.videoFile = null;
+                                  // widget.videoFile = null;
+                                  widget.deleteFile();
                                 },
                               ),
                             ),

@@ -13,12 +13,14 @@ class PickerImage extends StatefulWidget {
     required this.imageFile,
     required this.imgFromGallery,
     required this.imgFromCamera,
+    required this.deleteFile,
     super.key,
   });
 
   File? imageFile;
   final Function imgFromGallery;
   final Function imgFromCamera;
+  final Function deleteFile;
 
   @override
   State<PickerImage> createState() => _PickerImageState();
@@ -123,6 +125,7 @@ class _PickerImageState extends State<PickerImage> {
                                   color: AppColors.green,
                                 ),
                                 onPressed: () {
+                                  widget.deleteFile();
                                   widget.imageFile = null;
                                 },
                               ),

@@ -1,9 +1,10 @@
 import 'dart:io';
-
 import 'package:_88credit_mobile/features/domain/entities/bank_card.dart';
 import 'package:_88credit_mobile/features/domain/entities/user.dart';
-import 'package:bloc/bloc.dart';
+
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
@@ -13,25 +14,23 @@ part 'create_request_state.dart';
 
 class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
   CreateRequestBloc() : super(const CreateRequestState()) {
-    on<CreateRequestEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<CreateRequestEvent>((event, emit) {});
     on<ChangeReceiver>((event, emit) {
       emit(state.copyWith(receiver: event.receiver));
     });
     on<GetPrimaryBankCard>((event, emit) {});
     on<PostRequest>((event, emit) {});
     on<ChangePortrait>((event, emit) {
-      emit(state.copyWith(portrait: event.portrait));
+      emit(state.copyWith(portrait: () => event.portrait));
     });
     on<ChangeIdCardFrontPhoto>((event, emit) {
-      emit(state.copyWith(idCardFrontPhoto: event.idCardFrontPhoto));
+      emit(state.copyWith(idCardFrontPhoto: () => event.idCardFrontPhoto));
     });
     on<ChangeIdCardBackPhoto>((event, emit) {
-      emit(state.copyWith(idCardBackPhoto: event.idCardBackPhoto));
+      emit(state.copyWith(idCardBackPhoto: () => event.idCardBackPhoto));
     });
     on<ChangeVideo>((event, emit) {
-      emit(state.copyWith(video: event.video));
+      emit(state.copyWith(video: () => event.video));
     });
   }
 
