@@ -2,15 +2,15 @@ import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/entities/user.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
-import '../../../../domain/enums/role.dart';
-import '../../../../domain/enums/user_status.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../../request_detail.dart/widgets/credit_card.dart';
 import '../../request_detail.dart/widgets/user_card.dart';
+import '../bloc/create_request_bloc.dart';
 import '../widgets/images_form.dart';
 import '../widgets/loan_info_form.dart';
 
@@ -41,35 +41,42 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
   @override
   Widget build(BuildContext context) {
     if (ModalRoute.of(context)!.settings.arguments != null) {
-      receiver = ModalRoute.of(context)!.settings.arguments as UserEntity;
+      context.read<CreateRequestBloc>().add(
+            ChangeReceiver(
+                ModalRoute.of(context)!.settings.arguments as UserEntity),
+          );
     }
     return Scaffold(
       appBar: const MyAppbar(title: "Tạo yêu cầu vay"),
       body: ListView(
         children: [
-          Form(
-            key: requestFormKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-                  child: UserCard(
-                    title: "Người cho vay",
-                    name: receiver.fullName,
-                    avatar: receiver.avatar,
-                    buttonText: "Thay đổi",
-                    navToProfile: () {
-                      Navigator.of(context).pushNamed(AppRoutes.changeUser);
-                    },
-                  ),
-                ),
-
-                Padding(
+          BlocBuilder<CreateRequestBloc, CreateRequestState>(
+              builder: (context, state) {
+            return Form(
+              key: requestFormKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
                     padding:
                         const EdgeInsets.only(left: 20, right: 20, top: 10),
-                    child: controller.isGetingPrimaryBankCard.value
+                    child: UserCard(
+                      title: "Người cho vay",
+                      name: state.receiver.fullName,
+                      avatar: state.receiver.avatar,
+                      buttonText: "Thay đổi",
+                      navToProfile: () {
+                        Navigator.of(context).pushNamed(AppRoutes.changeUser);
+                      },
+                    ),
+                  ),
+
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: state.getPrimaryBankCardStatus ==
+                            GetPrimaryBankCardStatus.loading
                         ? Container(
                             width: double.infinity,
                             padding: const EdgeInsets.symmetric(
@@ -88,9 +95,9 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
                                 ),
                               ),
                             ))
-                        : controller.primaryBankCard.value == null ||
-                                controller.primaryBankCard.value!.cardNumber ==
-                                    null
+                        : state.getPrimaryBankCardStatus ==
+                                    GetPrimaryBankCardStatus.failure ||
+                                state.primaryBankCard.cardNumber == null
                             ? CreditCard(
                                 bankName: "Chọn thẻ",
                                 bankNumber: "Không có dữ liệu",
@@ -101,64 +108,79 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
                                 buttonText: "Chọn thẻ",
                               )
                             : CreditCard(
-                                bankName: controller
-                                    .primaryBankCard.value!.bank!.shortName,
-                                bankNumber: controller
-                                    .primaryBankCard.value!.cardNumber!,
-                                logoBank: controller
-                                    .primaryBankCard.value!.bank!.logo,
+                                bankName: state.primaryBankCard.bank!.shortName,
+                                bankNumber: state.primaryBankCard.cardNumber!,
+                                logoBank: state.primaryBankCard.bank!.logo,
                                 hanleChooseCard: () {
-                                  controller.navigateToBank();
+                                  Navigator.of(context)
+                                      .pushNamed(AppRoutes.bank)
+                                      .then((value) => context
+                                          .read<CreateRequestBloc>()
+                                          .add(const GetPrimaryBankCard()));
                                 },
                                 buttonText: "Đổi thẻ",
                               ),
-                // Thong tin bai dang
-                LoanInfoForm(
-                  isvisible: true,
-                ),
-                // images
-                const ImagesForm(
-                  isvisible: true,
-                ),
-                // dang bai ============================================
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: ElevatedButton(
-                    onPressed: controller.isLoading.value
-                        ? null
-                        : () {
-                            controller.createRequest();
-                          },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.green,
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      textStyle: const TextStyle(color: AppColors.white),
-                      elevation: 10,
-                      minimumSize: Size(100.wp, 55),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: controller.isLoading.value
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
-                            ),
-                          )
-                        : Text(
-                            'Tạo yêu cầu',
-                            style:
-                                AppTextStyles.bold14.colorEx(AppColors.white),
-                          ),
                   ),
-                ),
-              ],
-            ),
-          ),
+                  // Thong tin bai dang
+                  LoanInfoForm(
+                    isvisible: true,
+                    discriptionTextController: discriptionTextController,
+                    loanAmountTextController: loanAmountTextController,
+                    interestRateTextController: interestRateTextController,
+                    loanReasonTextController: loanReasonTextController,
+                    overdueInterestRateTextController:
+                        overdueInterestRateTextController,
+                    tenureMonthsTextController: tenureMonthsTextController,
+                    loanReasonType: loanReasonType,
+                  ),
+                  // images
+                  const ImagesForm(
+                    isvisible: true,
+                  ),
+                  // dang bai ============================================
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: ElevatedButton(
+                      onPressed: state.createRequestStatus ==
+                              CreateRequestStatus.loading
+                          ? null
+                          : () {
+                              context.read<CreateRequestBloc>().add(
+                                    PostRequest(),
+                                  );
+                            },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.green,
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        textStyle: const TextStyle(color: AppColors.white),
+                        elevation: 10,
+                        minimumSize: Size(100.wp, 55),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: state.createRequestStatus ==
+                              CreateRequestStatus.loading
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : Text(
+                              'Tạo yêu cầu',
+                              style:
+                                  AppTextStyles.bold14.colorEx(AppColors.white),
+                            ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          })
         ],
       ),
     );

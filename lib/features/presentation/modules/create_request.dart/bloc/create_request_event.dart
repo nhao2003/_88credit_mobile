@@ -15,3 +15,9 @@ class ChangeReceiver extends CreateRequestEvent {
   @override
   List<Object> get props => [receiver];
 }
+
+class GetPrimaryBankCard extends CreateRequestEvent {
+  const GetPrimaryBankCard();
+}
+
+class PostRequest extends CreateRequestEvent {}

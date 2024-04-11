@@ -40,7 +40,7 @@ class CreatePostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(
+      appBar: const MyAppbar(
         title: 'Đăng tin',
       ),
       body: ListView(
