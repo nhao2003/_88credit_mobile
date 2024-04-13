@@ -28,9 +28,9 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
 
   @override
   void initState() {
-    var data = Get.arguments;
-    post = data[0] as ContractEntity;
-    isPurchase = data[1] as bool;
+    // var data = Get.arguments;
+    // post = data[0] as ContractEntity;
+    // isPurchase = data[1] as bool;
     super.initState();
   }
 
