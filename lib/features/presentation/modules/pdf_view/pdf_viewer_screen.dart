@@ -3,6 +3,7 @@ import 'package:_88credit_mobile/core/constants/constants.dart';
 import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/date_ex.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 // ignore: depend_on_referenced_packages
@@ -98,8 +99,10 @@ class PdfViewerScreen extends StatelessWidget {
               onPressed: () async {
                 // final path = await saveDocument(name: 'test.pdf', pdf: pdf);
                 const path = '/storage/emulated/0/Download/test.pdf';
-                Get.snackbar('Download', 'Downloaded to $path');
-                context.snackBar('Downloaded to $path');
+                context.snackBar(
+                  'Downloaded to $path',
+                  type: AnimatedSnackBarType.info,
+                );
               },
             ),
           ],

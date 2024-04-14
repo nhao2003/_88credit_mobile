@@ -1,12 +1,17 @@
+import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/config/theme/app_color.dart';
 import 'package:_88credit_mobile/config/theme/text_styles.dart';
+import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/utils/add_months_date.dart';
 import 'package:_88credit_mobile/core/utils/bank_format.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../../domain/entities/contract.dart';
+import '../../../../domain/entities/user.dart';
 import '../../../globalwidgets/base_button.dart';
 import '../../../globalwidgets/my_appbar.dart';
+import '../../pdf_view/pdf_viewer_screen.dart';
 import '../../post_detail/widgets/description_card.dart';
 import '../../request_detail.dart/widgets/credit_card.dart';
 import '../../request_detail.dart/widgets/loan_amount_card.dart';
@@ -26,21 +31,22 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
 
   late bool isPurchase;
 
-  @override
-  void initState() {
-    // var data = Get.arguments;
-    // post = data[0] as ContractEntity;
-    // isPurchase = data[1] as bool;
-    super.initState();
+  void navToPdfScreen(ContractEntity contract) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return PdfViewerScreen(contract: contract);
+    }));
   }
 
-  void navToProfile(ContractEntity contract) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return ProfileScreen(
-        userId: contract.borrower!.id,
-      );
-    }));
-    PdfViewerScreen(contract: contract);
+  void navToProfile(UserEntity user) {
+    Navigator.pushNamed(context, AppRoutes.userProfile, arguments: user);
+  }
+
+  void copyToClipboard(String text) async {
+    await Clipboard.setData(ClipboardData(text: text));
+    if (!mounted) return;
+    context.snackBar(
+      "Đã copy",
+    );
   }
 
   @override
@@ -63,7 +69,7 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
           if (isPurchase)
             TextButton(
               onPressed: () {
-                // navToPdfScreen(post);
+                navToPdfScreen(post);
               },
               child: Text(
                 "Xem PDF",
@@ -145,7 +151,7 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
               BaseButton(
                 title: "Xem bản PDF",
                 width: 100.wp,
-                isLoading: isLoading,
+                isLoading: true,
                 onClick: () {
                   navToPdfScreen(post);
                 },
