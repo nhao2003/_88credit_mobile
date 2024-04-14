@@ -34,8 +34,28 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
     super.initState();
   }
 
+  void navToProfile(ContractEntity contract) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return ProfileScreen(
+        userId: contract.borrower!.id,
+      );
+    }));
+    PdfViewerScreen(contract: contract);
+  }
+
   @override
   Widget build(BuildContext context) {
+    var data = ModalRoute.of(context)!.settings.arguments as List<dynamic>?;
+    if (data == null) {
+      return const Scaffold(
+        body: Center(
+          child: Text("Không có dữ liệu"),
+        ),
+      );
+    }
+    post = data[0] as ContractEntity;
+    isPurchase = data[1] as bool;
+
     return Scaffold(
       appBar: MyAppbar(
         title: "Chi tiết hợp đồng",
@@ -43,7 +63,7 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
           if (isPurchase)
             TextButton(
               onPressed: () {
-                navToPdfScreen(post);
+                // navToPdfScreen(post);
               },
               child: Text(
                 "Xem PDF",

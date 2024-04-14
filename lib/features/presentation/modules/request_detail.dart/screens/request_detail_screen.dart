@@ -56,7 +56,6 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
   @override
   Widget build(BuildContext context) {
     post = ModalRoute.of(context)!.settings.arguments as LoanRequestEntity;
-    print(post.status!);
     context.read<RequestDetailBloc>().add(ChangeRequestStatus(post.status!));
 
     return Scaffold(

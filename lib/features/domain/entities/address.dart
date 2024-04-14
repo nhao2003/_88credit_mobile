@@ -36,18 +36,20 @@ class AddressEntity extends Equatable {
     return result;
   }
 
-  // String getDetailAddress() {
-  //   final GetAddressUseCase getAddressUseCase = sl<GetAddressUseCase>();
-  //   final dataState = getAddressUseCase(
-  //     params: this,
-  //   );
+  String getDetailAddress() {
+    // final GetAddressUseCase getAddressUseCase = sl<GetAddressUseCase>();
+    // final dataState = getAddressUseCase(
+    //   params: this,
+    // );
 
-  //   if (dataState is DataSuccess) {
-  //     return dataState.data!;
-  //   } else {
-  //     return toString();
-  //   }
-  // }
+    // if (dataState is DataSuccess) {
+    //   return dataState.data!;
+    // } else {
+    //   return toString();
+    // }
+
+    return "";
+  }
 
   @override
   List<Object?> get props => [provinceCode];
