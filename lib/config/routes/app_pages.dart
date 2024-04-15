@@ -2,10 +2,9 @@ import 'package:_88credit_mobile/features/presentation/modules/create_request.da
 import 'package:_88credit_mobile/features/presentation/modules/create_request.dart/screens/create_request_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/bloc/request_detail_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/screens/request_detail_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/user_profile/bloc/user_profile_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/user_profile/screens/user_profile_screen.dart';
 import '../../features/presentation/modules/contract_detail/screens/contract_detail_screen.dart';
-import 'app_routes.dart';
 import '../../features/presentation/modules/account/screens/account_screen.dart';
 import '../../features/presentation/modules/bottom_bar/bloc/bar_bloc.dart';
 import '../../features/presentation/modules/bottom_bar/bottom_bar_screen.dart';
@@ -29,6 +28,9 @@ import '../../features/presentation/modules/create_post/screens/create_post_scre
 import '../../features/presentation/modules/error/screens/error_screen.dart';
 import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
 import '../../features/presentation/modules/login/screens/update_info_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
+import 'app_routes.dart';
 
 class AppPages {
   static List<PageEntity> pages() {
@@ -112,6 +114,11 @@ class AppPages {
         path: AppRoutes.contractDetail,
         page: const ContractDetailScreen(),
         bloc: BlocProvider(create: (context) => ContractBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.userProfile,
+        page: const UserProfileScreen(),
+        bloc: BlocProvider(create: (context) => UserProfileBloc()),
       ),
     ];
   }

@@ -33,7 +33,6 @@ class _BaseButtonState extends State<BaseButton> {
           ? null
           : () {
               widget.onClick();
-              //Get.toNamed(AppRoutes.bottomBar);
             },
       style: ElevatedButton.styleFrom(
         backgroundColor: widget.colorButton ?? AppColors.green,

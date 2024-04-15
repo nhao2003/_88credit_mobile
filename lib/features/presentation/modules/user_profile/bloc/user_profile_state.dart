@@ -1,6 +1,9 @@
 part of 'user_profile_bloc.dart';
 
+enum GetUserPostsStatus { loading, success, failure }
+
 final class UserProfileState extends Equatable {
+  final GetUserPostsStatus getUserPostsStatus;
   final int numberPost;
   final int numberFollower;
   final int numberFollowing;
@@ -10,6 +13,7 @@ final class UserProfileState extends Equatable {
   final List<PostEntity> userPosts;
 
   const UserProfileState({
+    this.getUserPostsStatus = GetUserPostsStatus.loading,
     this.numberPost = 0,
     this.numberFollower = 0,
     this.numberFollowing = 0,
@@ -20,6 +24,7 @@ final class UserProfileState extends Equatable {
   });
 
   UserProfileState copyWith({
+    GetUserPostsStatus? getUserPostsStatus,
     int? numberPost,
     int? numberFollower,
     int? numberFollowing,
@@ -29,6 +34,7 @@ final class UserProfileState extends Equatable {
     List<PostEntity>? userPosts,
   }) {
     return UserProfileState(
+      getUserPostsStatus: getUserPostsStatus ?? this.getUserPostsStatus,
       numberPost: numberPost ?? this.numberPost,
       numberFollower: numberFollower ?? this.numberFollower,
       numberFollowing: numberFollowing ?? this.numberFollowing,
@@ -41,6 +47,7 @@ final class UserProfileState extends Equatable {
 
   @override
   List<Object> get props => [
+        getUserPostsStatus,
         numberPost,
         numberFollower,
         numberFollowing,

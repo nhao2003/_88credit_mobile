@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/features/domain/entities/address.dart';
 import 'package:_88credit_mobile/features/domain/entities/user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -138,7 +139,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         isIdentityVerified: true,
         role: Role.user,
         email: 'a@a.com',
-        address: null,
+        address: address,
         firstName: 'John',
         lastName: 'Doe',
         gender: true,
@@ -149,6 +150,13 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         lastActiveAt: DateTime.now(),
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
+      );
+
+  AddressEntity get address => AddressEntity(
+        provinceCode: 1,
+        districtCode: 1,
+        wardCode: 1,
+        detail: '123 ABC',
       );
 
   int page = 1;
