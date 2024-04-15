@@ -136,14 +136,14 @@ class DialogReport extends StatelessWidget {
                       colorButton: AppColors.red,
                       width: 33.wp,
                       isLoading: false,
-                      onClick: onCancel,
+                      onClick: () => onCancel(context),
                     ),
                     const SizedBox(width: 10),
                     BaseButton(
                       title: "Báo cáo",
                       width: 33.wp,
                       isLoading: false,
-                      onClick: onAccept,
+                      onClick: () => onAccept(context),
                     ),
                   ],
                 )
