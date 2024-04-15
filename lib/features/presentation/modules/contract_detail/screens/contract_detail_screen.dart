@@ -151,7 +151,7 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
               BaseButton(
                 title: "Xem bản PDF",
                 width: 100.wp,
-                isLoading: true,
+                isLoading: false,
                 onClick: () {
                   navToPdfScreen(post);
                 },

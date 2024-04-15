@@ -4,6 +4,7 @@ import 'package:_88credit_mobile/features/presentation/modules/request_detail.da
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/screens/request_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../features/presentation/modules/contract_detail/screens/contract_detail_screen.dart';
 import 'app_routes.dart';
 import '../../features/presentation/modules/account/screens/account_screen.dart';
 import '../../features/presentation/modules/bottom_bar/bloc/bar_bloc.dart';
@@ -106,6 +107,11 @@ class AppPages {
         path: AppRoutes.createRequest,
         page: const CreateRequestScreen(),
         bloc: BlocProvider(create: (context) => CreateRequestBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.contractDetail,
+        page: const ContractDetailScreen(),
+        bloc: BlocProvider(create: (context) => ContractBloc()),
       ),
     ];
   }

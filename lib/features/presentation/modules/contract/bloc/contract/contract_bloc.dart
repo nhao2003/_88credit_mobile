@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/resources/pair.dart';
+import '../../../../../domain/entities/bank.dart';
+import '../../../../../domain/entities/bank_card.dart';
 import '../../../../../domain/entities/contract.dart';
 import '../../../../../domain/entities/user.dart';
 import '../../../../../domain/enums/loan_reason_types.dart';
@@ -41,6 +43,8 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
         id: index.toString(),
         loanContractRequestId: index.toString(),
         contractTemplateId: index.toString(),
+        lenderBankCard: bankCard,
+        borrowerBankCard: bankCard,
         lender: user,
         lenderBankCardId: index.toString(),
         borrower: user,
@@ -56,6 +60,27 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
       ),
     );
   }
+
+  BankCardEntity get bankCard => BankCardEntity(
+        id: '1',
+        isPrimary: true,
+        userId: '1',
+        bankId: '1',
+        cardNumber: '1234567890',
+        branch: 'Branch',
+        bank: bank,
+        createdAt: DateTime.now(),
+        deletedAt: null,
+      );
+  BankEntity get bank => const BankEntity(
+        id: '1',
+        name: 'Bank',
+        shortName: 'Bank',
+        logo:
+            'https://baobitrungthanh.com/wp-content/uploads/2024/01/logo-ngan-hang-agribank-40.jpg',
+        code: '123',
+        bin: '123',
+      );
 
   UserEntity get user => UserEntity(
         id: '1',

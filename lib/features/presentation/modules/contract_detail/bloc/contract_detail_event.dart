@@ -6,3 +6,6 @@ sealed class ContractDetailEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class InitPDF extends ContractDetailEvent {
+}
