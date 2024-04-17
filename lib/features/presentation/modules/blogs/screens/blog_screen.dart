@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/features/presentation/modules/home/bloc/home_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:_88credit_mobile/config/theme/app_color.dart';
@@ -5,9 +6,9 @@ import 'package:_88credit_mobile/config/theme/text_styles.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:_88credit_mobile/features/presentation/modules/blogs/screens/blog_detail_screen.dart';
-
-import '../../../../domain/entities/blog.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../globalwidgets/my_appbar.dart';
+import '../bloc/blog_bloc.dart';
 
 class BlogListScreen extends StatefulWidget {
   const BlogListScreen({super.key});
@@ -28,17 +29,19 @@ class _BlogListScreenState extends State<BlogListScreen> {
       appBar: const MyAppbar(
         title: 'Blogs',
       ),
-      body: FutureBuilder<List<BlogEntity>>(
-          future: _controller.getBlogs(),
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            RxList<BlogEntity> data = snapshot.data!.obs;
+      body: BlocBuilder<BlogBloc, BlogState>(
+        builder: (context, state) {
+          if (state.status == BlogStatus.initial) {
+            context.read<BlogBloc>().add(FetchBlogScreens());
+          }
+          if (state.status == BlogStatus.failure) {
+            return const Center(
+              child: Text('Error'),
+            );
+          }
+          if (state.status == BlogStatus.success) {
             return ListView.builder(
-              itemCount: data.length,
+              itemCount: state.blogs.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
@@ -47,7 +50,14 @@ class _BlogListScreenState extends State<BlogListScreen> {
                   ),
                   child: InkWell(
                     onTap: () {
-                      Get.to(() => BlogDetailScreen(), arguments: data[index]);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BlogDetailScreen(),
+                          settings:
+                              RouteSettings(arguments: state.blogs[index]),
+                        ),
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(
@@ -61,7 +71,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                 topLeft: Radius.circular(10),
                                 topRight: Radius.circular(10)),
                             child: CachedNetworkImage(
-                              imageUrl: data[index].thumbnail,
+                              imageUrl: state.blogs[index].thumbnail,
                               fit: BoxFit.cover,
                               height: 23.hp,
                               width: double.infinity,
@@ -74,7 +84,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  data[index].shortDescription,
+                                  state.blogs[index].shortDescription,
                                   style: AppTextStyles.bold16,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
@@ -83,7 +93,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                   height: 2,
                                 ),
                                 Text(
-                                  data[index].shortDescription,
+                                  state.blogs[index].shortDescription,
                                   style: AppTextStyles.light12
                                       .colorEx(AppColors.grey500),
                                   maxLines: 3,
@@ -92,24 +102,6 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                 const SizedBox(
                                   height: 10,
                                 ),
-                                // Row(
-                                //   children: [
-                                //     const Icon(
-                                //       Icons.remove_red_eye_outlined,
-                                //       color: AppColors.grey500,
-                                //       size: 15,
-                                //     ),
-                                //     const SizedBox(
-                                //       width: 3,
-                                //     ),
-                                //     Obx(() => Text(
-                                //           "${data[index].numViews} lượt xem",
-                                //           style: AppTextStyles.light12.copyWith(
-                                //               color: AppColors.grey500),
-                                //         )),
-                                //   ],
-                                // ),
-                                // const SizedBox(height: 4),
                               ],
                             ),
                           ),
@@ -120,7 +112,12 @@ class _BlogListScreenState extends State<BlogListScreen> {
                 );
               },
             );
-          }),
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
+      ),
     );
   }
 }

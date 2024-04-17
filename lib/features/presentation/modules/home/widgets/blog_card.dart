@@ -22,8 +22,7 @@ class BlogCard extends StatelessWidget {
       child: InkWell(
         onTap: () {
           Navigator.of(context)
-              .pushNamed(AppRoutes.getBlogRoute(blog.id), arguments: blog);
-          // Get.to(() => BlogDetailScreen(), arguments: blog);
+              .pushNamed(AppRoutes.blogDetail, arguments: blog);
         },
         splashColor: AppColors.green,
         child: Container(

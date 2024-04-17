@@ -13,7 +13,7 @@ class BlogDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlogEntity blog;
+    BlogEntity blog = ModalRoute.of(context)!.settings.arguments as BlogEntity;
     return Scaffold(
         appBar: const MyAppbar(title: "Chi tiết bài viết"),
         body: SingleChildScrollView(
