@@ -28,3 +28,12 @@ final class FetchMorePostEnvent extends PostEvent {
   @override
   List<Object> get props => [postType];
 }
+
+final class ChangeSortType extends PostEvent {
+  final TypeSort typeSort;
+
+  const ChangeSortType(this.typeSort);
+
+  @override
+  List<Object> get props => [typeSort];
+}

@@ -68,6 +68,10 @@ class Assets {
   static const String slider = '$iconPath/slider.png';
   static const String star = '$iconPath/star.png';
 
+  static const String circleDown = '$iconPath/Arrow_Circle_Down.png';
+  static const String circleUp = '$iconPath/Arrow_Circle_Up.png';
+  static const String trendUp = '$iconPath/trending-up.png';
+  static const String trenDown = '$iconPath/trending-down.png';
   // Ilustration
   static const String purchaseFailed = '$ilustrationPath/purchase-fail.png';
   static const String purchaseSuccess = '$ilustrationPath/purchase-success.png';

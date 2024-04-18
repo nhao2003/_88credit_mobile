@@ -9,6 +9,7 @@ import '../../../../domain/enums/post_status.dart';
 import '../../../../domain/enums/post_type.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
+import '../widgets/card_sort.dart';
 
 part 'post_event.dart';
 part 'post_state.dart';
@@ -20,6 +21,14 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     on<GetBorrowingPostEnvent>(_onGetBorrowingPost);
     on<RefreshPostEnvent>(_refresh);
     on<FetchMorePostEnvent>(_fetchMore);
+    on<ChangeSortType>(_changeSortType);
+  }
+
+  Future<void> _changeSortType(
+    ChangeSortType event,
+    Emitter<PostState> emit,
+  ) async {
+    emit(state.copyWith(typeSort: event.typeSort));
   }
 
   Future<void> _onGetLendingPost(

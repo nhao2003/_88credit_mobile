@@ -7,12 +7,14 @@ final class PostState extends Equatable {
   final List<PostEntity> lendingPosts;
   final List<PostEntity> borrowingPosts;
   final bool hasMore;
+  final TypeSort typeSort;
 
   const PostState({
     this.status = PostFetchStatus.loading,
     this.lendingPosts = const [],
     this.borrowingPosts = const [],
     this.hasMore = true,
+    this.typeSort = TypeSort.amountIncrease,
   });
 
   PostState copyWith({
@@ -20,12 +22,14 @@ final class PostState extends Equatable {
     List<PostEntity>? lendingPosts,
     List<PostEntity>? borrowingPosts,
     bool? hasMore,
+    TypeSort? typeSort,
   }) {
     return PostState(
       status: status ?? this.status,
       lendingPosts: lendingPosts ?? this.lendingPosts,
       borrowingPosts: borrowingPosts ?? this.borrowingPosts,
       hasMore: hasMore ?? this.hasMore,
+      typeSort: typeSort ?? this.typeSort,
     );
   }
 
@@ -35,5 +39,6 @@ final class PostState extends Equatable {
         lendingPosts,
         borrowingPosts,
         hasMore,
+        typeSort,
       ];
 }
