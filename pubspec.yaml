@@ -149,7 +149,7 @@ dependencies:
   pretty_qr_code: ^3.3.0
 
   # Chat bot
-  chat_gpt_sdk: ^3.0.7
+  chat_gpt_sdk: ^3.0.4
   dash_chat_2: ^0.0.20
 
 dev_dependencies:
