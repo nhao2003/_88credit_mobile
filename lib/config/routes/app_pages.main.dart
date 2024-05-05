@@ -1,7 +1,8 @@
 part of 'app_pages.dart';
 
-class AppPages {
-  static List<PageEntity> pages() {
+class MyAppPages extends AppPages {
+  @override
+  List<PageEntity> pages() {
     return [
       PageEntity(
         path: AppRoutes.login,
@@ -110,43 +111,4 @@ class AppPages {
       ),
     ];
   }
-
-  static final RouteObserver<Route> routeObserver = RouteObserver<Route>();
-  static List<String> history = [];
-
-  static List<dynamic> blocer(BuildContext context) {
-    List<dynamic> blocerList = [];
-    pages().forEach((element) {
-      blocerList.add(element.bloc);
-    });
-    return blocerList;
-  }
-
-  static MaterialPageRoute generateRouteSettings(RouteSettings settings) {
-    if (settings.name != null) {
-      var result = pages().where((element) => element.path == settings.name);
-      if (result.isNotEmpty) {
-        return MaterialPageRoute(
-          builder: (context) => result.first.page,
-          settings: settings,
-        );
-      }
-    }
-    return MaterialPageRoute(
-      builder: (context) => const ErrorScreen(),
-      settings: settings,
-    );
-  }
-}
-
-class PageEntity<T> {
-  String path;
-  Widget page;
-  dynamic bloc;
-
-  PageEntity({
-    required this.path,
-    required this.page,
-    required this.bloc,
-  });
 }

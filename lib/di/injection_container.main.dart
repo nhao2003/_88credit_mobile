@@ -3,6 +3,8 @@ part of 'injection_container.dart';
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  // AppPages
+  sl.registerSingleton<MyAppPages>(MyAppPages());
   // Dio
   sl.registerSingleton<Dio>(Dio());
   // Authentication

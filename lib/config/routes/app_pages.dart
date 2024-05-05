@@ -9,6 +9,7 @@ import 'package:_88credit_mobile/features/presentation/modules/request_detail.da
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/screens/request_detail_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/user_profile/bloc/user_profile_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/user_profile/screens/user_profile_screen.dart';
+import '../../core/resources/base_app_pages.dart';
 import '../../features/presentation/modules/blogs/screens/blog_screen.dart';
 import '../../features/presentation/modules/contract_detail/screens/contract_detail_screen.dart';
 import '../../features/presentation/modules/account/screens/account_screen.dart';
@@ -31,11 +32,9 @@ import '../../features/presentation/modules/post_detail/bloc/post_detail_bloc.da
 import '../../features/presentation/modules/post_detail/screens/post_detail_screen.dart';
 import '../../features/presentation/modules/account/bloc/account_bloc.dart';
 import '../../features/presentation/modules/create_post/screens/create_post_screen.dart';
-import '../../features/presentation/modules/error/screens/error_screen.dart';
 import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
 import '../../features/presentation/modules/login/screens/update_info_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/material.dart';
 import 'app_routes.dart';
 
 part 'app_pages.main.dart';

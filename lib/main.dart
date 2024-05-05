@@ -24,15 +24,17 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+    final appPages = sl<MyAppPages>();
+
     return MultiBlocProvider(
-      providers: [...AppPages.blocer(context)],
+      providers: [...appPages.blocer(context)],
       child: MaterialApp(
         title: AppStrings.appName,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.appTheme(),
-        navigatorObservers: [AppPages.routeObserver],
+        navigatorObservers: [appPages.routeObserver],
         initialRoute: AppRoutes.bottomBar,
-        onGenerateRoute: AppPages.generateRouteSettings,
+        onGenerateRoute: appPages.generateRouteSettings,
       ),
     );
   }
