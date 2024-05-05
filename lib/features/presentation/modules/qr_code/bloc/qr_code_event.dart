@@ -6,3 +6,12 @@ sealed class QrCodeEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class GenerateQrCode extends QrCodeEvent {
+  final String qrData;
+
+  const GenerateQrCode(this.qrData);
+
+  @override
+  List<Object> get props => [qrData];
+}

@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -8,9 +9,7 @@ class ScanCodeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Scan QR Code'),
-      ),
+      appBar: const MyAppbar(title: 'Quét mã QR'),
       body: MobileScanner(
         controller: MobileScannerController(
           detectionSpeed: DetectionSpeed.noDuplicates,

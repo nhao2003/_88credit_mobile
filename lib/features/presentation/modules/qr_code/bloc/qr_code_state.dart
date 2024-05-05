@@ -1,8 +1,21 @@
 part of 'qr_code_bloc.dart';
 
 final class QrCodeState extends Equatable {
-  const QrCodeState();
+  final String qrData;
+  const QrCodeState({
+    this.qrData = "",
+  });
+
+  QrCodeState copyWith({
+    String? qrData,
+  }) {
+    return QrCodeState(
+      qrData: qrData ?? this.qrData,
+    );
+  }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [
+        qrData,
+      ];
 }

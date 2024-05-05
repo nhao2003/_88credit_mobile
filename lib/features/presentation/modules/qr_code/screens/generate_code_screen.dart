@@ -1,40 +1,38 @@
+import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 
-class GenerateCodeScreen extends StatefulWidget {
+import '../bloc/qr_code_bloc.dart';
+
+class GenerateCodeScreen extends StatelessWidget {
   const GenerateCodeScreen({super.key});
-
-  @override
-  State<GenerateCodeScreen> createState() => _GenerateCodeScreenState();
-}
-
-class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
-  String? qrData;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Generate QR Code'),
-      ),
+      appBar: const MyAppbar(title: 'Tạo mã QR'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              TextField(
-                decoration: const InputDecoration(
-                  hintText: 'Enter data to encode',
-                ),
-                onSubmitted: (value) {
-                  setState(() {
-                    qrData = value;
-                  });
-                },
-              ),
-              const SizedBox(height: 20),
-              if (qrData != null) PrettyQrView.data(data: qrData!),
-            ],
+          child: BlocBuilder<QrCodeBloc, QrCodeState>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Enter data to encode',
+                    ),
+                    onSubmitted: (value) {
+                      context.read<QrCodeBloc>().add(GenerateQrCode(value));
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  if (state.qrData.isNotEmpty)
+                    PrettyQrView.data(data: state.qrData),
+                ],
+              );
+            },
           ),
         ),
       ),
