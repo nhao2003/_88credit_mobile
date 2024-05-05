@@ -20,7 +20,7 @@ abstract class AuthenticationRepository {
   DataState<String> getUserId();
 
   // Fingerprinting
-  DataState<bool> getAuthenticateBiometrics();
+  Future<DataState<bool>> getAuthenticateBiometrics();
 
   void addAuthStateListener(Function(bool) listener);
   void removeAuthStateListener(Function(bool) listener);

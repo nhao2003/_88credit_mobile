@@ -228,10 +228,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       return DataFailed(e);
     }
   }
-  
+
   @override
-  DataState<bool> getAuthenticateBiometrics() {
-    // TODO: implement getAuthenticateBiometrics
-    throw UnimplementedError();
+  Future<DataState<bool>> getAuthenticateBiometrics() async {
+    try {
+      final result = await _dataLocalSrc.authenticateBiometrics();
+      return DataSuccess(result);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 }

@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    const FingerprintButton(),
+                    FingerprintButton(),
                   ],
                 ),
               ),

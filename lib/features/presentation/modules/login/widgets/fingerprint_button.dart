@@ -1,10 +1,15 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/config/theme/app_color.dart';
+import 'package:_88credit_mobile/di/injection_container.dart';
 import 'package:flutter/material.dart';
-import '../bloc/local_auth_api.dart';
+
+import '../../../../domain/usecases/authentication/get_authen_biometrics.dart';
 
 class FingerprintButton extends StatelessWidget {
-  const FingerprintButton({super.key});
+  FingerprintButton({super.key});
+
+  final GetAuthenticateBiometrics getAuthenticateBiometrics =
+      sl<GetAuthenticateBiometrics>();
 
   @override
   Widget build(BuildContext context) => buildAuthenticate(context);
@@ -12,7 +17,7 @@ class FingerprintButton extends StatelessWidget {
   Widget buildAuthenticate(BuildContext context) => buildButton(
         icon: Icons.fingerprint,
         onClicked: () async {
-          final isAuthenticated = await LocalAuthApi.authenticate();
+          final isAuthenticated = await getAuthenticateBiometrics();
 
           if (isAuthenticated) {
             if (!context.mounted) return;

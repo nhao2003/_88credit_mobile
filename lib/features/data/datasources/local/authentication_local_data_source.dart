@@ -1,4 +1,6 @@
+import 'package:flutter/services.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../core/errors/exceptions.dart';
 
@@ -10,11 +12,15 @@ abstract class AuthenLocalDataSrc {
   Future<void> deleteRefreshToken();
   Future<void> deleteAccessToken();
   String getUserIdFromToken();
+  Future<bool> hasBiometrics();
+  Future<List<BiometricType>> getBiometrics();
+  Future<bool> authenticateBiometrics();
 }
 
 class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
   late SharedPreferences client;
-  AuthenLocalDataSrcImpl(this.client);
+  late final LocalAuthentication localAuth;
+  AuthenLocalDataSrcImpl(this.client, this.localAuth);
 
   String? getSharedPreferencesValue(String key) {
     try {
@@ -86,6 +92,47 @@ class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
     } catch (error) {
       throw SharedPreferencesException(
           message: error.toString(), statusCode: 500);
+    }
+  }
+
+  @override
+  Future<bool> hasBiometrics() async {
+    try {
+      final bool canAuthenticateWithBiometrics =
+          await localAuth.canCheckBiometrics;
+      return canAuthenticateWithBiometrics ||
+          await localAuth.isDeviceSupported();
+      // return await localAuth.canCheckBiometrics;
+    } on PlatformException catch (_) {
+      return false;
+    }
+  }
+
+  @override
+  Future<List<BiometricType>> getBiometrics() async {
+    try {
+      return await localAuth.getAvailableBiometrics();
+    } on PlatformException catch (_) {
+      return <BiometricType>[];
+    }
+  }
+
+  @override
+  Future<bool> authenticateBiometrics() async {
+    final isAvailable = await hasBiometrics();
+    if (!isAvailable) return false;
+
+    try {
+      return await localAuth.authenticate(
+        localizedReason: 'Vui lòng quét dấu vân tay để tiếp tục',
+        options: const AuthenticationOptions(
+          biometricOnly: true,
+          useErrorDialogs: true,
+          stickyAuth: true,
+        ),
+      );
+    } on PlatformException catch (_) {
+      return false;
     }
   }
 }
