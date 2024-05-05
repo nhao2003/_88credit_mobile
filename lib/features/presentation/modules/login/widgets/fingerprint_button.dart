@@ -1,87 +1,48 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
+import 'package:_88credit_mobile/config/theme/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:local_auth/local_auth.dart';
-
 import '../bloc/local_auth_api.dart';
 
-class FingerprintPage extends StatelessWidget {
-  const FingerprintPage({super.key});
+class FingerprintButton extends StatelessWidget {
+  const FingerprintButton({super.key});
 
   @override
-  Widget build(BuildContext context) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildAvailability(context),
-          const SizedBox(height: 24),
-          buildAuthenticate(context),
-        ],
-      );
-
-  Widget buildAvailability(BuildContext context) => buildButton(
-        text: 'Check Availability',
-        icon: Icons.event_available,
-        onClicked: () async {
-          final isAvailable = await LocalAuthApi.hasBiometrics();
-          final biometrics = await LocalAuthApi.getBiometrics();
-
-          final hasFingerprint = biometrics.contains(BiometricType.fingerprint);
-
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: const Text('Availability'),
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  buildText('Biometrics', isAvailable),
-                  buildText('Fingerprint', hasFingerprint),
-                ],
-              ),
-            ),
-          );
-        },
-      );
-
-  Widget buildText(String text, bool checked) => Container(
-        margin: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          children: [
-            checked
-                ? const Icon(Icons.check, color: Colors.green, size: 24)
-                : const Icon(Icons.close, color: Colors.red, size: 24),
-            const SizedBox(width: 12),
-            Text(text, style: const TextStyle(fontSize: 24)),
-          ],
-        ),
-      );
+  Widget build(BuildContext context) => buildAuthenticate(context);
 
   Widget buildAuthenticate(BuildContext context) => buildButton(
-        text: 'Authenticate',
-        icon: Icons.lock_open,
+        icon: Icons.fingerprint,
         onClicked: () async {
           final isAuthenticated = await LocalAuthApi.authenticate();
 
           if (isAuthenticated) {
-            Navigator.of(context).pushNamed(AppRoutes.bottomBar);
+            if (!context.mounted) return;
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              AppRoutes.bottomBar,
+              (Route<dynamic> route) => false,
+            );
           }
         },
       );
 
   Widget buildButton({
-    required String text,
     required IconData icon,
     required VoidCallback onClicked,
   }) =>
-      ElevatedButton.icon(
-        style: ElevatedButton.styleFrom(
-          minimumSize: const Size.fromHeight(50),
+      Container(
+        width: 60,
+        margin: const EdgeInsets.only(left: 5),
+        child: RawMaterialButton(
+          onPressed: onClicked,
+          elevation: 10,
+          fillColor: AppColors.green,
+          padding: const EdgeInsets.all(15.0),
+          shape: const CircleBorder(),
+          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          child: Icon(
+            icon,
+            size: 26.0,
+            color: Colors.white,
+          ),
         ),
-        icon: Icon(icon, size: 26),
-        label: Text(
-          text,
-          style: const TextStyle(fontSize: 20),
-        ),
-        onPressed: onClicked,
       );
 }

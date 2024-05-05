@@ -28,7 +28,7 @@ class LocalAuthApi {
 
     try {
       return await _auth.authenticate(
-        localizedReason: 'Scan Fingerprint to Authenticate',
+        localizedReason: 'Vui lòng quét dấu vân tay để tiếp tục',
         options: const AuthenticationOptions(
           biometricOnly: true,
           useErrorDialogs: true,
