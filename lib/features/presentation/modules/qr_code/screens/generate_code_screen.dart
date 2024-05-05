@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/config/values/asset_image.dart';
 import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +30,14 @@ class GenerateCodeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   if (state.qrData.isNotEmpty)
-                    PrettyQrView.data(data: state.qrData),
+                    PrettyQrView.data(
+                      data: state.qrData,
+                      decoration: const PrettyQrDecoration(
+                        image: PrettyQrDecorationImage(
+                          image: AssetImage(Assets.appLogoLight),
+                        ),
+                      ),
+                    ),
                 ],
               );
             },
