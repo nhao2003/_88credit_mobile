@@ -90,4 +90,8 @@ abstract class AppRoutes {
   static String getChatDetailRoute(String id) {
     return '/chat/$id';
   }
+
+  // QR Code
+  static const generateQRCode = '/generateQRCode';
+  static const scanQRCode = '/scanQRCode';
 }
