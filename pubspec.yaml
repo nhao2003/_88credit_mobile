@@ -54,6 +54,9 @@ dependencies:
   #dateFormat
   intl: ^0.18.1
 
+  #make request to api
+  retrofit: ^4.0.1
+
   #Hooks
   flutter_hooks: ^0.20.3
 
