@@ -1,9 +1,9 @@
 import 'package:_88credit_mobile/config/theme/app_color.dart';
-import 'package:_88credit_mobile/core/constants/constants.dart';
 import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ChatBotScreen extends StatefulWidget {
   const ChatBotScreen({super.key});
@@ -14,7 +14,7 @@ class ChatBotScreen extends StatefulWidget {
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
   final _openAI = OpenAI.instance.build(
-    token: apiGPTKey,
+    token: dotenv.env['GPT_API_KEY'],
     baseOption: HttpSetup(
       receiveTimeout: const Duration(seconds: 10),
     ),

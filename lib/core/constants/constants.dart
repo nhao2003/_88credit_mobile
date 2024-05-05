@@ -4,7 +4,7 @@ const String apiDevUrl = "http://$ipConfig:8000/api/v1";
 const String apiProductionUrl = "https://eight8credit.onrender.com/api/v1";
 const String apiUrl = isProduction ? apiProductionUrl : apiDevUrl;
 
-const String apiGPTKey = '';
+const String envPath = "assets/.env";
 //const String apiAppUrl = isProduction ? apiProductionUrl : apiDevUrl;
 const String kSignIn = '/auth/sign-in';
 const String kSignUp = '/auth/sign-up';

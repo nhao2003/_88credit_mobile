@@ -152,6 +152,9 @@ dependencies:
   chat_gpt_sdk: ^3.0.4
   dash_chat_2: ^0.0.20
 
+  # dotenv
+  flutter_dotenv: ^5.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -200,6 +203,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/ilustrations/
+    - assets/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
