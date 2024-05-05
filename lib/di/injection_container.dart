@@ -20,10 +20,10 @@ Future<void> initializeDependencies() async {
   // Dio
   sl.registerSingleton<Dio>(Dio());
   // Authentication
-  _initAuth();
+  await _initAuth();
 }
 
-void _initAuth() async {
+Future<void> _initAuth() async {
   // datasource
   sl.registerSingleton<AuthenRemoteDataSrc>(
     AuthenRemoteDataSrcImpl(
