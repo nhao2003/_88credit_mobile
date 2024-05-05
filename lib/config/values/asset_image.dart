@@ -22,6 +22,7 @@ class Assets {
   static const String defaultImage = '$imagePath/default-image.jpg';
   static const String addVideo = '$imagePath/add-video.png';
   static const String notFound = '$imagePath/no-results.png';
+  static const String barcodeScran = '$imagePath/barcode-scan.png';
 
   // icon
   static const String home = '$iconPath/home (1).png';

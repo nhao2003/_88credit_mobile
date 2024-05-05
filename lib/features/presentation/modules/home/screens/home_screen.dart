@@ -168,23 +168,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   UtilCard(
+                    title: "Quét QR",
+                    image: Assets.barcodeScran,
+                    onTap: () {},
+                  ),
+                  UtilCard(
                     title: "Tính lãi suất",
                     image: Assets.financialProfit,
                     onTap: () {},
                   ),
                   UtilCard(
-                    title: "Lịch sử GD",
-                    image: Assets.history,
+                    title: "Hỗ trợ AI",
+                    image: Assets.chatbot,
                     onTap: () {},
                   ),
                   UtilCard(
                     title: "Báo cáo",
                     image: Assets.schedule,
-                    onTap: () {},
-                  ),
-                  UtilCard(
-                    title: "Hỗ trợ",
-                    image: Assets.chatbot,
                     onTap: () {},
                   ),
                 ],
