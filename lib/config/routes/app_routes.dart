@@ -94,4 +94,7 @@ abstract class AppRoutes {
   // QR Code
   static const generateQRCode = '/generateQRCode';
   static const scanQRCode = '/scanQRCode';
+
+  // chat bot
+  static const chatBot = '/chatBot';
 }

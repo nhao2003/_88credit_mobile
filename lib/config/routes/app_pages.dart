@@ -1,5 +1,6 @@
 import 'package:_88credit_mobile/features/presentation/modules/blogs/bloc/blog_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/blogs/screens/blog_detail_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/chat_bot/screens/chat_bot_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/create_request.dart/bloc/create_request_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/create_request.dart/screens/create_request_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/qr_code/bloc/qr_code_bloc.dart';
@@ -11,6 +12,7 @@ import 'package:_88credit_mobile/features/presentation/modules/user_profile/bloc
 import 'package:_88credit_mobile/features/presentation/modules/user_profile/screens/user_profile_screen.dart';
 import '../../core/resources/base_app_pages.dart';
 import '../../features/presentation/modules/blogs/screens/blog_screen.dart';
+import '../../features/presentation/modules/chat_bot/bloc/chat_bot_bloc.dart';
 import '../../features/presentation/modules/contract_detail/screens/contract_detail_screen.dart';
 import '../../features/presentation/modules/account/screens/account_screen.dart';
 import '../../features/presentation/modules/bottom_bar/bloc/bar_bloc.dart';

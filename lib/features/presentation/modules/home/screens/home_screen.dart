@@ -184,7 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   UtilCard(
                     title: "Hỗ trợ AI",
                     image: Assets.chatbot,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AppRoutes.chatBot);
+                    },
                   ),
                   UtilCard(
                     title: "Báo cáo",

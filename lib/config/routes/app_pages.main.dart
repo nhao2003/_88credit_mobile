@@ -109,6 +109,11 @@ class MyAppPages extends AppPages {
         page: const ScanCodeScreen(),
         bloc: BlocProvider(create: (context) => QrCodeBloc()),
       ),
+      PageEntity(
+        path: AppRoutes.chatBot,
+        page: const ChatBotScreen(),
+        bloc: BlocProvider(create: (context) => ChatBotBloc()),
+      ),
     ];
   }
 }

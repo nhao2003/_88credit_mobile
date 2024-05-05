@@ -148,6 +148,10 @@ dependencies:
   mobile_scanner: ^5.1.0
   pretty_qr_code: ^3.3.0
 
+  # Chat bot
+  chat_gpt_sdk: ^3.0.7
+  dash_chat_2: ^0.0.20
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
