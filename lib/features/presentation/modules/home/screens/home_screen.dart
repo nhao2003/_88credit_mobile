@@ -170,12 +170,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   UtilCard(
                     title: "Quét QR",
                     image: Assets.barcodeScran,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AppRoutes.scanQRCode);
+                    },
                   ),
                   UtilCard(
                     title: "Tính lãi suất",
                     image: Assets.financialProfit,
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AppRoutes.generateQRCode);
+                    },
                   ),
                   UtilCard(
                     title: "Hỗ trợ AI",

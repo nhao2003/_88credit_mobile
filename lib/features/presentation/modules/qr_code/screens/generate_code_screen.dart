@@ -8,8 +8,22 @@ class GenerateCodeScreen extends StatefulWidget {
 }
 
 class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
+  String? qrData;
+  
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Generate QR Code'),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Generate QR Code'),
+          ],
+        ),
+      ),
+    );
   }
 }
