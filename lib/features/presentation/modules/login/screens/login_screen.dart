@@ -3,6 +3,7 @@ import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/string_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/bloc/auth_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/login/widgets/fingerprint_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
@@ -178,6 +179,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text('Đăng ký ngay')),
                 ],
               ),
+              const FingerprintPage(),
             ],
           ),
         ),
