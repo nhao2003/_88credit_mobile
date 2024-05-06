@@ -1,0 +1,150 @@
+import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
+import '../../../../core/errors/exceptions.dart';
+import '../../../../core/resources/pair.dart';
+import '../../../../core/utils/typedef.dart';
+import '../../../../di/injection_container.dart';
+import '../../models/contract.dart';
+import '../../models/loan_request.dart';
+import '../../models/post.dart';
+import '../local/authentication_local_data_source.dart';
+
+class DatabaseHelper {
+  ApiException handleLoginException(dynamic e) {
+    if (e is DioException) {
+      if (e.response != null) {
+        return ApiException(
+          message: e.response!.data['message'],
+          statusCode: e.response!.statusCode!,
+        );
+      } else {
+        return ApiException(
+          message:
+              "Something happened in setting up or sending the request that triggered an Error: $e",
+          statusCode: e.response?.statusCode ?? 500,
+        );
+      }
+    } else {
+      return ApiException(message: e.toString(), statusCode: 500);
+    }
+  }
+
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getPosts(
+      String url, Dio client) async {
+    try {
+      final response = await client.get(url);
+      //print('${response.statusCode} : ${response.data["message"].toString()}');
+      if (response.statusCode != 200) {
+        //print('${response.statusCode} : ${response.data["result"].toString()}');
+        throw ApiException(
+          message: response.data,
+          statusCode: response.statusCode!,
+        );
+      }
+
+      final int numOfPages = response.data["num_of_pages"];
+
+      final List<DataMap> taskDataList =
+          List<DataMap>.from(response.data["result"]);
+
+      List<PostModel> posts = [];
+      for (var element in taskDataList) {
+        posts.add(PostModel.fromJson(element));
+      }
+
+      final value = Pair(numOfPages, posts);
+
+      return HttpResponse(value, response);
+    } catch (error) {
+      throw handleLoginException(error);
+    }
+  }
+
+  Future<HttpResponse<Pair<int, List<LoanRequestModel>>>> getRequests(
+      String url, Dio client) async {
+    try {
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 505);
+      }
+
+      final response = await client.get(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      //print('${response.statusCode} : ${response.data["message"].toString()}');
+      if (response.statusCode != 200) {
+        //print('${response.statusCode} : ${response.data["result"].toString()}');
+        throw ApiException(
+          message: response.data,
+          statusCode: response.statusCode!,
+        );
+      }
+
+      final int numOfPages = response.data["num_of_pages"];
+
+      final List<DataMap> taskDataList =
+          List<DataMap>.from(response.data["result"]);
+
+      List<LoanRequestModel> posts = [];
+      for (var element in taskDataList) {
+        posts.add(LoanRequestModel.fromJson(element));
+      }
+
+      final value = Pair(numOfPages, posts);
+
+      return HttpResponse(value, response);
+    } catch (error) {
+      throw handleLoginException(error);
+    }
+  }
+
+  Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
+      String url, Dio client) async {
+    try {
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 505);
+      }
+
+      final response = await client.get(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      //print('${response.statusCode} : ${response.data["message"].toString()}');
+      if (response.statusCode != 200) {
+        //print('${response.statusCode} : ${response.data["result"].toString()}');
+        throw ApiException(
+          message: response.data,
+          statusCode: response.statusCode!,
+        );
+      }
+
+      final int numOfPages = response.data["num_of_pages"];
+
+      final List<DataMap> taskDataList =
+          List<DataMap>.from(response.data["result"]);
+
+      List<ContractModel> posts = [];
+      for (var element in taskDataList) {
+        posts.add(ContractModel.fromJson(element));
+      }
+
+      final value = Pair(numOfPages, posts);
+
+      return HttpResponse(value, response);
+    } catch (error) {
+      throw handleLoginException(error);
+    }
+  }
+}

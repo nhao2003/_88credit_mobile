@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/core/errors/exceptions.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/resources/data_state.dart';
@@ -48,10 +49,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         status: AuthStatus.failure,
         failureMessage: "Can't login",
       ));
-    } catch (e) {
+    } on ApiException catch (e) {
       emit(state.copyWith(
         status: AuthStatus.failure,
-        failureMessage: e.toString(),
+        failureMessage: e.message,
       ));
     }
   }

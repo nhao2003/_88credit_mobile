@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/features/data/datasources/db/database_helper.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -46,9 +47,6 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
   Future<HttpResponse<Map<String, String>>> login(
       String email, String password) async {
     const url = '$apiUrl$kSignIn';
-    print(email);
-    print(password);
-    print(url);
     try {
       // Gửi yêu cầu đăng nhập
       final response = await client.post(
@@ -62,10 +60,8 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
           statusCode: response.statusCode!,
         );
       }
-
       // Nếu yêu cầu thành công, giải mã dữ liệu JSON
       final DataMap data = DataMap.from(response.data["data"]);
-      print(data['accessToken']);
 
       // Lấy AccessToken và RefreshToken từ dữ liệu giải mã
       String accessToken = data['accessToken'];
@@ -78,10 +74,8 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       };
 
       return HttpResponse(value, response);
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw DatabaseHelper().handleLoginException(e);
     }
   }
 
@@ -122,10 +116,8 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       String accessToken = data['access_token'];
 
       return HttpResponse(accessToken, response);
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw DatabaseHelper().handleLoginException(e);
     }
   }
 
@@ -159,10 +151,8 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       }
 
       return HttpResponse(null, response);
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw DatabaseHelper().handleLoginException(e);
     }
   }
 
@@ -206,39 +196,42 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
         message: e.message!,
         statusCode: e.response?.statusCode ?? 505,
       );
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw DatabaseHelper().handleLoginException(e);
     }
   }
 
   @override
   Future<HttpResponse<UserModel>> getMe() {
     const url = '$apiUrl$kGetMe';
-    AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
-    String? accessToken = localDataSrc.getAccessToken();
-    if (accessToken == null) {
-      throw const ApiException(
-          message: 'Access token is null', statusCode: 505);
-    }
-    return client
-        .get(url,
-            options: Options(headers: {'Authorization': 'Bearer $accessToken'}))
-        .then((response) {
-      if (response.statusCode != 200) {
-        throw ApiException(
-          message: response.data['message'],
-          statusCode: response.statusCode!,
-        );
+    try {
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 505);
       }
+      return client
+          .get(url,
+              options:
+                  Options(headers: {'Authorization': 'Bearer $accessToken'}))
+          .then((response) {
+        if (response.statusCode != 200) {
+          throw ApiException(
+            message: response.data['message'],
+            statusCode: response.statusCode!,
+          );
+        }
 
-      // Nếu yêu cầu thành công, giải mã dữ liệu JSON
-      final DataMap data = DataMap.from(response.data["result"]);
+        // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+        final DataMap data = DataMap.from(response.data["result"]);
 
-      UserModel user = UserModel.fromJson(data);
+        UserModel user = UserModel.fromJson(data);
 
-      return HttpResponse(user, response);
-    });
+        return HttpResponse(user, response);
+      });
+    } catch (e) {
+      throw DatabaseHelper().handleLoginException(e);
+    }
   }
 }

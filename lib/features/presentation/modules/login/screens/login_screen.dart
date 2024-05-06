@@ -39,6 +39,12 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
+  void onLogin(BuildContext ctx) {
+    if (loginFormGlobalKey.currentState!.validate()) {
+      ctx.read<AuthBloc>().add(AuthLogin(loginEmail.text, loginPassword.text));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,25 +151,15 @@ class _LoginScreenState extends State<LoginScreen> {
               // button login
               BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
-                  void onLogin() {
-                    if (loginFormGlobalKey.currentState!.validate()) {
-                      context
-                          .read<AuthBloc>()
-                          .add(AuthLogin(loginEmail.text, loginPassword.text));
-
-                      if (state.status == AuthStatus.success) {
-                        if (!context.mounted) return;
-                        context.snackBar('Đăng nhập thành công!');
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          AppRoutes.bottomBar,
-                          (Route<dynamic> route) => false,
-                        );
-                      } else if (state.status == AuthStatus.failure) {
-                        if (!context.mounted) return;
-                        context.snackBar(state.failureMessage,
-                            type: AnimatedSnackBarType.error);
-                      }
-                    }
+                  if (state.status == AuthStatus.success) {
+                    context.snackBar('Đăng nhập thành công!');
+                    // Navigator.of(context).pushNamedAndRemoveUntil(
+                    //   AppRoutes.bottomBar,
+                    //   (Route<dynamic> route) => false,
+                    // );
+                  } else if (state.status == AuthStatus.failure) {
+                    context.snackBar(state.failureMessage,
+                        type: AnimatedSnackBarType.error);
                   }
 
                   return SizedBox(
@@ -174,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: state.status == AuthStatus.loading
                                 ? null
-                                : onLogin,
+                                : () => onLogin(context),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.green,
                               padding: const EdgeInsets.symmetric(vertical: 15),
