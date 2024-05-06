@@ -12,6 +12,6 @@ class CheckAccessTokenUseCase implements UseCase<DataState<bool>, void> {
   Future<DataState<bool>> call({void params}) async {
     // final result = await _authenRepository.refreshNewAccessToken();
     final result = _authenRepository.checkAccessTokenIsValid();
-    return result;
+    return const DataSuccess(false);
   }
 }

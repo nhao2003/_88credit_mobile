@@ -4,16 +4,27 @@ import '../../../../config/values/asset_image.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../di/injection_container.dart';
 import '../../../domain/usecases/authentication/check_access_token.dart';
+import '../../../domain/usecases/authentication/check_refresh_token.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   Future<bool> _checkIsLogin() async {
-    bool isLogin = false;
+    // check access token
     CheckAccessTokenUseCase checkTokenUseCase = sl<CheckAccessTokenUseCase>();
     final dataState = await checkTokenUseCase();
-    if (dataState is DataSuccess && dataState.data == true) isLogin = true;
-    return isLogin;
+    if (dataState is DataSuccess && dataState.data == true) return true;
+
+    // check Refresh token
+    CheckRefreshTokenUseCase checkRefreshTokenUseCase =
+        sl<CheckRefreshTokenUseCase>();
+    final dataStateRefresh = await checkRefreshTokenUseCase();
+    if (!(dataStateRefresh is DataSuccess && dataStateRefresh.data == true)) {
+      return false;
+    }
+    // refresh access token
+
+    return false;
   }
 
   void checkLogin(BuildContext context) {
