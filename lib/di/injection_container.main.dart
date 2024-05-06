@@ -32,8 +32,14 @@ Future<void> _initAuth() async {
     ),
   );
   // use cases
-  sl.registerSingleton<CheckTokenUseCase>(
-    CheckTokenUseCase(
+  sl.registerSingleton<CheckAccessTokenUseCase>(
+    CheckAccessTokenUseCase(
+      sl<AuthenticationRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<CheckRefreshTokenUseCase>(
+    CheckRefreshTokenUseCase(
       sl<AuthenticationRepository>(),
     ),
   );

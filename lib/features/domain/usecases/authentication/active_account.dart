@@ -9,7 +9,7 @@ class CheckActiveTokenUseCase implements UseCaseSync<DataState<bool>, void> {
 
   @override
   DataState<bool> call({void params}) {
-    final data = _authenRepository.checkActiveToken();
+    final data = _authenRepository.checkAccessTokenIsValid();
     return data;
   }
 }

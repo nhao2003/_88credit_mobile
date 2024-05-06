@@ -40,9 +40,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  DataState<bool> checkActiveToken() {
+  DataState<bool> checkAccessTokenIsValid() {
     try {
       String? accessToken = _dataLocalSrc.getAccessToken();
+      print("accessTone: $accessToken");
       if (accessToken != "" &&
           JwtDecoder.isExpired(accessToken ?? "") == false) {
         return const DataSuccess(true);
@@ -57,6 +58,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   DataState<bool> checkRefreshTokenIsValid() {
     try {
       String? refreshToken = _dataLocalSrc.getRefreshToken();
+      print("refresh: $refreshToken");
       if (refreshToken != "" &&
           JwtDecoder.isExpired(refreshToken ?? "") == false) {
         return const DataSuccess(true);
