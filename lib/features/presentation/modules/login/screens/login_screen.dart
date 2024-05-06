@@ -153,10 +153,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 builder: (context, state) {
                   if (state.status == AuthStatus.success) {
                     context.snackBar('Đăng nhập thành công!');
-                    // Navigator.of(context).pushNamedAndRemoveUntil(
-                    //   AppRoutes.bottomBar,
-                    //   (Route<dynamic> route) => false,
-                    // );
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRoutes.bottomBar,
+                      (Route<dynamic> route) => false,
+                    );
                   } else if (state.status == AuthStatus.failure) {
                     context.snackBar(state.failureMessage,
                         type: AnimatedSnackBarType.error);

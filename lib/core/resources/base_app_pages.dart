@@ -18,7 +18,9 @@ class AppPages extends BaseAppPages {
   List<dynamic> blocer(BuildContext context) {
     List<dynamic> blocerList = [];
     pages().forEach((element) {
-      blocerList.add(element.bloc);
+      if (element.bloc != null) {
+        blocerList.add(element.bloc);
+      }
     });
     return blocerList;
   }

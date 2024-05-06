@@ -1,6 +1,6 @@
 abstract class AppRoutes {
   // splashScreen
-  static const splashScreen = '/splashScreen';
+  static const splash = '/splash';
 
   // error
   static const error = '/error';

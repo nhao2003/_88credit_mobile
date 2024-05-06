@@ -5,6 +5,11 @@ class MyAppPages extends AppPages {
   List<PageEntity> pages() {
     return [
       PageEntity(
+        path: AppRoutes.splash,
+        page: const SplashScreen(),
+        bloc: null,
+      ),
+      PageEntity(
         path: AppRoutes.login,
         page: const LoginScreen(),
         bloc: BlocProvider(create: (context) => AuthBloc()),

@@ -8,6 +8,7 @@ import 'package:_88credit_mobile/features/presentation/modules/qr_code/screens/g
 import 'package:_88credit_mobile/features/presentation/modules/qr_code/screens/scan_code_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/bloc/request_detail_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/screens/request_detail_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/splash/splash_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/user_profile/bloc/user_profile_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/user_profile/screens/user_profile_screen.dart';
 import '../../core/resources/base_app_pages.dart';
