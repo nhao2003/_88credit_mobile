@@ -10,25 +10,6 @@ import '../../models/post.dart';
 import '../local/authentication_local_data_source.dart';
 
 class DatabaseHelper {
-  ApiException handleLoginException(dynamic e) {
-    if (e is DioException) {
-      if (e.response != null) {
-        return ApiException(
-          message: e.response!.data['message'],
-          statusCode: e.response!.statusCode!,
-        );
-      } else {
-        return ApiException(
-          message:
-              "Something happened in setting up or sending the request that triggered an Error: $e",
-          statusCode: e.response?.statusCode ?? 500,
-        );
-      }
-    } else {
-      return ApiException(message: e.toString(), statusCode: 500);
-    }
-  }
-
   Future<HttpResponse<Pair<int, List<PostModel>>>> getPosts(
       String url, Dio client) async {
     try {
@@ -56,7 +37,7 @@ class DatabaseHelper {
 
       return HttpResponse(value, response);
     } catch (error) {
-      throw handleLoginException(error);
+      throw ErrorHelpers.handleException(error);
     }
   }
 
@@ -100,7 +81,7 @@ class DatabaseHelper {
 
       return HttpResponse(value, response);
     } catch (error) {
-      throw handleLoginException(error);
+      throw ErrorHelpers.handleException(error);
     }
   }
 
@@ -144,7 +125,7 @@ class DatabaseHelper {
 
       return HttpResponse(value, response);
     } catch (error) {
-      throw handleLoginException(error);
+      throw ErrorHelpers.handleException(error);
     }
   }
 }

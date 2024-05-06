@@ -1,4 +1,3 @@
-import 'package:_88credit_mobile/features/data/datasources/db/database_helper.dart';
 import 'package:dio/dio.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -53,7 +52,6 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
         url,
         data: {'email': email, 'password': password},
       );
-      print(response.data);
       if (response.statusCode != 200) {
         throw ApiException(
           message: response.data,
@@ -75,7 +73,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
 
       return HttpResponse(value, response);
     } catch (e) {
-      throw DatabaseHelper().handleLoginException(e);
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -117,7 +115,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
 
       return HttpResponse(accessToken, response);
     } catch (e) {
-      throw DatabaseHelper().handleLoginException(e);
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -152,7 +150,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
 
       return HttpResponse(null, response);
     } catch (e) {
-      throw DatabaseHelper().handleLoginException(e);
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -197,7 +195,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
         statusCode: e.response?.statusCode ?? 505,
       );
     } catch (e) {
-      throw DatabaseHelper().handleLoginException(e);
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -231,7 +229,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
         return HttpResponse(user, response);
       });
     } catch (e) {
-      throw DatabaseHelper().handleLoginException(e);
+      throw ErrorHelpers.handleException(e);
     }
   }
 }
