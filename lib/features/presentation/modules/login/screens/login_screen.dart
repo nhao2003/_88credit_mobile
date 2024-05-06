@@ -152,11 +152,14 @@ class _LoginScreenState extends State<LoginScreen> {
               BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
                   if (state.status == AuthStatus.success) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      // Add Your Code here.
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        AppRoutes.bottomBar,
+                        (Route<dynamic> route) => false,
+                      );
+                    });
                     context.snackBar('Đăng nhập thành công!');
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      AppRoutes.bottomBar,
-                      (Route<dynamic> route) => false,
-                    );
                   } else if (state.status == AuthStatus.failure) {
                     context.snackBar(state.failureMessage,
                         type: AnimatedSnackBarType.error);

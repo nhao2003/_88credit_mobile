@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/core/utils/hash_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:local_auth/local_auth.dart';
@@ -56,7 +57,16 @@ class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
 
   @override
   String? getRefreshToken() {
-    return getSharedPreferencesValue('refreshToken');
+    try {
+      String? encodeToken = getSharedPreferencesValue('refreshToken');
+      print("Token lay storage: $encodeToken");
+      String refreshToken = HashUtils.decodeBase64ToString(encodeToken!);
+      print("Token truoc khi lưu: $refreshToken ");
+      return refreshToken;
+    } catch (error) {
+      throw SharedPreferencesException(
+          message: error.toString(), statusCode: 1000);
+    }
   }
 
   @override
@@ -66,7 +76,15 @@ class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
 
   @override
   Future<void> storeRefreshToken(String refreshToken) async {
-    setSharedPreferencesValue('refreshToken', refreshToken);
+    try {
+      print("Token truoc khi hash: $refreshToken");
+      String encodedToken = HashUtils.encodeStringToBase64(refreshToken);
+      print("Token truoc khi lưu: $encodedToken ");
+      setSharedPreferencesValue('refreshToken', encodedToken);
+    } catch (error) {
+      throw SharedPreferencesException(
+          message: error.toString(), statusCode: 1000);
+    }
   }
 
   @override
