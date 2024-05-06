@@ -1,5 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/resources/data_state.dart';
+import '../../../../../di/injection_container.dart';
+import '../../../../domain/usecases/authentication/sign_in.dart';
 part 'auth_event.dart';
 part 'auth_state.dart';
 
@@ -29,10 +32,28 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(state.copyWith(status: AuthStatus.loading));
-    print("email: ${event.email}");
-    print("password: ${event.password}");
-    await Future.delayed(const Duration(seconds: 1));
-    emit(state.copyWith(status: AuthStatus.success));
+    try {
+      final SignInUseCase signInUseCase = sl<SignInUseCase>();
+      Map<String, dynamic>? params = {
+        "email": event.email,
+        "password": event.password,
+      };
+
+      final dataState = await signInUseCase(params: params);
+
+      if (dataState is DataSuccess) {
+        return emit(state.copyWith(status: AuthStatus.success));
+      }
+      return emit(state.copyWith(
+        status: AuthStatus.failure,
+        failureMessage: "Can't login",
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: AuthStatus.failure,
+        failureMessage: e.toString(),
+      ));
+    }
   }
 
   void _onAuthSignup(

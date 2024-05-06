@@ -1,8 +1,9 @@
-const ipConfig = "192.168.139.225";
-const bool isProduction = true;
-const String apiDevUrl = "http://$ipConfig:8000/api/v1";
-const String apiProductionUrl = "https://eight8credit.onrender.com/api/v1";
+const ipConfig = "172.17.13.78";
+const bool isProduction = false;
+const String apiDevUrl = "http://$ipConfig:8080";
+const String apiProductionUrl = "https://eight8credit.onrender.com";
 const String apiUrl = isProduction ? apiProductionUrl : apiDevUrl;
+// http://localhost:8080/auth/sign-in
 
 const String envPath = "assets/.env";
 //const String apiAppUrl = isProduction ? apiProductionUrl : apiDevUrl;

@@ -19,7 +19,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<DataState<void>> signIn(String email, String password) async {
     try {
       final httpResponse = await _dataRemoteSrc.login(email, password);
-
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         String accessToken = httpResponse.data['accessToken']!;
         String refreshToken = httpResponse.data['refreshToken']!;

@@ -46,12 +46,16 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
   Future<HttpResponse<Map<String, String>>> login(
       String email, String password) async {
     const url = '$apiUrl$kSignIn';
+    print(email);
+    print(password);
+    print(url);
     try {
       // Gửi yêu cầu đăng nhập
       final response = await client.post(
         url,
         data: {'email': email, 'password': password},
       );
+      print(response.data);
       if (response.statusCode != 200) {
         throw ApiException(
           message: response.data,
@@ -60,11 +64,12 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       }
 
       // Nếu yêu cầu thành công, giải mã dữ liệu JSON
-      final DataMap data = DataMap.from(response.data["result"]);
+      final DataMap data = DataMap.from(response.data["data"]);
+      print(data['accessToken']);
 
       // Lấy AccessToken và RefreshToken từ dữ liệu giải mã
-      String accessToken = data['access_token'];
-      String refreshToken = data['refresh_token'];
+      String accessToken = data['accessToken'];
+      String refreshToken = data['refreshToken'];
 
       // Trả về AccessToken và RefreshToken
       Map<String, String> value = {

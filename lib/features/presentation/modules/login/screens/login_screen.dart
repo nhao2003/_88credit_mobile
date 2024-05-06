@@ -1,9 +1,11 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
+import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/string_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/bloc/auth_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/widgets/fingerprint_button.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
@@ -143,6 +145,27 @@ class _LoginScreenState extends State<LoginScreen> {
               // button login
               BlocBuilder<AuthBloc, AuthState>(
                 builder: (context, state) {
+                  void onLogin() {
+                    if (loginFormGlobalKey.currentState!.validate()) {
+                      context
+                          .read<AuthBloc>()
+                          .add(AuthLogin(loginEmail.text, loginPassword.text));
+
+                      if (state.status == AuthStatus.success) {
+                        if (!context.mounted) return;
+                        context.snackBar('Đăng nhập thành công!');
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          AppRoutes.bottomBar,
+                          (Route<dynamic> route) => false,
+                        );
+                      } else if (state.status == AuthStatus.failure) {
+                        if (!context.mounted) return;
+                        context.snackBar(state.failureMessage,
+                            type: AnimatedSnackBarType.error);
+                      }
+                    }
+                  }
+
                   return SizedBox(
                     width: 100.wp,
                     child: Row(
@@ -151,19 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: ElevatedButton(
                             onPressed: state.status == AuthStatus.loading
                                 ? null
-                                : () {
-                                    if (loginFormGlobalKey.currentState!
-                                        .validate()) {
-                                      context.read<AuthBloc>().add(AuthLogin(
-                                          loginEmail.text, loginPassword.text));
-                                    }
-                                    // if (!context.mounted) return;
-                                    // Navigator.of(context)
-                                    //     .pushNamedAndRemoveUntil(
-                                    //   AppRoutes.bottomBar,
-                                    //   (Route<dynamic> route) => false,
-                                    // );
-                                  },
+                                : onLogin,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: AppColors.green,
                               padding: const EdgeInsets.symmetric(vertical: 15),
