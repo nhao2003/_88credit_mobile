@@ -100,13 +100,14 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         _typingUsers.remove(_gptChatUser);
       });
     } catch (e) {
+      setState(() {
+        _typingUsers.remove(_gptChatUser);
+      });
+      if (!mounted) return;
       context.snackBar(
         e.toString(),
         type: AnimatedSnackBarType.error,
       );
-      setState(() {
-        _typingUsers.remove(_gptChatUser);
-      });
     }
   }
 }

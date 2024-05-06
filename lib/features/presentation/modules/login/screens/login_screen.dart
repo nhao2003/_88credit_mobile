@@ -141,38 +141,52 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               // button login
-              SizedBox(
-                width: 100.wp,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        // controller.isLoading.value
-                        //     ? null
-                        //     : () {
-                        //         controller.handleLogin();
-                        //         //Get.toNamed(AppRoutes.bottomBar);
-                        //       },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.green,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          textStyle: const TextStyle(color: AppColors.white),
-                          elevation: 10,
-                          minimumSize: Size(100.wp, 55),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return SizedBox(
+                    width: 100.wp,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: state.status == AuthStatus.loading
+                                ? null
+                                : () {
+                                    if (loginFormGlobalKey.currentState!
+                                        .validate()) {
+                                      context.read<AuthBloc>().add(AuthLogin(
+                                          loginEmail.text, loginPassword.text));
+                                    }
+                                    // if (!context.mounted) return;
+                                    // Navigator.of(context)
+                                    //     .pushNamedAndRemoveUntil(
+                                    //   AppRoutes.bottomBar,
+                                    //   (Route<dynamic> route) => false,
+                                    // );
+                                  },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.green,
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              textStyle:
+                                  const TextStyle(color: AppColors.white),
+                              elevation: 10,
+                              minimumSize: Size(100.wp, 55),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: Text(
+                              'Đăng nhập',
+                              style:
+                                  AppTextStyles.bold14.colorEx(AppColors.white),
+                            ),
                           ),
                         ),
-                        child: Text(
-                          'Đăng nhập',
-                          style: AppTextStyles.bold14.colorEx(AppColors.white),
-                        ),
-                      ),
+                        FingerprintButton(),
+                      ],
                     ),
-                    FingerprintButton(),
-                  ],
-                ),
+                  );
+                },
               ),
               const SizedBox(height: 20),
               Row(
