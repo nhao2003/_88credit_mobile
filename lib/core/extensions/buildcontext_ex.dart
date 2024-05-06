@@ -16,8 +16,8 @@ extension BuildContextX on BuildContext {
   void snackBar(String message,
       {AnimatedSnackBarType? type = AnimatedSnackBarType.success}) {
     return AnimatedSnackBar.material(
-      "Đã copy",
-      type: AnimatedSnackBarType.success,
+      message,
+      type: type ?? AnimatedSnackBarType.success,
       animationDuration: const Duration(milliseconds: 800),
       duration: const Duration(seconds: 2),
       animationCurve: Curves.bounceOut,

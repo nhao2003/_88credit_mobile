@@ -1,5 +1,7 @@
 import 'package:_88credit_mobile/config/theme/app_color.dart';
+import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
+import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
@@ -58,43 +60,53 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   }
 
   Future<void> getChatResponse(ChatMessage message) async {
-    setState(() {
-      _messages.insert(0, message);
-      _typingUsers.add(_gptChatUser);
-    });
+    try {
+      setState(() {
+        _messages.insert(0, message);
+        _typingUsers.add(_gptChatUser);
+      });
 
-    List<Map<String, dynamic>> messagesHistory = _messages.reversed.map((m) {
-      if (m.user == _currentUser) {
-        return Messages(role: Role.user, content: m.text).toJson();
-      } else {
-        return Messages(role: Role.assistant, content: m.text).toJson();
+      List<Map<String, dynamic>> messagesHistory = _messages.reversed.map((m) {
+        if (m.user == _currentUser) {
+          return Messages(role: Role.user, content: m.text).toJson();
+        } else {
+          return Messages(role: Role.assistant, content: m.text).toJson();
+        }
+      }).toList();
+
+      final request = ChatCompleteText(
+        model: GptTurbo0301ChatModel(),
+        messages: messagesHistory,
+        maxToken: 200,
+      );
+
+      final response = await _openAI.onChatCompletion(request: request);
+      for (final element in response!.choices) {
+        if (element.message != null) {
+          setState(() {
+            _messages.insert(
+              0,
+              ChatMessage(
+                user: _gptChatUser,
+                text: element.message!.content,
+                createdAt: DateTime.now(),
+              ),
+            );
+          });
+        }
       }
-    }).toList();
 
-    final request = ChatCompleteText(
-      model: GptTurbo0301ChatModel(),
-      messages: messagesHistory,
-      maxToken: 200,
-    );
-
-    final response = await _openAI.onChatCompletion(request: request);
-    for (final element in response!.choices) {
-      if (element.message != null) {
-        setState(() {
-          _messages.insert(
-            0,
-            ChatMessage(
-              user: _gptChatUser,
-              text: element.message!.content,
-              createdAt: DateTime.now(),
-            ),
-          );
-        });
-      }
+      setState(() {
+        _typingUsers.remove(_gptChatUser);
+      });
+    } catch (e) {
+      context.snackBar(
+        e.toString(),
+        type: AnimatedSnackBarType.error,
+      );
+      setState(() {
+        _typingUsers.remove(_gptChatUser);
+      });
     }
-
-    setState(() {
-      _typingUsers.remove(_gptChatUser);
-    });
   }
 }
