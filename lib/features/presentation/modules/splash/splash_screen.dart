@@ -13,15 +13,15 @@ class SplashScreen extends StatelessWidget {
     // check access token
     CheckAccessTokenUseCase checkTokenUseCase = sl<CheckAccessTokenUseCase>();
     final dataState = await checkTokenUseCase();
-    if (dataState is DataSuccess && dataState.data == true) return true;
+    if (dataState is DataSuccess && dataState.data == true) return false;
 
     // check Refresh token
-    CheckRefreshTokenUseCase checkRefreshTokenUseCase =
-        sl<CheckRefreshTokenUseCase>();
-    final dataStateRefresh = await checkRefreshTokenUseCase();
-    if (!(dataStateRefresh is DataSuccess && dataStateRefresh.data == true)) {
-      return false;
-    }
+    // CheckRefreshTokenUseCase checkRefreshTokenUseCase =
+    //     sl<CheckRefreshTokenUseCase>();
+    // final dataStateRefresh = await checkRefreshTokenUseCase();
+    // if (!(dataStateRefresh is DataSuccess && dataStateRefresh.data == true)) {
+    //   return false;
+    // }
     // refresh access token
 
     return false;

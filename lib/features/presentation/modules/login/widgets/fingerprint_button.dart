@@ -3,6 +3,8 @@ import 'package:_88credit_mobile/config/theme/app_color.dart';
 import 'package:_88credit_mobile/di/injection_container.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../core/resources/data_state.dart';
+import '../../../../domain/usecases/authentication/check_refresh_token.dart';
 import '../../../../domain/usecases/authentication/get_authen_biometrics.dart';
 
 class FingerprintButton extends StatelessWidget {
@@ -20,6 +22,15 @@ class FingerprintButton extends StatelessWidget {
           final isAuthenticated = await getAuthenticateBiometrics();
 
           if (isAuthenticated) {
+            // check Refresh token
+            CheckRefreshTokenUseCase checkRefreshTokenUseCase =
+                sl<CheckRefreshTokenUseCase>();
+            final dataStateRefresh = await checkRefreshTokenUseCase();
+            if (!(dataStateRefresh is DataSuccess &&
+                dataStateRefresh.data == true)) {
+              return;
+            }
+
             if (!context.mounted) return;
             Navigator.of(context).pushNamedAndRemoveUntil(
               AppRoutes.bottomBar,
