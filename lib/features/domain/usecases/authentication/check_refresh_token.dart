@@ -11,7 +11,7 @@ class CheckRefreshTokenUseCase implements UseCase<DataState<bool>, void> {
   @override
   Future<DataState<bool>> call({void params}) async {
     // final result = await _authenRepository.refreshNewAccessToken();
-    final result = _authenRepository.checkRefreshTokenIsValid();
+    final result = await _authenRepository.checkRefreshTokenIsValid();
     return result;
   }
 }

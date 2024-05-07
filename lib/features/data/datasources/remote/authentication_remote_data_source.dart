@@ -82,7 +82,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
     const url = '$apiUrl$kRefreshToken';
     try {
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
-      String? refreshToken = localDataSrc.getRefreshToken();
+      String? refreshToken = await localDataSrc.getRefreshToken();
 
       if (refreshToken == null) {
         throw const ApiException(

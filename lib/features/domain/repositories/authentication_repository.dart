@@ -15,7 +15,7 @@ abstract class AuthenticationRepository {
   // Local
   DataState<String> getAccessToken();
   DataState<bool> checkAccessTokenIsValid();
-  DataState<bool> checkRefreshTokenIsValid();
+  Future<DataState<bool>> checkRefreshTokenIsValid();
   Future<DataState<void>> refreshNewAccessToken();
   DataState<String> getUserId();
 

@@ -44,8 +44,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     try {
       String? accessToken = _dataLocalSrc.getAccessToken();
       print("accessTone: $accessToken");
-      if (accessToken != "" &&
-          JwtDecoder.isExpired(accessToken ?? "") == false) {
+      if (accessToken == null) return const DataSuccess(false);
+      if (JwtDecoder.isExpired(accessToken) == false) {
         return const DataSuccess(true);
       }
       return const DataSuccess(false);
@@ -55,12 +55,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  DataState<bool> checkRefreshTokenIsValid() {
+  Future<DataState<bool>> checkRefreshTokenIsValid() async {
     try {
-      String? refreshToken = _dataLocalSrc.getRefreshToken();
+      String? refreshToken = await _dataLocalSrc.getRefreshToken();
       print("refresh: $refreshToken");
-      if (refreshToken != "" &&
-          JwtDecoder.isExpired(refreshToken ?? "") == false) {
+      if (refreshToken == null) return const DataSuccess(false);
+      if (JwtDecoder.isExpired(refreshToken) == false) {
         return const DataSuccess(true);
       }
       return const DataSuccess(false);
@@ -72,7 +72,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<DataState<void>> refreshNewAccessToken() async {
     try {
-      final refreshToken = _dataLocalSrc.getRefreshToken();
+      final refreshToken = await _dataLocalSrc.getRefreshToken();
       final httpResponse = await _dataRemoteSrc.refreshToken(refreshToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         String accessToken = httpResponse.data;
@@ -189,7 +189,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<DataState<void>> signInWithToken() async {
-    final refreshToken = _dataLocalSrc.getRefreshToken();
+    final refreshToken = await _dataLocalSrc.getRefreshToken();
     if (JwtDecoder.isExpired(refreshToken ?? "") == false) {
       final result = await refreshNewAccessToken();
       if (result is DataSuccess) {

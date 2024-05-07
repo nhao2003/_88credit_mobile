@@ -26,7 +26,6 @@ class ContractModel extends ContractEntity {
   });
 
   factory ContractModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     return ContractModel(
       id: json['id'],
       loanContractRequestId: json['loan_contract_request_id'],

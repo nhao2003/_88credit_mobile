@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/core/utils/device_info.dart';
 import 'package:_88credit_mobile/core/utils/hash_utils.dart';
 import 'package:flutter/services.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -8,7 +9,7 @@ import '../../../../core/errors/exceptions.dart';
 abstract class AuthenLocalDataSrc {
   Future<void> storeRefreshToken(String refreshToken);
   Future<void> storeAccessToken(String accessToken);
-  String? getRefreshToken();
+  Future<String?> getRefreshToken();
   String? getAccessToken();
   Future<void> deleteRefreshToken();
   Future<void> deleteAccessToken();
@@ -56,12 +57,16 @@ class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
   }
 
   @override
-  String? getRefreshToken() {
+  Future<String?> getRefreshToken() async {
     try {
       String? encodeToken = getSharedPreferencesValue('refreshToken');
-      print("Token lay storage: $encodeToken");
-      String refreshToken = HashUtils.decodeBase64ToString(encodeToken!);
-      print("Token truoc khi lưu: $refreshToken ");
+      if (encodeToken == null) return null;
+      print("encodeRefreshToken after: $encodeToken");
+      String? deviceID = await DeviceInfo.getDeviceID();
+      print("deviceID after: $deviceID");
+      String refreshToken =
+          HashUtils.decode(encodeToken, password: deviceID ?? "");
+      print("refreshToken after: $refreshToken");
       return refreshToken;
     } catch (error) {
       throw SharedPreferencesException(
@@ -77,9 +82,12 @@ class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
   @override
   Future<void> storeRefreshToken(String refreshToken) async {
     try {
-      print("Token truoc khi hash: $refreshToken");
-      String encodedToken = HashUtils.encodeStringToBase64(refreshToken);
-      print("Token truoc khi lưu: $encodedToken ");
+      print("refreshToken before: $refreshToken");
+      String? deviceID = await DeviceInfo.getDeviceID();
+      print("deviceID before: $deviceID");
+      String encodedToken =
+          HashUtils.encode(refreshToken, password: deviceID ?? "");
+      print("encodeRefreshToken before: $encodedToken");
       setSharedPreferencesValue('refreshToken', encodedToken);
     } catch (error) {
       throw SharedPreferencesException(
