@@ -114,7 +114,7 @@ class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
             message: "Token is expired", statusCode: 500);
       }
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-      return decodedToken["user_id"];
+      return decodedToken["userId"];
     } catch (error) {
       throw SharedPreferencesException(
           message: error.toString(), statusCode: 500);

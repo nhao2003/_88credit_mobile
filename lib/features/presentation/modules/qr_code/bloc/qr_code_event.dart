@@ -15,3 +15,7 @@ class GenerateQrCode extends QrCodeEvent {
   @override
   List<Object> get props => [qrData];
 }
+
+class GetUserId extends QrCodeEvent {
+  const GetUserId();
+}
