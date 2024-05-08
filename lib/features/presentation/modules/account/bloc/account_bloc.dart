@@ -1,5 +1,9 @@
+import 'package:_88credit_mobile/core/errors/exceptions.dart';
+import 'package:_88credit_mobile/features/domain/usecases/authentication/sign_out.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/resources/data_state.dart';
+import '../../../../../di/injection_container.dart';
 import '../../../../domain/entities/user.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
@@ -50,7 +54,22 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     Emitter<AccountState> emit,
   ) async {
     emit(state.copyWith(signoutStatus: SignoutStatus.loading));
-    await Future.delayed(const Duration(seconds: 2));
-    emit(state.copyWith(signoutStatus: SignoutStatus.success));
+    // await Future.delayed(const Duration(seconds: 2));
+    final SignOutUseCase signOutUseCase = sl<SignOutUseCase>();
+    try {
+      final dataState = await signOutUseCase();
+      if (dataState is DataSuccess) {
+        return emit(state.copyWith(signoutStatus: SignoutStatus.success));
+      }
+      return emit(state.copyWith(
+        signoutStatus: SignoutStatus.failure,
+        signoutError: "Can't signout",
+      ));
+    } on ApiException catch (e) {
+      emit(state.copyWith(
+        signoutStatus: SignoutStatus.failure,
+        signoutError: e.message,
+      ));
+    }
   }
 }

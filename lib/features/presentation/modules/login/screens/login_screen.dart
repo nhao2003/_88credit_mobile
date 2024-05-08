@@ -5,7 +5,6 @@ import 'package:_88credit_mobile/core/extensions/string_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/bloc/auth_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/login/widgets/fingerprint_button.dart';
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
@@ -162,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     context.snackBar('Đăng nhập thành công!');
                   } else if (state.status == AuthStatus.failure) {
                     context.snackBar(state.failureMessage,
-                        type: AnimatedSnackBarType.error);
+                        type: SnackBarType.error);
                   }
 
                   return SizedBox(

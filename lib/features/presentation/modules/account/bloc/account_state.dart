@@ -10,6 +10,7 @@ final class AccountState extends Equatable {
   final UserEntity user;
   final int servicePack;
   final bool isIdentity;
+  final String signoutError;
 
   const AccountState({
     this.signoutStatus = SignoutStatus.initial,
@@ -17,6 +18,7 @@ final class AccountState extends Equatable {
     this.user = const UserEntity(),
     this.servicePack = 0,
     this.isIdentity = false,
+    this.signoutError = '',
   });
 
   AccountState copyWith({
@@ -25,6 +27,7 @@ final class AccountState extends Equatable {
     UserEntity? user,
     int? servicePack,
     bool? isIdentity,
+    String? signoutError,
   }) {
     return AccountState(
       signoutStatus: signoutStatus ?? this.signoutStatus,
@@ -32,6 +35,7 @@ final class AccountState extends Equatable {
       user: user ?? this.user,
       servicePack: servicePack ?? this.servicePack,
       isIdentity: isIdentity ?? this.isIdentity,
+      signoutError: signoutError ?? this.signoutError,
     );
   }
 
@@ -42,5 +46,6 @@ final class AccountState extends Equatable {
         user,
         servicePack,
         isIdentity,
+        signoutError,
       ];
 }

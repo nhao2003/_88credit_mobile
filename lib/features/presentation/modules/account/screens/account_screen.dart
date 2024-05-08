@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -292,6 +293,19 @@ class AccountScreen extends StatelessWidget {
               // logout
               BlocBuilder<AccountBloc, AccountState>(
                 builder: (context, state) {
+                  if (state.signoutStatus == SignoutStatus.success) {
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        AppRoutes.login,
+                        (Route<dynamic> route) => false,
+                      );
+                    });
+                    context.snackBar('Đăng xuất thành công!');
+                  } else if (state.signoutStatus == SignoutStatus.failure) {
+                    context.snackBar(state.signoutError,
+                        type: SnackBarType.error);
+                  }
+
                   return ListTile(
                     contentPadding:
                         const EdgeInsets.symmetric(horizontal: 30, vertical: 2),

@@ -134,7 +134,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       String? accessToken = localDataSrc.getAccessToken();
       if (accessToken == null) {
         throw const ApiException(
-            message: 'Access token is null', statusCode: 505);
+            message: 'Access token is null', statusCode: 1000);
       }
       // Gửi yêu cầu đăng xuat
       final response = await client.post(

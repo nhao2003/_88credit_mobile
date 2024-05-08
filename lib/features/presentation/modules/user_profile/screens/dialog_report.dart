@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../../../../../config/theme/app_color.dart';
@@ -37,7 +36,7 @@ class DialogReport extends StatelessWidget {
     if (image == null) {
       context.snackBar(
         "Vui lòng chọn ảnh minh chứng",
-        type: AnimatedSnackBarType.error,
+        type: SnackBarType.error,
       );
       return;
     }

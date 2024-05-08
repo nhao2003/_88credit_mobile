@@ -2,7 +2,6 @@ import 'package:_88credit_mobile/config/theme/app_color.dart';
 import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -129,7 +128,7 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
       if (!mounted) return;
       context.snackBar(
         e.toString(),
-        type: AnimatedSnackBarType.error,
+        type: SnackBarType.error,
       );
     }
   }

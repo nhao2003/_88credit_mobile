@@ -1,5 +1,6 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/config/theme/app_color.dart';
+import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/di/injection_container.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,9 @@ class FingerprintButton extends StatelessWidget {
             final dataStateRefresh = await checkRefreshTokenUseCase();
             if (!(dataStateRefresh is DataSuccess &&
                 dataStateRefresh.data == true)) {
+              if (!context.mounted) return;
+              context.snackBar('Dấu vân tay không hợp lệ!',
+                  type: SnackBarType.error);
               return;
             }
 
@@ -36,6 +40,7 @@ class FingerprintButton extends StatelessWidget {
               AppRoutes.bottomBar,
               (Route<dynamic> route) => false,
             );
+            context.snackBar('Đăng nhập thành công!');
           }
         },
       );
