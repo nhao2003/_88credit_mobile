@@ -15,12 +15,17 @@ class ChatBotScreen extends StatefulWidget {
 }
 
 class _ChatBotScreenState extends State<ChatBotScreen> {
-  final _openAI = OpenAI.instance.build(
-    token: dotenv.env['GPT_API_KEY'],
-    baseOption: HttpSetup(
-      receiveTimeout: const Duration(seconds: 10),
-    ),
-    enableLog: true,
+  // final _openAI = OpenAI.instance.build(
+  //   token: dotenv.env['GPT_API_KEY'],
+  //   baseOption: HttpSetup(
+  //     receiveTimeout: const Duration(seconds: 10),
+  //   ),
+  //   enableLog: true,
+  // );
+
+  final _gemini = GenerativeModel(
+    model: 'gemini-pro',
+    apiKey: dotenv.env['GEMINI_API_KEY']!,
   );
 
   final ChatUser _currentUser = ChatUser(
@@ -29,10 +34,10 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     lastName: "Phan",
   );
 
-  final ChatUser _gptChatUser = ChatUser(
+  final ChatUser _geminiChatUser = ChatUser(
     id: '2',
     firstName: "Chat",
-    lastName: "GPT",
+    lastName: "Gemini",
   );
 
   final List<ChatMessage> _messages = [];
@@ -63,45 +68,63 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
     try {
       setState(() {
         _messages.insert(0, message);
-        _typingUsers.add(_gptChatUser);
+        _typingUsers.add(_geminiChatUser);
       });
 
-      List<Map<String, dynamic>> messagesHistory = _messages.reversed.map((m) {
-        if (m.user == _currentUser) {
-          return Messages(role: Role.user, content: m.text).toJson();
-        } else {
-          return Messages(role: Role.assistant, content: m.text).toJson();
-        }
-      }).toList();
+      // List<Map<String, dynamic>> messagesHistory = _messages.reversed.map((m) {
+      //   if (m.user == _currentUser) {
+      //     return Message(isUser: true, message: m.text).toJson();
+      //   } else {
+      //     return Message(role: Role.assistant, content: m.text).toJson();
+      //   }
+      // }).toList();
 
-      final request = ChatCompleteText(
-        model: GptTurbo0301ChatModel(),
-        messages: messagesHistory,
-        maxToken: 200,
-      );
-
-      final response = await _openAI.onChatCompletion(request: request);
-      for (final element in response!.choices) {
-        if (element.message != null) {
-          setState(() {
+      final content = [Content.text(message.text)];
+      final response = await _gemini.generateContent(content);
+      setState(() {
+        // Add bot's response to the chat
+        setState(() {
+          if (response.text != null) {
             _messages.insert(
               0,
               ChatMessage(
-                user: _gptChatUser,
-                text: element.message!.content,
+                user: _geminiChatUser,
+                text: response.text!,
                 createdAt: DateTime.now(),
               ),
             );
-          });
-        }
-      }
+          }
+        });
+      });
+
+      // final request = ChatCompleteText(
+      //   model: GptTurbo0301ChatModel(),
+      //   messages: messagesHistory,
+      //   maxToken: 200,
+      // );
+
+      // final response = await _openAI.onChatCompletion(request: request);
+      // for (final element in response!.choices) {
+      //   if (element.message != null) {
+      //     setState(() {
+      //       _messages.insert(
+      //         0,
+      //         ChatMessage(
+      //           user: _geminiChatUser,
+      //           text: element.message!.content,
+      //           createdAt: DateTime.now(),
+      //         ),
+      //       );
+      //     });
+      //   }
+      // }
 
       setState(() {
-        _typingUsers.remove(_gptChatUser);
+        _typingUsers.remove(_geminiChatUser);
       });
     } catch (e) {
       setState(() {
-        _typingUsers.remove(_gptChatUser);
+        _typingUsers.remove(_geminiChatUser);
       });
       if (!mounted) return;
       context.snackBar(
@@ -109,5 +132,19 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
         type: AnimatedSnackBarType.error,
       );
     }
+  }
+}
+
+class Message {
+  final bool isUser;
+  final String message;
+  late DateTime? date;
+
+  Message({
+    required this.isUser,
+    required this.message,
+    this.date,
+  }) {
+    date ??= DateTime.now();
   }
 }
