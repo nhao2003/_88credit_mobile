@@ -1,4 +1,4 @@
-const ipConfig = "192.168.6.225";
+const ipConfig = "192.168.1.135";
 const bool isProduction = false;
 const String apiDevUrl = "http://$ipConfig:8080";
 const String apiProductionUrl = "https://eight8credit.onrender.com";

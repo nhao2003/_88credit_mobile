@@ -149,7 +149,7 @@ dependencies:
   qr_flutter: ^4.1.0
 
   # Chat bot
-  chat_gpt_sdk: ^3.0.4
+  google_generative_ai: ^0.3.3
   dash_chat_2: ^0.0.20
 
   # dotenv
