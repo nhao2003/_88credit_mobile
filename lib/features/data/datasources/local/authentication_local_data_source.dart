@@ -76,6 +76,7 @@ class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
 
   @override
   Future<void> storeAccessToken(String accessToken) async {
+    print("store accessToken");
     setSharedPreferencesValue('accessToken', accessToken);
   }
 
