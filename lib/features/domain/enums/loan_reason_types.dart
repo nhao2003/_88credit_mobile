@@ -1,13 +1,14 @@
+// [ BUSINESS, EDUCATION, TRAVEL, WEDDING, MEDICAL, SHOPPING, HOUSE_BUYING, CAR_BUYING, OTHER ]
 enum LoanReasonTypes {
-  business,
-  education,
-  travel,
-  wedding,
-  medical,
-  shopping,
-  houseBuying,
-  carBuying,
-  other;
+  BUSINESS,
+  EDUCATION,
+  TRAVEL,
+  WEDDING,
+  MEDICAL,
+  SHOPPING,
+  HOUSE_BUYING,
+  CAR_BUYING,
+  OTHER;
 
   //parse
   static LoanReasonTypes parse(String value) {
@@ -22,47 +23,47 @@ enum LoanReasonTypes {
   @override
   String toString() {
     switch (this) {
-      case LoanReasonTypes.business:
-        return "business";
-      case LoanReasonTypes.education:
-        return "education";
-      case LoanReasonTypes.travel:
-        return "travel";
-      case LoanReasonTypes.wedding:
-        return "wedding";
-      case LoanReasonTypes.medical:
-        return "medical";
-      case LoanReasonTypes.shopping:
-        return "shopping";
-      case LoanReasonTypes.houseBuying:
-        return "house-buying";
-      case LoanReasonTypes.carBuying:
-        return "car-buying";
-      case LoanReasonTypes.other:
-        return "other";
+      case LoanReasonTypes.BUSINESS:
+        return "BUSINESS";
+      case LoanReasonTypes.EDUCATION:
+        return "EDUCATION";
+      case LoanReasonTypes.TRAVEL:
+        return "TRAVEL";
+      case LoanReasonTypes.WEDDING:
+        return "WEDDING";
+      case LoanReasonTypes.MEDICAL:
+        return "MEDICAL";
+      case LoanReasonTypes.SHOPPING:
+        return "SHOPPING";
+      case LoanReasonTypes.HOUSE_BUYING:
+        return "HOUSE_BUYING";
+      case LoanReasonTypes.CAR_BUYING:
+        return "CAR_BUYING";
+      case LoanReasonTypes.OTHER:
+        return "OTHER";
     }
   }
 
   //getStringVi
   String toStringVi() {
     switch (this) {
-      case LoanReasonTypes.business:
+      case LoanReasonTypes.BUSINESS:
         return "Kinh doanh";
-      case LoanReasonTypes.education:
+      case LoanReasonTypes.EDUCATION:
         return "Học tập";
-      case LoanReasonTypes.travel:
+      case LoanReasonTypes.TRAVEL:
         return "Du lịch";
-      case LoanReasonTypes.wedding:
+      case LoanReasonTypes.WEDDING:
         return "Cưới hỏi";
-      case LoanReasonTypes.medical:
+      case LoanReasonTypes.MEDICAL:
         return "Y tế";
-      case LoanReasonTypes.shopping:
+      case LoanReasonTypes.SHOPPING:
         return "Mua sắm";
-      case LoanReasonTypes.houseBuying:
+      case LoanReasonTypes.HOUSE_BUYING:
         return "Mua nhà";
-      case LoanReasonTypes.carBuying:
+      case LoanReasonTypes.CAR_BUYING:
         return "Mua ô tô";
-      case LoanReasonTypes.other:
+      case LoanReasonTypes.OTHER:
         return "Khác";
     }
   }
@@ -70,15 +71,15 @@ enum LoanReasonTypes {
   //toMap
   static Map<LoanReasonTypes, String> toMap() {
     return {
-      LoanReasonTypes.business: "Kinh doanh",
-      LoanReasonTypes.education: "Học tập",
-      LoanReasonTypes.travel: "Du lịch",
-      LoanReasonTypes.wedding: "Cưới hỏi",
-      LoanReasonTypes.medical: "Y tế",
-      LoanReasonTypes.shopping: "Mua sắm",
-      LoanReasonTypes.houseBuying: "Mua nhà",
-      LoanReasonTypes.carBuying: "Mua ô tô",
-      LoanReasonTypes.other: "Khác",
+      LoanReasonTypes.BUSINESS: "Kinh doanh",
+      LoanReasonTypes.EDUCATION: "Học tập",
+      LoanReasonTypes.TRAVEL: "Du lịch",
+      LoanReasonTypes.WEDDING: "Cưới hỏi",
+      LoanReasonTypes.MEDICAL: "Y tế",
+      LoanReasonTypes.SHOPPING: "Mua sắm",
+      LoanReasonTypes.HOUSE_BUYING: "Mua nhà",
+      LoanReasonTypes.CAR_BUYING: "Mua ô tô",
+      LoanReasonTypes.OTHER: "Khác",
     };
   }
 }

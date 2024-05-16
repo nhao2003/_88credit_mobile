@@ -1,106 +1,105 @@
+import 'package:_88credit_mobile/core/utils/validate_utils.dart';
 import '../../domain/entities/post.dart';
-import '../../domain/entities/user.dart';
 import '../../domain/enums/loan_reason_types.dart';
 import '../../domain/enums/post_status.dart';
-import '../../domain/enums/post_type.dart';
 
 class PostModel extends PostEntity {
   const PostModel({
     super.id,
+    super.userId,
     super.user,
-    super.type,
-    super.loanReasonType,
-    super.loanReason,
     super.status,
+    super.loanReason,
+    super.loanReasonDescription,
+    super.isLease,
     super.title,
     super.description,
     super.images,
-    super.createdAt,
-    super.updatedAt,
     super.interestRate,
-    super.loanAmount,
-    super.tenureMonths,
+    super.amount,
+    super.duration,
     super.overdueInterestRate,
     super.maxInterestRate,
-    super.maxLoanAmount,
-    super.maxTenureMonths,
+    super.maxAmount,
+    super.maxDuration,
     super.maxOverdueInterestRate,
-    super.rejectedReason,
-    super.deletedAt,
+    super.rejectionReason,
+    super.createdAt,
+    super.updatedAt,
   });
 
   factory PostModel.fromJson(Map<String, dynamic> json) {
     return PostModel(
       id: json['id'],
-      user: json['user'] != null ? UserEntity.fromJson(json['user']) : null,
-      type: json['type'] != null ? PostTypes.parse(json['type']) : null,
-      loanReasonType: json['loan_reason_type'] != null
-          ? LoanReasonTypes.parse(json['loan_reason_type'])
-          : null,
-      loanReason: json['loan_reason'],
+      userId: json['userId'],
+      // user: json['user'] != null ? UserEntity.fromJson(json['user']) : null,
       status: json['status'] != null ? PostStatus.parse(json['status']) : null,
+      loanReason: json['loanReason'] != null
+          ? LoanReasonTypes.parse(json['loanReason'])
+          : null,
+      loanReasonDescription: json['loanReasonDescription'],
+      isLease: json['isLease'],
       title: json['title'],
       description: json['description'],
       images: List<String>.from(json['images'] ?? []),
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
-      interestRate: json['interest_rate'],
-      loanAmount: double.parse(json['loan_amount']),
-      tenureMonths: json['tenure_months'],
-      overdueInterestRate: json['overdue_interest_rate'],
-      maxInterestRate: json['max_interest_rate'],
-      maxLoanAmount: json['max_loan_amount'] != null
-          ? double.parse(json['max_loan_amount'])
-          : null,
-      maxTenureMonths: json['max_tenure_months'],
-      maxOverdueInterestRate: json['max_overdue_interest_rate'],
-      rejectedReason: json['rejected_reason'],
-      deletedAt: json['deleted_at'],
+      interestRate: json['interestRate'],
+      amount: ValidateUtils.toDoubleJson(json['amount']),
+      duration: ValidateUtils.toIntJson(json['duration']),
+      overdueInterestRate:
+          ValidateUtils.toDoubleJson(json['overdueInterestRate']),
+      maxInterestRate: ValidateUtils.toDoubleJson(json['maxInterestRate']),
+      maxAmount: ValidateUtils.toDoubleJson(json['maxAmount']),
+      maxDuration: ValidateUtils.toIntJson(json['maxDuration']),
+      maxOverdueInterestRate:
+          ValidateUtils.toDoubleJson(json['maxOverdueInterestRate']),
+      rejectionReason: json['rejectionReason'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'type': type.toString(),
-      'loan_reason_type': loanReasonType.toString(),
-      'loan_reason': loanReason,
-      'title': title,
-      'description': description,
-      'images': images,
-      'interest_rate': interestRate,
-      'loan_amount': loanAmount,
-      'tenure_months': tenureMonths,
-      'overdue_interest_rate': overdueInterestRate ?? 0.1,
-      'max_interest_rate': maxInterestRate,
-      'max_loan_amount': maxLoanAmount,
-      'max_tenure_months': maxTenureMonths,
-      'max_overdue_interest_rate': maxOverdueInterestRate,
+      "isLease": isLease,
+      "title": title,
+      "description": description,
+      "images": images,
+      "loanReason": loanReason.toString(),
+      "loanReasonDescription": loanReasonDescription,
+      "interestRate": interestRate ?? 0,
+      "amount": amount ?? 0,
+      "duration": duration ?? 0,
+      "overdueInterestRate": overdueInterestRate ?? 0,
+      "maxInterestRate": maxInterestRate ?? 0,
+      "maxAmount": maxAmount ?? 0,
+      "maxDuration": maxDuration ?? 0,
+      "maxOverdueInterestRate": maxOverdueInterestRate ?? 0,
     };
   }
 
   factory PostModel.fromEntity(PostEntity entity) {
     return PostModel(
       id: entity.id,
+      userId: entity.userId,
       user: entity.user,
-      type: entity.type,
-      loanReasonType: entity.loanReasonType,
-      loanReason: entity.loanReason,
       status: entity.status,
+      loanReason: entity.loanReason,
+      loanReasonDescription: entity.loanReasonDescription,
+      isLease: entity.isLease,
       title: entity.title,
       description: entity.description,
       images: entity.images,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
       interestRate: entity.interestRate,
-      loanAmount: entity.loanAmount,
-      tenureMonths: entity.tenureMonths,
+      amount: entity.amount,
+      duration: entity.duration,
       overdueInterestRate: entity.overdueInterestRate,
       maxInterestRate: entity.maxInterestRate,
-      maxLoanAmount: entity.maxLoanAmount,
-      maxTenureMonths: entity.maxTenureMonths,
+      maxAmount: entity.maxAmount,
+      maxDuration: entity.maxDuration,
       maxOverdueInterestRate: entity.maxOverdueInterestRate,
-      rejectedReason: entity.rejectedReason,
-      deletedAt: entity.deletedAt,
+      rejectionReason: entity.rejectionReason,
+      createdAt: entity.createdAt,
+      updatedAt: entity.updatedAt,
     );
   }
 }

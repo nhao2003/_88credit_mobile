@@ -72,7 +72,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
         interestRate: 0.1,
         overdueInterestRate: 0.2,
         loanTenureMonths: 12,
-        loanReasonType: LoanReasonTypes.business,
+        loanReasonType: LoanReasonTypes.BUSINESS,
         loanReason: 'Business',
         videoConfirmation:
             'https://videos.pexels.com/video-files/6548176/6548176-hd_1920_1080_24fps.mp4',

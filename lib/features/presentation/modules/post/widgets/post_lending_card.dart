@@ -117,7 +117,7 @@ class PostLendingCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 2),
                               Text(
-                                "${post.tenureMonths} - ${post.maxTenureMonths} tháng",
+                                "${post.duration} - ${post.maxDuration} tháng",
                                 style: AppTextStyles.regular12.colorEx(
                                   AppColors.grey400,
                                 ),
@@ -156,7 +156,7 @@ class PostLendingCard extends StatelessWidget {
                         style: AppTextStyles.medium10,
                       ),
                       Text(
-                        post.type!.getStringVi(),
+                        post.isLease! ? "Cho vay" : "Vay tiền",
                         style: AppTextStyles.bold10.colorEx(AppColors.green),
                       ),
                     ],
@@ -197,7 +197,7 @@ class PostLendingCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${post.loanAmount!.toInt().formatNumberWithCommas} - ${post.maxLoanAmount!.toInt().formatNumberWithCommas} VND",
+                                "${post.amount!.toInt().formatNumberWithCommas} - ${post.maxAmount!.toInt().formatNumberWithCommas} VND",
                                 style: AppTextStyles.bold12
                                     .colorEx(AppColors.black),
                               ),

@@ -6,19 +6,18 @@ import '../../../../../core/utils/query_builder.dart';
 import '../../../../../core/utils/typedef.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../di/injection_container.dart';
-import '../../../domain/entities/post.dart';
 import '../../../domain/enums/post_type.dart';
 import '../../models/post.dart';
 import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
 
 abstract class PostRemoteDataSrc {
-  Future<HttpResponse<Pair<int, List<PostEntity>>>> getAllPosts(
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getAllPosts(
       String? userId, PostTypes? postTypes, int? page);
-  Future<HttpResponse<Pair<int, List<PostEntity>>>> getPostsStatus(
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsStatus(
       String status, int? page);
-  Future<HttpResponse<Pair<int, List<PostEntity>>>> getPostsHided(int? page);
-  Future<HttpResponse<Pair<int, List<PostEntity>>>> getPostsExpired(int? page);
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsHided(int? page);
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsExpired(int? page);
 
   Future<HttpResponse<void>> createPost(PostModel post);
 }
@@ -29,7 +28,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   PostRemoteDataSrcImpl(this.client);
 
   @override
-  Future<HttpResponse<Pair<int, List<PostEntity>>>> getAllPosts(
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getAllPosts(
       String? userId, PostTypes? postTypes, int? page) async {
     var url = '$apiUrl$kGetPostEndpoint';
 
@@ -53,7 +52,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<Pair<int, List<PostEntity>>>> getPostsStatus(
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsStatus(
       String status, int? page) async {
     int pageQuery = page ?? 1;
     QueryBuilder queryBuilder = QueryBuilder();
@@ -67,7 +66,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<Pair<int, List<PostEntity>>>> getPostsHided(
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsHided(
       int? page) async {
     int pageQuery = page ?? 1;
 
@@ -81,7 +80,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<Pair<int, List<PostEntity>>>> getPostsExpired(
+  Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsExpired(
       int? page) async {
     int pageQuery = page ?? 1;
     String url = '$apiUrl$kGetPostEndpoint?page=$pageQuery';
@@ -102,8 +101,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       final List<DataMap> taskDataList =
           List<DataMap>.from(response.data["result"]);
 
-      List<PostEntity> posts = taskDataList
-          .map((postJson) => PostEntity.fromJson(postJson))
+      List<PostModel> posts = taskDataList
+          .map((postJson) => PostModel.fromJson(postJson))
           //.where((post) => post.isActive!)
           //.where((post) => post.expiryDate!.isBefore(DateTime.now()))
           .toList();

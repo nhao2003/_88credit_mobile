@@ -16,7 +16,7 @@ final class CreatePostState extends Equatable {
     this.photoController = true,
     this.photo = const [],
     this.imageUrlList = const [],
-    this.loanReasonType = LoanReasonTypes.other,
+    this.loanReasonType = LoanReasonTypes.BUSINESS,
   });
 
   CreatePostState copyWith({

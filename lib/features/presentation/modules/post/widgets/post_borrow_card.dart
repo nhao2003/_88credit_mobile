@@ -115,7 +115,7 @@ class PostBorrowCard extends StatelessWidget {
                               ),
                               const SizedBox(width: 2),
                               Text(
-                                "${post.tenureMonths} tháng",
+                                "${post.duration} tháng",
                                 style: AppTextStyles.regular12.colorEx(
                                   AppColors.grey400,
                                 ),
@@ -154,7 +154,7 @@ class PostBorrowCard extends StatelessWidget {
                         style: AppTextStyles.medium10,
                       ),
                       Text(
-                        post.type!.getStringVi(),
+                        post.isLease! ? "Cho vay" : "Vay tiền",
                         style: AppTextStyles.bold10.colorEx(AppColors.green),
                       ),
                     ],
@@ -194,7 +194,7 @@ class PostBorrowCard extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  "${post.loanAmount!.toInt().formatNumberWithCommas} VNĐ",
+                                  "${post.amount!.toInt().formatNumberWithCommas} VNĐ",
                                   style: AppTextStyles.bold12
                                       .colorEx(AppColors.black),
                                 ),
@@ -231,7 +231,7 @@ class PostBorrowCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                post.loanReasonType!.toStringVi(),
+                                post.loanReason!.toStringVi(),
                                 style: AppTextStyles.bold12
                                     .colorEx(AppColors.black),
                               ),

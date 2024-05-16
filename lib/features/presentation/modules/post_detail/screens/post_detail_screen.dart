@@ -7,7 +7,6 @@ import 'package:_88credit_mobile/features/presentation/globalwidgets/image_card.
 import 'package:flutter/material.dart';
 import 'package:heroicons/heroicons.dart';
 import '../../../../domain/entities/post.dart';
-import '../../../../domain/enums/post_type.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../widgets/description_card.dart';
 import '../widgets/info_card.dart';
@@ -54,7 +53,7 @@ class PostDetailScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 2),
                 Text(
-                  post.type!.getStringVi(),
+                  post.isLease! ? "Cho vay" : "Vay tiền",
                   style: AppTextStyles.bold12.colorEx(AppColors.green),
                 ),
               ],
@@ -106,10 +105,8 @@ class PostDetailScreen extends StatelessWidget {
 // lý do vay
             const SizedBox(height: 20),
             DescriptionCard(
-              title: post.type == PostTypes.borrowing
-                  ? "Lý do vay"
-                  : "Lý do cho vay",
-              description: post.loanReason!,
+              title: post.isLease! ? "Lý do cho vay" : "Lý do vay",
+              description: post.loanReasonDescription!,
             ),
             const SizedBox(height: 100),
           ],

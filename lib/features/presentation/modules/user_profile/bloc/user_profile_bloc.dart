@@ -5,7 +5,6 @@ import '../../../../domain/entities/post.dart';
 import '../../../../domain/entities/user.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../../domain/enums/post_status.dart';
-import '../../../../domain/enums/post_type.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
 part 'user_profile_event.dart';
@@ -64,26 +63,26 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         (index) => PostEntity(
           id: index.toString(),
           user: user,
-          type: PostTypes.borrowing,
-          loanReasonType: LoanReasonTypes.business,
-          loanReason: 'Business',
           status: PostStatus.approved,
+          loanReason: LoanReasonTypes.BUSINESS,
+          loanReasonDescription: 'Business',
+          isLease: true,
           title: 'Title $index',
           description: 'Description $index',
           images: const [
             'https://img.cand.com.vn/resize/800x800/NewFiles/Images/2022/06/15/vay_tien_khong_tra_co_bi_di_tu_2-1655284202853.jpg',
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-ep0T17eQH5S3seorTt57qLqW-vm9N9v00L_ol_VXOQ&s",
           ],
-          createdAt: DateTime.now(),
-          updatedAt: DateTime.now(),
           interestRate: 0.1,
-          loanAmount: 2000,
-          tenureMonths: 12,
+          amount: 1000,
+          duration: 12,
           overdueInterestRate: 0.2,
           maxInterestRate: 0.3,
-          maxLoanAmount: 2000,
-          maxTenureMonths: 24,
+          maxAmount: 2000,
+          maxDuration: 24,
           maxOverdueInterestRate: 0.4,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
         ),
       ),
     );

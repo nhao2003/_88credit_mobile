@@ -34,7 +34,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
   final interestRateTextController = TextEditingController();
   final overdueInterestRateTextController = TextEditingController();
   final tenureMonthsTextController = TextEditingController();
-  final LoanReasonTypes loanReasonType = LoanReasonTypes.other;
+  final LoanReasonTypes loanReasonType = LoanReasonTypes.OTHER;
   final loanReasonTextController = TextEditingController();
   final discriptionTextController = TextEditingController();
 

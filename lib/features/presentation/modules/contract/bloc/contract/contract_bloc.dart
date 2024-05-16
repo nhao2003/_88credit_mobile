@@ -49,7 +49,7 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
         lenderBankCardId: index.toString(),
         borrower: user,
         borrowerBankCardId: index.toString(),
-        loanReasonType: LoanReasonTypes.business,
+        loanReasonType: LoanReasonTypes.BUSINESS,
         loanReason: 'Loan reason',
         amount: 1000,
         interestRate: 0.1,
