@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';

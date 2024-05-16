@@ -1,7 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/resources/data_state.dart';
+import '../../../../../di/injection_container.dart';
 import '../../../../domain/entities/advertisement.dart';
 import '../../../../domain/entities/blog.dart';
+import '../../../../domain/usecases/blog/get_blogs.dart';
 part 'home_event.dart';
 part 'home_state.dart';
 
@@ -33,21 +36,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<List<BlogEntity>> _fetchBlogs() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return List.generate(
-      5,
-      (index) => BlogEntity(
-        id: index.toString(),
-        title: 'Title $index',
-        content: 'Content $index',
-        shortDescription: 'asd asdasd asd asd asd asd asd asd',
-        author: 'Author $index',
-        isActive: true,
-        thumbnail:
-            'https://tinnhiemmang.vn/storage/photos/shares/tin-tuc/tt2022/10211a.jpg',
-        createdAt: DateTime.now(),
-      ),
-    );
+    final GetBlogsUseCase getBlogsUseCase = sl.get<GetBlogsUseCase>();
+    final result = await getBlogsUseCase();
+    if (result is DataSuccess) {
+      return result.data!;
+    } else {
+      return [];
+    }
   }
 
   void _onChangeTab(ChangeTabEvent event, Emitter<HomeState> emit) {

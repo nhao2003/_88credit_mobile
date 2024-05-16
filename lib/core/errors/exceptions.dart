@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class ErrorHelpers {
   static ApiException handleException(dynamic e) {
+    print("ErrorHelpers.handleException: $e");
     if (e is DioException) {
       if (e.response != null) {
         return ApiException(

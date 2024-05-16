@@ -10,21 +10,26 @@ class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   Future<bool> _checkIsLogin() async {
-    // check access token
-    CheckAccessTokenUseCase checkTokenUseCase = sl<CheckAccessTokenUseCase>();
-    final dataState = await checkTokenUseCase();
-    if (dataState is DataSuccess && dataState.data == true) return false;
+    try {
+      // check access token
+      CheckAccessTokenUseCase checkTokenUseCase = sl<CheckAccessTokenUseCase>();
+      final dataState = await checkTokenUseCase();
+      if (dataState is DataSuccess && dataState.data == true) return false;
 
-    // check Refresh token
-    CheckRefreshTokenUseCase checkRefreshTokenUseCase =
-        sl<CheckRefreshTokenUseCase>();
-    final dataStateRefresh = await checkRefreshTokenUseCase();
-    if (!(dataStateRefresh is DataSuccess && dataStateRefresh.data == true)) {
+      // check Refresh token
+      CheckRefreshTokenUseCase checkRefreshTokenUseCase =
+          sl<CheckRefreshTokenUseCase>();
+      final dataStateRefresh = await checkRefreshTokenUseCase();
+      if (!(dataStateRefresh is DataSuccess && dataStateRefresh.data == true)) {
+        return false;
+      }
+      // refresh access token
+
+      return false;
+    } catch (e) {
+      print(e.toString());
       return false;
     }
-    // refresh access token
-
-    return false;
   }
 
   void checkLogin(BuildContext context) {

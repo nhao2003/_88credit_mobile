@@ -9,6 +9,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<Dio>(Dio());
   // Authentication
   await _initAuth();
+  await _initBlog();
 }
 
 Future<void> _initAuth() async {
@@ -77,6 +78,26 @@ Future<void> _initAuth() async {
   sl.registerSingleton<GetAuthenticateBiometrics>(
     GetAuthenticateBiometrics(
       sl<AuthenticationRepository>(),
+    ),
+  );
+}
+
+Future<void> _initBlog() async {
+  sl.registerSingleton<BlogRemoteDataSrc>(
+    BlogRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<BlogRepository>(
+    BlogRepositoryImpl(
+      sl<BlogRemoteDataSrc>(),
+    ),
+  );
+
+  sl.registerSingleton<GetBlogsUseCase>(
+    GetBlogsUseCase(
+      sl<BlogRepository>(),
     ),
   );
 }

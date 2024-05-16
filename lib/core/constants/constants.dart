@@ -1,4 +1,4 @@
-const ipConfig = "192.168.6.225";
+const ipConfig = "192.168.133.225";
 const bool isProduction = false;
 const String apiDevUrl = "http://$ipConfig:8080";
 const String apiProductionUrl = "https://eight8credit.onrender.com";
@@ -21,7 +21,7 @@ const String kCreatePostEndpoint = '/post/create';
 const String kGetMembershipPackageEndpoint = '/membership-package';
 const String kGetTransactionEndpoint = '/membership-package/transactions';
 const String kCreateOrderEndpoint = '/membership-package/check-out';
-const String kGetBlogEndpoint = '/blogs';
+const String kGetBlogEndpoint = '/blog';
 
 const String kGetRequestEndpoint = '/loan-request';
 const String kPayLoanRequestEndpoint = '/loan-request/lender-pay';

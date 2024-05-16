@@ -42,10 +42,10 @@ class BlogBloc extends Bloc<BlogEvent, BlogState> {
         content: 'Content $index',
         shortDescription: 'asd asdasd asd asd asd asd asd asd',
         author: 'Author $index',
-        isActive: true,
         thumbnail:
             'https://tinnhiemmang.vn/storage/photos/shares/tin-tuc/tt2022/10211a.jpg',
         createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
       ),
     );
   }

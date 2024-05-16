@@ -25,8 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
 
-  var loginEmail = TextEditingController(text: "user@example.com");
-  var loginPassword = TextEditingController(text: "haonek2003");
+  var loginEmail = TextEditingController(text: "abc@abc.com");
+  var loginPassword = TextEditingController(text: "Password123!");
 
   @override
   void dispose() {

@@ -5,8 +5,11 @@ import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../features/data/datasources/local/authentication_local_data_source.dart';
 import '../features/data/datasources/remote/authentication_remote_data_source.dart';
+import '../features/data/datasources/remote/blog_data_source.dart';
 import '../features/data/repositories/authentication_repository_impl.dart';
+import '../features/data/repositories/blog_repository_impl.dart';
 import '../features/domain/repositories/authentication_repository.dart';
+import '../features/domain/repositories/blog_repository.dart';
 import '../features/domain/usecases/authentication/check_access_token.dart';
 import '../features/domain/usecases/authentication/check_refresh_token.dart';
 import '../features/domain/usecases/authentication/get_access_token.dart';
@@ -15,5 +18,6 @@ import '../features/domain/usecases/authentication/get_user_id.dart';
 import '../features/domain/usecases/authentication/sign_in.dart';
 import '../features/domain/usecases/authentication/sign_out.dart';
 import '../features/domain/usecases/authentication/sign_up.dart';
+import '../features/domain/usecases/blog/get_blogs.dart';
 
 part 'injection_container.main.dart';
