@@ -13,20 +13,32 @@ class DatabaseHelper {
   Future<HttpResponse<Pair<int, List<PostModel>>>> getPosts(
       String url, Dio client) async {
     try {
-      final response = await client.get(url);
-      //print('${response.statusCode} : ${response.data["message"].toString()}');
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 1000);
+      }
+      final response = await client.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+
+      // final response = await client.get(url);
+      print('${response.statusCode} : ${response.data["message"].toString()}');
       if (response.statusCode != 200) {
-        //print('${response.statusCode} : ${response.data["result"].toString()}');
+        print('${response.statusCode} : ${response.data["data"].toString()}');
         throw ApiException(
           message: response.data,
           statusCode: response.statusCode!,
         );
       }
 
-      final int numOfPages = response.data["num_of_pages"];
+      final int numOfPages = response.data["totalPages"];
 
       final List<DataMap> taskDataList =
-          List<DataMap>.from(response.data["result"]);
+          List<DataMap>.from(response.data["data"]["items"]);
 
       List<PostModel> posts = [];
       for (var element in taskDataList) {
