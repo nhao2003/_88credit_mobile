@@ -1,4 +1,5 @@
 // [ BUSINESS, EDUCATION, TRAVEL, WEDDING, MEDICAL, SHOPPING, HOUSE_BUYING, CAR_BUYING, OTHER ]
+// ignore_for_file: constant_identifier_names
 enum LoanReasonTypes {
   BUSINESS,
   EDUCATION,

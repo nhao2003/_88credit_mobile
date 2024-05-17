@@ -42,7 +42,7 @@ class PostModel extends PostEntity {
       title: json['title'],
       description: json['description'],
       images: List<String>.from(json['images'] ?? []),
-      interestRate: json['interestRate'],
+      interestRate: ValidateUtils.toDoubleJson(json['interestRate']),
       amount: ValidateUtils.toDoubleJson(json['amount']),
       duration: ValidateUtils.toIntJson(json['duration']),
       overdueInterestRate:

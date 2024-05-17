@@ -35,7 +35,7 @@ class DatabaseHelper {
         );
       }
 
-      final int numOfPages = response.data["totalPages"];
+      final int numOfPages = response.data["data"]["totalPages"];
 
       final List<DataMap> taskDataList =
           List<DataMap>.from(response.data["data"]["items"]);

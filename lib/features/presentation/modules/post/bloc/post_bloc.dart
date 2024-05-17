@@ -1,8 +1,11 @@
 import 'package:_88credit_mobile/features/domain/entities/address.dart';
 import 'package:_88credit_mobile/features/domain/entities/user.dart';
+import 'package:_88credit_mobile/features/domain/usecases/post/get_posts.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/resources/data_state.dart';
 import '../../../../../core/resources/pair.dart';
+import '../../../../../di/injection_container.dart';
 import '../../../../domain/entities/post.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../../domain/enums/post_status.dart';
@@ -54,7 +57,16 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   }
 
   Future<Pair<int, List<PostEntity>>> _getPostsLending() async {
-    await Future.delayed(const Duration(seconds: 2));
+    final GetPostsUseCase getPostsUseCase = sl<GetPostsUseCase>();
+    final dataState = await getPostsUseCase(params: Pair(null, page));
+
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      print(dataState.data!);
+      //return dataState.data!;
+    } else {
+      print('error');
+      // return Pair(1, []);
+    }
     return Pair(
       1,
       List.generate(
@@ -62,7 +74,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         (index) => PostEntity(
           id: index.toString(),
           user: user,
-          status: PostStatus.approved,
+          status: PostStatus.APPROVED,
           loanReason: LoanReasonTypes.BUSINESS,
           loanReasonDescription: 'Business',
           isLease: true,
@@ -118,7 +130,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         (index) => PostEntity(
           id: index.toString(),
           user: user,
-          status: PostStatus.approved,
+          status: PostStatus.APPROVED,
           loanReason: LoanReasonTypes.BUSINESS,
           loanReasonDescription: 'Business',
           isLease: false,

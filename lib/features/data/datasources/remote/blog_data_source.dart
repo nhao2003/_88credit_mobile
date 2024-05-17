@@ -42,7 +42,7 @@ class BlogRemoteDataSrcImpl implements BlogRemoteDataSrc {
       }
 
       final List<DataMap> taskDataList =
-          List<DataMap>.from(response.data["data"]);
+          List<DataMap>.from(response.data["data"]["items"]);
 
       List<BlogModel> value =
           taskDataList.map((postJson) => BlogModel.fromJson(postJson)).toList();

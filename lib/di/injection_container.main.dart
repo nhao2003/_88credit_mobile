@@ -10,6 +10,7 @@ Future<void> initializeDependencies() async {
   // Authentication
   await _initAuth();
   await _initBlog();
+  await _initPost();
 }
 
 Future<void> _initAuth() async {
@@ -100,4 +101,92 @@ Future<void> _initBlog() async {
       sl<BlogRepository>(),
     ),
   );
+}
+
+Future<void> _initPost() async {
+  // datasource
+  sl.registerSingleton<PostRemoteDataSrc>(
+    PostRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  // sl.registerSingleton<MediaRemoteDataSource>(
+  //   MediaRemoteDataSourceImpl(
+  //     sl<Dio>(),
+  //   ),
+  // );
+  // post repository
+  sl.registerSingleton<PostRepository>(
+    PostRepositoryImpl(
+      sl<PostRemoteDataSrc>(),
+    ),
+  );
+
+  // sl.registerSingleton<MediaRepository>(
+  //   MediaRepositoryImpl(
+  //     sl<MediaRemoteDataSource>(),
+  //   ),
+  // );
+
+  // use cases
+  sl.registerSingleton<GetPostsUseCase>(
+    GetPostsUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<CreatePostsUseCase>(
+    CreatePostsUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  // sl.registerSingleton<GetPostsLendingUseCase>(
+  //   GetPostsLendingUseCase(
+  //     sl<PostRepository>(),
+  //   ),
+  // );
+
+  // sl.registerSingleton<GetPostsBorrowingUseCase>(
+  //   GetPostsBorrowingUseCase(
+  //     sl<PostRepository>(),
+  //   ),
+  // );
+
+  // sl.registerSingleton<GetPostsApprovedUseCase>(
+  //   GetPostsApprovedUseCase(
+  //     sl<PostRepository>(),
+  //   ),
+  // );
+
+  // sl.registerSingleton<GetPostsPendingUseCase>(
+  //   GetPostsPendingUseCase(
+  //     sl<PostRepository>(),
+  //   ),
+  // );
+
+  // sl.registerSingleton<GetPostsRejectUseCase>(
+  //   GetPostsRejectUseCase(
+  //     sl<PostRepository>(),
+  //   ),
+  // );
+
+  // sl.registerSingleton<GetPostsHidedUseCase>(
+  //   GetPostsHidedUseCase(
+  //     sl<PostRepository>(),
+  //   ),
+  // );
+
+  // sl.registerSingleton<UploadImagesUseCase>(
+  //   UploadImagesUseCase(
+  //     sl<MediaRepository>(),
+  //   ),
+  // );
+
+  // sl.registerSingleton<UploadVideosUseCase>(
+  //   UploadVideosUseCase(
+  //     sl<MediaRepository>(),
+  //   ),
+  // );
 }

@@ -1,8 +1,9 @@
+// ignore_for_file: constant_identifier_names
 enum PostStatus {
-  pending,
-  approved,
-  rejected,
-  hided;
+  PENDING,
+  APPROVED,
+  REJECTED,
+  HIDED;
 
   static PostStatus parse(String value) {
     for (PostStatus status in PostStatus.values) {
@@ -14,14 +15,14 @@ enum PostStatus {
   @override
   String toString() {
     switch (this) {
-      case PostStatus.pending:
-        return "pending";
-      case PostStatus.approved:
-        return "approved";
-      case PostStatus.rejected:
-        return "rejected";
-      case PostStatus.hided:
-        return "hided";
+      case PostStatus.PENDING:
+        return "PENDING";
+      case PostStatus.APPROVED:
+        return "APPROVED";
+      case PostStatus.REJECTED:
+        return "REJECTED";
+      case PostStatus.HIDED:
+        return "HIDED";
     }
   }
 }
