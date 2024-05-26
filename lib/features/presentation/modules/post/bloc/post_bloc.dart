@@ -61,7 +61,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     final dataState = await getPostsUseCase(params: Pair(null, page));
 
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
-      print(dataState.data!);
+      print(dataState.data!.second);
       //return dataState.data!;
     } else {
       print('error');

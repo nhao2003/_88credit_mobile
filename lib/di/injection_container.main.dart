@@ -11,6 +11,7 @@ Future<void> initializeDependencies() async {
   await _initAuth();
   await _initBlog();
   await _initPost();
+  await _initMedia();
 }
 
 Future<void> _initAuth() async {
@@ -189,4 +190,29 @@ Future<void> _initPost() async {
   //     sl<MediaRepository>(),
   //   ),
   // );
+}
+
+Future _initMedia() async {
+  // datasource
+  sl.registerSingleton<MediaRemoteDataSource>(
+    MediaRemoteDataSourceImpl(
+      sl<Dio>(),
+    ),
+  );
+  sl.registerSingleton<MediaRepository>(
+    MediaRepositoryImpl(
+      sl<MediaRemoteDataSource>(),
+    ),
+  );
+  sl.registerSingleton<UploadImagesUseCase>(
+    UploadImagesUseCase(
+      sl<MediaRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<UploadVideosUseCase>(
+    UploadVideosUseCase(
+      sl<MediaRepository>(),
+    ),
+  );
 }

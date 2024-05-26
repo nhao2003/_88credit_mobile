@@ -1,9 +1,12 @@
+import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
+import '../../../../domain/entities/post.dart';
+import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../globalwidgets/base_card.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../bloc/create_post_bloc.dart';
@@ -36,6 +39,58 @@ class CreatePostScreen extends StatelessWidget {
   final lendingMaxTenureMonthsTextController = TextEditingController();
   final lendingOverdueInterestRateTextController = TextEditingController();
   final lendingMaxOverdueInterestRateTextController = TextEditingController();
+
+  bool validatorForm(bool isLending) {
+    bool isValidate = true;
+    isValidate = isValidate & infoFormKey.currentState!.validate();
+    if (isLending) {
+      isValidate = isValidate & lendingFormKey.currentState!.validate();
+    } else {
+      isValidate = isValidate & borrowingFormKey.currentState!.validate();
+    }
+    return isValidate;
+  }
+
+  Future<PostEntity> createPost(bool isLending, LoanReasonTypes loanReasonType,
+      List<String>? images) async {
+    try {
+      if (isLending) {
+        // Lending
+        return PostEntity(
+          isLease: isLending,
+          title: titleTextController.text,
+          description: descriptionTextController.text,
+          images: images,
+          amount: double.tryParse(lendingLoanAmountTextController.text),
+          maxAmount: double.tryParse(lendingMaxLoanAmountTextController.text),
+          interestRate: double.tryParse(lendingInterestRateTextController.text),
+          maxInterestRate:
+              double.tryParse(lendingMaxInterestRateTextController.text),
+          duration: int.tryParse(lendingTenureMonthsTextController.text),
+          maxDuration: int.tryParse(lendingMaxTenureMonthsTextController.text),
+          overdueInterestRate:
+              double.tryParse(lendingOverdueInterestRateTextController.text),
+          maxOverdueInterestRate:
+              double.tryParse(lendingMaxOverdueInterestRateTextController.text),
+        );
+      } else {
+        return PostEntity(
+          isLease: isLending,
+          title: titleTextController.text,
+          description: descriptionTextController.text,
+          images: images,
+          amount: double.tryParse(borrowingLoanAmountTextController.text),
+          interestRate:
+              double.tryParse(borrowingInterestRateTextController.text),
+          duration: int.tryParse(borrowingTenureMonthsTextController.text),
+          loanReason: loanReasonType,
+          loanReasonDescription: borrowingLoanReasonTextController.text,
+        );
+      }
+    } catch (e) {
+      print("Error when Create Post: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,12 +164,20 @@ class CreatePostScreen extends StatelessWidget {
                       onPressed: state.status == CreatePostStatus.loading
                           ? null
                           : () {
+                              // upload images
                               context.read<CreatePostBloc>().add(
-                                    SendPostEvent(
-                                      titleTextController.text.trim(),
-                                      descriptionTextController.text.trim(),
-                                    ),
+                                    UploadImagesEvent(),
                                   );
+                              if (!validatorForm(state.isLending)) {
+                                return context.snackBar(
+                                  'Vui lòng điền đầy đủ thông tin bắt buộc!',
+                                  type: SnackBarType.error,
+                                );
+                              }
+                              // getNewPost(state.isLending);
+                              // context.read<CreatePostBloc>().add(
+                              //       const SendPostEvent(),
+                              //     );
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.green,

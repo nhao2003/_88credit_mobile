@@ -17,13 +17,12 @@ class TogglePageEvent extends CreatePostEvent {
 }
 
 class SendPostEvent extends CreatePostEvent {
-  final String title;
-  final String description;
+  final PostEntity postEntity;
 
-  const SendPostEvent(this.title, this.description);
+  const SendPostEvent(this.postEntity);
 
   @override
-  List<Object> get props => [title, description];
+  List<Object> get props => [postEntity];
 }
 
 class AddFileImageEvent extends CreatePostEvent {
@@ -54,3 +53,5 @@ class ChangeLoanReasonEvent extends CreatePostEvent {
   @override
   List<Object> get props => [loanReason];
 }
+
+class UploadImagesEvent extends CreatePostEvent {}
