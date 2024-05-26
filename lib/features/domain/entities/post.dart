@@ -124,4 +124,10 @@ class PostEntity extends Equatable {
       updatedAt: updatedAt ?? this.updatedAt,
     );
   }
+
+  // toString
+  @override
+  String toString() {
+    return 'PostEntity(id: $id, userId: $userId, user: $user, status: $status, loanReason: $loanReason, loanReasonDescription: $loanReasonDescription, isLease: $isLease, title: $title, description: $description, images: $images, interestRate: $interestRate, amount: $amount, duration: $duration, overdueInterestRate: $overdueInterestRate, maxInterestRate: $maxInterestRate, maxAmount: $maxAmount, maxDuration: $maxDuration, maxOverdueInterestRate: $maxOverdueInterestRate, rejectionReason: $rejectionReason, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
 }

@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
-import '../../../../domain/entities/post.dart';
-import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../globalwidgets/base_card.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../bloc/create_post_bloc.dart';
@@ -51,48 +49,6 @@ class CreatePostScreen extends StatelessWidget {
     return isValidate;
   }
 
-  PostEntity createPost(
-      bool isLending, LoanReasonTypes loanReasonType, List<String>? images) {
-    try {
-      if (isLending) {
-        // Lending
-        return PostEntity(
-          isLease: isLending,
-          title: titleTextController.text,
-          description: descriptionTextController.text,
-          images: images,
-          amount: double.tryParse(lendingLoanAmountTextController.text),
-          maxAmount: double.tryParse(lendingMaxLoanAmountTextController.text),
-          interestRate: double.tryParse(lendingInterestRateTextController.text),
-          maxInterestRate:
-              double.tryParse(lendingMaxInterestRateTextController.text),
-          duration: int.tryParse(lendingTenureMonthsTextController.text),
-          maxDuration: int.tryParse(lendingMaxTenureMonthsTextController.text),
-          overdueInterestRate:
-              double.tryParse(lendingOverdueInterestRateTextController.text),
-          maxOverdueInterestRate:
-              double.tryParse(lendingMaxOverdueInterestRateTextController.text),
-        );
-      } else {
-        return PostEntity(
-          isLease: isLending,
-          title: titleTextController.text,
-          description: descriptionTextController.text,
-          images: images,
-          amount: double.tryParse(borrowingLoanAmountTextController.text),
-          interestRate:
-              double.tryParse(borrowingInterestRateTextController.text),
-          duration: int.tryParse(borrowingTenureMonthsTextController.text),
-          loanReason: loanReasonType,
-          loanReasonDescription: borrowingLoanReasonTextController.text,
-        );
-      }
-    } catch (e) {
-      print("Error when Create Post: $e");
-      return const PostEntity();
-    }
-  }
-
   void uploadPost(BuildContext context, CreatePostState state) {
     // check validate
     if (!validatorForm(state.isLending)) {
@@ -103,9 +59,42 @@ class CreatePostScreen extends StatelessWidget {
     }
 
     // upload images
-    context.read<CreatePostBloc>().add(
-          UploadImagesEvent(),
-        );
+    if (state.isLending) {
+      context.read<CreatePostBloc>().add(
+            SendPostEvent(
+              title: titleTextController.text,
+              description: descriptionTextController.text,
+              amount: double.tryParse(lendingLoanAmountTextController.text),
+              maxAmount:
+                  double.tryParse(lendingMaxLoanAmountTextController.text),
+              interestRate:
+                  double.tryParse(lendingInterestRateTextController.text),
+              maxInterestRate:
+                  double.tryParse(lendingMaxInterestRateTextController.text),
+              duration: int.tryParse(lendingTenureMonthsTextController.text),
+              maxDuration:
+                  int.tryParse(lendingMaxTenureMonthsTextController.text),
+              overdueInterestRate: double.tryParse(
+                  lendingOverdueInterestRateTextController.text),
+              maxOverdueInterestRate: double.tryParse(
+                  lendingMaxOverdueInterestRateTextController.text),
+            ),
+          );
+    } else {
+      context.read<CreatePostBloc>().add(
+            SendPostEvent(
+              title: titleTextController.text,
+              description: descriptionTextController.text,
+              amount: double.tryParse(borrowingLoanAmountTextController.text),
+              interestRate:
+                  double.tryParse(borrowingInterestRateTextController.text),
+              duration: int.tryParse(borrowingTenureMonthsTextController.text),
+              overdueInterestRate: double.tryParse(
+                  borrowingOverdueInterestRateTextController.text),
+              loanReasonDescription: borrowingLoanReasonTextController.text,
+            ),
+          );
+    }
   }
 
   @override
@@ -118,36 +107,6 @@ class CreatePostScreen extends StatelessWidget {
         children: [
           BlocBuilder<CreatePostBloc, CreatePostState>(
             builder: (context, state) {
-              // đăng bài
-              if (state.uploadImagesStatus == UploadImagesStatus.failure) {
-                context.snackBar(
-                  'Có lỗi xảy ra khi tải ảnh lên!',
-                  type: SnackBarType.error,
-                );
-              } else if (state.uploadImagesStatus ==
-                  UploadImagesStatus.success) {
-                final post = createPost(
-                  state.isLending,
-                  state.loanReasonType,
-                  state.imageUrlList,
-                );
-                context.read<CreatePostBloc>().add(
-                      SendPostEvent(post),
-                    );
-              }
-              
-              if (state.status == CreatePostStatus.success) {
-                context.snackBar(
-                  'Đăng bài thành công!',
-                  type: SnackBarType.success,
-                );
-              } else if (state.status == CreatePostStatus.failure) {
-                context.snackBar(
-                  'Có lỗi xảy ra khi đăng bài!',
-                  type: SnackBarType.error,
-                );
-              }
-
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -209,7 +168,9 @@ class CreatePostScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: state.status == CreatePostStatus.loading
                           ? null
-                          : () {},
+                          : () {
+                              uploadPost(context, state);
+                            },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.green,
                         padding: const EdgeInsets.symmetric(vertical: 15),

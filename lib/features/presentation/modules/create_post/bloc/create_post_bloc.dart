@@ -20,7 +20,6 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<AddFileImageEvent>(_addImageFile);
     on<RemoveFileImageEvent>(_removeImageFile);
     on<ChangeLoanReasonEvent>(changeLoanReason);
-    on<UploadImagesEvent>(_uploadImages);
   }
 
   void _sendPost(
@@ -28,7 +27,12 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     Emitter<CreatePostState> emit,
   ) async {
     emit(state.copyWith(status: CreatePostStatus.loading));
-    print(event.postEntity);
+    // upload images
+    List<String> images = await _uploadImages();
+    // create post entity
+    PostEntity postEntity = createPostEntity(event, images);
+    // send post
+    print(postEntity.toString());
     await Future.delayed(const Duration(seconds: 2)).whenComplete(() {
       emit(state.copyWith(status: CreatePostStatus.success));
     });
@@ -68,20 +72,54 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     emit(state.copyWith(loanReasonType: event.loanReason));
   }
 
-  void _uploadImages(
-    UploadImagesEvent event,
-    Emitter<CreatePostState> emit,
-  ) async {
-    emit(state.copyWith(uploadImagesStatus: UploadImagesStatus.loading));
+  Future<List<String>> _uploadImages() async {
     UploadImagesUseCase uploadImagessUseCase = sl<UploadImagesUseCase>();
+    if (state.photo.isEmpty) {
+      return [];
+    }
     final dataState = await uploadImagessUseCase(params: state.photo);
     if (dataState is DataSuccess) {
-      emit(state.copyWith(
-        uploadImagesStatus: UploadImagesStatus.success,
-        imageUrlList: dataState.data!,
-      ));
+      return dataState.data!;
     } else {
-      emit(state.copyWith(uploadImagesStatus: UploadImagesStatus.failure));
+      return [];
+    }
+  }
+
+  PostEntity createPostEntity(SendPostEvent event, List<String> images) {
+    try {
+      if (state.isLending) {
+        // Lending
+        return PostEntity(
+          isLease: state.isLending,
+          title: event.title!,
+          description: event.description!,
+          images: images,
+          amount: event.amount!,
+          maxAmount: event.maxAmount!,
+          interestRate: event.interestRate!,
+          maxInterestRate: event.maxInterestRate!,
+          duration: event.duration!,
+          maxDuration: event.maxDuration!,
+          overdueInterestRate: event.overdueInterestRate!,
+          maxOverdueInterestRate: event.maxOverdueInterestRate!,
+        );
+      } else {
+        return PostEntity(
+          isLease: state.isLending,
+          title: event.title!,
+          description: event.description!,
+          images: images,
+          amount: event.amount!,
+          interestRate: event.interestRate!,
+          overdueInterestRate: event.overdueInterestRate!,
+          duration: event.duration!,
+          loanReason: state.loanReasonType,
+          loanReasonDescription: event.loanReasonDescription!,
+        );
+      }
+    } catch (e) {
+      print("Error when Create Post: $e");
+      return const PostEntity();
     }
   }
 }

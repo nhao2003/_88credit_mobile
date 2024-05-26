@@ -36,6 +36,7 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
       List<File> media, String typeMedia) async {
     const url = '$apiUrl/media/upload';
     final response = Response(
+      statusCode: 200,
       requestOptions: RequestOptions(path: url),
       data: {
         "result": {

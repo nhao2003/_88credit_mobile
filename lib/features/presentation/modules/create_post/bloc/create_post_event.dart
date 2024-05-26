@@ -17,12 +17,46 @@ class TogglePageEvent extends CreatePostEvent {
 }
 
 class SendPostEvent extends CreatePostEvent {
-  final PostEntity postEntity;
+  final String? title;
+  final String? description;
+  final double? amount;
+  final double? maxAmount;
+  final double? interestRate;
+  final double? maxInterestRate;
+  final int? duration;
+  final int? maxDuration;
+  final double? overdueInterestRate;
+  final double? maxOverdueInterestRate;
+  final String? loanReasonDescription;
 
-  const SendPostEvent(this.postEntity);
+  const SendPostEvent({
+    this.title,
+    this.description,
+    this.amount,
+    this.maxAmount,
+    this.interestRate,
+    this.maxInterestRate,
+    this.duration,
+    this.maxDuration,
+    this.overdueInterestRate,
+    this.maxOverdueInterestRate,
+    this.loanReasonDescription,
+  });
 
   @override
-  List<Object> get props => [postEntity];
+  List<Object> get props => [
+        title!,
+        description!,
+        amount!,
+        maxAmount!,
+        interestRate!,
+        maxInterestRate!,
+        duration!,
+        maxDuration!,
+        overdueInterestRate!,
+        maxOverdueInterestRate!,
+        loanReasonDescription!,
+      ];
 }
 
 class AddFileImageEvent extends CreatePostEvent {
@@ -53,5 +87,3 @@ class ChangeLoanReasonEvent extends CreatePostEvent {
   @override
   List<Object> get props => [loanReason];
 }
-
-class UploadImagesEvent extends CreatePostEvent {}
