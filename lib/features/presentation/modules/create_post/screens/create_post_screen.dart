@@ -51,8 +51,8 @@ class CreatePostScreen extends StatelessWidget {
     return isValidate;
   }
 
-  Future<PostEntity> createPost(bool isLending, LoanReasonTypes loanReasonType,
-      List<String>? images) async {
+  PostEntity createPost(
+      bool isLending, LoanReasonTypes loanReasonType, List<String>? images) {
     try {
       if (isLending) {
         // Lending
@@ -89,7 +89,23 @@ class CreatePostScreen extends StatelessWidget {
       }
     } catch (e) {
       print("Error when Create Post: $e");
+      return const PostEntity();
     }
+  }
+
+  void uploadPost(BuildContext context, CreatePostState state) {
+    // check validate
+    if (!validatorForm(state.isLending)) {
+      return context.snackBar(
+        'Vui lòng điền đầy đủ thông tin bắt buộc!',
+        type: SnackBarType.error,
+      );
+    }
+
+    // upload images
+    context.read<CreatePostBloc>().add(
+          UploadImagesEvent(),
+        );
   }
 
   @override
@@ -102,6 +118,36 @@ class CreatePostScreen extends StatelessWidget {
         children: [
           BlocBuilder<CreatePostBloc, CreatePostState>(
             builder: (context, state) {
+              // đăng bài
+              if (state.uploadImagesStatus == UploadImagesStatus.failure) {
+                context.snackBar(
+                  'Có lỗi xảy ra khi tải ảnh lên!',
+                  type: SnackBarType.error,
+                );
+              } else if (state.uploadImagesStatus ==
+                  UploadImagesStatus.success) {
+                final post = createPost(
+                  state.isLending,
+                  state.loanReasonType,
+                  state.imageUrlList,
+                );
+                context.read<CreatePostBloc>().add(
+                      SendPostEvent(post),
+                    );
+              }
+              
+              if (state.status == CreatePostStatus.success) {
+                context.snackBar(
+                  'Đăng bài thành công!',
+                  type: SnackBarType.success,
+                );
+              } else if (state.status == CreatePostStatus.failure) {
+                context.snackBar(
+                  'Có lỗi xảy ra khi đăng bài!',
+                  type: SnackBarType.error,
+                );
+              }
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -163,22 +209,7 @@ class CreatePostScreen extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: state.status == CreatePostStatus.loading
                           ? null
-                          : () {
-                              // upload images
-                              context.read<CreatePostBloc>().add(
-                                    UploadImagesEvent(),
-                                  );
-                              if (!validatorForm(state.isLending)) {
-                                return context.snackBar(
-                                  'Vui lòng điền đầy đủ thông tin bắt buộc!',
-                                  type: SnackBarType.error,
-                                );
-                              }
-                              // getNewPost(state.isLending);
-                              // context.read<CreatePostBloc>().add(
-                              //       const SendPostEvent(),
-                              //     );
-                            },
+                          : () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.green,
                         padding: const EdgeInsets.symmetric(vertical: 15),
