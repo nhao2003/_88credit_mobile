@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../../core/errors/exceptions.dart';
@@ -126,8 +127,6 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       String? accessToken = localDataSrc.getAccessToken();
 
       // Gửi yêu cầu đến server
-      print(post.toJson());
-
       final response = await client.post(
         url,
         options: Options(
@@ -136,24 +135,16 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
         data: post.toJson(),
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.created) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
         );
       }
-
       // Nếu yêu cầu thành công, giải mã dữ liệu JSON
       return HttpResponse(null, response);
-    } on DioException catch (e) {
-      throw ApiException(
-        message: e.message ?? "Error when create post",
-        statusCode: e.response?.statusCode ?? 505,
-      );
-    } on ApiException {
-      rethrow;
     } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+      throw ErrorHelpers.handleException(error);
     }
   }
 }

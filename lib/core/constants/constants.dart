@@ -17,7 +17,7 @@ const String kResendActivationCode = '/auth/resend-activation-code';
 const String kRefreshToken = '/auth/refresh-token';
 
 const String kGetPostEndpoint = '/post';
-const String kCreatePostEndpoint = '/post/create';
+const String kCreatePostEndpoint = '/post';
 const String kGetMembershipPackageEndpoint = '/membership-package';
 const String kGetTransactionEndpoint = '/membership-package/transactions';
 const String kCreateOrderEndpoint = '/membership-package/check-out';

@@ -107,6 +107,16 @@ class CreatePostScreen extends StatelessWidget {
         children: [
           BlocBuilder<CreatePostBloc, CreatePostState>(
             builder: (context, state) {
+              if (state.status == CreatePostStatus.success) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  // Add Your Code here.
+                  Navigator.of(context).pop();
+                });
+                context.snackBar('Đăng bài thành công!');
+              } else if (state.status == CreatePostStatus.failure) {
+                context.snackBar(state.failureString, type: SnackBarType.error);
+              }
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,

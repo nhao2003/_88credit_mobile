@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:_88credit_mobile/features/domain/entities/post.dart';
+import 'package:_88credit_mobile/features/domain/usecases/post/create_post.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/resources/data_state.dart';
@@ -26,16 +27,27 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     SendPostEvent event,
     Emitter<CreatePostState> emit,
   ) async {
-    emit(state.copyWith(status: CreatePostStatus.loading));
-    // upload images
-    List<String> images = await _uploadImages();
-    // create post entity
-    PostEntity postEntity = createPostEntity(event, images);
-    // send post
-    print(postEntity.toString());
-    await Future.delayed(const Duration(seconds: 2)).whenComplete(() {
-      emit(state.copyWith(status: CreatePostStatus.success));
-    });
+    try {
+      emit(state.copyWith(status: CreatePostStatus.loading));
+      // upload images
+      List<String> images = await _uploadImages();
+      // create post entity
+      PostEntity postEntity = createPostEntity(event, images);
+      // send post
+      CreatePostsUseCase createPostsUseCase = sl<CreatePostsUseCase>();
+      final dataState = await createPostsUseCase(params: postEntity);
+
+      if (dataState is DataSuccess) {
+        emit(state.copyWith(status: CreatePostStatus.success));
+      } else {
+        emit(state.copyWith(
+            status: CreatePostStatus.failure,
+            failureString: dataState.error.toString()));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          status: CreatePostStatus.failure, failureString: e.toString()));
+    }
   }
 
   void checkLengthPhoto(

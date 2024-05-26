@@ -38,8 +38,7 @@ class PostRepositoryImpl implements PostRepository {
     try {
       final httpResponse =
           await _dataSrc.createPost(PostModel.fromEntity(post));
-
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.created) {
         return DataSuccess(httpResponse.data);
       } else {
         return DataFailed(
