@@ -129,7 +129,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
               description: post.loanReason!,
             ),
             const SizedBox(height: 20),
-            if (post.status == LoanContractRequestStatus.rejected &&
+            if (post.status == LoanContractRequestStatus.REJECTED &&
                 post.rejectedReason != null)
               DescriptionCard(
                 title: "Lý do hủy yêu cầu",
@@ -138,18 +138,18 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
             const SizedBox(height: 10),
             const HeaderTitle(title: "Ảnh chân dung"),
             const SizedBox(height: 10),
-            ImageCard(images: [post.portaitPhoto!]),
+            ImageCard(images: [post.portaitPhotoUrl!]),
             const SizedBox(height: 10),
             const HeaderTitle(title: "Ảnh căn cước / CMND:"),
             const SizedBox(height: 10),
-            ImageCard(images: [post.idCardFrontPhoto!, post.idCardBackPhoto!]),
-            if (post.videoConfirmation != null)
+            ImageCard(images: [post.idCardFrontPhotoUrl!, post.idCardBackPhotoUrl!]),
+            if (post.videoConfirmationUrl != null)
               Column(
                 children: [
                   const SizedBox(height: 10),
                   const HeaderTitle(title: "Video minh chứng:"),
                   const SizedBox(height: 10),
-                  VideoCard(videoUrl: post.videoConfirmation!),
+                  VideoCard(videoUrl: post.videoConfirmationUrl!),
                 ],
               ),
             const SizedBox(height: 20),
@@ -162,7 +162,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                     state.paymentStatus == PaymentStatus.loading) {
                   return const CircularProgressIndicator();
                 }
-                if (state.requestStatus == LoanContractRequestStatus.pending) {
+                if (state.requestStatus == LoanContractRequestStatus.PENDING) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -189,7 +189,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                   );
                 }
                 if (state.requestStatus ==
-                    LoanContractRequestStatus.waitingForPayment) {
+                    LoanContractRequestStatus.WAITING_FOR_PAYMENT) {
                   return BaseButton(
                     title: "Thanh toán",
                     width: 100.wp,

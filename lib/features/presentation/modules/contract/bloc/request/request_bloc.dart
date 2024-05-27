@@ -23,7 +23,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(LoanContractRequestStatus.paid),
+      getRequests(LoanContractRequestStatus.PAID),
     );
   }
 
@@ -31,7 +31,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(LoanContractRequestStatus.pending),
+      getRequests(LoanContractRequestStatus.PENDING),
     );
   }
 
@@ -39,7 +39,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(LoanContractRequestStatus.rejected),
+      getRequests(LoanContractRequestStatus.REJECTED),
     );
   }
 
@@ -47,7 +47,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(LoanContractRequestStatus.pending),
+      getRequests(LoanContractRequestStatus.PENDING),
     );
   }
 
@@ -55,7 +55,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
-      getRequests(LoanContractRequestStatus.waitingForPayment),
+      getRequests(LoanContractRequestStatus.WAITING_FOR_PAYMENT),
     );
   }
 
@@ -74,13 +74,13 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
         loanTenureMonths: 12,
         loanReasonType: LoanReasonTypes.BUSINESS,
         loanReason: 'Business',
-        videoConfirmation:
+        videoConfirmationUrl:
             'https://videos.pexels.com/video-files/6548176/6548176-hd_1920_1080_24fps.mp4',
-        portaitPhoto:
+        portaitPhotoUrl:
             'https://preview.redd.it/cute-chinese-girl-prompt-v0-unj4c2swcfeb1.png?auto=webp&s=fe872406e39269fa69244e138cf7cfb252c3be51',
-        idCardFrontPhoto:
+        idCardFrontPhotoUrl:
             'https://static.ttbc-hcm.gov.vn/images/upload/lienphuong/04102021//cccd_bodm.jpg',
-        idCardBackPhoto:
+        idCardBackPhotoUrl:
             'https://static.ttbc-hcm.gov.vn/images/upload/lienphuong/04102021//cccd_bodm.jpg',
         senderBankCardId: '1',
         receiverBankCardId: '2',

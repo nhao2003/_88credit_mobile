@@ -42,45 +42,45 @@ class RequestItem extends StatelessWidget {
 
   String getStatusText() {
     switch (request.status!) {
-      case LoanContractRequestStatus.cancle:
+      case LoanContractRequestStatus.CANCLE:
         return "Đã xác nhận từ ${request.createdAt!.toDMYString()}";
-      case LoanContractRequestStatus.waitingForPayment:
+      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
         return "Chờ thanh toán";
-      case LoanContractRequestStatus.rejected:
+      case LoanContractRequestStatus.REJECTED:
         return request.rejectedReason ?? "Đã hủy";
-      case LoanContractRequestStatus.paid:
+      case LoanContractRequestStatus.PAID:
         return "Đã thanh toán từ ${request.updatedAt!.toDMYString()}";
-      case LoanContractRequestStatus.pending:
+      case LoanContractRequestStatus.PENDING:
         return "Đang chờ xác nhận";
     }
   }
 
   Color getColorStatus() {
     switch (request.status!) {
-      case LoanContractRequestStatus.cancle:
+      case LoanContractRequestStatus.CANCLE:
         return AppColors.green800;
-      case LoanContractRequestStatus.waitingForPayment:
+      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
         return AppColors.blue800;
-      case LoanContractRequestStatus.rejected:
+      case LoanContractRequestStatus.REJECTED:
         return AppColors.red800;
-      case LoanContractRequestStatus.paid:
+      case LoanContractRequestStatus.PAID:
         return AppColors.grey700;
-      case LoanContractRequestStatus.pending:
+      case LoanContractRequestStatus.PENDING:
         return AppColors.yellow800;
     }
   }
 
   Color getColorBackground() {
     switch (request.status!) {
-      case LoanContractRequestStatus.cancle:
+      case LoanContractRequestStatus.CANCLE:
         return AppColors.green100;
-      case LoanContractRequestStatus.waitingForPayment:
+      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
         return AppColors.blue100;
-      case LoanContractRequestStatus.rejected:
+      case LoanContractRequestStatus.REJECTED:
         return AppColors.red100;
-      case LoanContractRequestStatus.paid:
+      case LoanContractRequestStatus.PAID:
         return AppColors.grey100;
-      case LoanContractRequestStatus.pending:
+      case LoanContractRequestStatus.PENDING:
         return AppColors.yellow100;
     }
   }
@@ -156,7 +156,7 @@ class RequestItem extends StatelessWidget {
                             ),
                             child: Text(
                               request.status ==
-                                      LoanContractRequestStatus.pending
+                                      LoanContractRequestStatus.PENDING
                                   ? "Xác nhận"
                                   : "Chi tiết",
                               style: AppTextStyles.semiBold12.colorEx(
