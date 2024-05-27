@@ -1,9 +1,10 @@
+// ignore_for_file: constant_identifier_names
 enum LoanContractRequestStatus {
-  cancle,
-  pending,
-  rejected,
-  waitingForPayment,
-  paid;
+  CANCLE,
+  PENDING,
+  REJECTED,
+  WAITING_FOR_PAYMENT,
+  PAID;
 
   static LoanContractRequestStatus parse(String value) {
     for (LoanContractRequestStatus status in LoanContractRequestStatus.values) {
@@ -16,30 +17,30 @@ enum LoanContractRequestStatus {
   @override
   String toString() {
     switch (this) {
-      case LoanContractRequestStatus.cancle:
-        return "cancle";
-      case LoanContractRequestStatus.pending:
-        return "pending";
-      case LoanContractRequestStatus.rejected:
-        return "rejected";
-      case LoanContractRequestStatus.waitingForPayment:
-        return "waiting_for_payment";
-      case LoanContractRequestStatus.paid:
-        return "paid";
+      case LoanContractRequestStatus.CANCLE:
+        return "CANCLE";
+      case LoanContractRequestStatus.PENDING:
+        return "PENDING";
+      case LoanContractRequestStatus.REJECTED:
+        return "REJECTED";
+      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
+        return "WAITING_FOR_PAYMENT";
+      case LoanContractRequestStatus.PAID:
+        return "PAID";
     }
   }
 
   String getStringVi() {
     switch (this) {
-      case LoanContractRequestStatus.cancle:
+      case LoanContractRequestStatus.CANCLE:
         return "Đã xác nhận";
-      case LoanContractRequestStatus.pending:
+      case LoanContractRequestStatus.PENDING:
         return "Đang chờ";
-      case LoanContractRequestStatus.rejected:
+      case LoanContractRequestStatus.REJECTED:
         return "Đã từ chối";
-      case LoanContractRequestStatus.waitingForPayment:
+      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
         return "Đang chờ thanh toán";
-      case LoanContractRequestStatus.paid:
+      case LoanContractRequestStatus.PAID:
         return "Đã thanh toán";
     }
   }
@@ -47,11 +48,11 @@ enum LoanContractRequestStatus {
   // toMap
   static Map<LoanContractRequestStatus, String> toMap() {
     return {
-      LoanContractRequestStatus.cancle: "Đã hủy",
-      LoanContractRequestStatus.pending: "Đang chờ",
-      LoanContractRequestStatus.rejected: "Đã từ chối",
-      LoanContractRequestStatus.waitingForPayment: "Đang chờ thanh toán",
-      LoanContractRequestStatus.paid: "Đã thanh toán",
+      LoanContractRequestStatus.CANCLE: "Đã hủy",
+      LoanContractRequestStatus.PENDING: "Đang chờ",
+      LoanContractRequestStatus.REJECTED: "Đã từ chối",
+      LoanContractRequestStatus.WAITING_FOR_PAYMENT: "Đang chờ thanh toán",
+      LoanContractRequestStatus.PAID: "Đã thanh toán",
     };
   }
 }

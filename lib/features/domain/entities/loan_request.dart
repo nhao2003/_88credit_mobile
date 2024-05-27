@@ -7,7 +7,9 @@ import 'bank_card.dart';
 class LoanRequestEntity extends Equatable {
   final String? id;
   final LoanContractRequestStatus? status;
+  final String? senderId;
   final UserEntity? sender;
+  final String? receiverId;
   final UserEntity? receiver;
   final String? description;
   final double? loanAmount;
@@ -16,10 +18,10 @@ class LoanRequestEntity extends Equatable {
   final int? loanTenureMonths;
   final LoanReasonTypes? loanReasonType;
   final String? loanReason;
-  final String? videoConfirmation;
-  final String? portaitPhoto;
-  final String? idCardFrontPhoto;
-  final String? idCardBackPhoto;
+  final String? videoConfirmationUrl;
+  final String? portaitPhotoUrl;
+  final String? idCardFrontPhotoUrl;
+  final String? idCardBackPhotoUrl;
   final String? senderBankCardId;
   final BankCardEntity? senderBankCard;
   final String? receiverBankCardId;
@@ -32,7 +34,9 @@ class LoanRequestEntity extends Equatable {
   const LoanRequestEntity({
     this.id,
     this.status,
+    this.senderId,
     this.sender,
+    this.receiverId,
     this.receiver,
     this.description,
     this.loanAmount,
@@ -41,10 +45,10 @@ class LoanRequestEntity extends Equatable {
     this.loanTenureMonths,
     this.loanReasonType,
     this.loanReason,
-    this.videoConfirmation,
-    this.portaitPhoto,
-    this.idCardFrontPhoto,
-    this.idCardBackPhoto,
+    this.videoConfirmationUrl,
+    this.portaitPhotoUrl,
+    this.idCardFrontPhotoUrl,
+    this.idCardBackPhotoUrl,
     this.senderBankCardId,
     this.receiverBankCardId,
     this.rejectedReason,
@@ -59,7 +63,9 @@ class LoanRequestEntity extends Equatable {
   List<Object?> get props => [
         id,
         status,
+        senderId,
         sender,
+        receiverId,
         receiver,
         description,
         loanAmount,
@@ -68,10 +74,10 @@ class LoanRequestEntity extends Equatable {
         loanTenureMonths,
         loanReasonType,
         loanReason,
-        videoConfirmation,
-        portaitPhoto,
-        idCardFrontPhoto,
-        idCardBackPhoto,
+        videoConfirmationUrl,
+        portaitPhotoUrl,
+        idCardFrontPhotoUrl,
+        idCardBackPhotoUrl,
         senderBankCardId,
         receiverBankCardId,
         rejectedReason,
@@ -85,7 +91,9 @@ class LoanRequestEntity extends Equatable {
   LoanRequestEntity copyWith({
     String? id,
     LoanContractRequestStatus? status,
+    String? senderId,
     UserEntity? sender,
+    String? receiverId,
     UserEntity? receiver,
     String? description,
     double? loanAmount,
@@ -110,7 +118,9 @@ class LoanRequestEntity extends Equatable {
     return LoanRequestEntity(
       id: id ?? this.id,
       status: status ?? this.status,
+      senderId: senderId ?? this.senderId,
       sender: sender ?? this.sender,
+      receiverId: receiverId ?? this.receiverId,
       receiver: receiver ?? this.receiver,
       description: description ?? this.description,
       loanAmount: loanAmount ?? this.loanAmount,
@@ -119,10 +129,10 @@ class LoanRequestEntity extends Equatable {
       loanTenureMonths: loanTenureMonths ?? this.loanTenureMonths,
       loanReasonType: loanReasonType ?? this.loanReasonType,
       loanReason: loanReason ?? this.loanReason,
-      videoConfirmation: videoConfirmation ?? this.videoConfirmation,
-      portaitPhoto: portaitPhoto ?? this.portaitPhoto,
-      idCardFrontPhoto: idCardFrontPhoto ?? this.idCardFrontPhoto,
-      idCardBackPhoto: idCardBackPhoto ?? this.idCardBackPhoto,
+      videoConfirmationUrl: videoConfirmation ?? videoConfirmationUrl,
+      portaitPhotoUrl: portaitPhoto ?? portaitPhotoUrl,
+      idCardFrontPhotoUrl: idCardFrontPhoto ?? idCardFrontPhotoUrl,
+      idCardBackPhotoUrl: idCardBackPhoto ?? idCardBackPhotoUrl,
       senderBankCardId: senderBankCardId ?? this.senderBankCardId,
       receiverBankCardId: receiverBankCardId ?? this.receiverBankCardId,
       rejectedReason: rejectedReason ?? this.rejectedReason,

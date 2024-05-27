@@ -79,10 +79,10 @@ class DatabaseHelper {
         );
       }
 
-      final int numOfPages = response.data["num_of_pages"];
+      final int numOfPages = response.data["data"]["totalPages"];
 
       final List<DataMap> taskDataList =
-          List<DataMap>.from(response.data["result"]);
+          List<DataMap>.from(response.data["data"]["items"]);
 
       List<LoanRequestModel> posts = [];
       for (var element in taskDataList) {

@@ -9,7 +9,9 @@ class LoanRequestModel extends LoanRequestEntity {
   const LoanRequestModel({
     super.id,
     super.status,
+    super.senderId,
     super.sender,
+    super.receiverId,
     super.receiver,
     super.description,
     super.loanAmount,
@@ -18,10 +20,10 @@ class LoanRequestModel extends LoanRequestEntity {
     super.loanTenureMonths,
     super.loanReasonType,
     super.loanReason,
-    super.videoConfirmation,
-    super.portaitPhoto,
-    super.idCardFrontPhoto,
-    super.idCardBackPhoto,
+    super.videoConfirmationUrl,
+    super.portaitPhotoUrl,
+    super.idCardFrontPhotoUrl,
+    super.idCardBackPhotoUrl,
     super.senderBankCardId,
     super.receiverBankCardId,
     super.rejectedReason,
@@ -38,57 +40,59 @@ class LoanRequestModel extends LoanRequestEntity {
       status: json['status'] != null
           ? LoanContractRequestStatus.parse(json['status'])
           : null,
-      sender: UserEntity.fromJson(json['sender']),
-      receiver: UserEntity.fromJson(json['receiver']),
+      senderId: json['senderId'],
+      sender:
+          json['sender'] == null ? UserEntity.fromJson(json['sender']) : null,
+      receiverId: json['receiverId'],
+      receiver: json['receiver'] == null
+          ? UserEntity.fromJson(json['receiver'])
+          : null,
       description: json['description'],
-      loanAmount: json['loan_amount'] != null
-          ? double.parse(json['loan_amount'])
-          : null,
-      interestRate: ConverNumber.convertIntToDouble(json['interest_rate']),
+      loanAmount:
+          json['loanAmount'] != null ? double.parse(json['loanAmount']) : null,
+      interestRate: ConverNumber.convertIntToDouble(json['interestRate']),
       overdueInterestRate:
-          ConverNumber.convertIntToDouble(json['overdue_interest_rate']),
-      loanTenureMonths: json['loan_tenure_months'],
-      loanReasonType: json['loan_reason_type'] != null
-          ? LoanReasonTypes.parse(json['loan_reason_type'])
+          ConverNumber.convertIntToDouble(json['overdueInterestRate']),
+      loanTenureMonths: json['loanTenureMonths'],
+      loanReasonType: json['loanReasonType'] != null
+          ? LoanReasonTypes.parse(json['loanReasonType'])
           : null,
-      loanReason: json['loan_reason'],
-      videoConfirmation: json['video_confirmation'],
-      portaitPhoto: json['portait_photo'],
-      idCardFrontPhoto: json['id_card_front_photo'],
-      idCardBackPhoto: json['id_card_back_photo'],
-      senderBankCardId: json['sender_bank_card_id'],
-      receiverBankCardId: json['receiver_bank_card_id'],
-      rejectedReason: json['rejected_reason'],
-      createdAt: DateTime.parse(json['created_at']),
-      updatedAt: DateTime.parse(json['updated_at']),
-      deletedAt: json['deleted_at'] != null
-          ? DateTime.parse(json['deleted_at'])
+      loanReason: json['loanReason'],
+      videoConfirmationUrl: json['videoConfirmationUrl'],
+      portaitPhotoUrl: json['portaitPhotoUrl'],
+      idCardFrontPhotoUrl: json['idCardFrontPhotoUrl'],
+      idCardBackPhotoUrl: json['idCardBackPhotoUrl'],
+      senderBankCardId: json['senderBankCardId'],
+      receiverBankCardId: json['receiverBankCardId'],
+      rejectedReason: json['rejectedReason'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+      deletedAt:
+          json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
+      senderBankCard: json['senderBankCard'] != null
+          ? BankCardModel.fromJson(json['senderBankCard'])
           : null,
-      senderBankCard: json['sender_bank_card'] != null
-          ? BankCardModel.fromJson(json['sender_bank_card'])
-          : null,
-      receiverBankCard: json['receiver_bank_card'] != null
-          ? BankCardModel.fromJson(json['receiver_bank_card'])
+      receiverBankCard: json['receiverBankCard'] != null
+          ? BankCardModel.fromJson(json['receiverBankCard'])
           : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'receiver_id': receiver!.id,
-      'loan_amount': loanAmount,
+      'receiverId': receiver!.id,
       'description': description,
-      'interest_rate': interestRate,
-      'overdue_interest_rate': overdueInterestRate,
-      'loan_tenure_months': loanTenureMonths,
-      'loan_reason_type': loanReasonType.toString(),
-      'loan_reason': loanReason,
-      'video_confirmation': videoConfirmation,
-      'portait_photo': portaitPhoto,
-      'id_card_front_photo': idCardFrontPhoto,
-      'id_card_back_photo': idCardBackPhoto,
-      "sender_bank_card_id": senderBankCardId,
-      'receiver_bank_card_id': receiverBankCardId,
+      'loanAmount': loanAmount,
+      'interestRate': interestRate,
+      'overdueInterestRate': overdueInterestRate,
+      'loanTenureMonths': loanTenureMonths,
+      'loanReasonType': loanReasonType.toString(),
+      'loanReason': loanReason,
+      'videoConfirmationUrl': videoConfirmationUrl,
+      'portaitPhotoUrl': portaitPhotoUrl,
+      'idCardFrontPhotoUrl': idCardFrontPhotoUrl,
+      'idCardBackPhotoUrl': idCardBackPhotoUrl,
+      "senderBankCardId": senderBankCardId,
     };
   }
 
@@ -97,7 +101,9 @@ class LoanRequestModel extends LoanRequestEntity {
     return LoanRequestModel(
       id: entity.id,
       status: entity.status,
+      senderId: entity.senderId,
       sender: entity.sender,
+      receiverId: entity.receiverId,
       receiver: entity.receiver,
       description: entity.description,
       loanAmount: entity.loanAmount,
@@ -106,10 +112,10 @@ class LoanRequestModel extends LoanRequestEntity {
       loanTenureMonths: entity.loanTenureMonths,
       loanReasonType: entity.loanReasonType,
       loanReason: entity.loanReason,
-      videoConfirmation: entity.videoConfirmation,
-      portaitPhoto: entity.portaitPhoto,
-      idCardFrontPhoto: entity.idCardFrontPhoto,
-      idCardBackPhoto: entity.idCardBackPhoto,
+      videoConfirmationUrl: entity.videoConfirmationUrl,
+      portaitPhotoUrl: entity.portaitPhotoUrl,
+      idCardFrontPhotoUrl: entity.idCardFrontPhotoUrl,
+      idCardBackPhotoUrl: entity.idCardBackPhotoUrl,
       senderBankCardId: entity.senderBankCardId,
       receiverBankCardId: entity.receiverBankCardId,
       rejectedReason: entity.rejectedReason,
