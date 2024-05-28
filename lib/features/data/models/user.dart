@@ -27,30 +27,28 @@ class UserModel extends UserEntity {
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
+      email: json['email'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+      avatar: json['avatar'],
+      gender: json['gender'],
+      dob: json['dob'],
+      phone: json['phone'],
       //status: UserStatus.parse(json['status']),
       status: UserStatus.parse(json['status'] ?? ""),
-      isIdentityVerified: json['is_identity_verified'],
+      isIdentityVerified: json['isIdentityVerified'],
       role: Role.parse(json['role']),
-      email: json['email'],
       address: json['address'] != null
           ? AddressEntity.fromJson(json['address'])
           : null,
-      firstName: json['first_name'],
-      lastName: json['last_name'],
-      gender: json['gender'],
-      avatar: json['avatar'],
-      dob: json['dob'],
-      phone: json['phone'],
-      banReason: json['ban_reason'],
-      lastActiveAt: DateTime.parse(json['last_active_at']),
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : null,
-      updatedAt: json['updated_at'] != null
-          ? DateTime.parse(json['updated_at'])
-          : null,
-      bannedUtil: json['banned_util'] != null
-          ? DateTime.tryParse(json['banned_util'] ?? "")
+      banReason: json['banReason'],
+      lastActiveAt: DateTime.parse(json['lastActiveAt']),
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      updatedAt:
+          json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      bannedUtil: json['bannedUtil'] != null
+          ? DateTime.tryParse(json['bannedUtil'] ?? "")
           : null,
     );
   }
@@ -59,21 +57,21 @@ class UserModel extends UserEntity {
     return {
       'id': id,
       'status': status.toString(),
-      'is_identity_verified': isIdentityVerified,
+      'isIdentityVerified': isIdentityVerified,
       'role': role.toString(),
       'email': email,
       'address': address,
-      'first_name': firstName,
-      'last_name': lastName,
+      'firstName': firstName,
+      'lastName': lastName,
       'gender': gender,
       'avatar': avatar,
       'dob': dob,
       'phone': phone,
-      'ban_reason': banReason,
-      'last_active_at': lastActiveAt!.toIso8601String(),
-      'created_at': createdAt!.toIso8601String(),
-      'updated_at': updatedAt!.toIso8601String(),
-      'banned_util': bannedUtil!.toIso8601String(),
+      'banReason': banReason,
+      'lastActiveAt': lastActiveAt!.toIso8601String(),
+      'createdAt': createdAt!.toIso8601String(),
+      'updatedAt': updatedAt!.toIso8601String(),
+      'bannedUtil': bannedUtil!.toIso8601String(),
     };
   }
 }

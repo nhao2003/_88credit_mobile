@@ -17,25 +17,23 @@ class BankCardModel extends BankCardEntity {
   factory BankCardModel.fromJson(Map<String, dynamic> json) {
     return BankCardModel(
       id: json['id'],
-      isPrimary: json['is_primary'],
-      userId: json['user_id'],
-      bankId: json['bank_id'],
+      isPrimary: json['isPrimary'],
+      userId: json['userId'],
+      bankId: json['bankId'],
       bank: json['bank'] != null ? BankModel.fromJson(json['bank']) : null,
-      cardNumber: json['card_number'],
+      cardNumber: json['cardNumber'],
       branch: json['branch'],
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : null,
-      deletedAt: json['deleted_at'] != null
-          ? DateTime.parse(json['deleted_at'])
-          : null,
+      createdAt:
+          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
+      deletedAt:
+          json['deletedAt'] != null ? DateTime.parse(json['deletedAt']) : null,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'bank_id': bank!.id,
-      'card_number': cardNumber,
+      'bankId': bank!.id,
+      'cardNumber': cardNumber,
     };
   }
 

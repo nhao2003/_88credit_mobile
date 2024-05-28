@@ -12,6 +12,7 @@ Future<void> initializeDependencies() async {
   await _initBlog();
   await _initPost();
   await _initMedia();
+  await _initRequest();
 }
 
 Future<void> _initAuth() async {

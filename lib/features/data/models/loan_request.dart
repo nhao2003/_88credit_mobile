@@ -1,6 +1,7 @@
+import 'package:_88credit_mobile/features/data/models/user.dart';
 import '../../../core/utils/convert_number.dart';
+import '../../../core/utils/validate_utils.dart';
 import '../../domain/entities/loan_request.dart';
-import '../../domain/entities/user.dart';
 import '../../domain/enums/loan_contract_request_status.dart';
 import '../../domain/enums/loan_reason_types.dart';
 import 'bank_card.dart';
@@ -42,14 +43,13 @@ class LoanRequestModel extends LoanRequestEntity {
           : null,
       senderId: json['senderId'],
       sender:
-          json['sender'] == null ? UserEntity.fromJson(json['sender']) : null,
+          json['sender'] == null ? UserModel.fromJson(json['sender']) : null,
       receiverId: json['receiverId'],
       receiver: json['receiver'] == null
-          ? UserEntity.fromJson(json['receiver'])
+          ? UserModel.fromJson(json['receiver'])
           : null,
       description: json['description'],
-      loanAmount:
-          json['loanAmount'] != null ? double.parse(json['loanAmount']) : null,
+      loanAmount: ValidateUtils.toDoubleJson(json['loanAmount']),
       interestRate: ConverNumber.convertIntToDouble(json['interestRate']),
       overdueInterestRate:
           ConverNumber.convertIntToDouble(json['overdueInterestRate']),

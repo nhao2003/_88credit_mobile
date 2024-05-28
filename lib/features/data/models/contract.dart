@@ -1,6 +1,6 @@
+import 'package:_88credit_mobile/features/data/models/user.dart';
 import '../../../../core/utils/convert_number.dart';
 import '../../domain/entities/contract.dart';
-import '../../domain/entities/user.dart';
 import '../../domain/enums/loan_reason_types.dart';
 import 'bank_card.dart';
 
@@ -30,9 +30,9 @@ class ContractModel extends ContractEntity {
       id: json['id'],
       loanContractRequestId: json['loan_contract_request_id'],
       contractTemplateId: json['contract_template_id'],
-      lender: UserEntity.fromJson(json['lender']),
+      lender: UserModel.fromJson(json['lender']),
       lenderBankCardId: json['lender_bank_card_id'],
-      borrower: UserEntity.fromJson(json['borrower']),
+      borrower: UserModel.fromJson(json['borrower']),
       borrowerBankCardId: json['borrower_bank_card_id'],
       loanReasonType: json['loan_reason_type'] != null
           ? LoanReasonTypes.parse(json['loan_reason_type'])

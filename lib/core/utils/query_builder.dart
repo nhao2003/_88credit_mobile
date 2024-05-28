@@ -109,7 +109,7 @@ class QueryBuilder {
     }
     _query += 'page=$page';
     if (_orderBy.isNotEmpty) {
-      _query += '&orders=$_orderBy';
+      _query += '&orderBy=$_orderBy';
     }
     if (search.isNotEmpty) {
       _query += '&search=$search';

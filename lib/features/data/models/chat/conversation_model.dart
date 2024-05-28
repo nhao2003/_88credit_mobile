@@ -1,5 +1,5 @@
+import 'package:_88credit_mobile/features/data/models/user.dart';
 import '../../../domain/entities/chat/conversation.dart';
-import '../../../domain/entities/user.dart';
 import 'message_model.dart';
 import 'participant_model.dart';
 
@@ -31,8 +31,8 @@ class ConversationModel extends ConversationEntitiy {
       messages: List<MessageModel>.from((json['messages'] ?? [])
           .map((e) => MessageModel.fromJson(e))
           .toList()),
-      users: List<UserEntity>.from(
-          ((json['users'] ?? []).map((e) => UserEntity.fromJson(e)).toList())),
+      users: List<UserModel>.from(
+          ((json['users'] ?? []).map((e) => UserModel.fromJson(e)).toList())),
     );
   }
 
