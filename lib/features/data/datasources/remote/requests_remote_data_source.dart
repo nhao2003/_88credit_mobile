@@ -6,7 +6,9 @@ import '../../../../core/resources/pair.dart';
 import '../../../../core/utils/query_builder.dart';
 import '../../../../di/injection_container.dart';
 import '../../../domain/enums/loan_contract_request_status.dart';
+import '../../models/contract.dart';
 import '../../models/loan_request.dart';
+import '../../models/transaction.dart';
 import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
 
@@ -27,10 +29,10 @@ abstract class RequestRemoteDataSrc {
   Future<HttpResponse<void>> confirmRequest(LoanRequestModel request);
   Future<HttpResponse<void>> rejectRequest(
       LoanRequestModel request, String rejectedReason);
-  // Future<HttpResponse<TransactionModel>> payLoanRequest(String id);
+  Future<HttpResponse<TransactionModel>> payLoanRequest(String id);
 
-  // Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
-  //     bool isLending, int? page);
+  Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
+      bool isLending, int? page);
 }
 
 class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
@@ -75,10 +77,8 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
         message: e.message ?? "Error when create post",
         statusCode: e.response?.statusCode ?? 505,
       );
-    } on ApiException {
-      rethrow;
     } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+      throw ErrorHelpers.handleException(error);
     }
   }
 
@@ -132,27 +132,27 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
     return await DatabaseHelper().getRequests(url, client);
   }
 
-  // @override
-  // Future<HttpResponse<TransactionModel>> payLoanRequest(String id) {
-  //   var url = '$apiUrl$kPayLoanRequestEndpoint/$id';
-  //   AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
-  //   String? accessToken = localDataSrc.getAccessToken();
-  //   if (accessToken == null) {
-  //     throw const ApiException(
-  //         message: 'Access token is null', statusCode: 505);
-  //   }
-  //   return client
-  //       .patch(url,
-  //           options: Options(
-  //               sendTimeout: const Duration(seconds: 10),
-  //               headers: {'Authorization': 'Bearer $accessToken'}))
-  //       .then((value) {
-  //     return HttpResponse<TransactionModel>(
-  //         TransactionModel.fromJson(value.data["result"]), value);
-  //   }).catchError((error) {
-  //     throw ApiException(message: error.toString(), statusCode: 505);
-  //   });
-  // }
+  @override
+  Future<HttpResponse<TransactionModel>> payLoanRequest(String id) {
+    var url = '$apiUrl$kPayLoanRequestEndpoint/$id';
+    AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+    String? accessToken = localDataSrc.getAccessToken();
+    if (accessToken == null) {
+      throw const ApiException(
+          message: 'Access token is null', statusCode: 505);
+    }
+    return client
+        .patch(url,
+            options: Options(
+                sendTimeout: const Duration(seconds: 10),
+                headers: {'Authorization': 'Bearer $accessToken'}))
+        .then((value) {
+      return HttpResponse<TransactionModel>(
+          TransactionModel.fromJson(value.data["result"]), value);
+    }).catchError((error) {
+      throw ErrorHelpers.handleException(error);
+    });
+  }
 
   @override
   Future<HttpResponse<void>> confirmRequest(LoanRequestModel request) async {
@@ -190,10 +190,8 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
         message: e.message ?? "Error when create post",
         statusCode: e.response?.statusCode ?? 505,
       );
-    } on ApiException {
-      rethrow;
     } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+      throw ErrorHelpers.handleException(error);
     }
   }
 
@@ -234,10 +232,8 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
         message: e.message ?? "Error when create post",
         statusCode: e.response?.statusCode ?? 505,
       );
-    } on ApiException {
-      rethrow;
     } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+      throw ErrorHelpers.handleException(error);
     }
   }
 
@@ -309,29 +305,29 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
     return await DatabaseHelper().getRequests(url, client);
   }
 
-  // @override
-  // Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
-  //     bool isLending, int? page) async {
-  //   // get userId
-  //   AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
-  //   String? userId = localDataSrc.getUserIdFromToken();
+  @override
+  Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
+      bool isLending, int? page) async {
+    // get userId
+    AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+    String? userId = localDataSrc.getUserIdFromToken();
 
-  //   int pageQuery = page ?? 1;
-  //   QueryBuilder queryBuilder = QueryBuilder();
-  //   queryBuilder.addPage(pageQuery);
+    int pageQuery = page ?? 1;
+    QueryBuilder queryBuilder = QueryBuilder();
+    queryBuilder.addPage(pageQuery);
 
-  //   if (isLending) {
-  //     queryBuilder.addQuery(
-  //         'contract_lender_id', Operation.equals, '\'$userId\'');
-  //   } else {
-  //     queryBuilder.addQuery(
-  //         'contract_borrower_id', Operation.equals, '\'$userId\'');
-  //   }
+    if (isLending) {
+      queryBuilder.addQuery(
+          'contract_lender_id', Operation.equals, '\'$userId\'');
+    } else {
+      queryBuilder.addQuery(
+          'contract_borrower_id', Operation.equals, '\'$userId\'');
+    }
 
-  //   queryBuilder.addOrderBy('updated_at', OrderBy.desc);
+    queryBuilder.addOrderBy('updated_at', OrderBy.desc);
 
-  //   String url = '$apiUrl$kGetContractEndpoint${queryBuilder.build()}';
+    String url = '$apiUrl$kGetContractEndpoint${queryBuilder.build()}';
 
-  //   return await DatabaseHelper().getContracts(url, client);
-  // }
+    return await DatabaseHelper().getContracts(url, client);
+  }
 }

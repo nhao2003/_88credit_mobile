@@ -111,10 +111,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       final value = Pair(numOfPages, posts);
 
       return HttpResponse(value, response);
-    } on ApiException {
-      rethrow;
     } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+      throw ErrorHelpers.handleException(error);
     }
   }
 
