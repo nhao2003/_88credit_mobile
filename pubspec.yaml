@@ -161,6 +161,9 @@ dependencies:
   # device info
   android_id: ^0.3.6
 
+  # video call
+  zego_uikit_prebuilt_call: ^4.11.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
