@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/entities/loan_request.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
@@ -16,6 +17,7 @@ part 'create_request_state.dart';
 class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
   CreateRequestBloc() : super(const CreateRequestState()) {
     on<CreateRequestEvent>((event, emit) {});
+    on<SendRequestEvent>(_sendRequest);
     on<ChangeReceiver>((event, emit) {
       emit(state.copyWith(receiver: event.receiver));
     });
@@ -57,4 +59,53 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
     bannedUtil: null,
     banReason: null,
   );
+
+  void _sendRequest(
+    SendRequestEvent event,
+    Emitter<CreateRequestState> emit,
+  ) async {
+    getNewRequest(event);
+  }
+
+  Future<List<dynamic>> uploadImages() async {
+    // List responses = await Future.wait([
+    //   uploadImages(portrait.value!),
+    //   uploadImages(idCardFrontPhoto.value!),
+    //   uploadImages(idCardBackPhoto.value!),
+    //   uploadVideos(video.value!),
+    // ]);
+    return [
+      ["https://picsum.photos/200/300?random=1"],
+      ["https://picsum.photos/200/300?random=2"],
+      ["https://picsum.photos/200/300?random=3"],
+      [
+        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      ],
+    ];
+  }
+
+  Future<LoanRequestEntity> getNewRequest(SendRequestEvent event) async {
+    final responses = await uploadImages();
+
+    String portraitUrl = responses[0][0];
+    String idCardFrontPhotoUrl = responses[1][0];
+    String idCardBackPhotoUrl = responses[2][0];
+    String videoUrl = responses[3][0];
+
+    final request = LoanRequestEntity(
+      receiverId: receiverDefault.id,
+      description: event.description,
+      loanAmount: event.loanAmount,
+      interestRate: event.interestRate,
+      overdueInterestRate: event.overdueInterestRate,
+      loanReasonType: state.loanReasonType,
+      loanReason: event.loanReason,
+      videoConfirmationUrl: videoUrl,
+      portaitPhotoUrl: portraitUrl,
+      idCardFrontPhotoUrl: idCardFrontPhotoUrl,
+      idCardBackPhotoUrl: idCardBackPhotoUrl,
+    );
+
+    return request;
+  }
 }
