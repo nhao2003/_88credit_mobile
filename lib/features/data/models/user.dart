@@ -35,14 +35,16 @@ class UserModel extends UserEntity {
       dob: json['dob'],
       phone: json['phone'],
       //status: UserStatus.parse(json['status']),
-      status: UserStatus.parse(json['status'] ?? ""),
+      status: json['status'] != null ? UserStatus.parse(json['status']) : null,
       isIdentityVerified: json['isIdentityVerified'],
-      role: Role.parse(json['role']),
+      role: json['role'] != null ? Role.parse(json['role']) : null,
       address: json['address'] != null
           ? AddressEntity.fromJson(json['address'])
           : null,
       banReason: json['banReason'],
-      lastActiveAt: DateTime.parse(json['lastActiveAt']),
+      lastActiveAt: json['lastActiveAt'] != null
+          ? DateTime.parse(json['lastActiveAt'])
+          : null,
       createdAt:
           json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
       updatedAt:

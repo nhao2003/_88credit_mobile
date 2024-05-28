@@ -57,6 +57,8 @@ class DatabaseHelper {
       String url, Dio client) async {
     try {
       // get access token
+      print("Request url: $url");
+
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
       if (accessToken == null) {
@@ -70,9 +72,8 @@ class DatabaseHelper {
             sendTimeout: const Duration(seconds: 10),
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
-      //print('${response.statusCode} : ${response.data["message"].toString()}');
       if (response.statusCode != 200) {
-        //print('${response.statusCode} : ${response.data["result"].toString()}');
+        print('${response.statusCode} : ${response.data["result"].toString()}');
         throw ApiException(
           message: response.data,
           statusCode: response.statusCode!,

@@ -1,6 +1,8 @@
+import 'package:_88credit_mobile/di/injection_container.dart';
 import 'package:_88credit_mobile/features/domain/entities/bank_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import '../../../../../../core/resources/data_state.dart';
 import '../../../../../../core/resources/pair.dart';
 import '../../../../../domain/entities/bank.dart';
 import '../../../../../domain/entities/loan_request.dart';
@@ -9,6 +11,7 @@ import '../../../../../domain/enums/loan_contract_request_status.dart';
 import '../../../../../domain/enums/loan_reason_types.dart';
 import '../../../../../domain/enums/role.dart';
 import '../../../../../domain/enums/user_status.dart';
+import '../../../../../domain/usecases/contract/get_loan_requests_approved.dart';
 part 'request_event.dart';
 part 'request_state.dart';
 
@@ -19,12 +22,17 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     on<FetchMoreRequestEvent>(_fetchMoreRequest);
   }
 
-  Future<Pair<int, List<LoanRequestEntity>>> _getRequestApproved() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return Pair(
-      1,
-      getRequests(LoanContractRequestStatus.PAID),
-    );
+  Future<Pair<int, List<LoanRequestEntity>>> _getRequestApproved(
+      {int? page = 1}) async {
+    final GetRequestApprovedUseCase getPostsApprovedUseCase =
+        sl<GetRequestApprovedUseCase>();
+
+    final dataState = await getPostsApprovedUseCase(params: page);
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      return dataState.data!;
+    } else {
+      return Pair(1, []);
+    }
   }
 
   Future<Pair<int, List<LoanRequestEntity>>> _getRequestPending() async {

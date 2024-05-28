@@ -43,9 +43,9 @@ class LoanRequestModel extends LoanRequestEntity {
           : null,
       senderId: json['senderId'],
       sender:
-          json['sender'] == null ? UserModel.fromJson(json['sender']) : null,
+          json['sender'] != null ? UserModel.fromJson(json['sender']) : null,
       receiverId: json['receiverId'],
-      receiver: json['receiver'] == null
+      receiver: json['receiver'] != null
           ? UserModel.fromJson(json['receiver'])
           : null,
       description: json['description'],

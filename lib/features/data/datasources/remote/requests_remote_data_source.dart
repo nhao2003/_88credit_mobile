@@ -107,8 +107,8 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
     int pageQuery = page ?? 1;
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
-    queryBuilder.addQuery('status', Operation.inValue,
-        '\'${LoanContractRequestStatus.PAID.toString()}\'');
+    queryBuilder.addQuery(
+        'status', Operation.inValue, LoanContractRequestStatus.PAID.toString());
     queryBuilder.addOrderBy('updatedAt', OrderBy.desc);
 
     String url = '$apiUrl$kGetRequestEndpoint${queryBuilder.build()}';
@@ -247,7 +247,7 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
     queryBuilder.addQuery('status', Operation.inValue,
-        '\'${LoanContractRequestStatus.PENDING.toString()}\'');
+        LoanContractRequestStatus.PENDING.toString());
 
     queryBuilder.addQuery('receiverId', Operation.equals, '\'$userId\'');
 
@@ -269,7 +269,7 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
     queryBuilder.addQuery('status', Operation.inValue,
-        '\'${LoanContractRequestStatus.PENDING.toString()}\'');
+        LoanContractRequestStatus.PENDING.toString());
 
     queryBuilder.addQuery('senderId', Operation.equals, '\'$userId\'');
 
@@ -291,7 +291,7 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
     queryBuilder.addQuery('status', Operation.inValue,
-        '\'${LoanContractRequestStatus.WAITING_FOR_PAYMENT.toString()}\'');
+        LoanContractRequestStatus.WAITING_FOR_PAYMENT.toString());
 
     queryBuilder.addQuery('receiverId', Operation.equals, '\'$userId\'');
 

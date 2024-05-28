@@ -109,15 +109,16 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                       .pushNamed(AppRoutes.userProfile, arguments: post.sender);
                 }),
             const SizedBox(height: 20),
-            CreditCard(
-              bankName: post.senderBankCard!.bank!.shortName,
-              bankNumber:
-                  BankFormat.formatCardNumber(post.senderBankCard!.cardNumber!),
-              logoBank: post.senderBankCard!.bank!.logo,
-              hanleChooseCard: () {
-                copyToClipboard(post.senderBankCard!.cardNumber!, context);
-              },
-            ),
+            if (post.senderBankCard!.bank != null)
+              CreditCard(
+                bankName: post.senderBankCard!.bank!.shortName,
+                bankNumber: BankFormat.formatCardNumber(
+                    post.senderBankCard!.cardNumber!),
+                logoBank: post.senderBankCard!.bank!.logo,
+                hanleChooseCard: () {
+                  copyToClipboard(post.senderBankCard!.cardNumber!, context);
+                },
+              ),
             const SizedBox(height: 20),
             DescriptionCard(
               title: "Mô tả yêu cầu",
@@ -142,7 +143,8 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
             const SizedBox(height: 10),
             const HeaderTitle(title: "Ảnh căn cước / CMND:"),
             const SizedBox(height: 10),
-            ImageCard(images: [post.idCardFrontPhotoUrl!, post.idCardBackPhotoUrl!]),
+            ImageCard(
+                images: [post.idCardFrontPhotoUrl!, post.idCardBackPhotoUrl!]),
             if (post.videoConfirmationUrl != null)
               Column(
                 children: [
