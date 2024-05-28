@@ -16,7 +16,7 @@ class BankModel extends BankEntity {
       name: json['name'] as String,
       code: json['code'] as String,
       bin: json['bin'] as String,
-      shortName: json['short_name'] as String,
+      shortName: json['shortName'] as String,
       logo: json['logo'] as String,
     );
   }
