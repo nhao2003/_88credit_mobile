@@ -7,6 +7,40 @@ sealed class CreateRequestEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class SendRequestEvent extends CreateRequestEvent {
+  final String? receiverId;
+  final String? description;
+  final double? loanAmount;
+  final double? interestRate;
+  final double? overdueInterestRate;
+  final int? loanTenureMonths;
+  final double? loanReasonType;
+  final String? loanReason;
+
+  const SendRequestEvent({
+    this.receiverId,
+    this.description,
+    this.loanAmount,
+    this.interestRate,
+    this.overdueInterestRate,
+    this.loanTenureMonths,
+    this.loanReasonType,
+    this.loanReason,
+  });
+
+  @override
+  List<Object?> get props => [
+        receiverId,
+        description,
+        loanAmount,
+        interestRate,
+        overdueInterestRate,
+        loanTenureMonths,
+        loanReasonType,
+        loanReason,
+      ];
+}
+
 class ChangeReceiver extends CreateRequestEvent {
   final UserEntity receiver;
 
@@ -56,4 +90,13 @@ class ChangeVideo extends CreateRequestEvent {
 
   @override
   List<Object?> get props => [video];
+}
+
+class ChangeLoanReasonEvent extends CreateRequestEvent {
+  final LoanReasonTypes loanReasonType;
+
+  const ChangeLoanReasonEvent(this.loanReasonType);
+
+  @override
+  List<Object> get props => [loanReasonType];
 }

@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/entities/user.dart';
-import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../../request_detail.dart/widgets/credit_card.dart';
 import '../../request_detail.dart/widgets/user_card.dart';
@@ -34,7 +33,6 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
   final interestRateTextController = TextEditingController();
   final overdueInterestRateTextController = TextEditingController();
   final tenureMonthsTextController = TextEditingController();
-  final LoanReasonTypes loanReasonType = LoanReasonTypes.OTHER;
   final loanReasonTextController = TextEditingController();
   final discriptionTextController = TextEditingController();
 
@@ -131,7 +129,6 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
                     overdueInterestRateTextController:
                         overdueInterestRateTextController,
                     tenureMonthsTextController: tenureMonthsTextController,
-                    loanReasonType: loanReasonType,
                   ),
                   // images
                   ImagesForm(

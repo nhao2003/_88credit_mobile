@@ -9,6 +9,7 @@ final class CreateRequestState extends Equatable {
   final GetPrimaryBankCardStatus getPrimaryBankCardStatus;
   final BankCardEntity primaryBankCard;
   final CreateRequestStatus createRequestStatus;
+  final LoanReasonTypes loanReasonType;
 
   final File? portrait;
   final File? idCardFrontPhoto;
@@ -20,6 +21,7 @@ final class CreateRequestState extends Equatable {
     this.getPrimaryBankCardStatus = GetPrimaryBankCardStatus.initial,
     this.primaryBankCard = const BankCardEntity(),
     this.createRequestStatus = CreateRequestStatus.initial,
+    this.loanReasonType = LoanReasonTypes.BUSINESS,
     this.portrait,
     this.idCardFrontPhoto,
     this.idCardBackPhoto,
@@ -31,6 +33,7 @@ final class CreateRequestState extends Equatable {
     GetPrimaryBankCardStatus? getPrimaryBankCardStatus,
     BankCardEntity? primaryBankCard,
     CreateRequestStatus? status,
+    LoanReasonTypes? loanReasonType,
     ValueGetter<File?>? portrait,
     ValueGetter<File?>? idCardFrontPhoto,
     ValueGetter<File?>? idCardBackPhoto,
@@ -42,6 +45,7 @@ final class CreateRequestState extends Equatable {
           getPrimaryBankCardStatus ?? this.getPrimaryBankCardStatus,
       primaryBankCard: primaryBankCard ?? this.primaryBankCard,
       createRequestStatus: status ?? createRequestStatus,
+      loanReasonType: loanReasonType ?? this.loanReasonType,
       portrait: portrait != null ? portrait() : this.portrait,
       idCardFrontPhoto:
           idCardFrontPhoto != null ? idCardFrontPhoto() : this.idCardFrontPhoto,
@@ -57,6 +61,7 @@ final class CreateRequestState extends Equatable {
         getPrimaryBankCardStatus,
         primaryBankCard,
         createRequestStatus,
+        loanReasonType,
         portrait,
         idCardFrontPhoto,
         idCardBackPhoto,

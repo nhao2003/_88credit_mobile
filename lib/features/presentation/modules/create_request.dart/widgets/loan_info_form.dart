@@ -2,10 +2,12 @@ import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:_88credit_mobile/features/domain/enums/loan_reason_types.dart';
 import 'package:_88credit_mobile/features/presentation/modules/create_post/widgets/base_row_text_dropdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../globalwidgets/base_dropdown_button.dart';
 import '../../../globalwidgets/base_textfield.dart';
+import '../bloc/create_request_bloc.dart';
 
 // ignore: must_be_immutable
 class LoanInfoForm extends StatelessWidget {
@@ -15,7 +17,6 @@ class LoanInfoForm extends StatelessWidget {
   final TextEditingController interestRateTextController;
   final TextEditingController overdueInterestRateTextController;
   final TextEditingController tenureMonthsTextController;
-  LoanReasonTypes loanReasonType;
   final TextEditingController loanReasonTextController;
   final TextEditingController discriptionTextController;
 
@@ -25,7 +26,6 @@ class LoanInfoForm extends StatelessWidget {
     required this.interestRateTextController,
     required this.overdueInterestRateTextController,
     required this.tenureMonthsTextController,
-    required this.loanReasonType,
     required this.loanReasonTextController,
     required this.discriptionTextController,
     super.key,
@@ -189,27 +189,32 @@ class LoanInfoForm extends StatelessWidget {
               style: AppTextStyles.bold14.colorEx(Colors.black),
             ),
             const SizedBox(height: 10),
-            BaseDropdownButton(
-              title: "Loại lý do vay",
-              hint: "Chọn loại lý do vay",
-              value: loanReasonType,
-              items: LoanReasonTypes.toMap().entries.map((entry) {
-                return DropdownMenuItem(
-                  value: entry.key,
-                  child: Text(
-                    entry.value,
-                    overflow: TextOverflow.visible,
-                  ),
+            BlocBuilder<CreateRequestBloc, CreateRequestState>(
+              builder: (context, state) {
+                return BaseDropdownButton(
+                  title: "Loại lý do vay",
+                  hint: "Chọn loại lý do vay",
+                  value: state.loanReasonType,
+                  items: LoanReasonTypes.toMap().entries.map((entry) {
+                    return DropdownMenuItem(
+                      value: entry.key,
+                      child: Text(
+                        entry.value,
+                        overflow: TextOverflow.visible,
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    if (value != null) {
+                      context.read<CreateRequestBloc>().add(
+                            ChangeLoanReasonEvent(value as LoanReasonTypes),
+                          );
+                    }
+                  },
+                  onSaved: (value) {
+                    if (value == null) return;
+                  },
                 );
-              }).toList(),
-              onChanged: (value) {
-                if (value != null) {
-                  // setLoanReason(value as LoanReasonTypes);
-                  loanReasonType = value as LoanReasonTypes;
-                }
-              },
-              onSaved: (value) {
-                if (value == null) return;
               },
             ),
             const SizedBox(height: 15),

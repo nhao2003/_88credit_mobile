@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
 
@@ -31,6 +32,9 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
     });
     on<ChangeVideo>((event, emit) {
       emit(state.copyWith(video: () => event.video));
+    });
+    on<ChangeLoanReasonEvent>((event, emit) {
+      emit(state.copyWith(loanReasonType: event.loanReasonType));
     });
   }
 
