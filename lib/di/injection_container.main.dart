@@ -216,3 +216,85 @@ Future _initMedia() async {
     ),
   );
 }
+
+Future<void> _initRequest() async {
+  sl.registerSingleton<RequestRemoteDataSrc>(
+    RequestRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  // repository
+  sl.registerSingleton<RequestRepository>(
+    RequestRepositoryImpl(
+      sl<RequestRemoteDataSrc>(),
+    ),
+  );
+
+  // use cases
+  sl.registerSingleton<GetRequestUseCase>(
+    GetRequestUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetRequestApprovedUseCase>(
+    GetRequestApprovedUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetRequestPendingUseCase>(
+    GetRequestPendingUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetRequestRejectedUseCase>(
+    GetRequestRejectedUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<CreateRequestsUseCase>(
+    CreateRequestsUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetRequestSentUseCase>(
+    GetRequestSentUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetRequestWaitingPaymentUseCase>(
+    GetRequestWaitingPaymentUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetBorrowingContractsUseCase>(
+    GetBorrowingContractsUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetLendingContractsUseCase>(
+    GetLendingContractsUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<ConfirmRequestUseCase>(
+    ConfirmRequestUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<RejectRequestUseCase>(
+    RejectRequestUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
+}
