@@ -8,7 +8,6 @@ sealed class CreateRequestEvent extends Equatable {
 }
 
 class SendRequestEvent extends CreateRequestEvent {
-  final String? receiverId;
   final String? description;
   final double? loanAmount;
   final double? interestRate;
@@ -18,7 +17,6 @@ class SendRequestEvent extends CreateRequestEvent {
   final String? loanReason;
 
   const SendRequestEvent({
-    this.receiverId,
     this.description,
     this.loanAmount,
     this.interestRate,
@@ -30,7 +28,6 @@ class SendRequestEvent extends CreateRequestEvent {
 
   @override
   List<Object?> get props => [
-        receiverId,
         description,
         loanAmount,
         interestRate,

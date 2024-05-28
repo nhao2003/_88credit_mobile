@@ -1,15 +1,15 @@
 import 'dart:io';
 import 'package:_88credit_mobile/features/domain/entities/bank_card.dart';
 import 'package:_88credit_mobile/features/domain/entities/user.dart';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../../di/injection_container.dart';
 import '../../../../domain/entities/loan_request.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
+import '../../../../domain/usecases/bank/get_primary_bank_card.dart';
 
 part 'create_request_event.dart';
 part 'create_request_state.dart';
@@ -41,7 +41,7 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
   }
 
   UserEntity receiverDefault = UserEntity(
-    id: "3b05eb4a-346f-481c-a682-58e24e06d32e",
+    id: "7c90e199-d3c7-4b50-8b08-7f8c40ab5412",
     status: UserStatus.verified,
     isIdentityVerified: true,
     role: Role.user,
@@ -64,7 +64,21 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
     SendRequestEvent event,
     Emitter<CreateRequestState> emit,
   ) async {
-    getNewRequest(event);
+    final senderPrimaryBankCard = await getPrimaryBankCard();
+    final listMedia = await uploadImages();
+    getNewRequest(event, listMedia, senderPrimaryBankCard);
+  }
+
+  GetPrimaryBankCardUseCase getPrimaryBankCardUseCase =
+      sl<GetPrimaryBankCardUseCase>();
+
+  Future<BankCardEntity> getPrimaryBankCard() async {
+    final dataState = await getPrimaryBankCardUseCase();
+    final primaryBankCard = dataState;
+    if (primaryBankCard == null) {
+      throw Exception("Primary bank card not found");
+    }
+    return primaryBankCard;
   }
 
   Future<List<dynamic>> uploadImages() async {
@@ -84,13 +98,12 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
     ];
   }
 
-  Future<LoanRequestEntity> getNewRequest(SendRequestEvent event) async {
-    final responses = await uploadImages();
-
-    String portraitUrl = responses[0][0];
-    String idCardFrontPhotoUrl = responses[1][0];
-    String idCardBackPhotoUrl = responses[2][0];
-    String videoUrl = responses[3][0];
+  Future<LoanRequestEntity> getNewRequest(SendRequestEvent event,
+      List<dynamic> listMedia, BankCardEntity senderPrimaryBankCard) async {
+    String portraitUrl = listMedia[0][0];
+    String idCardFrontPhotoUrl = listMedia[1][0];
+    String idCardBackPhotoUrl = listMedia[2][0];
+    String videoUrl = listMedia[3][0];
 
     final request = LoanRequestEntity(
       receiverId: receiverDefault.id,
@@ -104,8 +117,8 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
       portaitPhotoUrl: portraitUrl,
       idCardFrontPhotoUrl: idCardFrontPhotoUrl,
       idCardBackPhotoUrl: idCardBackPhotoUrl,
+      senderBankCardId: senderPrimaryBankCard.id,
     );
-
     return request;
   }
 }

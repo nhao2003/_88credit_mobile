@@ -1,4 +1,5 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
+import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,41 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
   final tenureMonthsTextController = TextEditingController();
   final loanReasonTextController = TextEditingController();
   final discriptionTextController = TextEditingController();
+
+  bool validatorForm() {
+    return requestFormKey.currentState!.validate();
+  }
+
+  void uploadRequest(BuildContext context, CreateRequestState state) {
+    if (!validatorForm()) {
+      return context.snackBar(
+        'Vui lòng điền đầy đủ thông tin bắt buộc!',
+        type: SnackBarType.error,
+      );
+    }
+
+    if (state.portrait == null ||
+        state.idCardFrontPhoto == null ||
+        state.idCardBackPhoto == null ||
+        state.video == null) {
+      return context.snackBar(
+        'Vui lòng cung cấp ảnh và video!',
+        type: SnackBarType.error,
+      );
+    }
+
+    context.read<CreateRequestBloc>().add(
+          SendRequestEvent(
+            description: discriptionTextController.text,
+            loanAmount: double.tryParse(loanAmountTextController.text),
+            interestRate: double.tryParse(interestRateTextController.text),
+            overdueInterestRate:
+                double.tryParse(overdueInterestRateTextController.text),
+            loanTenureMonths: int.tryParse(tenureMonthsTextController.text),
+            loanReason: loanReasonTextController.text,
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,9 +179,7 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
                               CreateRequestStatus.loading
                           ? null
                           : () {
-                              context.read<CreateRequestBloc>().add(
-                                    PostRequest(),
-                                  );
+                              uploadRequest(context, state);
                             },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.green,
