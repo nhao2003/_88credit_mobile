@@ -5,13 +5,13 @@ class BankCardModel extends BankCardEntity {
   const BankCardModel({
     super.id,
     super.isPrimary,
-    super.userId,
     super.bankId,
-    super.bank,
+    super.userId,
     super.cardNumber,
     super.branch,
     super.createdAt,
     super.deletedAt,
+    super.bank,
   });
 
   factory BankCardModel.fromJson(Map<String, dynamic> json) {
