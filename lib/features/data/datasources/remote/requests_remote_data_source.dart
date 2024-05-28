@@ -122,8 +122,7 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
     int pageQuery = page ?? 1;
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
-    queryBuilder.addQuery(
-        'status', Operation.equals, '\'${status.toString()}\'');
+    queryBuilder.addQuery('status', Operation.equals, status.toString());
     queryBuilder.addOrderBy('updatedAt', OrderBy.desc);
 
     String url = '$apiUrl$kGetRequestEndpoint${queryBuilder.build()}';
