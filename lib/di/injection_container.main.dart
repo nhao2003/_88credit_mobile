@@ -13,6 +13,7 @@ Future<void> initializeDependencies() async {
   await _initPost();
   await _initMedia();
   await _initRequest();
+  await _initBank();
 }
 
 Future<void> _initAuth() async {
@@ -296,6 +297,56 @@ Future<void> _initRequest() async {
   sl.registerSingleton<RejectRequestUseCase>(
     RejectRequestUseCase(
       sl<RequestRepository>(),
+    ),
+  );
+}
+
+Future<void> _initBank() async {
+  sl.registerSingleton<BankRemoteDataSrc>(
+    BankRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<BankRepository>(
+    BankRepositoryImpl(
+      sl<BankRemoteDataSrc>(),
+    ),
+  );
+
+  sl.registerSingleton<GetAllbankUseCase>(
+    GetAllbankUseCase(
+      sl<BankRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetBankCardsUseCase>(
+    GetBankCardsUseCase(
+      sl<BankRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<MarkAsPrimaryBankCardsUseCase>(
+    MarkAsPrimaryBankCardsUseCase(
+      sl<BankRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<AddBankCardUseCase>(
+    AddBankCardUseCase(
+      sl<BankRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<DeleteBankCardUseCase>(
+    DeleteBankCardUseCase(
+      sl<BankRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPrimaryBankCardUseCase>(
+    GetPrimaryBankCardUseCase(
+      sl<BankRepository>(),
     ),
   );
 }
