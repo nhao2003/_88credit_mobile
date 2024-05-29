@@ -119,6 +119,21 @@ class MyAppPages extends AppPages {
         page: const ChatBotScreen(),
         bloc: BlocProvider(create: (context) => ChatBotBloc()),
       ),
+      PageEntity(
+        path: AppRoutes.loginCall,
+        page: const LoginCallScreen(),
+        bloc: BlocProvider(create: (context) => CallBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.connectCall,
+        page: const ConnectScreen(),
+        bloc: BlocProvider(create: (context) => CallBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.callVideo,
+        page: const CallVideoPage(),
+        bloc: BlocProvider(create: (context) => CallBloc()),
+      ),
     ];
   }
 }

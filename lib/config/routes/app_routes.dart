@@ -97,4 +97,9 @@ abstract class AppRoutes {
 
   // chat bot
   static const chatBot = '/chatBot';
+
+  // call video
+  static const loginCall = '/loginCall';
+  static const connectCall = '/connectCall';
+  static const callVideo = '/callVideo';
 }
