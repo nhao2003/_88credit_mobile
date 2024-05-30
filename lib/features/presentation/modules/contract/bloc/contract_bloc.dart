@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../../core/resources/pair.dart';
-import '../../../../../domain/entities/bank.dart';
-import '../../../../../domain/entities/bank_card.dart';
-import '../../../../../domain/entities/contract.dart';
-import '../../../../../domain/entities/user.dart';
-import '../../../../../domain/enums/loan_reason_types.dart';
-import '../../../../../domain/enums/post_type.dart';
-import '../../../../../domain/enums/role.dart';
-import '../../../../../domain/enums/user_status.dart';
+import '../../../../../core/resources/pair.dart';
+import '../../../../domain/entities/bank.dart';
+import '../../../../domain/entities/bank_card.dart';
+import '../../../../domain/entities/contract.dart';
+import '../../../../domain/entities/user.dart';
+import '../../../../domain/enums/loan_reason_types.dart';
+import '../../../../domain/enums/post_type.dart';
+import '../../../../domain/enums/role.dart';
+import '../../../../domain/enums/user_status.dart';
 
 part 'contract_event.dart';
 part 'contract_state.dart';

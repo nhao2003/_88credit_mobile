@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../../config/theme/app_color.dart';
-import '../../../../globalwidgets/keep_page_alive.dart';
+import '../../../../../config/theme/app_color.dart';
+import '../../../globalwidgets/keep_page_alive.dart';
 import '../widgets/borrowing_contract_tab.dart';
 import '../widgets/lending_contract_tab.dart';
 

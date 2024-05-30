@@ -1,25 +1,26 @@
-import 'package:_88credit_mobile/features/domain/entities/loan_request.dart';
-import 'package:_88credit_mobile/features/presentation/modules/contract/bloc/request/request_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/contract/request/widgets/request_item.dart';
+import 'package:_88credit_mobile/features/domain/enums/post_type.dart';
+import 'package:_88credit_mobile/features/presentation/modules/contract/bloc/contract_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/contract/widgets/contract_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../../config/theme/app_color.dart';
-import '../../../../../../config/theme/text_styles.dart';
+import '../../../../../config/theme/app_color.dart';
+import '../../../../../config/theme/text_styles.dart';
+import '../../../../domain/entities/contract.dart';
 
-class BaseListRequests extends StatefulWidget {
-  final RequestStatusTypes requestType;
+class BaseListContract extends StatefulWidget {
+  final PostTypes type;
   final String titleNull;
-  const BaseListRequests({
-    required this.requestType,
+  const BaseListContract({
+    required this.type,
     required this.titleNull,
     super.key,
   });
 
   @override
-  State<BaseListRequests> createState() => _BaseListRequestsState();
+  State<BaseListContract> createState() => _BaseListContractState();
 }
 
-class _BaseListRequestsState extends State<BaseListRequests> {
+class _BaseListContractState extends State<BaseListContract> {
   final scrollController = ScrollController();
 
   @override
@@ -41,31 +42,23 @@ class _BaseListRequestsState extends State<BaseListRequests> {
   }
 
   Future fetchMore() async {
-    context.read<RequestBloc>().add(FetchMoreRequestEvent(widget.requestType));
+    context.read<ContractBloc>().add(FetchMoreContractEvent(widget.type));
   }
 
   Future refresh() async {
-    context.read<RequestBloc>().add(RefreshRequestEvent(widget.requestType));
+    context.read<ContractBloc>().add(RefreshContractEvent(widget.type));
   }
 
-  Widget? buildItem(LoanRequestEntity request) {
-    return RequestItem(request: request);
+  Widget? buildItem(ContractEntity contract) {
+    return ContractItem(contract);
   }
 
-  List<LoanRequestEntity> getRequests(RequestState state) {
-    switch (widget.requestType) {
-      case RequestStatusTypes.approved:
-        return state.requestsApproved;
-      case RequestStatusTypes.pending:
-        return state.requestsPending;
-      case RequestStatusTypes.rejected:
-        return state.requestsRejected;
-      case RequestStatusTypes.sent:
-        return state.requestsSent;
-      case RequestStatusTypes.waitingPayment:
-        return state.requestsWaitingPayment;
-      default:
-        return [];
+  List<ContractEntity> getContracts(ContractState state) {
+    switch (widget.type) {
+      case PostTypes.lending:
+        return state.lendingContracts;
+      case PostTypes.borrowing:
+        return state.borrowingContracts;
     }
   }
 
@@ -78,16 +71,16 @@ class _BaseListRequestsState extends State<BaseListRequests> {
         child: Column(
           children: [
             Expanded(
-              child: BlocBuilder<RequestBloc, RequestState>(
+              child: BlocBuilder<ContractBloc, ContractState>(
                 builder: (context, state) {
-                  List<LoanRequestEntity> requests = getRequests(state);
+                  List<ContractEntity> contracts = getContracts(state);
                   switch (state.status) {
-                    case RequestFetchStatus.loading:
+                    case ContractFetchStatus.loading:
                       return const Center(
                         child: CircularProgressIndicator(),
                       );
-                    case RequestFetchStatus.success:
-                      if (requests.isEmpty) {
+                    case ContractFetchStatus.success:
+                      if (contracts.isEmpty) {
                         return Stack(
                           children: <Widget>[
                             ListView(),
@@ -103,12 +96,12 @@ class _BaseListRequestsState extends State<BaseListRequests> {
                       }
                       return ListView.builder(
                         controller: scrollController,
-                        itemCount: requests.length + 1,
+                        itemCount: contracts.length + 1,
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          if (index < requests.length) {
-                            return buildItem(requests[index]);
+                          if (index < contracts.length) {
+                            return buildItem(contracts[index]);
                           } else {
                             return state.hasMore
                                 ? const Padding(

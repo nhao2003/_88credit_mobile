@@ -1,14 +1,14 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
-import '../../../../../../config/theme/app_color.dart';
-import '../../../../../../config/theme/text_styles.dart';
-import '../../../../globalwidgets/my_tab_appbar.dart';
+import '../../../../../config/theme/app_color.dart';
+import '../../../../../config/theme/text_styles.dart';
+import '../../../globalwidgets/my_tab_appbar.dart';
 import '../../contract/screens/contract_tab_screen.dart';
 import 'request_tab_screen.dart';
 
-class ContractScreen extends StatelessWidget {
-  const ContractScreen({super.key});
+class RequestScreen extends StatelessWidget {
+  const RequestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

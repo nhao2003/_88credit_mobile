@@ -75,12 +75,12 @@ class MyAppPages extends AppPages {
         bloc: BlocProvider(create: (context) => CreatePostBloc()),
       ),
       PageEntity(
-        path: AppRoutes.contract,
-        page: const ContractScreen(),
+        path: AppRoutes.request,
+        page: const RequestScreen(),
         bloc: BlocProvider(create: (context) => ContractBloc()),
       ),
       PageEntity(
-        path: AppRoutes.request,
+        path: AppRoutes.requestTab,
         page: const RequestTabScreen(),
         bloc: BlocProvider(create: (context) => RequestBloc()),
       ),
@@ -94,6 +94,11 @@ class MyAppPages extends AppPages {
         page: const CreateRequestScreen(),
         bloc: BlocProvider(create: (context) => CreateRequestBloc()),
       ),
+      // PageEntity(
+      //   path: AppRoutes.contract,
+      //   page: const RequestTabScreen(),
+      //   bloc: BlocProvider(create: (context) => RequestBloc()),
+      // ),
       PageEntity(
         path: AppRoutes.contractDetail,
         page: const ContractDetailScreen(),

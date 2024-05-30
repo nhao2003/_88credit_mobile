@@ -1,7 +1,7 @@
-import 'package:_88credit_mobile/features/presentation/modules/contract/request/widgets/request_item.dart';
+import 'package:_88credit_mobile/features/presentation/modules/request/widgets/request_item.dart';
 import 'package:flutter/material.dart';
-import '../../../../../domain/entities/loan_request.dart';
-import '../../bloc/request/request_bloc.dart';
+import '../../../../domain/entities/loan_request.dart';
+import '../bloc/request_bloc.dart';
 import 'base_list_request.dart';
 
 class WaitingPaymentRequestTab extends StatelessWidget {

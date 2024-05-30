@@ -4,12 +4,12 @@ import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../config/routes/app_routes.dart';
-import '../../../../../../config/theme/app_color.dart';
-import '../../../../../../config/theme/text_styles.dart';
-import '../../../../../../config/values/asset_image.dart';
-import '../../../../../domain/entities/loan_request.dart';
-import '../../../../../domain/enums/loan_contract_request_status.dart';
+import '../../../../../config/routes/app_routes.dart';
+import '../../../../../config/theme/app_color.dart';
+import '../../../../../config/theme/text_styles.dart';
+import '../../../../../config/values/asset_image.dart';
+import '../../../../domain/entities/loan_request.dart';
+import '../../../../domain/enums/loan_contract_request_status.dart';
 
 class RequestItem extends StatelessWidget {
   final LoanRequestEntity request;

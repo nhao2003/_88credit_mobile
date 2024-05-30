@@ -3,11 +3,11 @@ import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../config/routes/app_routes.dart';
-import '../../../../../../config/theme/app_color.dart';
-import '../../../../../../config/theme/text_styles.dart';
-import '../../../../../../config/values/asset_image.dart';
-import '../../../../../domain/entities/contract.dart';
+import '../../../../../config/routes/app_routes.dart';
+import '../../../../../config/theme/app_color.dart';
+import '../../../../../config/theme/text_styles.dart';
+import '../../../../../config/values/asset_image.dart';
+import '../../../../domain/entities/contract.dart';
 
 class ContractItem extends StatelessWidget {
   final ContractEntity contract;

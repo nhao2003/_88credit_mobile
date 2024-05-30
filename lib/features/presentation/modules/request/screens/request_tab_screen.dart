@@ -1,8 +1,7 @@
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../../config/theme/app_color.dart';
-import '../../../../globalwidgets/keep_page_alive.dart';
+import '../../../../../config/theme/app_color.dart';
+import '../../../globalwidgets/keep_page_alive.dart';
 import '../widgets/approved_request_tab.dart';
 import '../widgets/pending_request_tab.dart';
 import '../widgets/reject_request_tab.dart';

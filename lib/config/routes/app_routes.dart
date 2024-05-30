@@ -27,15 +27,17 @@ abstract class AppRoutes {
   }
 
   // contract
-  static const contract = '/contract';
-
   static const request = '/request';
+
+  static const requestTab = '/request/tab';
+
+  static const contract = '/contract';
 
   static const createRequest = '/contract/createRequest';
   // request detail
-  static const requestDetail = '/contract/request/:id';
+  static const requestDetail = '/request/detail/:id';
   static String getRequestDetailRoute(String id) {
-    return '/contract/request/$id';
+    return '/request/detail/$id';
   }
 
   static const bank = '/bank';
@@ -50,9 +52,9 @@ abstract class AppRoutes {
   }
 
   // post detail
-  static const postDetail = '/post_detail/:id';
+  static const postDetail = '/post/detail/:id';
   static String getPostRoute(String id) {
-    return '/post_detail/$id';
+    return '/post/detail/$id';
   }
 
   // search
