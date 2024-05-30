@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../globalwidgets/keep_page_alive.dart';
@@ -28,34 +29,37 @@ class _ContractTabScreenState extends State<ContractTabScreen>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Column(
-        children: [
-          TabBar(
-            controller: _tabController,
-            indicatorColor: AppColors.green,
-            indicatorSize: TabBarIndicatorSize.tab,
-            tabs: const [
-              Tab(
-                text: "Cho vay",
-              ),
-              Tab(
-                text: "Vay tiền",
-              ),
-            ],
-          ),
-          Expanded(
-            child: TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
+    return Scaffold(
+      appBar: const MyAppbar(title: "Hợp đồng"),
+      body: DefaultTabController(
+        length: 2,
+        child: Column(
+          children: [
+            TabBar(
               controller: _tabController,
-              children: const [
-                KeepPageAlive(child: LendingContractTab()),
-                KeepPageAlive(child: BorrowingContractTab()),
+              indicatorColor: AppColors.green,
+              indicatorSize: TabBarIndicatorSize.tab,
+              tabs: const [
+                Tab(
+                  text: "Cho vay",
+                ),
+                Tab(
+                  text: "Vay tiền",
+                ),
               ],
             ),
-          ),
-        ],
+            Expanded(
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _tabController,
+                children: const [
+                  KeepPageAlive(child: LendingContractTab()),
+                  KeepPageAlive(child: BorrowingContractTab()),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

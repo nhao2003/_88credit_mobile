@@ -41,11 +41,15 @@ class _BaseListSentRequestsState extends State<BaseListSentRequests> {
   }
 
   Future fetchMore() async {
-    context.read<RequestBloc>().add(FetchMoreRequestEvent(widget.requestType));
+    context
+        .read<RequestBloc>()
+        .add(FetchMoreRequestEvent(RequestTypes.sent, widget.requestType));
   }
 
   Future refresh() async {
-    context.read<RequestBloc>().add(RefreshRequestEvent(widget.requestType));
+    context
+        .read<RequestBloc>()
+        .add(RefreshRequestEvent(RequestTypes.sent, widget.requestType));
   }
 
   Widget? buildItem(LoanRequestEntity request) {
@@ -55,15 +59,15 @@ class _BaseListSentRequestsState extends State<BaseListSentRequests> {
   List<LoanRequestEntity> getRequests(RequestState state) {
     switch (widget.requestType) {
       case RequestStatusTypes.approved:
-        return state.requestsApproved;
+        return state.sentRequestsApproved;
       case RequestStatusTypes.pending:
-        return state.requestsPending;
+        return state.sentRequestsPending;
       case RequestStatusTypes.rejected:
-        return state.requestsRejected;
+        return state.sentRequestsRejected;
       case RequestStatusTypes.paid:
-        return state.requestsSent;
+        return state.sentRequestsSent;
       case RequestStatusTypes.waitingPayment:
-        return state.requestsWaitingPayment;
+        return state.sentRequestsWaitingPayment;
       default:
         return [];
     }
@@ -110,7 +114,7 @@ class _BaseListSentRequestsState extends State<BaseListSentRequests> {
                           if (index < requests.length) {
                             return buildItem(requests[index]);
                           } else {
-                            return state.hasMore
+                            return state.hasMoreSent
                                 ? const Padding(
                                     padding: EdgeInsets.all(12.0),
                                     child: Center(

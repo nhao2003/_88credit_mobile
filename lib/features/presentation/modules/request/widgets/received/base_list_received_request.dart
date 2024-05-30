@@ -42,11 +42,15 @@ class _BaseListReceivedRequestsState extends State<BaseListReceivedRequests> {
   }
 
   Future fetchMore() async {
-    context.read<RequestBloc>().add(FetchMoreRequestEvent(widget.requestType));
+    context
+        .read<RequestBloc>()
+        .add(FetchMoreRequestEvent(RequestTypes.received, widget.requestType));
   }
 
   Future refresh() async {
-    context.read<RequestBloc>().add(RefreshRequestEvent(widget.requestType));
+    context
+        .read<RequestBloc>()
+        .add(RefreshRequestEvent(RequestTypes.received, widget.requestType));
   }
 
   Widget? buildItem(LoanRequestEntity request) {
@@ -56,15 +60,15 @@ class _BaseListReceivedRequestsState extends State<BaseListReceivedRequests> {
   List<LoanRequestEntity> getRequests(RequestState state) {
     switch (widget.requestType) {
       case RequestStatusTypes.approved:
-        return state.requestsApproved;
+        return state.receivedRequestsApproved;
       case RequestStatusTypes.pending:
-        return state.requestsPending;
+        return state.receivedRequestsPending;
       case RequestStatusTypes.rejected:
-        return state.requestsRejected;
+        return state.receivedRequestsRejected;
       case RequestStatusTypes.paid:
-        return state.requestsSent;
+        return state.receivedRequestsSent;
       case RequestStatusTypes.waitingPayment:
-        return state.requestsWaitingPayment;
+        return state.receivedRequestsWaitingPayment;
       default:
         return [];
     }
@@ -111,7 +115,7 @@ class _BaseListReceivedRequestsState extends State<BaseListReceivedRequests> {
                           if (index < requests.length) {
                             return buildItem(requests[index]);
                           } else {
-                            return state.hasMore
+                            return state.hasMoreReceived
                                 ? const Padding(
                                     padding: EdgeInsets.all(12.0),
                                     child: Center(
