@@ -7,22 +7,26 @@ sealed class RequestEvent extends Equatable {
   List<Object> get props => [];
 }
 
-enum RequestStatusTypes { approved, pending, rejected, sent, waitingPayment }
+enum RequestStatusTypes { paid, waitingPayment, approved, pending, rejected }
+
+enum RequestTypes { sent, received }
 
 final class RefreshRequestEvent extends RequestEvent {
+  final RequestTypes requestType;
   final RequestStatusTypes requestStatusType;
 
-  const RefreshRequestEvent(this.requestStatusType);
+  const RefreshRequestEvent(this.requestType, this.requestStatusType);
 
   @override
-  List<Object> get props => [requestStatusType];
+  List<Object> get props => [requestType, requestStatusType];
 }
 
 final class FetchMoreRequestEvent extends RequestEvent {
+  final RequestTypes requestType;
   final RequestStatusTypes requestStatusType;
 
-  const FetchMoreRequestEvent(this.requestStatusType);
+  const FetchMoreRequestEvent(this.requestType, this.requestStatusType);
 
   @override
-  List<Object> get props => [requestStatusType];
+  List<Object> get props => [requestType, requestStatusType];
 }

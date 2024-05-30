@@ -23,7 +23,30 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     on<FetchMoreRequestEvent>(_fetchMoreRequest);
   }
 
+  // { paid, waitingPayment, approved, pending, rejected }
+
+  Future<Pair<int, List<LoanRequestEntity>>> _getRequestPaid(
+      RequestTypes requestTypes,
+      {int? page = 1}) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return Pair(
+      1,
+      getRequests(LoanContractRequestStatus.PENDING),
+    );
+  }
+
+  Future<Pair<int, List<LoanRequestEntity>>> _getRequestWaitingPayment(
+      RequestTypes requestTypes,
+      {int? page = 1}) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return Pair(
+      1,
+      getRequests(LoanContractRequestStatus.WAITING_FOR_PAYMENT),
+    );
+  }
+
   Future<Pair<int, List<LoanRequestEntity>>> _getRequestApproved(
+      RequestTypes requestTypes,
       {int? page = 1}) async {
     final GetRequestApprovedUseCase getPostsApprovedUseCase =
         sl<GetRequestApprovedUseCase>();
@@ -36,7 +59,9 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     }
   }
 
-  Future<Pair<int, List<LoanRequestEntity>>> _getRequestPending() async {
+  Future<Pair<int, List<LoanRequestEntity>>> _getRequestPending(
+      RequestTypes requestTypes,
+      {int? page = 1}) async {
     await Future.delayed(const Duration(seconds: 2));
     return Pair(
       1,
@@ -44,7 +69,9 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     );
   }
 
-  Future<Pair<int, List<LoanRequestEntity>>> _getRequestRejected() async {
+  Future<Pair<int, List<LoanRequestEntity>>> _getRequestRejected(
+      RequestTypes requestTypes,
+      {int? page = 1}) async {
     final GetRequestRejectedUseCase getPostsApprovedUseCase =
         sl<GetRequestRejectedUseCase>();
 
@@ -54,22 +81,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     } else {
       return Pair(1, []);
     }
-  }
-
-  Future<Pair<int, List<LoanRequestEntity>>> _getRequestSent() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return Pair(
-      1,
-      getRequests(LoanContractRequestStatus.PENDING),
-    );
-  }
-
-  Future<Pair<int, List<LoanRequestEntity>>> _getRequestWaitingPayment() async {
-    await Future.delayed(const Duration(seconds: 2));
-    return Pair(
-      1,
-      getRequests(LoanContractRequestStatus.WAITING_FOR_PAYMENT),
-    );
   }
 
   List<LoanRequestEntity> getRequests(LoanContractRequestStatus? status) {
@@ -151,34 +162,43 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
   bool hasMore = true;
   Future _refreshRequest(
       RefreshRequestEvent event, Emitter<RequestState> emit) async {
+    if (event.requestType == RequestTypes.sent) {
+      return _refreshSentRequest(event, emit);
+    } else {
+      return _refreshReceivedRequest(event, emit);
+    }
+  }
+
+  Future _refreshReceivedRequest(
+      RefreshRequestEvent event, Emitter<RequestState> emit) async {
     page = 1;
     hasMore = true;
     emit(state.copyWith(
       status: RequestFetchStatus.loading,
-      hasMore: hasMore,
+      hasMoreReceived: hasMore,
     ));
 
     final Pair<int, List<LoanRequestEntity>> result;
     switch (event.requestStatusType) {
       case RequestStatusTypes.approved:
-        emit(state.copyWith(requestsApproved: []));
-        result = await _getRequestApproved();
+        emit(state.copyWith(receivedRequestsApproved: []));
+        result = await _getRequestApproved(RequestTypes.received);
         break;
       case RequestStatusTypes.pending:
-        emit(state.copyWith(requestsPending: []));
-        result = await _getRequestPending();
+        emit(state.copyWith(receivedRequestsPending: []));
+        result = await _getRequestPending(RequestTypes.received);
         break;
       case RequestStatusTypes.rejected:
-        emit(state.copyWith(requestsRejected: []));
-        result = await _getRequestRejected();
+        emit(state.copyWith(receivedRequestsRejected: []));
+        result = await _getRequestRejected(RequestTypes.received);
         break;
-      case RequestStatusTypes.sent:
-        emit(state.copyWith(requestsSent: []));
-        result = await _getRequestSent();
+      case RequestStatusTypes.paid:
+        emit(state.copyWith(receivedRequestsSent: []));
+        result = await _getRequestPaid(RequestTypes.received);
         break;
       case RequestStatusTypes.waitingPayment:
-        emit(state.copyWith(requestsWaitingPayment: []));
-        result = await _getRequestWaitingPayment();
+        emit(state.copyWith(receivedRequestsWaitingPayment: []));
+        result = await _getRequestWaitingPayment(RequestTypes.received);
         break;
     }
 
@@ -188,23 +208,87 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
 
     emit(state.copyWith(
       status: RequestFetchStatus.success,
-      hasMore: hasMore,
+      hasMoreReceived: hasMore,
     ));
     switch (event.requestStatusType) {
       case RequestStatusTypes.approved:
-        return emit(state.copyWith(requestsApproved: newPosts));
+        return emit(state.copyWith(receivedRequestsApproved: newPosts));
       case RequestStatusTypes.pending:
-        return emit(state.copyWith(requestsPending: newPosts));
+        return emit(state.copyWith(receivedRequestsPending: newPosts));
       case RequestStatusTypes.rejected:
-        return emit(state.copyWith(requestsRejected: newPosts));
-      case RequestStatusTypes.sent:
-        return emit(state.copyWith(requestsSent: newPosts));
+        return emit(state.copyWith(receivedRequestsRejected: newPosts));
+      case RequestStatusTypes.paid:
+        return emit(state.copyWith(receivedRequestsSent: newPosts));
       case RequestStatusTypes.waitingPayment:
-        return emit(state.copyWith(requestsWaitingPayment: newPosts));
+        return emit(state.copyWith(receivedRequestsWaitingPayment: newPosts));
+    }
+  }
+
+  Future _refreshSentRequest(
+      RefreshRequestEvent event, Emitter<RequestState> emit) async {
+    page = 1;
+    hasMore = true;
+    emit(state.copyWith(
+      status: RequestFetchStatus.loading,
+      hasMoreSent: hasMore,
+    ));
+
+    final Pair<int, List<LoanRequestEntity>> result;
+    switch (event.requestStatusType) {
+      case RequestStatusTypes.approved:
+        emit(state.copyWith(sentRequestsApproved: []));
+        result = await _getRequestApproved(RequestTypes.sent);
+        break;
+      case RequestStatusTypes.pending:
+        emit(state.copyWith(sentRequestsPending: []));
+        result = await _getRequestPending(RequestTypes.sent);
+        break;
+      case RequestStatusTypes.rejected:
+        emit(state.copyWith(sentRequestsRejected: []));
+        result = await _getRequestRejected(RequestTypes.sent);
+        break;
+      case RequestStatusTypes.paid:
+        emit(state.copyWith(sentRequestsSent: []));
+        result = await _getRequestPaid(RequestTypes.sent);
+        break;
+      case RequestStatusTypes.waitingPayment:
+        emit(state.copyWith(sentRequestsWaitingPayment: []));
+        result = await _getRequestWaitingPayment(RequestTypes.sent);
+        break;
+    }
+
+    numOfPage = result.first;
+    final newPosts = result.second;
+    numOfPage == 1 ? hasMore = false : hasMore = true;
+
+    emit(state.copyWith(
+      status: RequestFetchStatus.success,
+      hasMoreSent: hasMore,
+    ));
+    switch (event.requestStatusType) {
+      case RequestStatusTypes.approved:
+        return emit(state.copyWith(sentRequestsApproved: newPosts));
+      case RequestStatusTypes.pending:
+        return emit(state.copyWith(sentRequestsPending: newPosts));
+      case RequestStatusTypes.rejected:
+        return emit(state.copyWith(sentRequestsRejected: newPosts));
+      case RequestStatusTypes.paid:
+        return emit(state.copyWith(sentRequestsSent: newPosts));
+      case RequestStatusTypes.waitingPayment:
+        return emit(state.copyWith(sentRequestsWaitingPayment: newPosts));
     }
   }
 
   Future _fetchMoreRequest(
+      FetchMoreRequestEvent event, Emitter<RequestState> emit) async {
+    if (event.requestType == RequestTypes.sent) {
+      return _fetchMoreSentRequest(event, emit);
+    } else {
+      return _fetchMoreReceivedRequest(event, emit);
+    }
+  }
+
+  Future _fetchMoreSentRequest(
       FetchMoreRequestEvent event, Emitter<RequestState> emit) async {
     if (page < numOfPage) {
       page++;
@@ -215,24 +299,24 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       final Pair<int, List<LoanRequestEntity>> result;
       switch (event.requestStatusType) {
         case RequestStatusTypes.approved:
-          result = await _getRequestApproved();
-          state.requestsApproved.addAll(result.second);
+          result = await _getRequestApproved(RequestTypes.sent);
+          state.sentRequestsApproved.addAll(result.second);
           break;
         case RequestStatusTypes.pending:
-          result = await _getRequestPending();
-          state.requestsPending.addAll(result.second);
+          result = await _getRequestPending(RequestTypes.sent);
+          state.sentRequestsPending.addAll(result.second);
           break;
         case RequestStatusTypes.rejected:
-          result = await _getRequestRejected();
-          state.requestsRejected.addAll(result.second);
+          result = await _getRequestRejected(RequestTypes.sent);
+          state.sentRequestsRejected.addAll(result.second);
           break;
-        case RequestStatusTypes.sent:
-          result = await _getRequestSent();
-          state.requestsSent.addAll(result.second);
+        case RequestStatusTypes.paid:
+          result = await _getRequestPaid(RequestTypes.sent);
+          state.sentRequestsSent.addAll(result.second);
           break;
         case RequestStatusTypes.waitingPayment:
-          result = await _getRequestWaitingPayment();
-          state.requestsWaitingPayment.addAll(result.second);
+          result = await _getRequestWaitingPayment(RequestTypes.sent);
+          state.sentRequestsWaitingPayment.addAll(result.second);
           break;
       }
 
@@ -240,26 +324,94 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       hasMore = true;
       emit(state.copyWith(
         status: RequestFetchStatus.success,
-        hasMore: hasMore,
+        hasMoreSent: hasMore,
       ));
       switch (event.requestStatusType) {
         case RequestStatusTypes.approved:
-          return emit(state.copyWith(requestsApproved: state.requestsApproved));
+          return emit(
+              state.copyWith(sentRequestsApproved: state.sentRequestsApproved));
         case RequestStatusTypes.pending:
-          return emit(state.copyWith(requestsPending: state.requestsPending));
+          return emit(
+              state.copyWith(sentRequestsPending: state.sentRequestsPending));
         case RequestStatusTypes.rejected:
-          return emit(state.copyWith(requestsRejected: state.requestsRejected));
-        case RequestStatusTypes.sent:
-          return emit(state.copyWith(requestsSent: state.requestsSent));
+          return emit(
+              state.copyWith(sentRequestsRejected: state.sentRequestsRejected));
+        case RequestStatusTypes.paid:
+          return emit(state.copyWith(sentRequestsSent: state.sentRequestsSent));
         case RequestStatusTypes.waitingPayment:
           return emit(state.copyWith(
-              requestsWaitingPayment: state.requestsWaitingPayment));
+              sentRequestsWaitingPayment: state.sentRequestsWaitingPayment));
       }
     } else {
       hasMore = false;
       emit(state.copyWith(
         status: RequestFetchStatus.success,
-        hasMore: hasMore,
+        hasMoreSent: hasMore,
+      ));
+    }
+  }
+
+  Future _fetchMoreReceivedRequest(
+      FetchMoreRequestEvent event, Emitter<RequestState> emit) async {
+    if (page < numOfPage) {
+      page++;
+      emit(state.copyWith(
+        status: RequestFetchStatus.loading,
+      ));
+
+      final Pair<int, List<LoanRequestEntity>> result;
+      switch (event.requestStatusType) {
+        case RequestStatusTypes.approved:
+          result = await _getRequestApproved(RequestTypes.sent);
+          state.receivedRequestsApproved.addAll(result.second);
+          break;
+        case RequestStatusTypes.pending:
+          result = await _getRequestPending(RequestTypes.sent);
+          state.receivedRequestsPending.addAll(result.second);
+          break;
+        case RequestStatusTypes.rejected:
+          result = await _getRequestRejected(RequestTypes.sent);
+          state.receivedRequestsRejected.addAll(result.second);
+          break;
+        case RequestStatusTypes.paid:
+          result = await _getRequestPaid(RequestTypes.sent);
+          state.receivedRequestsSent.addAll(result.second);
+          break;
+        case RequestStatusTypes.waitingPayment:
+          result = await _getRequestWaitingPayment(RequestTypes.sent);
+          state.receivedRequestsWaitingPayment.addAll(result.second);
+          break;
+      }
+
+      numOfPage = result.first;
+      hasMore = true;
+      emit(state.copyWith(
+        status: RequestFetchStatus.success,
+        hasMoreReceived: hasMore,
+      ));
+      switch (event.requestStatusType) {
+        case RequestStatusTypes.approved:
+          return emit(state.copyWith(
+              receivedRequestsApproved: state.receivedRequestsApproved));
+        case RequestStatusTypes.pending:
+          return emit(state.copyWith(
+              receivedRequestsPending: state.receivedRequestsPending));
+        case RequestStatusTypes.rejected:
+          return emit(state.copyWith(
+              receivedRequestsRejected: state.receivedRequestsRejected));
+        case RequestStatusTypes.paid:
+          return emit(
+              state.copyWith(receivedRequestsSent: state.receivedRequestsSent));
+        case RequestStatusTypes.waitingPayment:
+          return emit(state.copyWith(
+              receivedRequestsWaitingPayment:
+                  state.receivedRequestsWaitingPayment));
+      }
+    } else {
+      hasMore = false;
+      emit(state.copyWith(
+        status: RequestFetchStatus.success,
+        hasMoreReceived: hasMore,
       ));
     }
   }

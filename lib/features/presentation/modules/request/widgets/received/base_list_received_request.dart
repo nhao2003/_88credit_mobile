@@ -61,7 +61,7 @@ class _BaseListReceivedRequestsState extends State<BaseListReceivedRequests> {
         return state.requestsPending;
       case RequestStatusTypes.rejected:
         return state.requestsRejected;
-      case RequestStatusTypes.sent:
+      case RequestStatusTypes.paid:
         return state.requestsSent;
       case RequestStatusTypes.waitingPayment:
         return state.requestsWaitingPayment;

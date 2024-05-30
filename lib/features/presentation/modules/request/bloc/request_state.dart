@@ -4,52 +4,87 @@ enum RequestFetchStatus { loading, success, failure }
 
 final class RequestState extends Equatable {
   final RequestFetchStatus status;
-  final bool hasMore;
-  final List<LoanRequestEntity> requestsApproved;
-  final List<LoanRequestEntity> requestsPending;
-  final List<LoanRequestEntity> requestsRejected;
-  final List<LoanRequestEntity> requestsSent;
-  final List<LoanRequestEntity> requestsWaitingPayment;
+  final bool hasMoreSent;
+  final List<LoanRequestEntity> sentRequestsApproved;
+  final List<LoanRequestEntity> sentRequestsPending;
+  final List<LoanRequestEntity> sentRequestsRejected;
+  final List<LoanRequestEntity> sentRequestsSent;
+  final List<LoanRequestEntity> sentRequestsWaitingPayment;
+
+  final bool hasMoreReceived;
+  final List<LoanRequestEntity> receivedRequestsApproved;
+  final List<LoanRequestEntity> receivedRequestsPending;
+  final List<LoanRequestEntity> receivedRequestsRejected;
+  final List<LoanRequestEntity> receivedRequestsSent;
+  final List<LoanRequestEntity> receivedRequestsWaitingPayment;
 
   const RequestState({
     this.status = RequestFetchStatus.loading,
-    this.hasMore = true,
-    this.requestsApproved = const [],
-    this.requestsPending = const [],
-    this.requestsRejected = const [],
-    this.requestsSent = const [],
-    this.requestsWaitingPayment = const [],
+    this.hasMoreSent = true,
+    this.sentRequestsApproved = const [],
+    this.sentRequestsPending = const [],
+    this.sentRequestsRejected = const [],
+    this.sentRequestsSent = const [],
+    this.sentRequestsWaitingPayment = const [],
+    this.hasMoreReceived = true,
+    this.receivedRequestsApproved = const [],
+    this.receivedRequestsPending = const [],
+    this.receivedRequestsRejected = const [],
+    this.receivedRequestsSent = const [],
+    this.receivedRequestsWaitingPayment = const [],
   });
 
   RequestState copyWith({
     RequestFetchStatus? status,
-    bool? hasMore,
-    List<LoanRequestEntity>? requestsApproved,
-    List<LoanRequestEntity>? requestsPending,
-    List<LoanRequestEntity>? requestsRejected,
-    List<LoanRequestEntity>? requestsSent,
-    List<LoanRequestEntity>? requestsWaitingPayment,
+    bool? hasMoreSent,
+    List<LoanRequestEntity>? sentRequestsApproved,
+    List<LoanRequestEntity>? sentRequestsPending,
+    List<LoanRequestEntity>? sentRequestsRejected,
+    List<LoanRequestEntity>? sentRequestsSent,
+    List<LoanRequestEntity>? sentRequestsWaitingPayment,
+    bool? hasMoreReceived,
+    List<LoanRequestEntity>? receivedRequestsApproved,
+    List<LoanRequestEntity>? receivedRequestsPending,
+    List<LoanRequestEntity>? receivedRequestsRejected,
+    List<LoanRequestEntity>? receivedRequestsSent,
+    List<LoanRequestEntity>? receivedRequestsWaitingPayment,
   }) {
     return RequestState(
       status: status ?? this.status,
-      hasMore: hasMore ?? this.hasMore,
-      requestsApproved: requestsApproved ?? this.requestsApproved,
-      requestsPending: requestsPending ?? this.requestsPending,
-      requestsRejected: requestsRejected ?? this.requestsRejected,
-      requestsSent: requestsSent ?? this.requestsSent,
-      requestsWaitingPayment:
-          requestsWaitingPayment ?? this.requestsWaitingPayment,
+      hasMoreSent: hasMoreSent ?? this.hasMoreSent,
+      sentRequestsApproved: sentRequestsApproved ?? this.sentRequestsApproved,
+      sentRequestsPending: sentRequestsPending ?? this.sentRequestsPending,
+      sentRequestsRejected: sentRequestsRejected ?? this.sentRequestsRejected,
+      sentRequestsSent: sentRequestsSent ?? this.sentRequestsSent,
+      sentRequestsWaitingPayment:
+          sentRequestsWaitingPayment ?? this.sentRequestsWaitingPayment,
+      hasMoreReceived: hasMoreReceived ?? this.hasMoreReceived,
+      receivedRequestsApproved:
+          receivedRequestsApproved ?? this.receivedRequestsApproved,
+      receivedRequestsPending:
+          receivedRequestsPending ?? this.receivedRequestsPending,
+      receivedRequestsRejected:
+          receivedRequestsRejected ?? this.receivedRequestsRejected,
+      receivedRequestsSent: receivedRequestsSent ?? this.receivedRequestsSent,
+      receivedRequestsWaitingPayment:
+          receivedRequestsWaitingPayment ?? this.receivedRequestsWaitingPayment,
     );
   }
 
   @override
   List<Object> get props => [
         status,
-        hasMore,
-        requestsApproved,
-        requestsPending,
-        requestsRejected,
-        requestsSent,
-        requestsWaitingPayment,
+        hasMoreSent,
+        sentRequestsApproved,
+        sentRequestsPending,
+        sentRequestsRejected,
+        sentRequestsSent,
+        sentRequestsWaitingPayment,
+        hasMoreReceived,
+        receivedRequestsApproved,
+        receivedRequestsPending,
+        receivedRequestsRejected,
+        receivedRequestsSent,
+        receivedRequestsWaitingPayment,
       ];
 }
