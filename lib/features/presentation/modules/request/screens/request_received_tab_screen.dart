@@ -2,20 +2,20 @@ import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:flutter/material.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../globalwidgets/keep_page_alive.dart';
-import '../widgets/approved_request_tab.dart';
-import '../widgets/pending_request_tab.dart';
-import '../widgets/reject_request_tab.dart';
-import '../widgets/sent_request_tab.dart';
-import '../widgets/waiting_payment_request_tab.dart';
+import '../widgets/sent/approved_request_tab.dart';
+import '../widgets/sent/pending_request_tab.dart';
+import '../widgets/sent/reject_request_tab.dart';
+import '../widgets/sent/sent_request_tab.dart';
+import '../widgets/sent/waiting_payment_request_tab.dart';
 
-class RequestTabScreen extends StatefulWidget {
-  const RequestTabScreen({super.key});
+class RequestReceivedTabScreen extends StatefulWidget {
+  const RequestReceivedTabScreen({super.key});
 
   @override
-  State<RequestTabScreen> createState() => _RequestTabScreenState();
+  State<RequestReceivedTabScreen> createState() => _RequestReceivedTabScreenState();
 }
 
-class _RequestTabScreenState extends State<RequestTabScreen>
+class _RequestReceivedTabScreenState extends State<RequestReceivedTabScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
 

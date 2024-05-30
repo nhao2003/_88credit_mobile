@@ -1,10 +1,10 @@
 import 'package:_88credit_mobile/features/domain/entities/loan_request.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request/bloc/request_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/request/widgets/request_item.dart';
+import 'package:_88credit_mobile/features/presentation/modules/request/widgets/sent/request_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../config/theme/app_color.dart';
-import '../../../../../config/theme/text_styles.dart';
+import '../../../../../../config/theme/app_color.dart';
+import '../../../../../../config/theme/text_styles.dart';
 
 class BaseListRequests extends StatefulWidget {
   final RequestStatusTypes requestType;

@@ -1,11 +1,11 @@
-import 'package:_88credit_mobile/features/presentation/modules/request/widgets/request_item.dart';
 import 'package:flutter/material.dart';
-import '../../../../domain/entities/loan_request.dart';
-import '../bloc/request_bloc.dart';
+import '../../../../../domain/entities/loan_request.dart';
+import '../../bloc/request_bloc.dart';
 import 'base_list_request.dart';
+import 'request_item.dart';
 
-class WaitingPaymentRequestTab extends StatelessWidget {
-  const WaitingPaymentRequestTab({super.key});
+class PendingRequestTab extends StatelessWidget {
+  const PendingRequestTab({super.key});
 
   Widget? buildItem(LoanRequestEntity request) {
     return RequestItem(request: request);
@@ -17,7 +17,7 @@ class WaitingPaymentRequestTab extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: BaseListRequests(
         titleNull: "Chưa có tin đã đăng",
-        requestType: RequestStatusTypes.waitingPayment,
+        requestType: RequestStatusTypes.pending,
       ),
     );
   }

@@ -10,6 +10,7 @@ import 'package:_88credit_mobile/features/presentation/modules/create_request.da
 import 'package:_88credit_mobile/features/presentation/modules/qr_code/bloc/qr_code_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/qr_code/screens/generate_code_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/qr_code/screens/scan_code_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/request/screens/request_sent_tab_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/bloc/request_detail_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request_detail.dart/screens/request_detail_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/splash/splash_screen.dart';
@@ -24,8 +25,8 @@ import '../../features/presentation/modules/bottom_bar/bloc/bar_bloc.dart';
 import '../../features/presentation/modules/bottom_bar/bottom_bar_screen.dart';
 import '../../features/presentation/modules/contract/bloc/contract_bloc.dart';
 import '../../features/presentation/modules/request/bloc/request_bloc.dart';
-import '../../features/presentation/modules/request/screens/contract_screen.dart';
-import '../../features/presentation/modules/request/screens/request_tab_screen.dart';
+import '../../features/presentation/modules/request/screens/request_screen.dart';
+import '../../features/presentation/modules/request/screens/request_received_tab_screen.dart';
 import '../../features/presentation/modules/create_post/bloc/create_post_bloc.dart';
 import '../../features/presentation/modules/home/bloc/home_bloc.dart';
 import '../../features/presentation/modules/home/screens/home_screen.dart';

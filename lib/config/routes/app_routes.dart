@@ -29,7 +29,8 @@ abstract class AppRoutes {
   // contract
   static const request = '/request';
 
-  static const requestTab = '/request/tab';
+  static const requestSentTab = '/request/tab/sent';
+  static const requestReceivedTab = '/request/tab/received';
 
   static const contract = '/contract';
 

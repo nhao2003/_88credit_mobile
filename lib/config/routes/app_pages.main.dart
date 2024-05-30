@@ -80,8 +80,13 @@ class MyAppPages extends AppPages {
         bloc: BlocProvider(create: (context) => ContractBloc()),
       ),
       PageEntity(
-        path: AppRoutes.requestTab,
-        page: const RequestTabScreen(),
+        path: AppRoutes.requestSentTab,
+        page: const RequestSentTabScreen(),
+        bloc: BlocProvider(create: (context) => RequestBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.requestReceivedTab,
+        page: const RequestReceivedTabScreen(),
         bloc: BlocProvider(create: (context) => RequestBloc()),
       ),
       PageEntity(

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../globalwidgets/my_tab_appbar.dart';
-import '../../contract/screens/contract_tab_screen.dart';
-import 'request_tab_screen.dart';
+import 'request_received_tab_screen.dart';
+import 'request_sent_tab_screen.dart';
 
 class RequestScreen extends StatelessWidget {
   const RequestScreen({super.key});
@@ -16,16 +16,16 @@ class RequestScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: const MyTabAppbar(
-          title: "Hợp đồng",
-          tabTitle1: "Yêu cầu",
-          tabTitle2: "Hợp đồng",
+          title: "Yêu cầu",
+          tabTitle1: "Đã gửi",
+          tabTitle2: "Đã nhận",
           leading: SizedBox(),
         ),
         body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            RequestTabScreen(),
-            ContractTabScreen(),
+            RequestSentTabScreen(),
+            RequestReceivedTabScreen(),
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
