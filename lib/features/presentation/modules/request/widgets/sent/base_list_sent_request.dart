@@ -1,25 +1,25 @@
 import 'package:_88credit_mobile/features/domain/entities/loan_request.dart';
 import 'package:_88credit_mobile/features/presentation/modules/request/bloc/request_bloc.dart';
-import 'package:_88credit_mobile/features/presentation/modules/request/widgets/sent/request_item.dart';
+import 'package:_88credit_mobile/features/presentation/modules/request/widgets/share_widgets/request_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../config/theme/app_color.dart';
 import '../../../../../../config/theme/text_styles.dart';
 
-class BaseListRequests extends StatefulWidget {
+class BaseListSentRequests extends StatefulWidget {
   final RequestStatusTypes requestType;
   final String titleNull;
-  const BaseListRequests({
+  const BaseListSentRequests({
     required this.requestType,
     required this.titleNull,
     super.key,
   });
 
   @override
-  State<BaseListRequests> createState() => _BaseListRequestsState();
+  State<BaseListSentRequests> createState() => _BaseListSentRequestsState();
 }
 
-class _BaseListRequestsState extends State<BaseListRequests> {
+class _BaseListSentRequestsState extends State<BaseListSentRequests> {
   final scrollController = ScrollController();
 
   @override

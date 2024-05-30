@@ -59,7 +59,7 @@ class _BottomBarScreenState extends State<BottomBarScreen>
       TabItem(
         icon: Image.asset(Assets.clipboard, color: AppColors.grey700),
         activeIcon: Image.asset(Assets.clipboard, color: AppColors.green),
-        title: 'Hợp đồng',
+        title: 'Yêu cầu',
       ),
       TabItem(
         icon: Image.asset(Assets.user),
