@@ -1,4 +1,5 @@
 import 'package:_88credit_mobile/config/routes/app_routes.dart';
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/features/presentation/globalwidgets/my_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,7 +68,7 @@ class _ConnectScreenState extends State<ConnectScreen> {
               height: 20,
             ),
             SizedBox(
-              width: 200,
+              width: 100.wp,
               child: ElevatedButton(
                   onPressed: () async {
                     if (callID.text.isEmpty) {
@@ -81,11 +82,12 @@ class _ConnectScreenState extends State<ConnectScreen> {
                           .add(ChangeCallID(callID: callID.text));
                       // await 1s for change callID
                       await Future.delayed(const Duration(seconds: 1));
+                      if (!mounted) return;
                       Navigator.pushNamed(context, AppRoutes.callVideo);
                     }
                   },
                   style: buttonStyle,
-                  child: const Text('Call Now', style: buttonTextStyle)),
+                  child: Text('Call Now', style: buttonTextStyle)),
             )
           ],
         ),

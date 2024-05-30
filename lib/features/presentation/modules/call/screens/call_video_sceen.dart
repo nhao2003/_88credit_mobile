@@ -16,15 +16,6 @@ class _CallVideoPageState extends State<CallVideoPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<CallBloc, CallState>(
       builder: (context, state) {
-        // final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        //     <String, String>{}) as Map<String, String>;
-        // final callID = arguments[state.callID] ?? '';
-        print("App_id: ${dotenv.env['APP_ID']!}");
-        print("App_sign: ${dotenv.env['APP_SIGN']!}");
-        print("Call_id: ${state.callID}");
-        print("User_id: ${state.currentUser.id}");
-        print("User_name: ${state.currentUser.name}");
-
         return SafeArea(
           child: ZegoUIKitPrebuiltCall(
             appID: int.tryParse(dotenv.env['APP_ID']!)!,

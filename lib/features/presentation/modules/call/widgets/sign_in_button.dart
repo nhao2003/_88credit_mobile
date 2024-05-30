@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/features/presentation/modules/call/bloc/call_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,7 @@ class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200,
+      width: 100.wp,
       child: ElevatedButton(
         onPressed: () {
           context.read<CallBloc>().add(
@@ -24,7 +25,10 @@ class SignInButton extends StatelessWidget {
               MaterialPageRoute(builder: (context) => const ConnectScreen()));
         },
         style: buttonStyle,
-        child: const Text('Sign In', style: buttonTextStyle),
+        child: Text(
+          'Đăng nhập',
+          style: buttonTextStyle,
+        ),
       ),
     );
   }

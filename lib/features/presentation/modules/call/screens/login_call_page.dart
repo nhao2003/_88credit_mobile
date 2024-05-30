@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/log_in_app_bar.dart';
+import '../../../globalwidgets/my_appbar.dart';
 import '../widgets/sign_in_button.dart';
 import '../widgets/text_field_widget.dart';
 
@@ -13,7 +12,6 @@ class LoginCallScreen extends StatefulWidget {
 
 class _LogInPageState extends State<LoginCallScreen> {
   final TextEditingController phoneNum = TextEditingController();
-  final TextEditingController password = TextEditingController();
 
   //dispose the controller to release the memory
   @override
@@ -21,13 +19,14 @@ class _LogInPageState extends State<LoginCallScreen> {
     // TODO: implement dispose
     super.dispose();
     phoneNum.dispose();
-    password.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: const LogInAppBar()),
+      appBar: const MyAppbar(
+        title: 'Create User',
+      ),
       backgroundColor: Colors.blueGrey[50],
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -40,15 +39,11 @@ class _LogInPageState extends State<LoginCallScreen> {
             ),
             TextFieldWidget(
                 controller: phoneNum,
-                hintText: 'Phone',
-                icon: const Icon(Icons.phone)),
+                hintText: 'UserID',
+                icon: const Icon(Icons.person)),
             const SizedBox(
               height: 20,
             ),
-            TextFieldWidget(
-                controller: password,
-                hintText: 'Password',
-                icon: const Icon(Icons.lock_open)),
             const SizedBox(
               height: 30,
             ),
