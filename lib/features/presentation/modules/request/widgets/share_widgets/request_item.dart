@@ -42,28 +42,32 @@ class RequestItem extends StatelessWidget {
 
   String getStatusText() {
     switch (request.status!) {
-      case LoanContractRequestStatus.CANCLE:
-        return "Đã xác nhận từ ${request.createdAt!.toDMYString()}";
-      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
-        return "Chờ thanh toán";
-      case LoanContractRequestStatus.REJECTED:
-        return request.rejectedReason ?? "Đã hủy";
       case LoanContractRequestStatus.PAID:
         return "Đã thanh toán từ ${request.updatedAt!.toDMYString()}";
+      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
+        return "Chờ thanh toán từ ${request.updatedAt!.toDMYString()}";
+      case LoanContractRequestStatus.APPROVED:
+        return "Đã xác nhận từ ${request.updatedAt!.toDMYString()}";
       case LoanContractRequestStatus.PENDING:
-        return "Đang chờ xác nhận";
+        return "Đang chờ xác nhận từ ${request.updatedAt!.toDMYString()}";
+      case LoanContractRequestStatus.CANCELLED:
+        return "Đã xác nhận từ ${request.updatedAt!.toDMYString()}";
+      case LoanContractRequestStatus.REJECTED:
+        return request.rejectedReason ?? "Đã hủy";
     }
   }
 
   Color getColorStatus() {
     switch (request.status!) {
-      case LoanContractRequestStatus.CANCLE:
+      case LoanContractRequestStatus.PAID:
         return AppColors.green800;
       case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
         return AppColors.blue800;
+      case LoanContractRequestStatus.APPROVED:
+        return AppColors.grey700;
       case LoanContractRequestStatus.REJECTED:
         return AppColors.red800;
-      case LoanContractRequestStatus.PAID:
+      case LoanContractRequestStatus.CANCELLED:
         return AppColors.grey700;
       case LoanContractRequestStatus.PENDING:
         return AppColors.yellow800;
@@ -72,13 +76,15 @@ class RequestItem extends StatelessWidget {
 
   Color getColorBackground() {
     switch (request.status!) {
-      case LoanContractRequestStatus.CANCLE:
+      case LoanContractRequestStatus.PAID:
         return AppColors.green100;
       case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
         return AppColors.blue100;
+      case LoanContractRequestStatus.APPROVED:
+        return AppColors.grey100;
       case LoanContractRequestStatus.REJECTED:
         return AppColors.red100;
-      case LoanContractRequestStatus.PAID:
+      case LoanContractRequestStatus.CANCELLED:
         return AppColors.grey100;
       case LoanContractRequestStatus.PENDING:
         return AppColors.yellow100;

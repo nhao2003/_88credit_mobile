@@ -16,7 +16,7 @@ class PendingReceivedRequestTab extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.all(8.0),
       child: BaseListReceivedRequests(
-        titleNull: "Chưa có tin đã đăng",
+        titleNull: "Chưa có yêu cầu đang chờ",
         requestType: RequestStatusTypes.pending,
       ),
     );

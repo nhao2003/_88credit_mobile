@@ -16,7 +16,7 @@ class PaidSentRequestTab extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.all(8.0),
       child: BaseListSentRequests(
-        titleNull: "Chưa có yêu cầu da gui",
+        titleNull: "Chưa có yêu cầu thành công",
         requestType: RequestStatusTypes.paid,
       ),
     );

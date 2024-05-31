@@ -58,16 +58,16 @@ class _BaseListSentRequestsState extends State<BaseListSentRequests> {
 
   List<LoanRequestEntity> getRequests(RequestState state) {
     switch (widget.requestType) {
+      case RequestStatusTypes.paid:
+        return state.sentRequestsPaid;
+      case RequestStatusTypes.waitingPayment:
+        return state.sentRequestsWaitingPayment;
       case RequestStatusTypes.approved:
         return state.sentRequestsApproved;
       case RequestStatusTypes.pending:
         return state.sentRequestsPending;
       case RequestStatusTypes.rejected:
         return state.sentRequestsRejected;
-      case RequestStatusTypes.paid:
-        return state.sentRequestsSent;
-      case RequestStatusTypes.waitingPayment:
-        return state.sentRequestsWaitingPayment;
       default:
         return [];
     }

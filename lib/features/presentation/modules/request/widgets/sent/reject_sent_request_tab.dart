@@ -16,7 +16,7 @@ class RejectSentRequestTab extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.all(8.0),
       child: BaseListSentRequests(
-        titleNull: "Chưa có tin đã đăng",
+        titleNull: "Chưa có yêu cầu bị từ chối",
         requestType: RequestStatusTypes.rejected,
       ),
     );

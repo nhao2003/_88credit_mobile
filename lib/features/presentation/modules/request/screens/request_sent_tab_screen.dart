@@ -81,8 +81,8 @@ class _RequestSentTabScreenState extends State<RequestSentTabScreen>
               controller: _tabController,
               children: const [
                 KeepPageAlive(child: PaidSentRequestTab()),
-                KeepPageAlive(child: ApprovedSentRequestTab()),
                 KeepPageAlive(child: WaitingPaymentSentRequestTab()),
+                KeepPageAlive(child: ApprovedSentRequestTab()),
                 KeepPageAlive(child: PendingSentRequestTab()),
                 KeepPageAlive(child: RejectSentRequestTab()),
               ],

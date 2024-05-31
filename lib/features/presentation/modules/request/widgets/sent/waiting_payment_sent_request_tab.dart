@@ -16,7 +16,7 @@ class WaitingPaymentSentRequestTab extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.all(8.0),
       child: BaseListSentRequests(
-        titleNull: "Chưa có tin đã đăng",
+        titleNull: "Chưa có yêu cầu đang chờ thanh toán",
         requestType: RequestStatusTypes.waitingPayment,
       ),
     );

@@ -1,8 +1,9 @@
 // ignore_for_file: constant_identifier_names
 enum LoanContractRequestStatus {
-  CANCLE,
   PENDING,
+  APPROVED,
   REJECTED,
+  CANCELLED,
   WAITING_FOR_PAYMENT,
   PAID;
 
@@ -17,7 +18,9 @@ enum LoanContractRequestStatus {
   @override
   String toString() {
     switch (this) {
-      case LoanContractRequestStatus.CANCLE:
+      case LoanContractRequestStatus.APPROVED:
+        return "APPROVED";
+      case LoanContractRequestStatus.CANCELLED:
         return "CANCLE";
       case LoanContractRequestStatus.PENDING:
         return "PENDING";
@@ -32,8 +35,10 @@ enum LoanContractRequestStatus {
 
   String getStringVi() {
     switch (this) {
-      case LoanContractRequestStatus.CANCLE:
+      case LoanContractRequestStatus.APPROVED:
         return "Đã xác nhận";
+      case LoanContractRequestStatus.CANCELLED:
+        return "Đã hủy";
       case LoanContractRequestStatus.PENDING:
         return "Đang chờ";
       case LoanContractRequestStatus.REJECTED:
@@ -48,7 +53,8 @@ enum LoanContractRequestStatus {
   // toMap
   static Map<LoanContractRequestStatus, String> toMap() {
     return {
-      LoanContractRequestStatus.CANCLE: "Đã hủy",
+      LoanContractRequestStatus.APPROVED: "Đã xác nhận",
+      LoanContractRequestStatus.CANCELLED: "Đã hủy",
       LoanContractRequestStatus.PENDING: "Đang chờ",
       LoanContractRequestStatus.REJECTED: "Đã từ chối",
       LoanContractRequestStatus.WAITING_FOR_PAYMENT: "Đang chờ thanh toán",

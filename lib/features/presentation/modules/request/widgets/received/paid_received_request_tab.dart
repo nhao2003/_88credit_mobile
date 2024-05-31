@@ -16,8 +16,8 @@ class PaidReceivedRequestTab extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.all(8.0),
       child: BaseListReceivedRequests(
-        titleNull: "Chưa có tin đã đăng",
-        requestType: RequestStatusTypes.approved,
+        titleNull: "Chưa có yêu cầu thành công",
+        requestType: RequestStatusTypes.paid,
       ),
     );
   }
