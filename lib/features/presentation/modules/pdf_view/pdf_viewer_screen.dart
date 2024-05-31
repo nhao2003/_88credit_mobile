@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:_88credit_mobile/core/constants/constants.dart';
+import 'package:_88credit_mobile/config/constants/constants.dart';
 import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/date_ex.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';

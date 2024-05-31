@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../../core/errors/exceptions.dart';
 import '../../../../../core/utils/typedef.dart';
-import '../../../../core/constants/constants.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../../di/injection_container.dart';
 import '../../models/blog_model.dart';
 import '../local/authentication_local_data_source.dart';

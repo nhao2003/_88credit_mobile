@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../../../../core/constants/constants.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/typedef.dart';
 import '../../../../di/injection_container.dart';

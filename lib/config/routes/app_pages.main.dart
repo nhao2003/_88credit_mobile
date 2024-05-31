@@ -99,11 +99,11 @@ class MyAppPages extends AppPages {
         page: const CreateRequestScreen(),
         bloc: BlocProvider(create: (context) => CreateRequestBloc()),
       ),
-      // PageEntity(
-      //   path: AppRoutes.contract,
-      //   page: const RequestTabScreen(),
-      //   bloc: BlocProvider(create: (context) => RequestBloc()),
-      // ),
+      PageEntity(
+        path: AppRoutes.contract,
+        page: const ContracScreen(),
+        bloc: BlocProvider(create: (context) => RequestBloc()),
+      ),
       PageEntity(
         path: AppRoutes.contractDetail,
         page: const ContractDetailScreen(),

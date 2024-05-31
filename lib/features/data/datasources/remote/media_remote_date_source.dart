@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:retrofit/dio.dart';
-import '../../../../core/constants/constants.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
 
 abstract class MediaRemoteDataSource {

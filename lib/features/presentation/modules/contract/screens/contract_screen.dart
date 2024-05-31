@@ -5,14 +5,14 @@ import '../../../globalwidgets/keep_page_alive.dart';
 import '../widgets/borrowing_contract_tab.dart';
 import '../widgets/lending_contract_tab.dart';
 
-class ContractTabScreen extends StatefulWidget {
-  const ContractTabScreen({super.key});
+class ContracScreen extends StatefulWidget {
+  const ContracScreen({super.key});
 
   @override
-  State<ContractTabScreen> createState() => _ContractTabScreenState();
+  State<ContracScreen> createState() => _ContracScreenState();
 }
 
-class _ContractTabScreenState extends State<ContractTabScreen>
+class _ContracScreenState extends State<ContracScreen>
     with TickerProviderStateMixin {
   late TabController _tabController;
 

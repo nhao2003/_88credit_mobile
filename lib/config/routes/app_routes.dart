@@ -32,8 +32,6 @@ abstract class AppRoutes {
   static const requestSentTab = '/request/tab/sent';
   static const requestReceivedTab = '/request/tab/received';
 
-  static const contract = '/contract';
-
   static const createRequest = '/contract/createRequest';
   // request detail
   static const requestDetail = '/request/detail/:id';
@@ -46,6 +44,8 @@ abstract class AppRoutes {
   static const addBankCard = '/bank/addBankCard';
 
   static const changeUser = '/changeUser';
+
+  static const contract = '/contract';
 
   static const contractDetail = '/contract/detail/:id';
   static String getContractDetailRoute(String id) {

@@ -5,7 +5,7 @@ import '../../../../../core/errors/exceptions.dart';
 import '../../../../../core/resources/pair.dart';
 import '../../../../../core/utils/query_builder.dart';
 import '../../../../../core/utils/typedef.dart';
-import '../../../../core/constants/constants.dart';
+import '../../../../config/constants/constants.dart';
 import '../../../../di/injection_container.dart';
 import '../../../domain/enums/post_type.dart';
 import '../../models/post.dart';
