@@ -9,8 +9,6 @@ sealed class RequestEvent extends Equatable {
 
 enum RequestStatusTypes { paid, waitingPayment, approved, pending, rejected }
 
-enum RequestTypes { sent, received }
-
 final class RefreshRequestEvent extends RequestEvent {
   final RequestTypes requestType;
   final RequestStatusTypes requestStatusType;

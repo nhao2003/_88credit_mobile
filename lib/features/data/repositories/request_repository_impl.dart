@@ -7,6 +7,7 @@ import '../../domain/entities/contract.dart';
 import '../../domain/entities/loan_request.dart';
 import '../../domain/entities/transaction.dart';
 import '../../domain/enums/loan_contract_request_status.dart';
+import '../../domain/enums/request_types.dart';
 import '../../domain/repositories/request_repository.dart';
 import '../datasources/remote/requests_remote_data_source.dart';
 import '../models/loan_request.dart';
@@ -60,95 +61,14 @@ class RequestRepositoryImpl implements RequestRepository {
   }
 
   @override
-  Future<DataState<Pair<int, List<LoanRequestEntity>>>> getRequestsApproved(
-      int? page) async {
+  Future<DataState<Pair<int, List<LoanRequestEntity>>>> getRequestsStatus(
+    RequestTypes requestTypes,
+    LoanContractRequestStatus status,
+    int? page,
+  ) async {
     try {
-      final httpResponse = await _dataSrc.getRequestsApproved(page);
-
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
-      } else {
-        return DataFailed(DioException(
-          error: httpResponse.response.statusMessage,
-          response: httpResponse.response,
-          type: DioExceptionType.badResponse,
-          requestOptions: httpResponse.response.requestOptions,
-        ));
-      }
-    } on DioException catch (e) {
-      return DataFailed(e);
-    }
-  }
-
-  @override
-  Future<DataState<Pair<int, List<LoanRequestEntity>>>> getRequestsPending(
-      int? page) async {
-    try {
-      final httpResponse = await _dataSrc.getRequestsPending(page);
-
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
-      } else {
-        return DataFailed(DioException(
-          error: httpResponse.response.statusMessage,
-          response: httpResponse.response,
-          type: DioExceptionType.badResponse,
-          requestOptions: httpResponse.response.requestOptions,
-        ));
-      }
-    } on DioException catch (e) {
-      return DataFailed(e);
-    }
-  }
-
-  @override
-  Future<DataState<Pair<int, List<LoanRequestEntity>>>> getRequestsSent(
-      int? page) async {
-    try {
-      final httpResponse = await _dataSrc.getRequestsSent(page);
-
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
-      } else {
-        return DataFailed(DioException(
-          error: httpResponse.response.statusMessage,
-          response: httpResponse.response,
-          type: DioExceptionType.badResponse,
-          requestOptions: httpResponse.response.requestOptions,
-        ));
-      }
-    } on DioException catch (e) {
-      return DataFailed(e);
-    }
-  }
-
-  @override
-  Future<DataState<Pair<int, List<LoanRequestEntity>>>>
-      getRequestsWaitingPayment(int? page) async {
-    try {
-      final httpResponse = await _dataSrc.getRequestsWaitingPayment(page);
-
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
-      } else {
-        return DataFailed(DioException(
-          error: httpResponse.response.statusMessage,
-          response: httpResponse.response,
-          type: DioExceptionType.badResponse,
-          requestOptions: httpResponse.response.requestOptions,
-        ));
-      }
-    } on DioException catch (e) {
-      return DataFailed(e);
-    }
-  }
-
-  @override
-  Future<DataState<Pair<int, List<LoanRequestEntity>>>> getRequestsRejected(
-      int? page) async {
-    try {
-      final httpResponse = await _dataSrc.getRequestsStatus(
-          LoanContractRequestStatus.REJECTED, page);
+      final httpResponse =
+          await _dataSrc.getRequestsStatus(requestTypes, status, page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

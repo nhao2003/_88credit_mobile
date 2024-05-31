@@ -6,6 +6,7 @@ import '../../../../core/resources/pair.dart';
 import '../../../../core/utils/query_builder.dart';
 import '../../../../di/injection_container.dart';
 import '../../../domain/enums/loan_contract_request_status.dart';
+import '../../../domain/enums/request_types.dart';
 import '../../models/contract.dart';
 import '../../models/loan_request.dart';
 import '../../models/transaction.dart';
@@ -16,7 +17,7 @@ abstract class RequestRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<LoanRequestModel>>>> getAllRequests(
       String? userId, int? page);
   Future<HttpResponse<Pair<int, List<LoanRequestModel>>>> getRequestsStatus(
-      LoanContractRequestStatus status, int? page);
+      RequestTypes requestTypes, LoanContractRequestStatus status, int? page);
   Future<HttpResponse<Pair<int, List<LoanRequestModel>>>> getRequestsApproved(
       int? page);
   Future<HttpResponse<Pair<int, List<LoanRequestModel>>>> getRequestsPending(
@@ -118,14 +119,25 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
 
   @override
   Future<HttpResponse<Pair<int, List<LoanRequestModel>>>> getRequestsStatus(
-      LoanContractRequestStatus status, int? page) async {
+    RequestTypes requestTypes,
+    LoanContractRequestStatus status,
+    int? page,
+  ) async {
+    String typeRequest = "";
+    if (requestTypes == RequestTypes.sent) {
+      typeRequest = '/sent';
+    } else {
+      typeRequest = '/received';
+    }
+
     int pageQuery = page ?? 1;
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
-    queryBuilder.addQuery('status', Operation.equals, status.toString());
+    queryBuilder.addQuery('status', Operation.inValue, status.toString());
     queryBuilder.addOrderBy('updatedAt', OrderBy.desc);
 
-    String url = '$apiUrl$kGetRequestEndpoint${queryBuilder.build()}';
+    String url =
+        '$apiUrl$kGetRequestEndpoint$typeRequest${queryBuilder.build()}';
 
     return await DatabaseHelper().getRequests(url, client);
   }

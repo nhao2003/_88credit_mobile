@@ -240,38 +240,20 @@ Future<void> _initRequest() async {
     ),
   );
 
-  sl.registerSingleton<GetRequestApprovedUseCase>(
-    GetRequestApprovedUseCase(
+  sl.registerSingleton<GetReceivedRequestStatusUseCase>(
+    GetReceivedRequestStatusUseCase(
       sl<RequestRepository>(),
     ),
   );
 
-  sl.registerSingleton<GetRequestPendingUseCase>(
-    GetRequestPendingUseCase(
-      sl<RequestRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<GetRequestRejectedUseCase>(
-    GetRequestRejectedUseCase(
+  sl.registerSingleton<GetSentRequestStatusUseCase>(
+    GetSentRequestStatusUseCase(
       sl<RequestRepository>(),
     ),
   );
 
   sl.registerSingleton<CreateRequestsUseCase>(
     CreateRequestsUseCase(
-      sl<RequestRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<GetRequestSentUseCase>(
-    GetRequestSentUseCase(
-      sl<RequestRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<GetRequestWaitingPaymentUseCase>(
-    GetRequestWaitingPaymentUseCase(
       sl<RequestRepository>(),
     ),
   );

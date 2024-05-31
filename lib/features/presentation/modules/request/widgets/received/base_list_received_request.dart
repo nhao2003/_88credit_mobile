@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../config/theme/app_color.dart';
 import '../../../../../../config/theme/text_styles.dart';
+import '../../../../../domain/enums/request_types.dart';
 
 class BaseListReceivedRequests extends StatefulWidget {
   final RequestStatusTypes requestType;
