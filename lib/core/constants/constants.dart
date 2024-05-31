@@ -1,7 +1,11 @@
-const ipConfig = "172.17.14.167";
-const bool isProduction = false;
+const ipLocal = "172.17.14.167";
+const ipMobile = "";
+const isIPMobile = false;
+const ipConfig = isIPMobile ? ipMobile : ipLocal;
+
 const String apiDevUrl = "http://$ipConfig:8080";
 const String apiProductionUrl = "https://eight8credit.onrender.com";
+const bool isProduction = false;
 const String apiUrl = isProduction ? apiProductionUrl : apiDevUrl;
 // http://localhost:8080/auth/sign-in
 
