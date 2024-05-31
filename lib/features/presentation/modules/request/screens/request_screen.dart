@@ -17,15 +17,15 @@ class RequestScreen extends StatelessWidget {
       child: Scaffold(
         appBar: const MyTabAppbar(
           title: "Yêu cầu",
-          tabTitle1: "Đã gửi",
-          tabTitle2: "Đã nhận",
+          tabTitle1: "Đã nhận",
+          tabTitle2: "Đã gửi",
           leading: SizedBox(),
         ),
         body: const TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: [
-            RequestSentTabScreen(),
             RequestReceivedTabScreen(),
+            RequestSentTabScreen(),
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(

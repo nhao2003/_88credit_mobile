@@ -226,7 +226,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       case RequestStatusTypes.paid:
         emit(state.copyWith(sentRequestsPaid: []));
         result = await _getRequest(
-          RequestTypes.received,
+          RequestTypes.sent,
           LoanContractRequestStatus.PAID,
           page: page,
         );
@@ -234,14 +234,14 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       case RequestStatusTypes.waitingPayment:
         emit(state.copyWith(sentRequestsWaitingPayment: []));
         result = await _getRequest(
-          RequestTypes.received,
+          RequestTypes.sent,
           LoanContractRequestStatus.WAITING_FOR_PAYMENT,
           page: page,
         );
       case RequestStatusTypes.approved:
         emit(state.copyWith(sentRequestsApproved: []));
         result = await _getRequest(
-          RequestTypes.received,
+          RequestTypes.sent,
           LoanContractRequestStatus.APPROVED,
           page: page,
         );
@@ -249,7 +249,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       case RequestStatusTypes.pending:
         emit(state.copyWith(sentRequestsPending: []));
         result = await _getRequest(
-          RequestTypes.received,
+          RequestTypes.sent,
           LoanContractRequestStatus.PENDING,
           page: page,
         );
@@ -257,7 +257,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       case RequestStatusTypes.rejected:
         emit(state.copyWith(sentRequestsRejected: []));
         result = await _getRequest(
-          RequestTypes.received,
+          RequestTypes.sent,
           LoanContractRequestStatus.REJECTED,
           page: page,
         );
@@ -307,7 +307,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       switch (event.requestStatusType) {
         case RequestStatusTypes.paid:
           result = await _getRequest(
-            RequestTypes.received,
+            RequestTypes.sent,
             LoanContractRequestStatus.PAID,
             page: page,
           );
@@ -315,7 +315,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           break;
         case RequestStatusTypes.waitingPayment:
           result = await _getRequest(
-            RequestTypes.received,
+            RequestTypes.sent,
             LoanContractRequestStatus.WAITING_FOR_PAYMENT,
             page: page,
           );
@@ -323,7 +323,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           break;
         case RequestStatusTypes.approved:
           result = await _getRequest(
-            RequestTypes.received,
+            RequestTypes.sent,
             LoanContractRequestStatus.APPROVED,
             page: page,
           );
@@ -331,7 +331,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           break;
         case RequestStatusTypes.pending:
           result = await _getRequest(
-            RequestTypes.received,
+            RequestTypes.sent,
             LoanContractRequestStatus.PENDING,
             page: page,
           );
@@ -339,7 +339,7 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           break;
         case RequestStatusTypes.rejected:
           result = await _getRequest(
-            RequestTypes.received,
+            RequestTypes.sent,
             LoanContractRequestStatus.REJECTED,
             page: page,
           );
