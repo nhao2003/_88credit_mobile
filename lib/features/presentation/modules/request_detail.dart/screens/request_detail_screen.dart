@@ -162,13 +162,30 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
             const SizedBox(height: 20),
 
             // Button
-            // if received => Cancel
-            // if sent
-            // if pending => Confirm, Reject
-            // if approved => Payment
-            // if success => go to contract
             BlocBuilder<RequestDetailBloc, RequestDetailState>(
               builder: (context, state) {
+                // if received && != PAID REJECTED => Cancel
+                if (requestType == RequestTypes.sent) {
+                  if (state.requestStatus == LoanContractRequestStatus.PAID ||
+                      state.requestStatus ==
+                          LoanContractRequestStatus.REJECTED) {
+                    return const SizedBox();
+                  }
+                  return BaseButton(
+                    title: "Hủy yêu cầu",
+                    colorButton: AppColors.red,
+                    width: 100.wp,
+                    isLoading: false,
+                    onClick: () {
+                      // showCommentForm(context);
+                    },
+                  );
+                }
+                // if sent
+                // if pending => Confirm, Reject
+                // if approved => Payment
+                // if success => go to contract
+
                 if (state.requestStatus == LoanContractRequestStatus.PENDING) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -195,8 +212,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                     ],
                   );
                 }
-                if (state.requestStatus ==
-                    LoanContractRequestStatus.WAITING_FOR_PAYMENT) {
+                if (state.requestStatus == LoanContractRequestStatus.APPROVED) {
                   return BaseButton(
                     title: "Thanh toán",
                     width: 100.wp,
