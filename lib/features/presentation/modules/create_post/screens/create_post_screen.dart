@@ -13,9 +13,14 @@ import '../widgets/choose_lending_card.dart';
 import '../widgets/lending_form.dart';
 import '../widgets/post_info_card.dart';
 
-class CreatePostScreen extends StatelessWidget {
-  CreatePostScreen({super.key});
+class CreatePostScreen extends StatefulWidget {
+  const CreatePostScreen({super.key});
 
+  @override
+  State<CreatePostScreen> createState() => _CreatePostScreenState();
+}
+
+class _CreatePostScreenState extends State<CreatePostScreen> {
   final infoFormKey = GlobalKey<FormState>();
   final borrowingFormKey = GlobalKey<FormState>();
   final lendingFormKey = GlobalKey<FormState>();
@@ -37,6 +42,28 @@ class CreatePostScreen extends StatelessWidget {
   final lendingMaxTenureMonthsTextController = TextEditingController();
   final lendingOverdueInterestRateTextController = TextEditingController();
   final lendingMaxOverdueInterestRateTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    titleTextController.dispose();
+    descriptionTextController.dispose();
+
+    borrowingLoanAmountTextController.dispose();
+    borrowingInterestRateTextController.dispose();
+    borrowingOverdueInterestRateTextController.dispose();
+    borrowingTenureMonthsTextController.dispose();
+    borrowingLoanReasonTextController.dispose();
+
+    lendingLoanAmountTextController.dispose();
+    lendingMaxLoanAmountTextController.dispose();
+    lendingInterestRateTextController.dispose();
+    lendingMaxInterestRateTextController.dispose();
+    lendingTenureMonthsTextController.dispose();
+    lendingMaxTenureMonthsTextController.dispose();
+    lendingOverdueInterestRateTextController.dispose();
+    lendingMaxOverdueInterestRateTextController.dispose();
+    super.dispose();
+  }
 
   bool validatorForm(bool isLending) {
     bool isValidate = true;

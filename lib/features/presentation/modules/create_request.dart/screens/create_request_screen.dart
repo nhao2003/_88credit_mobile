@@ -25,17 +25,23 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
   // create Request
   final requestFormKey = GlobalKey<FormState>();
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   final loanAmountTextController = TextEditingController();
   final interestRateTextController = TextEditingController();
   final overdueInterestRateTextController = TextEditingController();
   final tenureMonthsTextController = TextEditingController();
   final loanReasonTextController = TextEditingController();
   final discriptionTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    loanAmountTextController.dispose();
+    interestRateTextController.dispose();
+    overdueInterestRateTextController.dispose();
+    tenureMonthsTextController.dispose();
+    loanReasonTextController.dispose();
+    discriptionTextController.dispose();
+    super.dispose();
+  }
 
   bool validatorForm() {
     return requestFormKey.currentState!.validate();
