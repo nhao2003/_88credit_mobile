@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../../domain/entities/loan_request.dart';
 import '../../bloc/request_bloc.dart';
 import 'base_list_sent_request.dart';
-import '../share_widgets/request_item.dart';
 
 class RejectSentRequestTab extends StatelessWidget {
   const RejectSentRequestTab({super.key});
-
-  Widget? buildItem(LoanRequestEntity request) {
-    return RequestItem(request: request);
-  }
 
   @override
   Widget build(BuildContext context) {

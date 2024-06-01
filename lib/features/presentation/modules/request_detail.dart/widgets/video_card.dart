@@ -46,7 +46,16 @@ class _VideoCardState extends State<VideoCard> {
               ],
             ),
           )
-        : Container();
+        : Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              border: Border.fromBorderSide(BorderSide(color: Colors.grey)),
+            ),
+            height: 200,
+            child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
   }
 }
 

@@ -10,6 +10,7 @@ import '../../../../../core/utils/add_months_date.dart';
 import '../../../../../core/utils/bank_format.dart';
 import '../../../../domain/entities/loan_request.dart';
 import '../../../../domain/enums/loan_contract_request_status.dart';
+import '../../../../domain/enums/request_types.dart';
 import '../../../globalwidgets/base_button.dart';
 import '../../../globalwidgets/header_title.dart';
 import '../../../globalwidgets/image_card.dart';
@@ -33,6 +34,7 @@ class RequestDetailScreen extends StatefulWidget {
 
 class _RequestDetailScreenState extends State<RequestDetailScreen> {
   LoanRequestEntity post = const LoanRequestEntity();
+  RequestTypes requestType = RequestTypes.received;
 
   void showCommentForm(BuildContext context) {
     showDialog(
@@ -55,7 +57,10 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    post = ModalRoute.of(context)!.settings.arguments as LoanRequestEntity;
+    final param = ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+    post = param[0] as LoanRequestEntity;
+    requestType = param[1] as RequestTypes;
+
     context.read<RequestDetailBloc>().add(ChangeRequestStatus(post.status!));
 
     return Scaffold(
@@ -157,13 +162,13 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
             const SizedBox(height: 20),
 
             // Button
+            // if received => Cancel
+            // if sent
+            // if pending => Confirm, Reject
+            // if approved => Payment
+            // if success => go to contract
             BlocBuilder<RequestDetailBloc, RequestDetailState>(
               builder: (context, state) {
-                if (state.confirmStatus == ConfirmStatus.loading ||
-                    state.rejectStatus == RejectStatus.loading ||
-                    state.paymentStatus == PaymentStatus.loading) {
-                  return const CircularProgressIndicator();
-                }
                 if (state.requestStatus == LoanContractRequestStatus.PENDING) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

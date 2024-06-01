@@ -54,7 +54,7 @@ class _BaseListSentRequestsState extends State<BaseListSentRequests> {
   }
 
   Widget? buildItem(LoanRequestEntity request) {
-    return RequestItem(request: request);
+    return RequestItem(request: request, requestType: RequestTypes.sent);
   }
 
   List<LoanRequestEntity> getRequests(RequestState state) {

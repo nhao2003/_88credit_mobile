@@ -10,16 +10,19 @@ import '../../../../../../config/theme/text_styles.dart';
 import '../../../../../../config/values/asset_image.dart';
 import '../../../../../domain/entities/loan_request.dart';
 import '../../../../../domain/enums/loan_contract_request_status.dart';
+import '../../../../../domain/enums/request_types.dart';
 
 class RequestItem extends StatelessWidget {
   final LoanRequestEntity request;
-  const RequestItem({required this.request, super.key});
+  final RequestTypes requestType;
+  const RequestItem(
+      {required this.request, required this.requestType, super.key});
 
   final int numOfStars = 4;
 
   onTapPost(BuildContext context) {
     Navigator.of(context)
-        .pushNamed(AppRoutes.requestDetail, arguments: request);
+        .pushNamed(AppRoutes.requestDetail, arguments: [request, requestType]);
   }
 
   onTapAvatar(BuildContext context) {
