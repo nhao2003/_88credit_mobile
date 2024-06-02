@@ -66,49 +66,29 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       hasMoreReceived: hasMore,
     ));
 
-    final Pair<int, List<LoanRequestEntity>> result;
     switch (event.requestStatusType) {
       case LoanContractRequestStatus.paid:
         emit(state.copyWith(receivedRequestsPaid: []));
-        result = await _getRequest(
-          RequestTypes.received,
-          LoanContractRequestStatus.paid,
-          page: page,
-        );
         break;
       case LoanContractRequestStatus.approved:
         emit(state.copyWith(receivedRequestsApproved: []));
-        result = await _getRequest(
-          RequestTypes.received,
-          LoanContractRequestStatus.approved,
-          page: page,
-        );
         break;
       case LoanContractRequestStatus.pending:
         emit(state.copyWith(receivedRequestsPending: []));
-        result = await _getRequest(
-          RequestTypes.received,
-          LoanContractRequestStatus.pending,
-          page: page,
-        );
         break;
       case LoanContractRequestStatus.rejected:
         emit(state.copyWith(receivedRequestsRejected: []));
-        result = await _getRequest(
-          RequestTypes.received,
-          LoanContractRequestStatus.rejected,
-          page: page,
-        );
         break;
       case LoanContractRequestStatus.cancelled:
         emit(state.copyWith(receivedRequestsCancelled: []));
-        result = await _getRequest(
-          RequestTypes.received,
-          LoanContractRequestStatus.cancelled,
-          page: page,
-        );
         break;
     }
+
+    final Pair<int, List<LoanRequestEntity>> result = await _getRequest(
+      RequestTypes.received,
+      event.requestStatusType,
+      page: page,
+    );
 
     numOfPage = result.first;
     final newPosts = result.second;
@@ -141,49 +121,29 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       hasMoreSent: hasMore,
     ));
 
-    final Pair<int, List<LoanRequestEntity>> result;
     switch (event.requestStatusType) {
       case LoanContractRequestStatus.paid:
         emit(state.copyWith(sentRequestsPaid: []));
-        result = await _getRequest(
-          RequestTypes.sent,
-          LoanContractRequestStatus.paid,
-          page: page,
-        );
         break;
       case LoanContractRequestStatus.approved:
         emit(state.copyWith(sentRequestsApproved: []));
-        result = await _getRequest(
-          RequestTypes.sent,
-          LoanContractRequestStatus.approved,
-          page: page,
-        );
         break;
       case LoanContractRequestStatus.pending:
         emit(state.copyWith(sentRequestsPending: []));
-        result = await _getRequest(
-          RequestTypes.sent,
-          LoanContractRequestStatus.pending,
-          page: page,
-        );
         break;
       case LoanContractRequestStatus.rejected:
         emit(state.copyWith(sentRequestsRejected: []));
-        result = await _getRequest(
-          RequestTypes.sent,
-          LoanContractRequestStatus.rejected,
-          page: page,
-        );
         break;
       case LoanContractRequestStatus.cancelled:
         emit(state.copyWith(sentRequestsCancelled: []));
-        result = await _getRequest(
-          RequestTypes.sent,
-          LoanContractRequestStatus.cancelled,
-          page: page,
-        );
         break;
     }
+
+    final Pair<int, List<LoanRequestEntity>> result = await _getRequest(
+      RequestTypes.sent,
+      event.requestStatusType,
+      page: page,
+    );
 
     numOfPage = result.first;
     final newPosts = result.second;
@@ -224,46 +184,26 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
         status: RequestFetchStatus.loading,
       ));
 
-      final Pair<int, List<LoanRequestEntity>> result;
+      final Pair<int, List<LoanRequestEntity>> result = await _getRequest(
+        RequestTypes.sent,
+        event.requestStatusType,
+        page: page,
+      );
+
       switch (event.requestStatusType) {
         case LoanContractRequestStatus.paid:
-          result = await _getRequest(
-            RequestTypes.sent,
-            LoanContractRequestStatus.paid,
-            page: page,
-          );
           state.sentRequestsPaid.addAll(result.second);
           break;
         case LoanContractRequestStatus.approved:
-          result = await _getRequest(
-            RequestTypes.sent,
-            LoanContractRequestStatus.approved,
-            page: page,
-          );
           state.sentRequestsApproved.addAll(result.second);
           break;
         case LoanContractRequestStatus.pending:
-          result = await _getRequest(
-            RequestTypes.sent,
-            LoanContractRequestStatus.pending,
-            page: page,
-          );
           state.sentRequestsPending.addAll(result.second);
           break;
         case LoanContractRequestStatus.rejected:
-          result = await _getRequest(
-            RequestTypes.sent,
-            LoanContractRequestStatus.rejected,
-            page: page,
-          );
           state.sentRequestsRejected.addAll(result.second);
           break;
         case LoanContractRequestStatus.cancelled:
-          result = await _getRequest(
-            RequestTypes.sent,
-            LoanContractRequestStatus.cancelled,
-            page: page,
-          );
           state.sentRequestsCancelled.addAll(result.second);
           break;
       }
@@ -307,46 +247,25 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
         status: RequestFetchStatus.loading,
       ));
 
-      final Pair<int, List<LoanRequestEntity>> result;
+      final Pair<int, List<LoanRequestEntity>> result = await _getRequest(
+        RequestTypes.received,
+        event.requestStatusType,
+        page: page,
+      );
       switch (event.requestStatusType) {
         case LoanContractRequestStatus.paid:
-          result = await _getRequest(
-            RequestTypes.received,
-            LoanContractRequestStatus.paid,
-            page: page,
-          );
           state.receivedRequestsPaid.addAll(result.second);
           break;
         case LoanContractRequestStatus.approved:
-          result = await _getRequest(
-            RequestTypes.received,
-            LoanContractRequestStatus.approved,
-            page: page,
-          );
           state.receivedRequestsApproved.addAll(result.second);
           break;
         case LoanContractRequestStatus.pending:
-          result = await _getRequest(
-            RequestTypes.received,
-            LoanContractRequestStatus.pending,
-            page: page,
-          );
           state.receivedRequestsPending.addAll(result.second);
           break;
         case LoanContractRequestStatus.rejected:
-          result = await _getRequest(
-            RequestTypes.received,
-            LoanContractRequestStatus.rejected,
-            page: page,
-          );
           state.receivedRequestsRejected.addAll(result.second);
           break;
         case LoanContractRequestStatus.cancelled:
-          result = await _getRequest(
-            RequestTypes.received,
-            LoanContractRequestStatus.cancelled,
-            page: page,
-          );
           state.receivedRequestsCancelled.addAll(result.second);
           break;
       }
