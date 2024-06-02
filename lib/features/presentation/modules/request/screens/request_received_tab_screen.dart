@@ -22,7 +22,7 @@ class _RequestReceivedTabScreenState extends State<RequestReceivedTabScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 5);
+    _tabController = TabController(vsync: this, length: 4);
     _tabController.addListener(_handleTabSelection);
   }
 
@@ -33,7 +33,7 @@ class _RequestReceivedTabScreenState extends State<RequestReceivedTabScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 5,
+      length: 4,
       child: Column(
         children: [
           TabBar(

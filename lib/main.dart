@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [...appPages.blocer(context)],
       child: MaterialApp(
-        initialRoute: AppRoutes.login,
+        initialRoute: AppRoutes.splash,
         title: AppStrings.appName,
         debugShowCheckedModeBanner: false,
         theme: AppTheme.appTheme(),
