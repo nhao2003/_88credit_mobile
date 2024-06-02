@@ -5,6 +5,7 @@ import '../../../../domain/entities/post.dart';
 import '../../../../domain/entities/user.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../../domain/enums/post_status.dart';
+import '../../../../domain/enums/post_type.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
 part 'user_profile_event.dart';
@@ -66,7 +67,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
           status: PostStatus.APPROVED,
           loanReason: LoanReasonTypes.BUSINESS,
           loanReasonDescription: 'Business',
-          isLease: true,
+          type: PostTypes.lending,
           title: 'Title $index',
           description: 'Description $index',
           images: const [

@@ -77,7 +77,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           status: PostStatus.APPROVED,
           loanReason: LoanReasonTypes.BUSINESS,
           loanReasonDescription: 'Business',
-          isLease: true,
+          type: PostTypes.lending,
           title: 'Title $index',
           description: 'Description $index',
           images: const [
@@ -133,7 +133,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
           status: PostStatus.APPROVED,
           loanReason: LoanReasonTypes.BUSINESS,
           loanReasonDescription: 'Business',
-          isLease: false,
+          type: PostTypes.borrowing,
           title: 'Title $index',
           description: 'Description $index',
           images: const [

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
+import '../../../../domain/enums/post_type.dart';
 import '../../../globalwidgets/base_card.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../bloc/create_post_bloc.dart';
@@ -65,10 +66,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     super.dispose();
   }
 
-  bool validatorForm(bool isLending) {
+  bool validatorForm(PostTypes postType) {
     bool isValidate = true;
     isValidate = isValidate & infoFormKey.currentState!.validate();
-    if (isLending) {
+    if (postType == PostTypes.lending) {
       isValidate = isValidate & lendingFormKey.currentState!.validate();
     } else {
       isValidate = isValidate & borrowingFormKey.currentState!.validate();
@@ -78,7 +79,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
 
   void uploadPost(BuildContext context, CreatePostState state) {
     // check validate
-    if (!validatorForm(state.isLending)) {
+    if (!validatorForm(state.postType)) {
       return context.snackBar(
         'Vui lòng điền đầy đủ thông tin bắt buộc!',
         type: SnackBarType.error,
@@ -86,7 +87,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     }
 
     // upload images
-    if (state.isLending) {
+    if (state.postType == PostTypes.lending) {
       context.read<CreatePostBloc>().add(
             SendPostEvent(
               title: titleTextController.text,
@@ -165,7 +166,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     ),
                   ),
                   BorrowingForm(
-                    isvisible: !state.isLending,
+                    isvisible: state.postType == PostTypes.borrowing,
                     borrowingFormKey: borrowingFormKey,
                     borrowingLoanAmountTextController:
                         borrowingLoanAmountTextController,
@@ -179,7 +180,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                         borrowingLoanReasonTextController,
                   ),
                   LendingForm(
-                    isvisible: state.isLending,
+                    isvisible: state.postType == PostTypes.lending,
                     lendingFormKey: lendingFormKey,
                     lendingLoanAmountTextController:
                         lendingLoanAmountTextController,

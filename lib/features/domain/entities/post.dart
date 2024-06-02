@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../enums/loan_reason_types.dart';
 import '../enums/post_status.dart';
+import '../enums/post_type.dart';
 import 'user.dart';
 
 class PostEntity extends Equatable {
@@ -10,7 +11,7 @@ class PostEntity extends Equatable {
   final PostStatus? status;
   final LoanReasonTypes? loanReason;
   final String? loanReasonDescription;
-  final bool? isLease;
+  final PostTypes? type;
   final String? title;
   final String? description;
   final List<String>? images;
@@ -33,7 +34,7 @@ class PostEntity extends Equatable {
     this.status,
     this.loanReason,
     this.loanReasonDescription,
-    this.isLease,
+    this.type,
     this.title,
     this.description,
     this.images,
@@ -58,7 +59,7 @@ class PostEntity extends Equatable {
         status,
         loanReason,
         loanReasonDescription,
-        isLease,
+        type,
         title,
         description,
         images,
@@ -82,7 +83,7 @@ class PostEntity extends Equatable {
     PostStatus? status,
     LoanReasonTypes? loanReason,
     String? loanReasonDescription,
-    bool? isLease,
+    PostTypes? type,
     String? title,
     String? description,
     List<String>? images,
@@ -106,7 +107,7 @@ class PostEntity extends Equatable {
       loanReason: loanReason ?? this.loanReason,
       loanReasonDescription:
           loanReasonDescription ?? this.loanReasonDescription,
-      isLease: isLease ?? this.isLease,
+      type: type ?? this.type,
       title: title ?? this.title,
       description: description ?? this.description,
       images: images ?? this.images,
@@ -128,6 +129,6 @@ class PostEntity extends Equatable {
   // toString
   @override
   String toString() {
-    return 'PostEntity(id: $id, userId: $userId, user: $user, status: $status, loanReason: $loanReason, loanReasonDescription: $loanReasonDescription, isLease: $isLease, title: $title, description: $description, images: $images, interestRate: $interestRate, amount: $amount, duration: $duration, overdueInterestRate: $overdueInterestRate, maxInterestRate: $maxInterestRate, maxAmount: $maxAmount, maxDuration: $maxDuration, maxOverdueInterestRate: $maxOverdueInterestRate, rejectionReason: $rejectionReason, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'PostEntity(id: $id, userId: $userId, user: $user, status: $status, loanReason: $loanReason, loanReasonDescription: $loanReasonDescription, type: $type, title: $title, description: $description, images: $images, interestRate: $interestRate, amount: $amount, duration: $duration, overdueInterestRate: $overdueInterestRate, maxInterestRate: $maxInterestRate, maxAmount: $maxAmount, maxDuration: $maxDuration, maxOverdueInterestRate: $maxOverdueInterestRate, rejectionReason: $rejectionReason, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }

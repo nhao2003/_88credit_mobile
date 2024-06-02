@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:_88credit_mobile/features/domain/entities/post.dart';
+import 'package:_88credit_mobile/features/domain/enums/post_type.dart';
 import 'package:_88credit_mobile/features/domain/usecases/post/create_post.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   CreatePostBloc() : super(const CreatePostState()) {
     on<CreatePostEvent>((event, emit) {});
     on<TogglePageEvent>((event, emit) {
-      emit(state.copyWith(isLending: event.isLending));
+      emit(state.copyWith(postType: event.postType));
     });
     on<SendPostEvent>(_sendPost);
     on<CheckLengthPhoto>(checkLengthPhoto);
@@ -99,10 +100,10 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
   PostEntity createPostEntity(SendPostEvent event, List<String> images) {
     try {
-      if (state.isLending) {
+      if (state.postType == PostTypes.lending) {
         // Lending
         return PostEntity(
-          isLease: state.isLending,
+          type: state.postType,
           title: event.title!,
           description: event.description!,
           images: images,
@@ -117,7 +118,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         );
       } else {
         return PostEntity(
-          isLease: state.isLending,
+          type: state.postType,
           title: event.title!,
           description: event.description!,
           images: images,

@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
+import '../../../../domain/enums/post_type.dart';
 import '../bloc/create_post_bloc.dart';
 
 class ChooseLendingCard extends StatelessWidget {
@@ -17,7 +18,7 @@ class ChooseLendingCard extends StatelessWidget {
               onTap: () {
                 context
                     .read<CreatePostBloc>()
-                    .add(const TogglePageEvent(false));
+                    .add(const TogglePageEvent(PostTypes.borrowing));
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -25,7 +26,7 @@ class ChooseLendingCard extends StatelessWidget {
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: state.isLending != true
+                  color: state.postType == PostTypes.borrowing
                       ? AppColors.greenLight
                       : AppColors.grey200,
                   borderRadius: BorderRadius.circular(10),
@@ -33,7 +34,7 @@ class ChooseLendingCard extends StatelessWidget {
                 child: Text(
                   "Vay tiền",
                   style: AppTextStyles.medium14.copyWith(
-                    color: state.isLending != true
+                    color: state.postType == PostTypes.borrowing
                         ? AppColors.green
                         : AppColors.grey600,
                   ),
@@ -45,7 +46,9 @@ class ChooseLendingCard extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                context.read<CreatePostBloc>().add(const TogglePageEvent(true));
+                context
+                    .read<CreatePostBloc>()
+                    .add(const TogglePageEvent(PostTypes.lending));
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(
@@ -53,7 +56,7 @@ class ChooseLendingCard extends StatelessWidget {
                   vertical: 10,
                 ),
                 decoration: BoxDecoration(
-                  color: state.isLending == true
+                  color: state.postType == PostTypes.lending
                       ? AppColors.greenLight
                       : AppColors.grey200,
                   borderRadius: BorderRadius.circular(10),
@@ -61,7 +64,7 @@ class ChooseLendingCard extends StatelessWidget {
                 child: Text(
                   "Cho vay",
                   style: AppTextStyles.medium14.copyWith(
-                    color: state.isLending == true
+                    color: state.postType == PostTypes.lending
                         ? AppColors.green
                         : AppColors.grey600,
                   ),

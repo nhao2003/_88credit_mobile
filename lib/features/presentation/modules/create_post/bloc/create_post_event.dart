@@ -8,12 +8,12 @@ sealed class CreatePostEvent extends Equatable {
 }
 
 class TogglePageEvent extends CreatePostEvent {
-  final bool isLending;
+  final PostTypes postType;
 
-  const TogglePageEvent(this.isLending);
+  const TogglePageEvent(this.postType);
 
   @override
-  List<Object> get props => [isLending];
+  List<Object> get props => [postType];
 }
 
 class SendPostEvent extends CreatePostEvent {

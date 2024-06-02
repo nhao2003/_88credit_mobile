@@ -8,6 +8,7 @@ import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../../../../domain/entities/post.dart';
+import '../../../../domain/enums/post_type.dart';
 import 'save_button.dart';
 
 // ignore: must_be_immutable
@@ -156,7 +157,7 @@ class PostLendingCard extends StatelessWidget {
                         style: AppTextStyles.medium10,
                       ),
                       Text(
-                        post.isLease! ? "Cho vay" : "Vay tiền",
+                        post.type == PostTypes.lending ? "Cho vay" : "Vay tiền",
                         style: AppTextStyles.bold10.colorEx(AppColors.green),
                       ),
                     ],

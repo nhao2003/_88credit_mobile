@@ -3,7 +3,7 @@ part of 'create_post_bloc.dart';
 enum CreatePostStatus { initial, loading, success, failure }
 
 final class CreatePostState extends Equatable {
-  final bool isLending;
+  final PostTypes postType;
   final CreatePostStatus status;
   final bool photoController;
   final List<File> photo;
@@ -12,7 +12,7 @@ final class CreatePostState extends Equatable {
   final String failureString;
 
   const CreatePostState({
-    this.isLending = false,
+    this.postType = PostTypes.lending,
     this.status = CreatePostStatus.initial,
     this.photoController = true,
     this.photo = const [],
@@ -22,7 +22,7 @@ final class CreatePostState extends Equatable {
   });
 
   CreatePostState copyWith({
-    bool? isLending,
+    PostTypes? postType,
     CreatePostStatus? status,
     bool? photoController,
     List<File>? photo,
@@ -31,7 +31,7 @@ final class CreatePostState extends Equatable {
     String? failureString,
   }) {
     return CreatePostState(
-      isLending: isLending ?? this.isLending,
+      postType: postType ?? this.postType,
       status: status ?? this.status,
       photoController: photoController ?? this.photoController,
       photo: photo ?? this.photo,
@@ -43,7 +43,7 @@ final class CreatePostState extends Equatable {
 
   @override
   List<Object> get props => [
-        isLending,
+        postType,
         status,
         photoController,
         photo,

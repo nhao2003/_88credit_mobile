@@ -1,7 +1,9 @@
 import 'package:_88credit_mobile/core/utils/validate_utils.dart';
+import 'package:_88credit_mobile/features/data/models/user.dart';
 import '../../domain/entities/post.dart';
 import '../../domain/enums/loan_reason_types.dart';
 import '../../domain/enums/post_status.dart';
+import '../../domain/enums/post_type.dart';
 
 class PostModel extends PostEntity {
   const PostModel({
@@ -11,7 +13,7 @@ class PostModel extends PostEntity {
     super.status,
     super.loanReason,
     super.loanReasonDescription,
-    super.isLease,
+    super.type,
     super.title,
     super.description,
     super.images,
@@ -32,13 +34,13 @@ class PostModel extends PostEntity {
     return PostModel(
       id: json['id'],
       userId: json['userId'],
-      // user: json['user'] != null ? UserEntity.fromJson(json['user']) : null,
+      user: json['user'] != null ? UserModel.fromJson(json['user']) : null,
       status: json['status'] != null ? PostStatus.parse(json['status']) : null,
       loanReason: json['loanReason'] != null
           ? LoanReasonTypes.parse(json['loanReason'])
           : null,
       loanReasonDescription: json['loanReasonDescription'],
-      isLease: json['isLease'],
+      type: json['type'] != null ? PostTypes.parse(json['type']) : null,
       title: json['title'],
       description: json['description'],
       images: List<String>.from(json['images'] ?? []),
@@ -60,7 +62,7 @@ class PostModel extends PostEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      "isLease": isLease,
+      "type": type.toString(),
       "title": title,
       "description": description,
       "images": images,
@@ -85,7 +87,7 @@ class PostModel extends PostEntity {
       status: entity.status,
       loanReason: entity.loanReason,
       loanReasonDescription: entity.loanReasonDescription,
-      isLease: entity.isLease,
+      type: entity.type,
       title: entity.title,
       description: entity.description,
       images: entity.images,
