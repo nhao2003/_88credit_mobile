@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../bloc/request_bloc.dart';
+import '../../../../../domain/enums/loan_contract_request_status.dart';
 import 'base_list_sent_request.dart';
 
 class ApprovedSentRequestTab extends StatelessWidget {
@@ -11,7 +11,7 @@ class ApprovedSentRequestTab extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: BaseListSentRequests(
         titleNull: "Chưa có yêu cầu được xác nhận",
-        requestType: RequestStatusTypes.approved,
+        requestType: LoanContractRequestStatus.approved,
       ),
     );
   }

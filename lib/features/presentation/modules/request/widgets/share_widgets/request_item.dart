@@ -51,7 +51,7 @@ class RequestItem extends StatelessWidget {
         return "Đã xác nhận từ ${request.updatedAt!.toDMYString()}";
       case LoanContractRequestStatus.pending:
         return "Đang chờ xác nhận từ ${request.updatedAt!.toDMYString()}";
-      case LoanContractRequestStatus.cancle:
+      case LoanContractRequestStatus.cancelled:
         return "Đã xác nhận từ ${request.updatedAt!.toDMYString()}";
       case LoanContractRequestStatus.rejected:
         return request.rejectedReason ?? "Đã hủy";
@@ -66,7 +66,7 @@ class RequestItem extends StatelessWidget {
         return AppColors.blue800;
       case LoanContractRequestStatus.rejected:
         return AppColors.red800;
-      case LoanContractRequestStatus.cancle:
+      case LoanContractRequestStatus.cancelled:
         return AppColors.grey700;
       case LoanContractRequestStatus.pending:
         return AppColors.yellow800;
@@ -81,7 +81,7 @@ class RequestItem extends StatelessWidget {
         return AppColors.blue100;
       case LoanContractRequestStatus.rejected:
         return AppColors.red100;
-      case LoanContractRequestStatus.cancle:
+      case LoanContractRequestStatus.cancelled:
         return AppColors.grey100;
       case LoanContractRequestStatus.pending:
         return AppColors.yellow100;

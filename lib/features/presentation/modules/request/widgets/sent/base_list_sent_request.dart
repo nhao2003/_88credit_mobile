@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../config/theme/app_color.dart';
 import '../../../../../../config/theme/text_styles.dart';
+import '../../../../../domain/enums/loan_contract_request_status.dart';
 import '../../../../../domain/enums/request_types.dart';
 
 class BaseListSentRequests extends StatefulWidget {
-  final RequestStatusTypes requestType;
+  final LoanContractRequestStatus requestType;
   final String titleNull;
   const BaseListSentRequests({
     required this.requestType,
@@ -59,14 +60,16 @@ class _BaseListSentRequestsState extends State<BaseListSentRequests> {
 
   List<LoanRequestEntity> getRequests(RequestState state) {
     switch (widget.requestType) {
-      case RequestStatusTypes.paid:
+      case LoanContractRequestStatus.paid:
         return state.sentRequestsPaid;
-      case RequestStatusTypes.approved:
+      case LoanContractRequestStatus.approved:
         return state.sentRequestsApproved;
-      case RequestStatusTypes.pending:
+      case LoanContractRequestStatus.pending:
         return state.sentRequestsPending;
-      case RequestStatusTypes.rejected:
+      case LoanContractRequestStatus.rejected:
         return state.sentRequestsRejected;
+      case LoanContractRequestStatus.cancelled:
+        return state.sentRequestsCancelled;
       default:
         return [];
     }

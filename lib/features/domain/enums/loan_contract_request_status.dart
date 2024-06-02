@@ -2,7 +2,7 @@
 enum LoanContractRequestStatus {
   pending,
   approved,
-  cancle,
+  cancelled,
   rejected,
   paid;
 
@@ -19,8 +19,8 @@ enum LoanContractRequestStatus {
     switch (this) {
       case LoanContractRequestStatus.approved:
         return "approved";
-      case LoanContractRequestStatus.cancle:
-        return "cancle";
+      case LoanContractRequestStatus.cancelled:
+        return "cancelled";
       case LoanContractRequestStatus.pending:
         return "pending";
       case LoanContractRequestStatus.rejected:
@@ -34,7 +34,7 @@ enum LoanContractRequestStatus {
     switch (this) {
       case LoanContractRequestStatus.approved:
         return "Đã xác nhận";
-      case LoanContractRequestStatus.cancle:
+      case LoanContractRequestStatus.cancelled:
         return "Đã hủy";
       case LoanContractRequestStatus.pending:
         return "Đang chờ";
@@ -49,7 +49,7 @@ enum LoanContractRequestStatus {
   static Map<LoanContractRequestStatus, String> toMap() {
     return {
       LoanContractRequestStatus.approved: "Đã xác nhận",
-      LoanContractRequestStatus.cancle: "Đã hủy",
+      LoanContractRequestStatus.cancelled: "Đã hủy",
       LoanContractRequestStatus.pending: "Đang chờ",
       LoanContractRequestStatus.rejected: "Đã từ chối",
       LoanContractRequestStatus.paid: "Đã thanh toán",

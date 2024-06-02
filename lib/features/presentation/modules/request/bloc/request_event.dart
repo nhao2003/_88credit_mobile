@@ -7,11 +7,9 @@ sealed class RequestEvent extends Equatable {
   List<Object> get props => [];
 }
 
-enum RequestStatusTypes { paid, approved, pending, rejected }
-
 final class RefreshRequestEvent extends RequestEvent {
   final RequestTypes requestType;
-  final RequestStatusTypes requestStatusType;
+  final LoanContractRequestStatus requestStatusType;
 
   const RefreshRequestEvent(this.requestType, this.requestStatusType);
 
@@ -21,7 +19,7 @@ final class RefreshRequestEvent extends RequestEvent {
 
 final class FetchMoreRequestEvent extends RequestEvent {
   final RequestTypes requestType;
-  final RequestStatusTypes requestStatusType;
+  final LoanContractRequestStatus requestStatusType;
 
   const FetchMoreRequestEvent(this.requestType, this.requestStatusType);
 

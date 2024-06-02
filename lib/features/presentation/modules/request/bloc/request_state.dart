@@ -9,14 +9,14 @@ final class RequestState extends Equatable {
   final List<LoanRequestEntity> sentRequestsPending;
   final List<LoanRequestEntity> sentRequestsRejected;
   final List<LoanRequestEntity> sentRequestsPaid;
-  final List<LoanRequestEntity> sentRequestsWaitingPayment;
+  final List<LoanRequestEntity> sentRequestsCancelled;
 
   final bool hasMoreReceived;
   final List<LoanRequestEntity> receivedRequestsApproved;
   final List<LoanRequestEntity> receivedRequestsPending;
   final List<LoanRequestEntity> receivedRequestsRejected;
   final List<LoanRequestEntity> receivedRequestsPaid;
-  final List<LoanRequestEntity> receivedRequestsWaitingPayment;
+  final List<LoanRequestEntity> receivedRequestsCancelled;
 
   const RequestState({
     this.status = RequestFetchStatus.loading,
@@ -25,13 +25,13 @@ final class RequestState extends Equatable {
     this.sentRequestsPending = const [],
     this.sentRequestsRejected = const [],
     this.sentRequestsPaid = const [],
-    this.sentRequestsWaitingPayment = const [],
+    this.sentRequestsCancelled = const [],
     this.hasMoreReceived = true,
     this.receivedRequestsApproved = const [],
     this.receivedRequestsPending = const [],
     this.receivedRequestsRejected = const [],
     this.receivedRequestsPaid = const [],
-    this.receivedRequestsWaitingPayment = const [],
+    this.receivedRequestsCancelled = const [],
   });
 
   RequestState copyWith({
@@ -41,13 +41,13 @@ final class RequestState extends Equatable {
     List<LoanRequestEntity>? sentRequestsPending,
     List<LoanRequestEntity>? sentRequestsRejected,
     List<LoanRequestEntity>? sentRequestsPaid,
-    List<LoanRequestEntity>? sentRequestsWaitingPayment,
+    List<LoanRequestEntity>? sentRequestsCancelled,
     bool? hasMoreReceived,
     List<LoanRequestEntity>? receivedRequestsApproved,
     List<LoanRequestEntity>? receivedRequestsPending,
     List<LoanRequestEntity>? receivedRequestsRejected,
     List<LoanRequestEntity>? receivedRequestsPaid,
-    List<LoanRequestEntity>? receivedRequestsWaitingPayment,
+    List<LoanRequestEntity>? receivedRequestsCancelled,
   }) {
     return RequestState(
       status: status ?? this.status,
@@ -56,8 +56,7 @@ final class RequestState extends Equatable {
       sentRequestsPending: sentRequestsPending ?? this.sentRequestsPending,
       sentRequestsRejected: sentRequestsRejected ?? this.sentRequestsRejected,
       sentRequestsPaid: sentRequestsPaid ?? this.sentRequestsPaid,
-      sentRequestsWaitingPayment:
-          sentRequestsWaitingPayment ?? this.sentRequestsWaitingPayment,
+      sentRequestsCancelled: sentRequestsCancelled ?? this.sentRequestsCancelled,
       hasMoreReceived: hasMoreReceived ?? this.hasMoreReceived,
       receivedRequestsApproved:
           receivedRequestsApproved ?? this.receivedRequestsApproved,
@@ -66,8 +65,8 @@ final class RequestState extends Equatable {
       receivedRequestsRejected:
           receivedRequestsRejected ?? this.receivedRequestsRejected,
       receivedRequestsPaid: receivedRequestsPaid ?? this.receivedRequestsPaid,
-      receivedRequestsWaitingPayment:
-          receivedRequestsWaitingPayment ?? this.receivedRequestsWaitingPayment,
+      receivedRequestsCancelled:
+          receivedRequestsCancelled ?? this.receivedRequestsCancelled,
     );
   }
 
@@ -79,12 +78,12 @@ final class RequestState extends Equatable {
         sentRequestsPending,
         sentRequestsRejected,
         sentRequestsPaid,
-        sentRequestsWaitingPayment,
+        sentRequestsCancelled,
         hasMoreReceived,
         receivedRequestsApproved,
         receivedRequestsPending,
         receivedRequestsRejected,
         receivedRequestsPaid,
-        receivedRequestsWaitingPayment,
+        receivedRequestsCancelled,
       ];
 }
