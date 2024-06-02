@@ -18,7 +18,7 @@ final class RequestDetailState extends Equatable {
     this.rejectStatus = RejectStatus.initial,
     this.confirmStatus = ConfirmStatus.initial,
     this.paymentStatus = PaymentStatus.initial,
-    this.requestStatus = LoanContractRequestStatus.PENDING,
+    this.requestStatus = LoanContractRequestStatus.pending,
   });
 
   RequestDetailState copyWith({

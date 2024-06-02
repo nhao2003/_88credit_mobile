@@ -135,7 +135,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
               description: post.loanReason!,
             ),
             const SizedBox(height: 20),
-            if (post.status == LoanContractRequestStatus.REJECTED &&
+            if (post.status == LoanContractRequestStatus.rejected &&
                 post.rejectedReason != null)
               DescriptionCard(
                 title: "Lý do hủy yêu cầu",
@@ -166,9 +166,9 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
               builder: (context, state) {
                 // if received && != PAID REJECTED => Cancel
                 if (requestType == RequestTypes.sent) {
-                  if (state.requestStatus == LoanContractRequestStatus.PAID ||
+                  if (state.requestStatus == LoanContractRequestStatus.paid ||
                       state.requestStatus ==
-                          LoanContractRequestStatus.REJECTED) {
+                          LoanContractRequestStatus.rejected) {
                     return const SizedBox();
                   }
                   return BaseButton(
@@ -186,7 +186,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                 // if approved => Payment
                 // if success => go to contract
 
-                if (state.requestStatus == LoanContractRequestStatus.PENDING) {
+                if (state.requestStatus == LoanContractRequestStatus.pending) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -212,7 +212,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                     ],
                   );
                 }
-                if (state.requestStatus == LoanContractRequestStatus.APPROVED) {
+                if (state.requestStatus == LoanContractRequestStatus.approved) {
                   return BaseButton(
                     title: "Thanh toán",
                     width: 100.wp,

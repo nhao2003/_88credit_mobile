@@ -21,7 +21,7 @@ final class CreateRequestState extends Equatable {
     this.getPrimaryBankCardStatus = GetPrimaryBankCardStatus.initial,
     this.primaryBankCard = const BankCardEntity(),
     this.createRequestStatus = CreateRequestStatus.initial,
-    this.loanReasonType = LoanReasonTypes.BUSINESS,
+    this.loanReasonType = LoanReasonTypes.business,
     this.portrait,
     this.idCardFrontPhoto,
     this.idCardBackPhoto,

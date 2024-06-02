@@ -64,8 +64,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         (index) => PostEntity(
           id: index.toString(),
           user: user,
-          status: PostStatus.APPROVED,
-          loanReason: LoanReasonTypes.BUSINESS,
+          status: PostStatus.approved,
+          loanReason: LoanReasonTypes.business,
           loanReasonDescription: 'Business',
           type: PostTypes.lending,
           title: 'Title $index',

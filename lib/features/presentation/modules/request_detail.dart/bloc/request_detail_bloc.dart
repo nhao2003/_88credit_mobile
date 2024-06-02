@@ -34,7 +34,7 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
     await Future.delayed(const Duration(seconds: 2)).whenComplete(() {
       emit(state.copyWith(
         confirmStatus: ConfirmStatus.success,
-        requestStatus: LoanContractRequestStatus.APPROVED,
+        requestStatus: LoanContractRequestStatus.approved,
       ));
     });
   }

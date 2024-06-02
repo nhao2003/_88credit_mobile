@@ -1,10 +1,10 @@
 // ignore_for_file: constant_identifier_names
 enum LoanContractRequestStatus {
-  PENDING,
-  APPROVED,
-  REJECTED,
-  CANCELLED,
-  PAID;
+  pending,
+  approved,
+  cancle,
+  rejected,
+  paid;
 
   static LoanContractRequestStatus parse(String value) {
     for (LoanContractRequestStatus status in LoanContractRequestStatus.values) {
@@ -17,30 +17,30 @@ enum LoanContractRequestStatus {
   @override
   String toString() {
     switch (this) {
-      case LoanContractRequestStatus.APPROVED:
-        return "APPROVED";
-      case LoanContractRequestStatus.CANCELLED:
-        return "CANCLE";
-      case LoanContractRequestStatus.PENDING:
-        return "PENDING";
-      case LoanContractRequestStatus.REJECTED:
-        return "REJECTED";
-      case LoanContractRequestStatus.PAID:
-        return "PAID";
+      case LoanContractRequestStatus.approved:
+        return "approved";
+      case LoanContractRequestStatus.cancle:
+        return "cancle";
+      case LoanContractRequestStatus.pending:
+        return "pending";
+      case LoanContractRequestStatus.rejected:
+        return "rejected";
+      case LoanContractRequestStatus.paid:
+        return "paid";
     }
   }
 
   String getStringVi() {
     switch (this) {
-      case LoanContractRequestStatus.APPROVED:
+      case LoanContractRequestStatus.approved:
         return "Đã xác nhận";
-      case LoanContractRequestStatus.CANCELLED:
+      case LoanContractRequestStatus.cancle:
         return "Đã hủy";
-      case LoanContractRequestStatus.PENDING:
+      case LoanContractRequestStatus.pending:
         return "Đang chờ";
-      case LoanContractRequestStatus.REJECTED:
+      case LoanContractRequestStatus.rejected:
         return "Đã từ chối";
-      case LoanContractRequestStatus.PAID:
+      case LoanContractRequestStatus.paid:
         return "Đã thanh toán";
     }
   }
@@ -48,11 +48,11 @@ enum LoanContractRequestStatus {
   // toMap
   static Map<LoanContractRequestStatus, String> toMap() {
     return {
-      LoanContractRequestStatus.APPROVED: "Đã xác nhận",
-      LoanContractRequestStatus.CANCELLED: "Đã hủy",
-      LoanContractRequestStatus.PENDING: "Đang chờ",
-      LoanContractRequestStatus.REJECTED: "Đã từ chối",
-      LoanContractRequestStatus.PAID: "Đã thanh toán",
+      LoanContractRequestStatus.approved: "Đã xác nhận",
+      LoanContractRequestStatus.cancle: "Đã hủy",
+      LoanContractRequestStatus.pending: "Đang chờ",
+      LoanContractRequestStatus.rejected: "Đã từ chối",
+      LoanContractRequestStatus.paid: "Đã thanh toán",
     };
   }
 }
