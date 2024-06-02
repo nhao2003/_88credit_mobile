@@ -164,6 +164,9 @@ dependencies:
   # video call
   zego_uikit_prebuilt_call: ^4.11.1
 
+  # stepper
+  easy_stepper: ^0.7.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
