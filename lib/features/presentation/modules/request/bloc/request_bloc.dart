@@ -150,14 +150,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           page: page,
         );
         break;
-      case RequestStatusTypes.waitingPayment:
-        emit(state.copyWith(receivedRequestsWaitingPayment: []));
-        result = await _getRequest(
-          RequestTypes.received,
-          LoanContractRequestStatus.WAITING_FOR_PAYMENT,
-          page: page,
-        );
-        break;
       case RequestStatusTypes.approved:
         emit(state.copyWith(receivedRequestsApproved: []));
         result = await _getRequest(
@@ -195,8 +187,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     switch (event.requestStatusType) {
       case RequestStatusTypes.paid:
         return emit(state.copyWith(receivedRequestsPaid: newPosts));
-      case RequestStatusTypes.waitingPayment:
-        return emit(state.copyWith(receivedRequestsWaitingPayment: newPosts));
       case RequestStatusTypes.approved:
         return emit(state.copyWith(receivedRequestsApproved: newPosts));
       case RequestStatusTypes.pending:
@@ -225,13 +215,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           page: page,
         );
         break;
-      case RequestStatusTypes.waitingPayment:
-        emit(state.copyWith(sentRequestsWaitingPayment: []));
-        result = await _getRequest(
-          RequestTypes.sent,
-          LoanContractRequestStatus.WAITING_FOR_PAYMENT,
-          page: page,
-        );
       case RequestStatusTypes.approved:
         emit(state.copyWith(sentRequestsApproved: []));
         result = await _getRequest(
@@ -269,8 +252,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
     switch (event.requestStatusType) {
       case RequestStatusTypes.paid:
         return emit(state.copyWith(sentRequestsPaid: newPosts));
-      case RequestStatusTypes.waitingPayment:
-        return emit(state.copyWith(sentRequestsWaitingPayment: newPosts));
       case RequestStatusTypes.approved:
         return emit(state.copyWith(sentRequestsApproved: newPosts));
       case RequestStatusTypes.pending:
@@ -307,14 +288,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           );
           state.sentRequestsPaid.addAll(result.second);
           break;
-        case RequestStatusTypes.waitingPayment:
-          result = await _getRequest(
-            RequestTypes.sent,
-            LoanContractRequestStatus.WAITING_FOR_PAYMENT,
-            page: page,
-          );
-          state.sentRequestsWaitingPayment.addAll(result.second);
-          break;
         case RequestStatusTypes.approved:
           result = await _getRequest(
             RequestTypes.sent,
@@ -350,9 +323,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
       switch (event.requestStatusType) {
         case RequestStatusTypes.paid:
           return emit(state.copyWith(sentRequestsPaid: state.sentRequestsPaid));
-        case RequestStatusTypes.waitingPayment:
-          return emit(state.copyWith(
-              sentRequestsWaitingPayment: state.sentRequestsWaitingPayment));
         case RequestStatusTypes.approved:
           return emit(
               state.copyWith(sentRequestsApproved: state.sentRequestsApproved));
@@ -390,14 +360,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
           );
           state.receivedRequestsPaid.addAll(result.second);
           break;
-        case RequestStatusTypes.waitingPayment:
-          result = await _getRequest(
-            RequestTypes.received,
-            LoanContractRequestStatus.WAITING_FOR_PAYMENT,
-            page: page,
-          );
-          state.receivedRequestsWaitingPayment.addAll(result.second);
-          break;
         case RequestStatusTypes.approved:
           result = await _getRequest(
             RequestTypes.received,
@@ -434,10 +396,6 @@ class RequestBloc extends Bloc<RequestEvent, RequestState> {
         case RequestStatusTypes.paid:
           return emit(
               state.copyWith(receivedRequestsPaid: state.receivedRequestsPaid));
-        case RequestStatusTypes.waitingPayment:
-          return emit(state.copyWith(
-              receivedRequestsWaitingPayment:
-                  state.receivedRequestsWaitingPayment));
         case RequestStatusTypes.approved:
           return emit(state.copyWith(
               receivedRequestsApproved: state.receivedRequestsApproved));

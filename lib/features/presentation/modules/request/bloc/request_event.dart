@@ -7,7 +7,7 @@ sealed class RequestEvent extends Equatable {
   List<Object> get props => [];
 }
 
-enum RequestStatusTypes { paid, waitingPayment, approved, pending, rejected }
+enum RequestStatusTypes { paid, approved, pending, rejected }
 
 final class RefreshRequestEvent extends RequestEvent {
   final RequestTypes requestType;

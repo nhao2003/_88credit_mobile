@@ -6,7 +6,6 @@ import '../widgets/received/approved_received_request_tab.dart';
 import '../widgets/received/paid_received_request_tab.dart';
 import '../widgets/received/pending_received_request_tab.dart';
 import '../widgets/received/reject_received_request_tab.dart';
-import '../widgets/received/waiting_payment_received_request_tab.dart';
 
 class RequestReceivedTabScreen extends StatefulWidget {
   const RequestReceivedTabScreen({super.key});
@@ -53,12 +52,6 @@ class _RequestReceivedTabScreenState extends State<RequestReceivedTabScreen>
               SizedBox(
                 width: 100.wp / 4,
                 child: const Tab(
-                  text: "Chờ thanh toán",
-                ),
-              ),
-              SizedBox(
-                width: 100.wp / 4,
-                child: const Tab(
                   text: "Đã xác nhận",
                 ),
               ),
@@ -82,7 +75,6 @@ class _RequestReceivedTabScreenState extends State<RequestReceivedTabScreen>
               controller: _tabController,
               children: const [
                 KeepPageAlive(child: PaidReceivedRequestTab()),
-                KeepPageAlive(child: WaitingPaymentReceivedRequestTab()),
                 KeepPageAlive(child: ApprovedReceivedRequestTab()),
                 KeepPageAlive(child: PendingReceivedRequestTab()),
                 KeepPageAlive(child: RejectReceivedRequestTab()),

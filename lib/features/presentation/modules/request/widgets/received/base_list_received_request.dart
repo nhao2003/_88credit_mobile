@@ -62,8 +62,6 @@ class _BaseListReceivedRequestsState extends State<BaseListReceivedRequests> {
     switch (widget.requestType) {
       case RequestStatusTypes.paid:
         return state.receivedRequestsPaid;
-      case RequestStatusTypes.waitingPayment:
-        return state.receivedRequestsWaitingPayment;
       case RequestStatusTypes.approved:
         return state.receivedRequestsApproved;
       case RequestStatusTypes.pending:

@@ -47,8 +47,6 @@ class RequestItem extends StatelessWidget {
     switch (request.status!) {
       case LoanContractRequestStatus.PAID:
         return "Đã thanh toán từ ${request.updatedAt!.toDMYString()}";
-      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
-        return "Chờ thanh toán từ ${request.updatedAt!.toDMYString()}";
       case LoanContractRequestStatus.APPROVED:
         return "Đã xác nhận từ ${request.updatedAt!.toDMYString()}";
       case LoanContractRequestStatus.PENDING:
@@ -64,10 +62,8 @@ class RequestItem extends StatelessWidget {
     switch (request.status!) {
       case LoanContractRequestStatus.PAID:
         return AppColors.green800;
-      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
-        return AppColors.blue800;
       case LoanContractRequestStatus.APPROVED:
-        return AppColors.grey700;
+        return AppColors.blue800;
       case LoanContractRequestStatus.REJECTED:
         return AppColors.red800;
       case LoanContractRequestStatus.CANCELLED:
@@ -81,10 +77,8 @@ class RequestItem extends StatelessWidget {
     switch (request.status!) {
       case LoanContractRequestStatus.PAID:
         return AppColors.green100;
-      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
-        return AppColors.blue100;
       case LoanContractRequestStatus.APPROVED:
-        return AppColors.grey100;
+        return AppColors.blue100;
       case LoanContractRequestStatus.REJECTED:
         return AppColors.red100;
       case LoanContractRequestStatus.CANCELLED:

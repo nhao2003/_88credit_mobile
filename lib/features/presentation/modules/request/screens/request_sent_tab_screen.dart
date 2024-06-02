@@ -6,7 +6,6 @@ import '../widgets/sent/approved_sent_request_tab.dart';
 import '../widgets/sent/pending_sent_request_tab.dart';
 import '../widgets/sent/reject_sent_request_tab.dart';
 import '../widgets/sent/paid_sent_request_tab.dart';
-import '../widgets/sent/waiting_payment_sent_request_tab.dart';
 
 class RequestSentTabScreen extends StatefulWidget {
   const RequestSentTabScreen({super.key});
@@ -52,12 +51,6 @@ class _RequestSentTabScreenState extends State<RequestSentTabScreen>
               SizedBox(
                 width: 100.wp / 4,
                 child: const Tab(
-                  text: "Chờ thanh toán",
-                ),
-              ),
-              SizedBox(
-                width: 100.wp / 4,
-                child: const Tab(
                   text: "Đã xác nhận",
                 ),
               ),
@@ -81,7 +74,6 @@ class _RequestSentTabScreenState extends State<RequestSentTabScreen>
               controller: _tabController,
               children: const [
                 KeepPageAlive(child: PaidSentRequestTab()),
-                KeepPageAlive(child: WaitingPaymentSentRequestTab()),
                 KeepPageAlive(child: ApprovedSentRequestTab()),
                 KeepPageAlive(child: PendingSentRequestTab()),
                 KeepPageAlive(child: RejectSentRequestTab()),

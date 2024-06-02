@@ -24,8 +24,6 @@ abstract class RequestRemoteDataSrc {
       int? page);
   Future<HttpResponse<Pair<int, List<LoanRequestModel>>>> getRequestsSent(
       int? page);
-  Future<HttpResponse<Pair<int, List<LoanRequestModel>>>>
-      getRequestsWaitingPayment(int? page);
   Future<HttpResponse<void>> createRequest(LoanRequestModel request);
   Future<HttpResponse<void>> confirmRequest(LoanRequestModel request);
   Future<HttpResponse<void>> rejectRequest(
@@ -283,28 +281,6 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
         LoanContractRequestStatus.PENDING.toString());
 
     queryBuilder.addQuery('senderId', Operation.equals, '\'$userId\'');
-
-    queryBuilder.addOrderBy('updatedAt', OrderBy.desc);
-
-    String url = '$apiUrl$kGetRequestEndpoint${queryBuilder.build()}';
-
-    return await DatabaseHelper().getRequests(url, client);
-  }
-
-  @override
-  Future<HttpResponse<Pair<int, List<LoanRequestModel>>>>
-      getRequestsWaitingPayment(int? page) async {
-    // get userId
-    AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
-    String? userId = localDataSrc.getUserIdFromToken();
-
-    int pageQuery = page ?? 1;
-    QueryBuilder queryBuilder = QueryBuilder();
-    queryBuilder.addPage(pageQuery);
-    queryBuilder.addQuery('status', Operation.inValue,
-        LoanContractRequestStatus.WAITING_FOR_PAYMENT.toString());
-
-    queryBuilder.addQuery('receiverId', Operation.equals, '\'$userId\'');
 
     queryBuilder.addOrderBy('updatedAt', OrderBy.desc);
 

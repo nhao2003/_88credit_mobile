@@ -4,7 +4,6 @@ enum LoanContractRequestStatus {
   APPROVED,
   REJECTED,
   CANCELLED,
-  WAITING_FOR_PAYMENT,
   PAID;
 
   static LoanContractRequestStatus parse(String value) {
@@ -26,8 +25,6 @@ enum LoanContractRequestStatus {
         return "PENDING";
       case LoanContractRequestStatus.REJECTED:
         return "REJECTED";
-      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
-        return "WAITING_FOR_PAYMENT";
       case LoanContractRequestStatus.PAID:
         return "PAID";
     }
@@ -43,8 +40,6 @@ enum LoanContractRequestStatus {
         return "Đang chờ";
       case LoanContractRequestStatus.REJECTED:
         return "Đã từ chối";
-      case LoanContractRequestStatus.WAITING_FOR_PAYMENT:
-        return "Đang chờ thanh toán";
       case LoanContractRequestStatus.PAID:
         return "Đã thanh toán";
     }
@@ -57,7 +52,6 @@ enum LoanContractRequestStatus {
       LoanContractRequestStatus.CANCELLED: "Đã hủy",
       LoanContractRequestStatus.PENDING: "Đang chờ",
       LoanContractRequestStatus.REJECTED: "Đã từ chối",
-      LoanContractRequestStatus.WAITING_FOR_PAYMENT: "Đang chờ thanh toán",
       LoanContractRequestStatus.PAID: "Đã thanh toán",
     };
   }
