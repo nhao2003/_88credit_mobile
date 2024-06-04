@@ -35,9 +35,15 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
 
     on<UploadImageFile>((event, emit) {
       if (event.typeImage) {
-        emit(state.copyWith(urlImageCardFront: event.file.path));
+        emit(state.copyWith(
+          urlImageCardFront: event.file.path,
+          uploadCardStatus: UploadCardStatus.success,
+        ));
       } else {
-        emit(state.copyWith(urlImageCardBack: event.file.path));
+        emit(state.copyWith(
+          urlImageCardBack: event.file.path,
+          uploadCardStatus: UploadCardStatus.success,
+        ));
       }
     });
 
