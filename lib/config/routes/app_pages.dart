@@ -16,6 +16,9 @@ import 'package:_88credit_mobile/features/presentation/modules/request_detail.da
 import 'package:_88credit_mobile/features/presentation/modules/splash/splash_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/user_profile/bloc/user_profile_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/user_profile/screens/user_profile_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/verification/bloc/verification_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/verification/screens/verification_card_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/verification/screens/verification_portrait_screen.dart';
 import '../../core/resources/base_app_pages.dart';
 import '../../features/presentation/modules/blogs/screens/blog_screen.dart';
 import '../../features/presentation/modules/chat_bot/bloc/chat_bot_bloc.dart';
@@ -44,6 +47,9 @@ import '../../features/presentation/modules/create_post/screens/create_post_scre
 import '../../features/presentation/modules/login/bloc/auth_bloc.dart';
 import '../../features/presentation/modules/login/screens/update_info_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../features/presentation/modules/verification/screens/verification_info_screen.dart';
+import '../../features/presentation/modules/verification/screens/verification_reject_screen.dart';
+import '../../features/presentation/modules/verification/screens/verification_waiting_screen.dart';
 import 'app_routes.dart';
 
 part 'app_pages.main.dart';

@@ -166,6 +166,7 @@ dependencies:
 
   # stepper
   easy_stepper: ^0.7.2
+  lottie: ^2.7.0
 
 dev_dependencies:
   flutter_test:

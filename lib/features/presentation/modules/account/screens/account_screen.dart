@@ -97,27 +97,29 @@ class AccountScreen extends StatelessWidget {
                 },
               ),
               // favorite
-              // ListTile(
-              //   contentPadding:
-              //       const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
-              //   title: Text(
-              //     'Đã lưu',
-              //     style: AppTextStyles.medium16,
-              //   ),
-              //   onTap: () {},
-              //   leading: const Padding(
-              //     padding: EdgeInsets.symmetric(horizontal: 5),
-              //     child: Icon(
-              //       Icons.favorite,
-              //       color: AppColors.red,
-              //       size: 25,
-              //     ),
-              //   ),
-              //   trailing: const Icon(
-              //     Icons.arrow_forward_ios_rounded,
-              //     size: 18,
-              //   ),
-              // ),
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                title: Text(
+                  'Xác thực danh tính',
+                  style: AppTextStyles.medium16,
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(AppRoutes.verificationCard);
+                },
+                leading: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Icon(
+                    Icons.admin_panel_settings_outlined,
+                    color: AppColors.black,
+                    size: 25,
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                ),
+              ),
               // purchase
               BlocBuilder<AccountBloc, AccountState>(
                 builder: (context, state) {

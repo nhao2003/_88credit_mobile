@@ -71,7 +71,7 @@ class MyAppPages extends AppPages {
       ),
       PageEntity(
         path: AppRoutes.createPost,
-        page: CreatePostScreen(),
+        page: const CreatePostScreen(),
         bloc: BlocProvider(create: (context) => CreatePostBloc()),
       ),
       PageEntity(
@@ -143,6 +143,31 @@ class MyAppPages extends AppPages {
         path: AppRoutes.callVideo,
         page: const CallVideoPage(),
         bloc: BlocProvider(create: (context) => CallBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.verificationCard,
+        page: const VerificationCardScreen(),
+        bloc: BlocProvider(create: (context) => VerificationBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.verificationInfo,
+        page: const VerificationInfoScreen(),
+        bloc: BlocProvider(create: (context) => VerificationBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.verificationPortrait,
+        page: const VerificationPortraitScreen(),
+        bloc: BlocProvider(create: (context) => VerificationBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.verificationReject,
+        page: const VerificationRejectScreen(),
+        bloc: BlocProvider(create: (context) => VerificationBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.verificationWaiting,
+        page: const VerificationWaitingScreen(),
+        bloc: BlocProvider(create: (context) => VerificationBloc()),
       ),
     ];
   }

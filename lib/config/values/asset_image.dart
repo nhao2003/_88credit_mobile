@@ -23,6 +23,13 @@ class Assets {
   static const String addVideo = '$imagePath/add-video.png';
   static const String notFound = '$imagePath/no-results.png';
   static const String barcodeScran = '$imagePath/barcode-scan.png';
+  static const String portrait = '$imagePath/portrait.png';
+  static const String cccdFront = '$imagePath/cccd_front.png';
+  static const String cccdBack = '$imagePath/cccd_back.png';
+  static const String cmndFront = '$imagePath/cmnd_front.png';
+  static const String cmndBack = '$imagePath/cmnd_back.png';
+  static const String hochieuFront = '$imagePath/hochieu_front.png';
+  static const String hochieuBack = '$imagePath/hochieu_back.png';
 
   // icon
   static const String home = '$iconPath/home (1).png';
@@ -68,6 +75,7 @@ class Assets {
   static const String lightning = '$iconPath/lightning.png';
   static const String slider = '$iconPath/slider.png';
   static const String star = '$iconPath/star.png';
+  static const String idCard = '$iconPath/id-card.png';
 
   static const String circleDown = '$iconPath/Arrow_Circle_Down.png';
   static const String circleUp = '$iconPath/Arrow_Circle_Up.png';
@@ -77,4 +85,6 @@ class Assets {
   static const String purchaseFailed = '$ilustrationPath/purchase-fail.png';
   static const String purchaseSuccess = '$ilustrationPath/purchase-success.png';
   static const String emptyChat = '$ilustrationPath/empty_chat.png';
+  static const String cardReject = '$ilustrationPath/card-rejected_loti.json';
+  static const String waiting = '$ilustrationPath/waiting_loti.json';
 }
