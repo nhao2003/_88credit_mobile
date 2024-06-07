@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:_88credit_mobile/features/domain/enums/post_status.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../../core/errors/exceptions.dart';
@@ -16,7 +17,7 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<PostModel>>>> getAllPosts(
       String? userId, PostTypes? postTypes, int? page);
   Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsStatus(
-      String status, int? page);
+      PostStatus type, int? page);
   Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsHided(int? page);
   Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsExpired(int? page);
 
@@ -43,10 +44,10 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
     if (postTypes != null) {
       queryBuilder.addQuery(
-          'post_type', Operation.equals, '\'${postTypes.toString()}\'');
+          'type', Operation.equals, '\'${postTypes.toString()}\'');
     }
 
-    queryBuilder.addOrderBy('updated_at', OrderBy.desc);
+    queryBuilder.addOrderBy('updatedAt', OrderBy.desc);
 
     url += queryBuilder.build();
     return await DatabaseHelper().getPosts(url, client);
@@ -54,12 +55,12 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<Pair<int, List<PostModel>>>> getPostsStatus(
-      String status, int? page) async {
+      PostStatus type, int? page) async {
     int pageQuery = page ?? 1;
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
-    queryBuilder.addQuery('post_status', Operation.equals, '\'$status\'');
-    queryBuilder.addOrderBy('updated_at', OrderBy.desc);
+    queryBuilder.addQuery('status', Operation.equals, '\'${type.toString()}\'');
+    queryBuilder.addOrderBy('updatedAt', OrderBy.desc);
 
     String url = '$apiUrl$kGetPostEndpoint${queryBuilder.build()}';
 
@@ -73,7 +74,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
-    queryBuilder.addOrderBy('updated_at', OrderBy.desc);
+    queryBuilder.addOrderBy('updatedAt', OrderBy.desc);
 
     String url = '$apiUrl$kGetPostEndpoint${queryBuilder.build()}';
 

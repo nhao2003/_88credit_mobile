@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -13,6 +15,7 @@ class DatabaseHelper {
   Future<HttpResponse<Pair<int, List<PostModel>>>> getPosts(
       String url, Dio client) async {
     try {
+      print("Get Posts url: $url");
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -26,8 +29,8 @@ class DatabaseHelper {
       );
 
       // final response = await client.get(url);
-      print('${response.statusCode} : ${response.data["message"].toString()}');
-      if (response.statusCode != 200) {
+      print('Code: ${response.statusCode}');
+      if (response.statusCode != HttpStatus.ok) {
         print('${response.statusCode} : ${response.data["data"].toString()}');
         throw ApiException(
           message: response.data,
@@ -72,7 +75,7 @@ class DatabaseHelper {
             sendTimeout: const Duration(seconds: 10),
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.ok) {
         print('${response.statusCode} : ${response.data["result"].toString()}');
         throw ApiException(
           message: response.data,
@@ -116,7 +119,7 @@ class DatabaseHelper {
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
       //print('${response.statusCode} : ${response.data["message"].toString()}');
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.ok) {
         //print('${response.statusCode} : ${response.data["result"].toString()}');
         throw ApiException(
           message: response.data,

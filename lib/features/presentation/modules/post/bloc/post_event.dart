@@ -7,10 +7,6 @@ sealed class PostEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class GetLendingPostEnvent extends PostEvent {}
-
-final class GetBorrowingPostEnvent extends PostEvent {}
-
 final class RefreshPostEnvent extends PostEvent {
   final PostTypes postType;
 

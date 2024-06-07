@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:_88credit_mobile/features/domain/enums/post_status.dart';
 import 'package:dio/dio.dart';
 import '../../../core/resources/data_state.dart';
 import '../../../core/resources/pair.dart';
@@ -77,7 +78,8 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<Pair<int, List<PostEntity>>>> getPostsApproved(
       int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("approved", page);
+      final httpResponse =
+          await _dataSrc.getPostsStatus(PostStatus.approved, page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -119,7 +121,8 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<Pair<int, List<PostEntity>>>> getPostsPending(
       int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("pending", page);
+      final httpResponse =
+          await _dataSrc.getPostsStatus(PostStatus.pending, page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -140,7 +143,8 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<Pair<int, List<PostEntity>>>> getPostsRejected(
       int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("rejected", page);
+      final httpResponse =
+          await _dataSrc.getPostsStatus(PostStatus.rejected, page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
