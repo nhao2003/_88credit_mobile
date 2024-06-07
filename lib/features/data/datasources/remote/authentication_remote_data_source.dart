@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import '../../../../config/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -52,7 +54,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
         url,
         data: {'email': email, 'password': password},
       );
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.created) {
         throw ApiException(
           message: response.data,
           statusCode: response.statusCode!,
