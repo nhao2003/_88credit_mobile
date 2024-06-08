@@ -1,6 +1,7 @@
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../config/constants/constants.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
@@ -43,6 +44,70 @@ class BorrowingForm extends StatelessWidget {
     super.key,
   });
 
+  String? validateMoney(String? value) {
+    try {
+      if (value!.trim().isEmpty) return 'Số tiền không được rỗng';
+      // parse double
+      final doubleValue = double.tryParse(value.trim());
+      // check 0 < value < 1000000000
+      if (doubleValue != null) {
+        if (doubleValue <= minMoney) return 'Số tiền phải lớn hơn $minMoney';
+        if (doubleValue >= maxMoney) {
+          return 'Số tiền phải nhỏ hơn 1 tỷ';
+        }
+      } else {
+        return 'Số tiền không hợp lệ';
+      }
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  String? validateInterestRate(String? value) {
+    try {
+      if (value!.trim().isEmpty) return 'Lãi suất không được rỗng';
+      // parse double
+      final doubleValue = double.tryParse(value.trim());
+      // check 0 < value < 1.66
+      if (doubleValue != null) {
+        if (doubleValue <= minInterestRate) {
+          return 'Lãi suất phải lớn hơn $minInterestRate%';
+        }
+        if (doubleValue >= maxInterestRate) {
+          return 'Lãi suất phải nhỏ hơn $maxInterestRate%';
+        }
+      } else {
+        return 'Lãi suất không hợp lệ';
+      }
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  String? validateTenureMonths(String? value) {
+    try {
+      if (value!.trim().isEmpty) return 'Kỳ hạn không được rỗng';
+      // parse double
+      final doubleValue = double.tryParse(value.trim());
+      // check 0 < value < 1000000000
+      if (doubleValue != null) {
+        if (doubleValue <= minTenureMonths) {
+          return 'Kỳ hạn phải lớn hơn $minTenureMonths';
+        }
+        if (doubleValue >= maxTenureMonths) {
+          return 'Kỳ hạn phải nhỏ hơn $maxTenureMonths';
+        }
+      } else {
+        return 'Kỳ hạn không hợp lệ';
+      }
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -74,12 +139,7 @@ class BorrowingForm extends StatelessWidget {
                 controller: borrowingLoanAmountTextController,
                 labelText: 'Số tiền mong muốn (VNĐ)',
                 hintText: "Nhập số tiền mong muốn",
-                onSaved: (value) {
-                  // borrowingLoanAmount = double.parse(value!.trim());
-                },
-                validator: (value) => (value!.trim().isNotEmpty)
-                    ? null
-                    : 'Số tiền không được rỗng',
+                validator: validateMoney,
               ),
               const SizedBox(height: 10),
               Text(
@@ -94,18 +154,9 @@ class BorrowingForm extends StatelessWidget {
                 labelText: 'Lãi suất mong muốn',
                 hintText: "Nhập lãi suất mong muốn",
                 controller: borrowingInterestRateTextController,
-                onSaved: (value) {
-                  try {
-                    // borrowingInterestRate = double.parse(value!.trim());
-                  } catch (e) {
-                    print(e);
-                  }
-                },
                 timeValue: timeValue,
                 onChangeTimeValue: setTimeValue,
-                validator: (value) => (value!.trim().isNotEmpty)
-                    ? null
-                    : 'Lãi suất không được rỗng',
+                validator: validateInterestRate,
               ),
               const SizedBox(height: 10),
               Text(
@@ -120,18 +171,9 @@ class BorrowingForm extends StatelessWidget {
                 labelText: 'Lãi suất quá hạn',
                 hintText: "Nhập lãi suất quá hạn",
                 controller: borrowingOverdueInterestRateTextController,
-                onSaved: (value) {
-                  try {
-                    // borrowingOverdueInterestRate = double.parse(value!.trim());
-                  } catch (e) {
-                    print(e);
-                  }
-                },
                 timeValue: timeValue,
                 onChangeTimeValue: setTimeValue,
-                validator: (value) => (value!.trim().isNotEmpty)
-                    ? null
-                    : 'Lãi suất không được rỗng',
+                validator: validateInterestRate,
               ),
               const SizedBox(height: 10),
               Text(
@@ -146,18 +188,9 @@ class BorrowingForm extends StatelessWidget {
                 labelText: 'Kỳ hạn mong muốn',
                 hintText: "Nhập kỳ hạn mong muốn",
                 controller: borrowingTenureMonthsTextController,
-                onSaved: (value) {
-                  try {
-                    // borrowingTenureMonths = int.parse(value!.trim());
-                  } catch (e) {
-                    print(e);
-                  }
-                },
                 timeValue: timeValue,
                 onChangeTimeValue: setTimeValue,
-                validator: (value) => (value!.trim().isNotEmpty)
-                    ? null
-                    : 'Kỳ hạn không được rỗng',
+                validator: validateTenureMonths,
               ),
               const SizedBox(height: 10),
               Text(

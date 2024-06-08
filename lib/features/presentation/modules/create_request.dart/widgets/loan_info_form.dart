@@ -3,6 +3,7 @@ import 'package:_88credit_mobile/features/domain/enums/loan_reason_types.dart';
 import 'package:_88credit_mobile/features/presentation/modules/create_post/widgets/base_row_text_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../config/constants/constants.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../globalwidgets/base_dropdown_button.dart';
@@ -38,10 +39,74 @@ class LoanInfoForm extends StatelessWidget {
   final FocusNode _timeFocusNode = FocusNode();
   final FocusNode _loanReasonFocusNode = FocusNode();
 
-  List<String> timeTypes = ["Tháng", "Năm"];
+  List<String> timeTypes = ["Tháng"];
   String timeValue = 'Tháng';
   void setTimeValue(String? value) {
     timeValue = value!;
+  }
+
+  String? validateMoney(String? value) {
+    try {
+      if (value!.trim().isEmpty) return 'Số tiền không được rỗng';
+      // parse double
+      final doubleValue = double.tryParse(value.trim());
+      // check 0 < value < 1000000000
+      if (doubleValue != null) {
+        if (doubleValue <= minMoney) return 'Số tiền phải lớn hơn $minMoney';
+        if (doubleValue >= maxMoney) {
+          return 'Số tiền phải nhỏ hơn 1 tỷ';
+        }
+      } else {
+        return 'Số tiền không hợp lệ';
+      }
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  String? validateInterestRate(String? value) {
+    try {
+      if (value!.trim().isEmpty) return 'Lãi suất không được rỗng';
+      // parse double
+      final doubleValue = double.tryParse(value.trim());
+      // check 0 < value < 1.66
+      if (doubleValue != null) {
+        if (doubleValue <= minInterestRate) {
+          return 'Lãi suất phải lớn hơn $minInterestRate%';
+        }
+        if (doubleValue >= maxInterestRate) {
+          return 'Lãi suất phải nhỏ hơn $maxInterestRate%';
+        }
+      } else {
+        return 'Lãi suất không hợp lệ';
+      }
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
+  }
+
+  String? validateTenureMonths(String? value) {
+    try {
+      if (value!.trim().isEmpty) return 'Kỳ hạn không được rỗng';
+      // parse double
+      final doubleValue = double.tryParse(value.trim());
+      // check 0 < value < 1000000000
+      if (doubleValue != null) {
+        if (doubleValue <= minTenureMonths) {
+          return 'Kỳ hạn phải lớn hơn $minTenureMonths';
+        }
+        if (doubleValue >= maxTenureMonths) {
+          return 'Kỳ hạn phải nhỏ hơn $maxTenureMonths';
+        }
+      } else {
+        return 'Kỳ hạn không hợp lệ';
+      }
+      return null;
+    } catch (e) {
+      return e.toString();
+    }
   }
 
   @override
@@ -75,11 +140,8 @@ class LoanInfoForm extends StatelessWidget {
               controller: discriptionTextController,
               labelText: 'Mô tả yêu cầu vay',
               hintText: 'Mô tả yêu cầu vay',
-              onSaved: (value) {
-                // discription = value!.trim();
-              },
               validator: (value) =>
-                  (value!.trim().isNotEmpty) ? null : 'Yêu cầu không được rỗng',
+                  (value!.trim().isNotEmpty) ? null : 'Mô tả không được rỗng',
             ),
             const SizedBox(height: 5),
             Text(
@@ -96,15 +158,7 @@ class LoanInfoForm extends StatelessWidget {
               controller: loanAmountTextController,
               labelText: 'Số tiền cần vay (VNĐ)',
               hintText: "Nhập số tiền mong muốn",
-              onSaved: (value) {
-                // try {
-                //   loanAmount = double.parse(value!.trim());
-                // } catch (e) {
-                //   tenureMonths = 0;
-                // }
-              },
-              validator: (value) =>
-                  (value!.trim().isNotEmpty) ? null : 'Số tiền không được rỗng',
+              validator: validateMoney,
             ),
             const SizedBox(height: 10),
             Text(
@@ -119,18 +173,9 @@ class LoanInfoForm extends StatelessWidget {
               labelText: 'Lãi suất mong muốn',
               hintText: "Nhập lãi suất mong muốn",
               controller: interestRateTextController,
-              onSaved: (value) {
-                // try {
-                //   interestRate = double.parse(value!.trim());
-                // } catch (e) {
-                //   tenureMonths = 0;
-                // }
-              },
               timeValue: timeValue,
               onChangeTimeValue: setTimeValue,
-              validator: (value) => (value!.trim().isNotEmpty)
-                  ? null
-                  : 'Lãi suất không được rỗng',
+              validator: validateInterestRate,
             ),
             const SizedBox(height: 10),
             Text(
@@ -145,18 +190,9 @@ class LoanInfoForm extends StatelessWidget {
               labelText: 'Lãi suất quá hạn',
               hintText: "Nhập lãi suất quá hạn",
               controller: overdueInterestRateTextController,
-              onSaved: (value) {
-                // try {
-                //   overdueInterestRate = double.parse(value!.trim());
-                // } catch (e) {
-                //   tenureMonths = 0;
-                // }
-              },
               timeValue: timeValue,
               onChangeTimeValue: setTimeValue,
-              validator: (value) => (value!.trim().isNotEmpty)
-                  ? null
-                  : 'Lãi suất quá hạn không được rỗng',
+              validator: validateInterestRate,
             ),
             const SizedBox(height: 10),
             Text(
@@ -171,17 +207,9 @@ class LoanInfoForm extends StatelessWidget {
               labelText: 'Kỳ hạn mong muốn',
               hintText: "Nhập kỳ hạn mong muốn",
               controller: tenureMonthsTextController,
-              onSaved: (value) {
-                // try {
-                //   tenureMonths = int.parse(value!.trim());
-                // } catch (e) {
-                //   tenureMonths = 0;
-                // }
-              },
               timeValue: timeValue,
               onChangeTimeValue: setTimeValue,
-              validator: (value) =>
-                  (value!.trim().isNotEmpty) ? null : 'Kỳ hạn không được rỗng',
+              validator: validateTenureMonths,
             ),
             const SizedBox(height: 10),
             Text(

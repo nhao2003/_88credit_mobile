@@ -91,9 +91,7 @@ class LendingForm extends StatelessWidget {
       return e.toString();
     }
   }
-
-  // #region validateTenureMonths
-
+  
   String? validateTenureMonths(String? value) {
     try {
       if (value!.trim().isEmpty) return 'Kỳ hạn không được rỗng';
