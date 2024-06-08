@@ -10,11 +10,10 @@ class MediaRepositoryImpl implements MediaRepository {
   MediaRepositoryImpl(this.mediaDataSource);
 
   @override
-  Future<DataState<List<String>>> uploadMedia(
-      List<File> media, String typeMedia) async {
+  Future<DataState<String>> uploadMedia(File media, String? folderName) async {
     try {
-      final response = await mediaDataSource.uploadMedia(media, typeMedia);
-      if (response.response.statusCode == HttpStatus.ok) {
+      final response = await mediaDataSource.uploadMedia(media, folderName);
+      if (response.response.statusCode == HttpStatus.created) {
         return DataSuccess(response.data);
       } else {
         return DataFailed(DioException(

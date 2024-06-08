@@ -12,7 +12,7 @@ final class CreatePostState extends Equatable {
   final String failureString;
 
   const CreatePostState({
-    this.postType = PostTypes.lending,
+    this.postType = PostTypes.borrowing,
     this.status = CreatePostStatus.initial,
     this.photoController = true,
     this.photo = const [],

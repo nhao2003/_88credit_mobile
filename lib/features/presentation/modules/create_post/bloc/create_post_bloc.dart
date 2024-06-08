@@ -5,9 +5,10 @@ import 'package:_88credit_mobile/features/domain/usecases/post/create_post.dart'
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/resources/data_state.dart';
+import '../../../../../core/resources/pair.dart';
 import '../../../../../di/injection_container.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
-import '../../../../domain/usecases/media/upload_images.dart';
+import '../../../../domain/usecases/media/upload_file.dart';
 part 'create_post_event.dart';
 part 'create_post_state.dart';
 
@@ -32,6 +33,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       emit(state.copyWith(status: CreatePostStatus.loading));
       // upload images
       List<String> images = await _uploadImages();
+      print(images);
       // create post entity
       PostEntity postEntity = createPostEntity(event, images);
       // send post
@@ -86,16 +88,19 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   }
 
   Future<List<String>> _uploadImages() async {
-    UploadImagesUseCase uploadImagessUseCase = sl<UploadImagesUseCase>();
+    UploadFileUseCase uploadUsecase = sl<UploadFileUseCase>();
     if (state.photo.isEmpty) {
       return [];
     }
-    final dataState = await uploadImagessUseCase(params: state.photo);
-    if (dataState is DataSuccess) {
-      return dataState.data!;
-    } else {
-      return [];
+    // upload tung file
+    List<String> images = [];
+    for (var file in state.photo) {
+      final dataState = await uploadUsecase(params: Pair(file, "post"));
+      if (dataState is DataSuccess) {
+        images.add(dataState.data!);
+      }
     }
+    return images;
   }
 
   PostEntity createPostEntity(SendPostEvent event, List<String> images) {

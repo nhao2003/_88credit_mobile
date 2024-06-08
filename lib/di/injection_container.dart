@@ -45,8 +45,7 @@ import '../features/domain/usecases/contract/get_loan_requests.dart';
 import '../features/domain/usecases/contract/get_received_requests_status.dart';
 import '../features/domain/usecases/contract/get_sent_requests_status.dart';
 import '../features/domain/usecases/contract/reject_request.dart';
-import '../features/domain/usecases/media/upload_images.dart';
-import '../features/domain/usecases/media/upload_videos.dart';
+import '../features/domain/usecases/media/upload_file.dart';
 import '../features/domain/usecases/post/create_post.dart';
 import '../features/domain/usecases/post/get_posts.dart';
 

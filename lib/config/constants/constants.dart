@@ -1,6 +1,6 @@
-const ipMobile = "192.168.1.10";
+const ipMobile = "192.168.1.85";
 const ipLocal = "172.17.15.94";
-const isIPMobile = false;
+const isIPMobile = true;
 const ipConfig = isIPMobile ? ipMobile : ipLocal;
 
 const String apiDevUrl = "http://$ipConfig";
@@ -42,3 +42,12 @@ const String kGetBankEndpoint = '/bank';
 const String kGetBankCardEndpoint = '/bank-card';
 const String kGetPrimaryBankCardEndpoint = '/bank-card/primary';
 const String kGetMarkPrimaryEndpoint = '/bank-card/:id/primary';
+
+const String kUploadMediaEndpoint = '/storage/upload';
+
+const minMoney = 1000;
+const maxMoney = 1000000000;
+const minInterestRate = 0.1;
+const maxInterestRate = 1.66;
+const minTenureMonths = 1;
+const maxTenureMonths = 24;

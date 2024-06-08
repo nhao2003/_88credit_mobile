@@ -206,14 +206,8 @@ Future _initMedia() async {
       sl<MediaRemoteDataSource>(),
     ),
   );
-  sl.registerSingleton<UploadImagesUseCase>(
-    UploadImagesUseCase(
-      sl<MediaRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<UploadVideosUseCase>(
-    UploadVideosUseCase(
+  sl.registerSingleton<UploadFileUseCase>(
+    UploadFileUseCase(
       sl<MediaRepository>(),
     ),
   );

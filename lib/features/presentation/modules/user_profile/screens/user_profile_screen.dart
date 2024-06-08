@@ -217,7 +217,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         SizedBox(
                           width: 80.wp,
                           child: Text(
-                            user.address!.getDetailAddress(),
+                            user.address ?? "Chưa cập nhật địa chỉ",
                             style: AppTextStyles.medium14
                                 .colorEx(AppColors.grey500),
                           ),

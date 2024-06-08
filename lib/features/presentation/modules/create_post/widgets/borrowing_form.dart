@@ -26,7 +26,7 @@ class BorrowingForm extends StatelessWidget {
   final TextEditingController borrowingTenureMonthsTextController;
   final TextEditingController borrowingLoanReasonTextController;
 
-  final List<String> timeTypes = ["Tháng", "Năm"];
+  final List<String> timeTypes = ["Tháng"];
   String timeValue = 'Tháng';
   void setTimeValue(String? value) {
     timeValue = value!;

@@ -11,10 +11,10 @@ class BaseRowTextDropdown extends StatelessWidget {
     required this.labelText,
     required this.hintText,
     required this.controller,
-    required this.onSaved,
     required this.timeValue,
     required this.onChangeTimeValue,
     this.validator,
+    this.onSaved,
     super.key,
   });
 
@@ -24,7 +24,7 @@ class BaseRowTextDropdown extends StatelessWidget {
   final String labelText;
   final String hintText;
   final TextEditingController? controller;
-  final void Function(String?) onSaved;
+  final void Function(String?)? onSaved;
   final String timeValue;
   final void Function(String?) onChangeTimeValue;
   final String? Function(String?)? validator;

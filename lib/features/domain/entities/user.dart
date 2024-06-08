@@ -12,7 +12,7 @@ class UserEntity extends Equatable {
   final bool? gender;
   final String? dob;
   final String? phone;
-  final AddressEntity? address;
+  final String? address;
   final UserStatus? status;
   final bool? isIdentityVerified;
   final Role? role;
@@ -53,7 +53,7 @@ class UserEntity extends Equatable {
     bool? isIdentityVerified,
     Role? role,
     String? email,
-    AddressEntity? address,
+    String? address,
     String? firstName,
     String? lastName,
     bool? gender,
@@ -94,7 +94,7 @@ class UserEntity extends Equatable {
   //     isIdentityVerified: json['is_identity_verified'] ?? false,
   //     role: Role.parse(json['role'] ?? ""),
   //     email: json['email'] ?? "",
-  //     address: AddressEntity.fromJson(json['address'] ?? {}),
+  //     address: String.fromJson(json['address'] ?? {}),
   //     firstName: json['first_name'] ?? "",
   //     lastName: json['last_name'] ?? "",
   //     gender: json['gender'] ?? false,

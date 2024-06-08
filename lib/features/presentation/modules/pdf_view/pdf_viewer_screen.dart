@@ -33,7 +33,7 @@ class PdfViewerScreen extends StatelessWidget {
         content.replaceAll('{lender_id_card_issued_by}', 'Ủy ban nhân dân');
     content = content.replaceAll('{lender_id_card_issued_at}', '01/01/2020');
     content = content.replaceAll('{lender_permanent_residence}',
-        contract.lender!.address!.getDetailAddress());
+        contract.lender!.address ?? "Hồ Chí Minh");
     content =
         content.replaceAll('{lender_phone_number}', contract.lender!.phone!);
     content = content.replaceAll(
@@ -51,7 +51,7 @@ class PdfViewerScreen extends StatelessWidget {
         content.replaceAll('{borrower_id_card_issued_by}', 'Ủy ban nhân dân');
     content = content.replaceAll('{borrower_id_card_issued_at}', '01/01/2020');
     content = content.replaceAll('{borrower_permanent_residence}',
-        contract.borrower!.address!.getDetailAddress());
+        contract.borrower!.address ?? "Hồ Chí Minh");
     content = content.replaceAll(
         '{borrower_phone_number}', contract.borrower!.phone!);
     content = content.replaceAll(

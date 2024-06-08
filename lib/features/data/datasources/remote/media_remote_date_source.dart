@@ -4,10 +4,11 @@ import 'package:http_parser/http_parser.dart';
 import 'package:retrofit/dio.dart';
 import '../../../../config/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
+import '../../../../di/injection_container.dart';
+import '../local/authentication_local_data_source.dart';
 
 abstract class MediaRemoteDataSource {
-  Future<HttpResponse<List<String>>> uploadMedia(
-      List<File> media, String typeMedia);
+  Future<HttpResponse<String>> uploadMedia(File media, String? folderName);
 }
 
 class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
@@ -32,57 +33,46 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
   }
 
   @override
-  Future<HttpResponse<List<String>>> uploadMedia(
-      List<File> media, String typeMedia) async {
-    const url = '$apiUrl/media/upload';
-    final response = Response(
-      statusCode: 200,
-      requestOptions: RequestOptions(path: url),
-      data: {
-        "result": {
-          "images": [
-            "https://www.crif.digital/media/0tinn5wz/lending-in-banking.jpg?anchor=center&mode=crop&width=706&height=382&rnd=133141855088470000"
-          ]
-        }
-      },
-    );
-    return HttpResponse([
-      "https://www.crif.digital/media/0tinn5wz/lending-in-banking.jpg?anchor=center&mode=crop&width=706&height=382&rnd=133141855088470000",
-    ], response);
-    // try {
-    //   final formData = FormData.fromMap({
-    //     "files": media
-    //         .map((e) => MultipartFile.fromFileSync(e.path,
-    //             contentType: getMediaType(e.path)))
-    //         .toList(),
-    //   });
+  Future<HttpResponse<String>> uploadMedia(
+      File media, String? folderName) async {
+    const url = '$apiUrl$kUploadMediaEndpoint';
+    print(url);
+    try {
+      // authen
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 1000);
+      }
 
-    //   final response = await client.post(
-    //     url,
-    //     data: formData,
-    //   );
-    //   if (response.statusCode != 200) {
-    //     throw DioException(
-    //       error: response.data,
-    //       response: response,
-    //       type: DioExceptionType.badResponse,
-    //       requestOptions: response.requestOptions,
-    //     );
-    //   }
+      String fileName = media.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(media.path, filename: fileName),
+        "folder": "/$folderName",
+      });
 
-    //   final data = response.data;
-    //   List<String> result = [];
-    //   if (typeMedia == "image") {
-    //     result = List<String>.from(data["result"]['images']);
-    //   } else {
-    //     result = List<String>.from(data["result"]['videos']);
-    //   }
+      final response = await client.post(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+        data: formData,
+      );
 
-    //   return HttpResponse(result, response);
-    // } on ApiException {
-    //   rethrow;
-    // } catch (error) {
-    //   throw ApiException(message: error.toString(), statusCode: 505);
-    // }
+      if (response.statusCode != HttpStatus.created) {
+        throw DioException(
+          error: response.data,
+          response: response,
+          type: DioExceptionType.badResponse,
+          requestOptions: response.requestOptions,
+        );
+      }
+
+      final data = response.data["data"];
+
+      return HttpResponse(data, response);
+    } catch (error) {
+      print(error);
+      throw ErrorHelpers.handleException(error);
+    }
   }
 }

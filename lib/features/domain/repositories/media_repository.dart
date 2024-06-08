@@ -3,6 +3,5 @@ import '../../../core/resources/data_state.dart';
 
 abstract class MediaRepository {
   // API remote
-  Future<DataState<List<String>>> uploadMedia(
-      List<File> media, String typeMedia);
+  Future<DataState<String>> uploadMedia(File media, String? folderName);
 }
