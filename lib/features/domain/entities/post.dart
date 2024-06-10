@@ -1,10 +1,10 @@
-import 'package:equatable/equatable.dart';
+import '../../../core/service/base_entity.dart';
 import '../enums/loan_reason_types.dart';
 import '../enums/post_status.dart';
 import '../enums/post_type.dart';
 import 'user.dart';
 
-class PostEntity extends Equatable {
+class PostEntity extends BaseEntity {
   final String? id;
   final String? userId;
   final UserEntity? user;
@@ -76,6 +76,7 @@ class PostEntity extends Equatable {
         updatedAt,
       ];
 
+  @override
   PostEntity copyWith({
     String? id,
     String? userId,
