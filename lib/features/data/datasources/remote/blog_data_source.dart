@@ -5,7 +5,7 @@ import '../../../../../core/errors/exceptions.dart';
 import '../../../../../core/utils/typedef.dart';
 import '../../../../config/constants/constants.dart';
 import '../../../../di/injection_container.dart';
-import '../../models/blog_model.dart';
+import '../../models/blog.dart';
 import '../local/authentication_local_data_source.dart';
 
 abstract class BlogRemoteDataSrc {

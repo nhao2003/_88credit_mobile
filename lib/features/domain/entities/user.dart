@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import '../enums/role.dart';
 import '../enums/user_status.dart';
-import 'address.dart';
 
 class UserEntity extends Equatable {
   final String? id;
@@ -86,30 +85,6 @@ class UserEntity extends Equatable {
       bannedUtil: bannedUtil ?? this.bannedUtil,
     );
   }
-
-  // factory UserEntity.fromJson(Map<String, dynamic> json) {
-  //   return UserEntity(
-  //     id: json['id'],
-  //     status: UserStatus.parse(json['status'] ?? ""),
-  //     isIdentityVerified: json['is_identity_verified'] ?? false,
-  //     role: Role.parse(json['role'] ?? ""),
-  //     email: json['email'] ?? "",
-  //     address: String.fromJson(json['address'] ?? {}),
-  //     firstName: json['first_name'] ?? "",
-  //     lastName: json['last_name'] ?? "",
-  //     gender: json['gender'] ?? false,
-  //     avatar: json['avatar'] ?? "",
-  //     dob: json['dob'] ?? "",
-  //     phone: json['phone'] ?? "",
-  //     banReason: json['ban_reason'] ?? "",
-  //     lastActiveAt: DateTime.parse(json['last_active_at'] ?? ""),
-  //     createdAt: DateTime.parse(json['created_at'] ?? ""),
-  //     updatedAt: json['updated_at'] != null
-  //         ? DateTime.parse(json['updated_at'])
-  //         : DateTime.now(),
-  //     bannedUtil: DateTime.tryParse(json['banned_util'] ?? ""),
-  //   );
-  // }
 
   String? getFullName() {
     if (firstName == "" || lastName == "") {
