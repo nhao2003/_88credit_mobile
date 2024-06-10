@@ -3,6 +3,9 @@ part of 'injection_container.dart';
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  final localDatabase =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+  sl.registerSingleton<AppDatabase>(localDatabase);
   // AppPages
   sl.registerSingleton<MyAppPages>(MyAppPages());
   // Dio
@@ -96,6 +99,7 @@ Future<void> _initBlog() async {
   sl.registerSingleton<BlogRepository>(
     BlogRepositoryImpl(
       sl<BlogRemoteDataSrc>(),
+      sl<AppDatabase>(),
     ),
   );
 

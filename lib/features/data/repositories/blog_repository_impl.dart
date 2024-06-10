@@ -1,14 +1,18 @@
 import 'dart:io';
+import 'package:_88credit_mobile/features/data/models/blog.dart';
 import 'package:dio/dio.dart';
 import '../../../core/resources/data_state.dart';
 import '../../domain/entities/blog.dart';
 import '../../domain/repositories/blog_repository.dart';
+import '../datasources/db/app_database.dart';
 import '../datasources/remote/blog_data_source.dart';
+import '../models/blog_local.dart';
 
 class BlogRepositoryImpl implements BlogRepository {
   final BlogRemoteDataSrc blogRemoteDataSrc;
+  final AppDatabase appDatabase;
 
-  BlogRepositoryImpl(this.blogRemoteDataSrc);
+  BlogRepositoryImpl(this.blogRemoteDataSrc, this.appDatabase);
 
   @override
   Future<DataState<List<BlogEntity>>> getAllBlogs() async {
@@ -28,5 +32,30 @@ class BlogRepositoryImpl implements BlogRepository {
     } on DioException catch (e) {
       return DataFailed(e);
     }
+  }
+
+  @override
+  Future<List<BlogModel>> getLocalBlogs() async {
+    final blogLocalModels = await appDatabase.blogDao.getAllBlogs();
+    return blogLocalModels
+        .map((blogLocalModel) => blogLocalModel.toBlogModel())
+        .toList();
+  }
+
+  @override
+  Future<void> insertLocalBlogs(List<BlogEntity> blogs) async {
+    final blogLocalModels = blogs.map((blogEntity) {
+      if (blogEntity is BlogModel) {
+        return BlogLocalModel.fromBlogModel(blogEntity);
+      } else {
+        throw Exception("Invalid type: Expected BlogModel");
+      }
+    }).toList();
+    await appDatabase.blogDao.insertBlogs(blogLocalModels);
+  }
+
+  @override
+  Future<void> deleteLocalBlogs() async {
+    await appDatabase.blogDao.deleteAllBlogs();
   }
 }

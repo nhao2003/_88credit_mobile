@@ -13,9 +13,15 @@ abstract class BlogDao {
   @insert
   Future<void> insertBlog(BlogLocalModel blog);
 
+  @insert
+  Future<void> insertBlogs(List<BlogLocalModel> blogs);
+
   @update
   Future<void> updateBlog(BlogLocalModel blog);
 
   @delete
   Future<void> deleteBlog(BlogLocalModel blog);
+
+  @Query('DELETE FROM BlogLocalModel')
+  Future<void> deleteAllBlogs();
 }

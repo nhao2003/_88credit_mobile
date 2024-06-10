@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../features/data/datasources/db/app_database.dart';
 import '../features/data/datasources/local/authentication_local_data_source.dart';
 import '../features/data/datasources/remote/authentication_remote_data_source.dart';
 import '../features/data/datasources/remote/bank_remote_data_source.dart';

@@ -199,9 +199,20 @@ class _$BlogDao extends BlogDao {
   }
 
   @override
+  Future<void> deleteAllBlogs() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM BlogLocalModel');
+  }
+
+  @override
   Future<void> insertBlog(BlogLocalModel blog) async {
     await _blogLocalModelInsertionAdapter.insert(
         blog, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<void> insertBlogs(List<BlogLocalModel> blogs) async {
+    await _blogLocalModelInsertionAdapter.insertList(
+        blogs, OnConflictStrategy.abort);
   }
 
   @override
