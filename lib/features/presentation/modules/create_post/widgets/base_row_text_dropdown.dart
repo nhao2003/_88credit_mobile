@@ -57,7 +57,7 @@ class BaseRowTextDropdown extends StatelessWidget {
             width: 25.wp,
             isSetSelectedItemBuilder: true,
             value: timeValue,
-            items: ["Tháng", "Năm"].map((value) {
+            items: ["Tháng"].map((value) {
               return DropdownMenuItem(
                 value: value,
                 child: Text(
