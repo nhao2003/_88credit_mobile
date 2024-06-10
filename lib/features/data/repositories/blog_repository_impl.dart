@@ -6,7 +6,7 @@ import '../../domain/entities/blog.dart';
 import '../../domain/repositories/blog_repository.dart';
 import '../datasources/db/app_database.dart';
 import '../datasources/remote/blog_data_source.dart';
-import '../models/blog_local.dart';
+import '../models/blog_adapter.dart';
 
 class BlogRepositoryImpl implements BlogRepository {
   final BlogRemoteDataSrc blogRemoteDataSrc;
@@ -38,7 +38,7 @@ class BlogRepositoryImpl implements BlogRepository {
   Future<List<BlogModel>> getLocalBlogs() async {
     final blogLocalModels = await appDatabase.blogDao.getAllBlogs();
     return blogLocalModels
-        .map((blogLocalModel) => blogLocalModel.toBlogModel())
+        .map((blogLocalModel) => BlogModelAdapter.toBlogModel(blogLocalModel))
         .toList();
   }
 
@@ -46,7 +46,7 @@ class BlogRepositoryImpl implements BlogRepository {
   Future<void> insertLocalBlogs(List<BlogEntity> blogs) async {
     final blogLocalModels = blogs.map((blogEntity) {
       if (blogEntity is BlogModel) {
-        return BlogLocalModel.fromBlogModel(blogEntity);
+        return BlogModelAdapter.fromBlogModel(blogEntity);
       } else {
         throw Exception("Invalid type: Expected BlogModel");
       }
