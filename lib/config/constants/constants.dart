@@ -1,6 +1,6 @@
 const ipMobile = "192.168.1.85";
-const ipLocal = "172.17.15.94";
-const isIPMobile = true;
+const ipLocal = "172.17.9.176";
+const isIPMobile = false;
 const ipConfig = isIPMobile ? ipMobile : ipLocal;
 
 const String apiDevUrl = "http://$ipConfig";

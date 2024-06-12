@@ -1,8 +1,14 @@
 import 'blog.dart';
 import 'blog_local.dart';
 
-class BlogModelAdapter {
-  static BlogLocalModel fromBlogModel(BlogModel model) {
+abstract class IBlogModelAdapter {
+  BlogLocalModel fromBlogModel(BlogModel model);
+  BlogModel toBlogModel(BlogLocalModel localModel);
+}
+
+class BlogModelAdapter implements IBlogModelAdapter {
+  @override
+  BlogLocalModel fromBlogModel(BlogModel model) {
     return BlogLocalModel(
       id: model.id,
       title: model.title,
@@ -15,7 +21,8 @@ class BlogModelAdapter {
     );
   }
 
-  static BlogModel toBlogModel(BlogLocalModel localModel) {
+  @override
+  BlogModel toBlogModel(BlogLocalModel localModel) {
     return BlogModel(
       id: localModel.id,
       title: localModel.title,

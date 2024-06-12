@@ -37,16 +37,18 @@ class BlogRepositoryImpl implements BlogRepository {
   @override
   Future<List<BlogModel>> getLocalBlogs() async {
     final blogLocalModels = await appDatabase.blogDao.getAllBlogs();
+    IBlogModelAdapter adapter = BlogModelAdapter();
     return blogLocalModels
-        .map((blogLocalModel) => BlogModelAdapter.toBlogModel(blogLocalModel))
+        .map((blogLocalModel) => adapter.toBlogModel(blogLocalModel))
         .toList();
   }
 
   @override
   Future<void> insertLocalBlogs(List<BlogEntity> blogs) async {
+    IBlogModelAdapter adapter = BlogModelAdapter();
     final blogLocalModels = blogs.map((blogEntity) {
       if (blogEntity is BlogModel) {
-        return BlogModelAdapter.fromBlogModel(blogEntity);
+        return adapter.fromBlogModel(blogEntity);
       } else {
         throw Exception("Invalid type: Expected BlogModel");
       }

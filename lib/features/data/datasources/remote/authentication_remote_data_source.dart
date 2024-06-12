@@ -49,11 +49,13 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       String email, String password) async {
     const url = '$apiUrl$kSignIn';
     try {
+      print(url);
       // Gửi yêu cầu đăng nhập
       final response = await client.post(
         url,
         data: {'email': email, 'password': password},
       );
+      print(response);
       if (response.statusCode != HttpStatus.created) {
         throw ApiException(
           message: response.data,
