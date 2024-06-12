@@ -1,5 +1,7 @@
 part of 'verification_bloc.dart';
 
+enum InitEkycStatus { loading, success, failure }
+
 enum UploadCardStatus { loading, success, failure }
 
 enum UploadPortraitstatus { loading, success, failure }
@@ -7,9 +9,12 @@ enum UploadPortraitstatus { loading, success, failure }
 enum UploadInfoStatus { loading, success, failure }
 
 final class VerificationState extends Equatable {
+  final InitEkycStatus initEkycStatus;
   final UploadCardStatus uploadCardStatus;
   final UploadPortraitstatus uploadPortraitstatus;
   final UploadInfoStatus uploadInfoStatus;
+
+  final String requestId;
 
   final int activeStep;
   final int selectedRadio;
@@ -28,9 +33,11 @@ final class VerificationState extends Equatable {
   final bool isApprove;
 
   const VerificationState({
+    this.initEkycStatus = InitEkycStatus.loading,
     this.uploadCardStatus = UploadCardStatus.loading,
     this.uploadPortraitstatus = UploadPortraitstatus.loading,
     this.uploadInfoStatus = UploadInfoStatus.loading,
+    this.requestId = "",
     this.activeStep = 0,
     this.selectedRadio = 0,
     this.urlImageCardFront = "",
@@ -45,9 +52,11 @@ final class VerificationState extends Equatable {
   });
 
   VerificationState copyWith({
+    InitEkycStatus? initEkycStatus,
     UploadCardStatus? uploadCardStatus,
     UploadPortraitstatus? uploadPortraitstatus,
     UploadInfoStatus? uploadInfoStatus,
+    String? requestId,
     int? activeStep,
     int? selectedRadio,
     String? urlImageCardFront,
@@ -61,9 +70,11 @@ final class VerificationState extends Equatable {
     bool? isApprove,
   }) {
     return VerificationState(
+      initEkycStatus: initEkycStatus ?? this.initEkycStatus,
       uploadCardStatus: uploadCardStatus ?? this.uploadCardStatus,
       uploadPortraitstatus: uploadPortraitstatus ?? this.uploadPortraitstatus,
       uploadInfoStatus: uploadInfoStatus ?? this.uploadInfoStatus,
+      requestId: requestId ?? this.requestId,
       activeStep: activeStep ?? this.activeStep,
       selectedRadio: selectedRadio ?? this.selectedRadio,
       urlImageCardFront: urlImageCardFront ?? this.urlImageCardFront,
@@ -81,9 +92,11 @@ final class VerificationState extends Equatable {
 
   @override
   List<Object> get props => [
+        initEkycStatus,
         uploadCardStatus,
         uploadPortraitstatus,
         uploadInfoStatus,
+        requestId,
         activeStep,
         selectedRadio,
         urlImageCardFront,

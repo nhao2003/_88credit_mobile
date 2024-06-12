@@ -7,6 +7,8 @@ sealed class VerificationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitEkycEvent extends VerificationEvent {}
+
 class ChangeStepEvent extends VerificationEvent {
   final int step;
   const ChangeStepEvent(this.step);

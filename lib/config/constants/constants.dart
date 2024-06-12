@@ -47,6 +47,10 @@ const String kGetMarkPrimaryEndpoint = '/primary';
 
 const String kUploadMediaEndpoint = '/storage/upload';
 
+const String kInitEkycEndpoint = '/ekyc/request';
+const String kOrcFrontEndpoint = '/ekyc/ocr/front-image';
+const String kOrcBackEndpoint = '/ekyc/ocr/back-image';
+
 const minMoney = 1000;
 const maxMoney = 1000000000;
 const minInterestRate = 0.1;

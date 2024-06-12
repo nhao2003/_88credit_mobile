@@ -18,6 +18,7 @@ Future<void> initializeDependencies() async {
   await _initRequest();
   await _initBank();
   await _initUser();
+  await _initEkyc();
 }
 
 Future<void> _initAuth() async {
