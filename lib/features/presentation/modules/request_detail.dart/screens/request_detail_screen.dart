@@ -168,16 +168,19 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                 if (requestType == RequestTypes.sent) {
                   if (state.requestStatus == LoanContractRequestStatus.paid ||
                       state.requestStatus ==
-                          LoanContractRequestStatus.rejected) {
+                          LoanContractRequestStatus.cancelled) {
                     return const SizedBox();
                   }
                   return BaseButton(
                     title: "Hủy yêu cầu",
                     colorButton: AppColors.red,
                     width: 100.wp,
-                    isLoading: false,
+                    isLoading: state.cancelStatus == CancelStatus.loading,
                     onClick: () {
                       // showCommentForm(context);
+                      context
+                          .read<RequestDetailBloc>()
+                          .add(CancelRequest(post));
                     },
                   );
                 }
@@ -196,7 +199,10 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                         width: 43.wp,
                         isLoading: state.rejectStatus == RejectStatus.loading,
                         onClick: () {
-                          showCommentForm(context);
+                          // showCommentForm(context);
+                          context
+                              .read<RequestDetailBloc>()
+                              .add(RejectRequest(post));
                         },
                       ),
                       BaseButton(

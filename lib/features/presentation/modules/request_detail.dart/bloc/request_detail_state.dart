@@ -1,5 +1,7 @@
 part of 'request_detail_bloc.dart';
 
+enum CancelStatus { initial, loading, success, failure }
+
 enum RejectStatus { initial, loading, success, failure }
 
 enum ConfirmStatus { initial, loading, success, failure }
@@ -8,6 +10,7 @@ enum PaymentStatus { initial, loading, success, failure }
 
 final class RequestDetailState extends Equatable {
   final ContractEntity contract;
+  final CancelStatus cancelStatus;
   final RejectStatus rejectStatus;
   final ConfirmStatus confirmStatus;
   final PaymentStatus paymentStatus;
@@ -15,6 +18,7 @@ final class RequestDetailState extends Equatable {
 
   const RequestDetailState({
     this.contract = const ContractEntity(),
+    this.cancelStatus = CancelStatus.initial,
     this.rejectStatus = RejectStatus.initial,
     this.confirmStatus = ConfirmStatus.initial,
     this.paymentStatus = PaymentStatus.initial,
@@ -23,6 +27,7 @@ final class RequestDetailState extends Equatable {
 
   RequestDetailState copyWith({
     ContractEntity? contract,
+    CancelStatus? cancelStatus,
     RejectStatus? rejectStatus,
     ConfirmStatus? confirmStatus,
     PaymentStatus? paymentStatus,
@@ -30,6 +35,7 @@ final class RequestDetailState extends Equatable {
   }) {
     return RequestDetailState(
       contract: contract ?? this.contract,
+      cancelStatus: cancelStatus ?? this.cancelStatus,
       rejectStatus: rejectStatus ?? this.rejectStatus,
       confirmStatus: confirmStatus ?? this.confirmStatus,
       paymentStatus: paymentStatus ?? this.paymentStatus,
@@ -40,6 +46,7 @@ final class RequestDetailState extends Equatable {
   @override
   List<Object> get props => [
         contract,
+        cancelStatus,
         rejectStatus,
         confirmStatus,
         paymentStatus,

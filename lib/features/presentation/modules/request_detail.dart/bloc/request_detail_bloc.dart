@@ -11,9 +11,20 @@ part 'request_detail_state.dart';
 class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
   RequestDetailBloc() : super(const RequestDetailState()) {
     on<RequestDetailEvent>((event, emit) {});
+    on<CancelRequest>(_cancelRequest);
     on<RejectRequest>(_rejectRequest);
     on<ConfirmRequest>(_confirmRequest);
     on<ChangeRequestStatus>(_changeRequestStatus);
+  }
+
+  void _cancelRequest(
+    CancelRequest event,
+    Emitter<RequestDetailState> emit,
+  ) async {
+    emit(state.copyWith(cancelStatus: CancelStatus.loading));
+    await Future.delayed(const Duration(seconds: 2)).whenComplete(() {
+      emit(state.copyWith(cancelStatus: CancelStatus.success));
+    });
   }
 
   void _rejectRequest(

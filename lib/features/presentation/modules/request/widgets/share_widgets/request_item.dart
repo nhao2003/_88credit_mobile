@@ -52,7 +52,7 @@ class RequestItem extends StatelessWidget {
       case LoanContractRequestStatus.pending:
         return "Đang chờ xác nhận từ ${request.updatedAt!.toDMYString()}";
       case LoanContractRequestStatus.cancelled:
-        return "Đã xác nhận từ ${request.updatedAt!.toDMYString()}";
+        return "Đã xóa từ ${request.updatedAt!.toDMYString()}";
       case LoanContractRequestStatus.rejected:
         return request.rejectedReason ?? "Đã hủy";
     }

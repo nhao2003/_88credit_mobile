@@ -7,14 +7,22 @@ sealed class RequestDetailEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class RejectRequest extends RequestDetailEvent {
-  final String reason;
+class CancelRequest extends RequestDetailEvent {
   final LoanRequestEntity request;
 
-  const RejectRequest(this.reason, this.request);
+  const CancelRequest(this.request);
 
   @override
-  List<Object> get props => [reason, request];
+  List<Object> get props => [request];
+}
+
+class RejectRequest extends RequestDetailEvent {
+  final LoanRequestEntity request;
+
+  const RejectRequest(this.request);
+
+  @override
+  List<Object> get props => [request];
 }
 
 class ConfirmRequest extends RequestDetailEvent {
