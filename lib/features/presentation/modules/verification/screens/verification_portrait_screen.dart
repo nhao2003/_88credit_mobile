@@ -9,9 +9,16 @@ import '../bloc/verification_bloc.dart';
 import '../widgets/choose_image_portrait.dart';
 import '../widgets/stepper_identify.dart';
 
-class VerificationPortraitScreen extends StatelessWidget {
+class VerificationPortraitScreen extends StatefulWidget {
   const VerificationPortraitScreen({super.key});
 
+  @override
+  State<VerificationPortraitScreen> createState() =>
+      _VerificationPortraitScreenState();
+}
+
+class _VerificationPortraitScreenState
+    extends State<VerificationPortraitScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +71,7 @@ class VerificationPortraitScreen extends StatelessWidget {
               builder: (context, state) {
                 return ElevatedButton(
                   onPressed:
-                      state.uploadPortraitstatus != UploadPortraitstatus.loading
+                      state.uploadPortraitstatus == UploadPortraitstatus.success
                           ? () {
                               Navigator.pushNamed(
                                   context, AppRoutes.verificationInfo);
@@ -84,7 +91,7 @@ class VerificationPortraitScreen extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Tiếp tục',
+                    'Kiểm tra ảnh chân dung',
                     style: AppTextStyles.bold14.colorEx(AppColors.white),
                   ),
                 );

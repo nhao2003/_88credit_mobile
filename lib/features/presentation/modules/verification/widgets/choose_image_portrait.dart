@@ -82,67 +82,87 @@ class _ChooseImagePortraitState extends State<ChooseImagePortrait> {
     return Column(children: [
       BlocBuilder<VerificationBloc, VerificationState>(
         builder: (context, state) {
-          return InkWell(
-            onTap: () => _showPicker(context),
-            child: DottedBorder(
-              color: state.urlImagePortrait.isNotEmpty
-                  ? Colors.white
-                  : AppColors.green,
-              strokeWidth: 1,
-              borderType: BorderType.RRect,
-              dashPattern: const [8, 4],
-              radius: const Radius.circular(8),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(10),
+          return Stack(
+            children: [
+              DottedBorder(
+                color: state.urlImagePortrait.isNotEmpty
+                    ? Colors.white
+                    : AppColors.green,
+                strokeWidth: 1,
+                borderType: BorderType.RRect,
+                dashPattern: const [8, 4],
+                radius: const Radius.circular(8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.all(
+                      state.urlImagePortrait.isNotEmpty ? 0 : 10),
+                  height: 200,
+                  width: 150,
+                  child: _pickedImage != null
+                      ? Image.file(
+                          _pickedImage!,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset(
+                          fit: BoxFit.cover,
+                          Assets.portrait,
+                        ),
                 ),
-                padding:
-                    EdgeInsets.all(state.urlImagePortrait.isNotEmpty ? 0 : 10),
-                height: 200,
-                width: 150,
-                child: _pickedImage != null
-                    ? Image.file(
-                        _pickedImage!,
-                        fit: BoxFit.cover,
-                      )
-                    : Image.asset(
-                        fit: BoxFit.cover,
-                        Assets.portrait,
-                      ),
               ),
-            ),
+
+              // loading center image
+              if (state.uploadPortraitstatus == UploadPortraitstatus.loading)
+                const Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+            ],
           );
         },
       ),
       const SizedBox(height: 15),
-      InkWell(
-        onTap: () => _showPicker(context),
-        child: Container(
-          width: 200,
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            color: AppColors.green,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.camera_alt,
-                  color: AppColors.white,
-                  size: 20,
+      BlocBuilder<VerificationBloc, VerificationState>(
+        builder: (context, state) {
+          return InkWell(
+            onTap: state.uploadPortraitstatus == UploadPortraitstatus.loading
+                ? null
+                : () => _showPicker(context),
+            child: Container(
+              width: 200,
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              decoration: BoxDecoration(
+                color:
+                    state.uploadPortraitstatus == UploadPortraitstatus.loading
+                        ? AppColors.grey300
+                        : AppColors.green,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.camera_alt,
+                      color: AppColors.white,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      "Chụp ảnh",
+                      style:
+                          AppTextStyles.bold14.copyWith(color: AppColors.white),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  "Chụp ảnh",
-                  style: AppTextStyles.bold14.copyWith(color: AppColors.white),
-                ),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     ]);
   }

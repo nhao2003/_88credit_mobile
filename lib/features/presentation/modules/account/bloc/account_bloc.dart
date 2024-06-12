@@ -1,6 +1,5 @@
 import 'package:_88credit_mobile/core/errors/exceptions.dart';
 import 'package:_88credit_mobile/features/domain/usecases/authentication/sign_out.dart';
-import 'package:_88credit_mobile/features/domain/usecases/user/get_user_id_usercase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/resources/data_state.dart';

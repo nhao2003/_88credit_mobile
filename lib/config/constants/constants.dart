@@ -50,6 +50,8 @@ const String kUploadMediaEndpoint = '/storage/upload';
 const String kInitEkycEndpoint = '/ekyc/request';
 const String kOrcFrontEndpoint = '/ekyc/ocr/front-image';
 const String kOrcBackEndpoint = '/ekyc/ocr/back-image';
+const String kFaceEndpoint = '/ekyc/face';
+const String kAddFaceEndpoint = '/add-face';
 
 const minMoney = 1000;
 const maxMoney = 1000000000;

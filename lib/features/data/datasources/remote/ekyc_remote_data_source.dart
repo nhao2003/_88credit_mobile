@@ -155,7 +155,47 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> sendFace(String requestId, File image) async {
-    throw UnimplementedError();
+    var url = '$apiUrl$kFaceEndpoint/$requestId$kAddFaceEndpoint';
+    try {
+      print(url);
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+
+      String fileName = image.path.split('/').last;
+      print("filename: $fileName");
+
+      MultipartFile multipartFile =
+          await MultipartFile.fromFile(image.path, filename: fileName);
+
+      FormData formData = FormData.fromMap({
+        "file": multipartFile,
+        "title": "Ảnh chân dung của User",
+        "description": "Ảnh chân dung của User",
+      });
+
+      // Gửi yêu cầu đến server
+      final response = await client.post(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+        data: formData,
+      );
+
+      if (response.statusCode != HttpStatus.created) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      print(response);
+
+      return HttpResponse(null, response);
+    } catch (error) {
+      throw ErrorHelpers.handleException(error);
+    }
   }
 
   @override

@@ -90,10 +90,10 @@ class _VerificationCardScreenState extends State<VerificationCardScreen> {
                 child: BlocBuilder<VerificationBloc, VerificationState>(
                   builder: (context, state) {
                     return ElevatedButton(
-                      onPressed: state.uploadCardFrontStatus !=
-                                  UploadCardFrontStatus.loading &&
-                              state.uploadCardBackStatus !=
-                                  UploadCardBackStatus.loading
+                      onPressed: state.uploadCardFrontStatus ==
+                                  UploadCardFrontStatus.success &&
+                              state.uploadCardBackStatus ==
+                                  UploadCardBackStatus.success
                           ? () {
                               Navigator.pushNamed(
                                   context, AppRoutes.verificationPortrait);

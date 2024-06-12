@@ -164,7 +164,7 @@ class _ChooseImageState extends State<ChooseImage> {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
                     color: checkIsLoading(state)
-                        ? AppColors.grey500
+                        ? AppColors.grey300
                         : AppColors.green,
                     borderRadius: BorderRadius.circular(10),
                   ),

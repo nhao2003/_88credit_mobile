@@ -4,6 +4,7 @@ import 'package:_88credit_mobile/core/resources/data_state.dart';
 import 'package:_88credit_mobile/core/resources/pair.dart';
 import 'package:_88credit_mobile/features/data/models/front_card_info.dart';
 import 'package:_88credit_mobile/features/domain/usecases/ekyc/init_request_usecase.dart';
+import 'package:_88credit_mobile/features/domain/usecases/ekyc/send_face_usecase.dart';
 import 'package:_88credit_mobile/features/domain/usecases/ekyc/send_ocr_back_usecase.dart';
 import 'package:_88credit_mobile/features/domain/usecases/ekyc/send_ocr_front_usecase.dart';
 import 'package:equatable/equatable.dart';
@@ -68,12 +69,7 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
 
     on<UploadBackCardFile>(_handleBackCardFile);
 
-    on<UploadPortrait>((event, emit) {
-      emit(state.copyWith(
-        urlImagePortrait: event.file.path,
-        uploadPortraitstatus: UploadPortraitstatus.success,
-      ));
-    });
+    on<UploadPortrait>(_handleUploadPortrail);
 
     on<InitEkycEvent>(_initEkyc);
   }
@@ -140,6 +136,30 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
     } else {
       emit(state.copyWith(
         uploadCardBackStatus: UploadCardBackStatus.failure,
+      ));
+    }
+  }
+
+  Future _handleUploadPortrail(
+      UploadPortrait event, Emitter<VerificationState> emit) async {
+    emit(state.copyWith(
+      urlImagePortrait: event.file.path,
+      uploadPortraitstatus: UploadPortraitstatus.loading,
+    ));
+    // upload image
+    print("Request id: ${state.requestId}");
+    print("File path: ${event.file.path}");
+    SendFaceUseCase sendFaceUseCase = sl<SendFaceUseCase>();
+    final result =
+        await sendFaceUseCase(params: Pair(state.requestId, event.file));
+
+    if (result is DataSuccess) {
+      emit(state.copyWith(
+        uploadPortraitstatus: UploadPortraitstatus.success,
+      ));
+    } else {
+      emit(state.copyWith(
+        uploadPortraitstatus: UploadPortraitstatus.failure,
       ));
     }
   }
