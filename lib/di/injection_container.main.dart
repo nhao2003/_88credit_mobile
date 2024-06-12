@@ -356,4 +356,9 @@ Future<void> _initUser() async {
       sl<UserRepository>(),
     ),
   );
+  sl.registerSingleton<GetUserByIdUsecase>(
+    GetUserByIdUsecase(
+      sl<UserRepository>(),
+    ),
+  );
 }

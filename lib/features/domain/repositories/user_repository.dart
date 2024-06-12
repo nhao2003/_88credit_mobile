@@ -6,5 +6,6 @@ import '../entities/user.dart';
 abstract class UserRepository {
   Future<DataState<Pair<int, List<UserModel>>>> searchUsers(
       String query, int page);
+  Future<DataState<UserEntity>> getUserById(String idUser);
   Future<DataState<UserEntity>> getProfile();
 }

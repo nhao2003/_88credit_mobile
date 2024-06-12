@@ -43,15 +43,23 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      user = ModalRoute.of(context)!.settings.arguments as UserEntity;
+      context.read<UserProfileBloc>().add(GetUserProfile(user.id!));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     double sizeImage = 22.wp;
-    user = ModalRoute.of(context)!.settings.arguments as UserEntity;
 
     return BlocBuilder<UserProfileBloc, UserProfileState>(
       builder: (context, state) {
         return Scaffold(
           appBar: MyAppbar(
-            title: user.fullName,
+            title: state.user.fullName,
             actions: [
               state.isMe
                   ? Container()
@@ -69,192 +77,197 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
             ],
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+          body: state.getUserProfileStatus == GetUserProfileStatus.loading
+              ? const Center(child: CircularProgressIndicator())
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        //avatar ========================================
-                        if (user.avatar != null)
-                          ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(50)),
-                            child: CachedNetworkImage(
-                              imageUrl: user.avatar!,
-                              fit: BoxFit.cover,
-                              width: sizeImage,
-                              height: sizeImage,
-                              errorWidget: (context, _, __) {
-                                return CircleAvatar(
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              //avatar ========================================
+                              if (state.user.avatar != null)
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(50)),
+                                  child: CachedNetworkImage(
+                                    imageUrl: state.user.avatar!,
+                                    fit: BoxFit.cover,
+                                    width: sizeImage,
+                                    height: sizeImage,
+                                    errorWidget: (context, _, __) {
+                                      return CircleAvatar(
+                                        radius: sizeImage / 2,
+                                        backgroundImage:
+                                            const AssetImage(Assets.avatar2),
+                                      );
+                                    },
+                                  ),
+                                )
+                              else
+                                CircleAvatar(
                                   radius: sizeImage / 2,
                                   backgroundImage:
                                       const AssetImage(Assets.avatar2),
-                                );
-                              },
-                            ),
-                          )
-                        else
-                          CircleAvatar(
-                            radius: sizeImage / 2,
-                            backgroundImage: const AssetImage(Assets.avatar2),
-                          ),
-                        const SizedBox(width: 10),
-                        // info ========================================
-                        Expanded(
-                          child: Column(
-                            children: [
-                              // info
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                ),
+                              const SizedBox(width: 10),
+                              // info ========================================
+                              Expanded(
+                                child: Column(
                                   children: [
-                                    // Bai viet
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          state.numberPost.toString(),
-                                          style: AppTextStyles.semiBold16
-                                              .colorEx(AppColors.grey700),
-                                        ),
-                                        Text(
-                                          "Bài viết",
-                                          style: AppTextStyles.medium12
-                                              .colorEx(AppColors.grey700),
-                                        ),
-                                      ],
+                                    // info
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          // Bai viet
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                state.numberPost.toString(),
+                                                style: AppTextStyles.semiBold16
+                                                    .colorEx(AppColors.grey700),
+                                              ),
+                                              Text(
+                                                "Bài viết",
+                                                style: AppTextStyles.medium12
+                                                    .colorEx(AppColors.grey700),
+                                              ),
+                                            ],
+                                          ),
+                                          // Người theo dõi
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                state.numberFollower.toString(),
+                                                style: AppTextStyles.semiBold16
+                                                    .colorEx(AppColors.grey700),
+                                              ),
+                                              Text(
+                                                "Người theo dõi",
+                                                style: AppTextStyles.medium12
+                                                    .colorEx(AppColors.grey700),
+                                              ),
+                                            ],
+                                          ),
+                                          // Đang theo dõi
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                state.numberFollowing
+                                                    .toString(),
+                                                style: AppTextStyles.semiBold16
+                                                    .colorEx(AppColors.grey700),
+                                              ),
+                                              Text(
+                                                "Đang theo dõi",
+                                                style: AppTextStyles.medium12
+                                                    .colorEx(AppColors.grey700),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    // Người theo dõi
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          state.numberFollower.toString(),
-                                          style: AppTextStyles.semiBold16
-                                              .colorEx(AppColors.grey700),
-                                        ),
-                                        Text(
-                                          "Người theo dõi",
-                                          style: AppTextStyles.medium12
-                                              .colorEx(AppColors.grey700),
-                                        ),
-                                      ],
-                                    ),
-                                    // Đang theo dõi
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          state.numberFollowing.toString(),
-                                          style: AppTextStyles.semiBold16
-                                              .colorEx(AppColors.grey700),
-                                        ),
-                                        Text(
-                                          "Đang theo dõi",
-                                          style: AppTextStyles.medium12
-                                              .colorEx(AppColors.grey700),
-                                        ),
-                                      ],
+                                    const SizedBox(height: 5),
+                                    // button follow
+                                    ButtonFollow(
+                                      isFollow: state.isFollow,
+                                      isMe: state.isMe,
+                                      onTap: () {
+                                        context
+                                            .read<UserProfileBloc>()
+                                            .add(const FollowUser());
+                                      },
                                     ),
                                   ],
                                 ),
-                              ),
-                              const SizedBox(height: 5),
-                              // button follow
-                              ButtonFollow(
-                                isFollow: state.isFollow,
-                                isMe: state.isMe,
-                                onTap: () {
-                                  context
-                                      .read<UserProfileBloc>()
-                                      .add(const FollowUser());
-                                },
-                              ),
+                              )
                             ],
                           ),
-                        )
-                      ],
-                    ),
 
-                    // name ============================================
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Text(
-                          user.fullName,
-                          style: AppTextStyles.semiBold16
-                              .colorEx(AppColors.grey700),
-                        ),
-                        const SizedBox(width: 5),
-                        const VerifyComponent(isVerify: true, isMe: true),
-                      ],
-                    ),
-                    // location ========================================
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          Assets.location,
-                          width: 20,
-                          height: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        SizedBox(
-                          width: 80.wp,
-                          child: Text(
-                            user.address ?? "Chưa cập nhật địa chỉ",
-                            style: AppTextStyles.medium14
-                                .colorEx(AppColors.grey500),
+                          // name ============================================
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              Text(
+                                state.user.fullName,
+                                style: AppTextStyles.semiBold16
+                                    .colorEx(AppColors.grey700),
+                              ),
+                              const SizedBox(width: 5),
+                              const VerifyComponent(isVerify: true, isMe: true),
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                    // dateCreate ======================================
-                    const SizedBox(height: 5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          Assets.calendar,
-                          width: 20,
-                          height: 20,
-                        ),
-                        const SizedBox(width: 8),
-                        SizedBox(
-                          width: 80.wp,
-                          child: user.createdAt != null
-                              ? Text(
-                                  "Tham gia ngày ${(user.createdAt!.toDMYString())}",
+                          // location ========================================
+                          const SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                Assets.location,
+                                width: 20,
+                                height: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              SizedBox(
+                                width: 80.wp,
+                                child: Text(
+                                  // state.user.address ?? "Chưa cập nhật địa chỉ",
+                                  "Thủ Đức, Hồ Chí Minh",
                                   style: AppTextStyles.medium14
                                       .colorEx(AppColors.grey500),
-                                )
-                              : const SizedBox(),
-                        )
-                      ],
+                                ),
+                              )
+                            ],
+                          ),
+                          // dateCreate ======================================
+                          const SizedBox(height: 5),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                Assets.calendar,
+                                width: 20,
+                                height: 20,
+                              ),
+                              const SizedBox(width: 8),
+                              SizedBox(
+                                width: 80.wp,
+                                child: state.user.createdAt != null
+                                    ? Text(
+                                        "Tham gia ngày ${(state.user.createdAt!.toDMYString())}",
+                                        style: AppTextStyles.medium14
+                                            .colorEx(AppColors.grey500),
+                                      )
+                                    : const SizedBox(),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
+                    // tab ==============================================
+                    const TabProfile(),
                   ],
                 ),
-              ),
-              // tab ==============================================
-              const TabProfile(),
-            ],
-          ),
           floatingActionButton: state.isMe
               ? Container()
               : FloatingActionButton.extended(

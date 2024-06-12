@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import '../../../../config/constants/constants.dart';
@@ -12,6 +14,7 @@ abstract class UserRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<UserModel>>>> searchUsers(
       String query, int page);
   Future<HttpResponse<UserModel>> getProfile();
+  Future<HttpResponse<UserModel>> getUserById(String idUser);
 }
 
 class UserRemoteDataSrcImpl extends UserRemoteDataSrc {
@@ -73,14 +76,41 @@ class UserRemoteDataSrcImpl extends UserRemoteDataSrc {
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.ok) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
         );
       }
 
-      UserModel user = UserModel.fromJson(response.data['result']);
+      UserModel user = UserModel.fromJson(response.data['data']);
+
+      return HttpResponse<UserModel>(
+        user,
+        response,
+      );
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<UserModel>> getUserById(String idUser) async {
+    String url = '$apiUrl$kGetUserEndpoint/$idUser';
+
+    try {
+      final response = await client.get(url);
+
+      if (response.statusCode != HttpStatus.ok) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      UserModel user = UserModel.fromJson(response.data['data']);
 
       return HttpResponse<UserModel>(
         user,

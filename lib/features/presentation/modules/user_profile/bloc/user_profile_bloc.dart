@@ -1,6 +1,8 @@
+import 'package:_88credit_mobile/features/domain/usecases/user/get_user_id_usercase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/resources/pair.dart';
+import '../../../../../di/injection_container.dart';
 import '../../../../domain/entities/post.dart';
 import '../../../../domain/entities/user.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
@@ -17,6 +19,38 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     on<GetUserPosts>(_onGetUserPosts);
     on<CheckIsMe>(_checkIsMe);
     on<FollowUser>(_followUser);
+    on<GetUserProfile>(_getUserProfile);
+  }
+
+  void _getUserProfile(
+    GetUserProfile event,
+    Emitter<UserProfileState> emit,
+  ) async {
+    emit(state.copyWith(getUserProfileStatus: GetUserProfileStatus.loading));
+    try {
+      GetUserByIdUsecase getUserByIdUsecase = sl<GetUserByIdUsecase>();
+      final user = await getUserByIdUsecase(params: event.userId);
+      if (user == null) {
+        emit(
+          state.copyWith(
+            getUserProfileStatus: GetUserProfileStatus.failure,
+          ),
+        );
+        return;
+      }
+      emit(
+        state.copyWith(
+          getUserProfileStatus: GetUserProfileStatus.success,
+          user: user,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          getUserProfileStatus: GetUserProfileStatus.failure,
+        ),
+      );
+    }
   }
 
   void _checkIsMe(

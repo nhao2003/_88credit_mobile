@@ -7,6 +7,16 @@ sealed class UserProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetUserProfile extends UserProfileEvent {
+  final String userId;
+  const GetUserProfile(
+    this.userId,
+  );
+
+  @override
+  List<Object> get props => [userId];
+}
+
 class GetUserPosts extends UserProfileEvent {
   const GetUserPosts();
 }

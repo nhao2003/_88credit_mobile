@@ -2,8 +2,12 @@ part of 'user_profile_bloc.dart';
 
 enum GetUserPostsStatus { loading, success, failure }
 
+enum GetUserProfileStatus { loading, success, failure }
+
 final class UserProfileState extends Equatable {
   final GetUserPostsStatus getUserPostsStatus;
+  final GetUserProfileStatus getUserProfileStatus;
+  final UserEntity user;
   final int numberPost;
   final int numberFollower;
   final int numberFollowing;
@@ -14,9 +18,11 @@ final class UserProfileState extends Equatable {
 
   const UserProfileState({
     this.getUserPostsStatus = GetUserPostsStatus.loading,
-    this.numberPost = 0,
-    this.numberFollower = 0,
-    this.numberFollowing = 0,
+    this.getUserProfileStatus = GetUserProfileStatus.loading,
+    this.user = const UserEntity(),
+    this.numberPost = 5,
+    this.numberFollower = 1,
+    this.numberFollowing = 2,
     this.isFollow = false,
     this.isMe = false,
     this.numOfPosts = "-",
@@ -25,6 +31,8 @@ final class UserProfileState extends Equatable {
 
   UserProfileState copyWith({
     GetUserPostsStatus? getUserPostsStatus,
+    GetUserProfileStatus? getUserProfileStatus,
+    UserEntity? user,
     int? numberPost,
     int? numberFollower,
     int? numberFollowing,
@@ -34,7 +42,9 @@ final class UserProfileState extends Equatable {
     List<PostEntity>? userPosts,
   }) {
     return UserProfileState(
+      user: user ?? this.user,
       getUserPostsStatus: getUserPostsStatus ?? this.getUserPostsStatus,
+      getUserProfileStatus: getUserProfileStatus ?? this.getUserProfileStatus,
       numberPost: numberPost ?? this.numberPost,
       numberFollower: numberFollower ?? this.numberFollower,
       numberFollowing: numberFollowing ?? this.numberFollowing,
@@ -47,7 +57,9 @@ final class UserProfileState extends Equatable {
 
   @override
   List<Object> get props => [
+        user,
         getUserPostsStatus,
+        getUserProfileStatus,
         numberPost,
         numberFollower,
         numberFollowing,
