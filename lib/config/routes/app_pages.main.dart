@@ -169,6 +169,21 @@ class MyAppPages extends AppPages {
         page: const VerificationWaitingScreen(),
         bloc: BlocProvider(create: (context) => VerificationBloc()),
       ),
+      PageEntity(
+        path: AppRoutes.bank,
+        page: const BankScreen(),
+        bloc: BlocProvider(create: (context) => BankBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.bankList,
+        page: const BankListScreen(),
+        bloc: BlocProvider(create: (context) => BankBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.addBankCard,
+        page: const AddBankCardScreen(),
+        bloc: BlocProvider(create: (context) => BankBloc()),
+      ),
     ];
   }
 }

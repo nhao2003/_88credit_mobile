@@ -45,6 +45,15 @@ class BankEntity extends Equatable {
     );
   }
 
+  // empty
+  const BankEntity.empty()
+      : id = '',
+        name = '',
+        code = '',
+        bin = '',
+        shortName = '',
+        logo = '';
+
   factory BankEntity.fromJson(Map<String, dynamic> json) {
     return BankEntity(
       id: json['id'] as String,

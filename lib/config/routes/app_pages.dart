@@ -1,3 +1,7 @@
+import 'package:_88credit_mobile/features/presentation/modules/bank/bloc/bank_bloc.dart';
+import 'package:_88credit_mobile/features/presentation/modules/bank/screens/add_bank_card_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/bank/screens/bank_list_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/bank/screens/bank_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/blogs/bloc/blog_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/blogs/screens/blog_detail_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/call/bloc/call_bloc.dart';
