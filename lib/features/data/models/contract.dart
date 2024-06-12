@@ -1,5 +1,6 @@
 import 'package:_88credit_mobile/features/data/models/user.dart';
 import '../../../../core/utils/convert_number.dart';
+import '../../../core/utils/validate_utils.dart';
 import '../../domain/entities/contract.dart';
 import '../../domain/enums/loan_reason_types.dart';
 import 'bank_card.dart';
@@ -7,11 +8,10 @@ import 'bank_card.dart';
 class ContractModel extends ContractEntity {
   const ContractModel({
     super.id,
-    super.loanContractRequestId,
-    super.contractTemplateId,
-    super.lender,
+    super.loanRequestId,
+    super.lenderId,
     super.lenderBankCardId,
-    super.borrower,
+    super.borrowerId,
     super.borrowerBankCardId,
     super.loanReasonType,
     super.loanReason,
@@ -20,7 +20,8 @@ class ContractModel extends ContractEntity {
     super.tenureInMonths,
     super.overdueInterestRate,
     super.createdAt,
-    super.expiredAt,
+    super.lender,
+    super.borrower,
     super.lenderBankCard,
     super.borrowerBankCard,
   });
@@ -28,28 +29,31 @@ class ContractModel extends ContractEntity {
   factory ContractModel.fromJson(Map<String, dynamic> json) {
     return ContractModel(
       id: json['id'],
-      loanContractRequestId: json['loan_contract_request_id'],
-      contractTemplateId: json['contract_template_id'],
-      lender: UserModel.fromJson(json['lender']),
-      lenderBankCardId: json['lender_bank_card_id'],
-      borrower: UserModel.fromJson(json['borrower']),
-      borrowerBankCardId: json['borrower_bank_card_id'],
-      loanReasonType: json['loan_reason_type'] != null
-          ? LoanReasonTypes.parse(json['loan_reason_type'])
+      loanRequestId: json['loanRequestId'],
+      lenderId: json['lenderId'],
+      lenderBankCardId: json['lenderBankCardId'],
+      borrowerId: json['borrowerId'],
+      borrowerBankCardId: json['borrowerBankCardId'],
+      loanReasonType: json['loanReasonType'] != null
+          ? LoanReasonTypes.parse(json['loanReasonType'])
           : null,
-      loanReason: json['loan_reason'],
-      amount: double.tryParse(json['amount']),
-      interestRate: ConverNumber.convertIntToDouble(json['interest_rate']),
+      loanReason: json['loanReason'],
+      amount: ValidateUtils.toDoubleJson(json['amount']),
+      interestRate: ValidateUtils.toDoubleJson(json['interestRate']),
+      tenureInMonths: ValidateUtils.toIntJson(json['tenureInMonths']),
       overdueInterestRate:
-          ConverNumber.convertIntToDouble(json['overdue_interest_rate']),
-      tenureInMonths: json['tenure_in_months'],
-      createdAt: DateTime.parse(json['created_at']),
-      expiredAt: DateTime.parse(json['expired_at']),
-      lenderBankCard: json['lender_bank_card'] != null
-          ? BankCardModel.fromJson(json['lender_bank_card'])
+          ValidateUtils.toDoubleJson(json['overdueInterestRate']),
+      createdAt: DateTime.parse(json['createdAt']),
+      lender:
+          json['lender'] != null ? UserModel.fromJson(json['lender']) : null,
+      borrower: json['borrower'] != null
+          ? UserModel.fromJson(json['borrower'])
           : null,
-      borrowerBankCard: json['borrower_bank_card'] != null
-          ? BankCardModel.fromJson(json['borrower_bank_card'])
+      lenderBankCard: json['lenderBankCard'] != null
+          ? BankCardModel.fromJson(json['lenderBankCard'])
+          : null,
+      borrowerBankCard: json['borrowerBankCard'] != null
+          ? BankCardModel.fromJson(json['borrowerBankCard'])
           : null,
     );
   }
@@ -57,20 +61,18 @@ class ContractModel extends ContractEntity {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'loan_contract_request_id': loanContractRequestId,
-      'contract_template_id': contractTemplateId,
-      'lender': lender,
-      'lender_bank_Card_id': lenderBankCardId,
-      'borrower': borrower,
-      'borrower_bank_Card_id': borrowerBankCardId,
-      'loan_reason_type': loanReasonType,
-      'loan_reason': loanReason,
+      'loanRequestId': loanRequestId,
+      'lenderId': lenderId,
+      'lenderBankCardId': lenderBankCardId,
+      'borrowerId': borrowerId,
+      'borrowerBankCardId': borrowerBankCardId,
+      'loanReasonType': loanReasonType?.toString(),
+      'loanReason': loanReason,
       'amount': amount,
-      'interest_rate': interestRate,
-      'tenure_in_months': tenureInMonths,
+      'interestRate': interestRate,
+      'tenureInMonths': tenureInMonths,
       'overdue_interest_rate': overdueInterestRate,
-      'created_at': createdAt,
-      'expired_at': expiredAt,
+      'created_at': createdAt?.toIso8601String(),
     };
   }
 
@@ -78,11 +80,10 @@ class ContractModel extends ContractEntity {
   factory ContractModel.fromEntity(ContractEntity entity) {
     return ContractModel(
       id: entity.id,
-      loanContractRequestId: entity.loanContractRequestId,
-      contractTemplateId: entity.contractTemplateId,
-      lender: entity.lender,
+      loanRequestId: entity.loanRequestId,
+      lenderId: entity.lenderId,
       lenderBankCardId: entity.lenderBankCardId,
-      borrower: entity.borrower,
+      borrowerId: entity.borrowerId,
       borrowerBankCardId: entity.borrowerBankCardId,
       loanReasonType: entity.loanReasonType,
       loanReason: entity.loanReason,
@@ -91,7 +92,8 @@ class ContractModel extends ContractEntity {
       tenureInMonths: entity.tenureInMonths,
       overdueInterestRate: entity.overdueInterestRate,
       createdAt: entity.createdAt,
-      expiredAt: entity.expiredAt,
+      lender: entity.lender,
+      borrower: entity.borrower,
       lenderBankCard: entity.lenderBankCard,
       borrowerBankCard: entity.borrowerBankCard,
     );

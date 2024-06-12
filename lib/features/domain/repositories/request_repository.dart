@@ -2,8 +2,8 @@ import '../../../../core/resources/data_state.dart';
 import '../../../core/resources/pair.dart';
 import '../entities/contract.dart';
 import '../entities/loan_request.dart';
-import '../entities/transaction.dart';
 import '../enums/loan_contract_request_status.dart';
+import '../enums/post_type.dart';
 import '../enums/request_types.dart';
 
 abstract class RequestRepository {
@@ -14,10 +14,8 @@ abstract class RequestRepository {
   Future<DataState<void>> createRequest(LoanRequestEntity request);
 
   Future<DataState<void>> confirmRequest(LoanRequestEntity request);
-  Future<DataState<void>> rejectRequest(
-      LoanRequestEntity request);
-  Future<DataState<void>> cancelRequest(
-      LoanRequestEntity request);
+  Future<DataState<void>> rejectRequest(LoanRequestEntity request);
+  Future<DataState<void>> cancelRequest(LoanRequestEntity request);
   // management
   Future<DataState<Pair<int, List<LoanRequestEntity>>>> getRequestsStatus(
       RequestTypes requestTypes, LoanContractRequestStatus status, int? page);
@@ -25,8 +23,6 @@ abstract class RequestRepository {
   Future<DataState<String>> payLoanRequest(String id);
 
   // contract
-  Future<DataState<Pair<int, List<ContractEntity>>>> getBorrowingContract(
-      int? page);
-  Future<DataState<Pair<int, List<ContractEntity>>>> getLendingContract(
-      int? page);
+  Future<DataState<Pair<int, List<ContractEntity>>>> getContracts(
+      PostTypes type, int? page);
 }

@@ -70,7 +70,7 @@ class PdfViewerScreen extends StatelessWidget {
     content =
         content.replaceAll('{created_at}', contract.createdAt!.toDMYString());
     content =
-        content.replaceAll('{expired_at}', contract.expiredAt!.toDMYString());
+        content.replaceAll('{expired_at}', (contract.createdAt!).toDMYString());
     content = content.replaceAll(
         '{transfer_date}', contract.createdAt!.toDMYString());
     content = content.replaceAll(

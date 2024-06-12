@@ -257,14 +257,8 @@ Future<void> _initRequest() async {
     ),
   );
 
-  sl.registerSingleton<GetBorrowingContractsUseCase>(
-    GetBorrowingContractsUseCase(
-      sl<RequestRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<GetLendingContractsUseCase>(
-    GetLendingContractsUseCase(
+  sl.registerSingleton<GetContractsUseCase>(
+    GetContractsUseCase(
       sl<RequestRepository>(),
     ),
   );

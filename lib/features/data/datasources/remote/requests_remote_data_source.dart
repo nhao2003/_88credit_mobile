@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:_88credit_mobile/features/domain/enums/post_type.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import '../../../../config/constants/constants.dart';
@@ -11,7 +12,6 @@ import '../../../domain/enums/loan_contract_request_status.dart';
 import '../../../domain/enums/request_types.dart';
 import '../../models/contract.dart';
 import '../../models/loan_request.dart';
-import '../../models/transaction.dart';
 import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
 
@@ -33,7 +33,7 @@ abstract class RequestRemoteDataSrc {
   Future<HttpResponse<String>> payLoanRequest(String id);
 
   Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
-      bool isLending, int? page);
+      PostTypes type, int? page);
 }
 
 class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
@@ -344,26 +344,23 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
 
   @override
   Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
-      bool isLending, int? page) async {
+      PostTypes type, int? page) async {
     // get userId
-    AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
-    String? userId = localDataSrc.getUserIdFromToken();
+    // AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+    // String? userId = localDataSrc.getUserIdFromToken();
 
     int pageQuery = page ?? 1;
     QueryBuilder queryBuilder = QueryBuilder();
     queryBuilder.addPage(pageQuery);
 
-    if (isLending) {
-      queryBuilder.addQuery(
-          'contractLenderId', Operation.equals, '\'$userId\'');
-    } else {
-      queryBuilder.addQuery(
-          'contractBorrowerId', Operation.equals, '\'$userId\'');
-    }
-
     queryBuilder.addOrderBy('createdAt', OrderBy.desc);
-
-    String url = '$apiUrl$kGetContractEndpoint${queryBuilder.build()}';
+    String url = '$apiUrl$kGetContractEndpoint';
+    if (type == PostTypes.lending) {
+      url += '/lend';
+    } else {
+      url += '/borrow';
+    }
+    url += queryBuilder.build();
 
     return await DatabaseHelper().getContracts(url, client);
   }

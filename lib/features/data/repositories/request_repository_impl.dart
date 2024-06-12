@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:_88credit_mobile/features/domain/enums/post_type.dart';
 import 'package:dio/dio.dart';
 import '../../../core/resources/data_state.dart';
 import '../../../core/resources/pair.dart';
@@ -181,31 +182,10 @@ class RequestRepositoryImpl implements RequestRepository {
   }
 
   @override
-  Future<DataState<Pair<int, List<ContractEntity>>>> getBorrowingContract(
-      int? page) async {
+  Future<DataState<Pair<int, List<ContractEntity>>>> getContracts(
+      PostTypes type, int? page) async {
     try {
-      final httpResponse = await _dataSrc.getContracts(false, page);
-
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data);
-      } else {
-        return DataFailed(DioException(
-          error: httpResponse.response.statusMessage,
-          response: httpResponse.response,
-          type: DioExceptionType.badResponse,
-          requestOptions: httpResponse.response.requestOptions,
-        ));
-      }
-    } on DioException catch (e) {
-      return DataFailed(e);
-    }
-  }
-
-  @override
-  Future<DataState<Pair<int, List<ContractEntity>>>> getLendingContract(
-      int? page) async {
-    try {
-      final httpResponse = await _dataSrc.getContracts(true, page);
+      final httpResponse = await _dataSrc.getContracts(type, page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

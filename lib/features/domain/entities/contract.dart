@@ -5,14 +5,11 @@ import '../enums/loan_reason_types.dart';
 
 class ContractEntity extends Equatable {
   final String? id;
-  final String? loanContractRequestId;
-  final String? contractTemplateId;
-  final UserEntity? lender;
+  final String? loanRequestId;
+  final String? lenderId;
   final String? lenderBankCardId;
-  final BankCardEntity? lenderBankCard;
-  final UserEntity? borrower;
+  final String? borrowerId;
   final String? borrowerBankCardId;
-  final BankCardEntity? borrowerBankCard;
   final LoanReasonTypes? loanReasonType;
   final String? loanReason;
   final double? amount;
@@ -20,15 +17,17 @@ class ContractEntity extends Equatable {
   final int? tenureInMonths;
   final double? overdueInterestRate;
   final DateTime? createdAt;
-  final DateTime? expiredAt;
+  final UserEntity? borrower;
+  final UserEntity? lender;
+  final BankCardEntity? borrowerBankCard;
+  final BankCardEntity? lenderBankCard;
 
   const ContractEntity({
     this.id,
-    this.loanContractRequestId,
-    this.contractTemplateId,
-    this.lender,
+    this.loanRequestId,
+    this.lenderId,
     this.lenderBankCardId,
-    this.borrower,
+    this.borrowerId,
     this.borrowerBankCardId,
     this.loanReasonType,
     this.loanReason,
@@ -37,7 +36,8 @@ class ContractEntity extends Equatable {
     this.tenureInMonths,
     this.overdueInterestRate,
     this.createdAt,
-    this.expiredAt,
+    this.lender,
+    this.borrower,
     this.lenderBankCard,
     this.borrowerBankCard,
   });
@@ -45,11 +45,10 @@ class ContractEntity extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        loanContractRequestId,
-        contractTemplateId,
-        lender,
+        loanRequestId,
+        lenderId,
         lenderBankCardId,
-        borrower,
+        borrowerId,
         borrowerBankCardId,
         loanReasonType,
         loanReason,
@@ -58,7 +57,8 @@ class ContractEntity extends Equatable {
         tenureInMonths,
         overdueInterestRate,
         createdAt,
-        expiredAt,
+        lender,
+        borrower,
         lenderBankCard,
         borrowerBankCard,
       ];
@@ -67,8 +67,10 @@ class ContractEntity extends Equatable {
     String? id,
     String? loanContractRequestId,
     String? contractTemplateId,
+    String? lenderId,
     UserEntity? lender,
     String? lenderBankCardId,
+    String? borrowerId,
     UserEntity? borrower,
     String? borrowerBankCardId,
     LoanReasonTypes? loanReasonType,
@@ -84,12 +86,10 @@ class ContractEntity extends Equatable {
   }) {
     return ContractEntity(
       id: id ?? this.id,
-      loanContractRequestId:
-          loanContractRequestId ?? this.loanContractRequestId,
-      contractTemplateId: contractTemplateId ?? this.contractTemplateId,
-      lender: lender ?? this.lender,
+      loanRequestId: loanContractRequestId ?? loanRequestId,
+      lenderId: lenderId ?? lenderId,
       lenderBankCardId: lenderBankCardId ?? this.lenderBankCardId,
-      borrower: borrower ?? this.borrower,
+      borrowerId: borrowerId ?? borrowerId,
       borrowerBankCardId: borrowerBankCardId ?? this.borrowerBankCardId,
       loanReasonType: loanReasonType ?? this.loanReasonType,
       loanReason: loanReason ?? this.loanReason,
@@ -98,7 +98,8 @@ class ContractEntity extends Equatable {
       tenureInMonths: tenureInMonths ?? this.tenureInMonths,
       overdueInterestRate: overdueInterestRate ?? this.overdueInterestRate,
       createdAt: createdAt ?? this.createdAt,
-      expiredAt: expiredAt ?? this.expiredAt,
+      lender: lender ?? this.lender,
+      borrower: borrower ?? this.borrower,
       lenderBankCard: lenderBankCard ?? this.lenderBankCard,
       borrowerBankCard: borrowerBankCard ?? this.borrowerBankCard,
     );

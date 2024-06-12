@@ -104,6 +104,7 @@ class DatabaseHelper {
   Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
       String url, Dio client) async {
     try {
+      print(url);
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -118,6 +119,8 @@ class DatabaseHelper {
             sendTimeout: const Duration(seconds: 10),
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
+
+      print(response);
       //print('${response.statusCode} : ${response.data["message"].toString()}');
       if (response.statusCode != HttpStatus.ok) {
         //print('${response.statusCode} : ${response.data["result"].toString()}');
@@ -127,10 +130,10 @@ class DatabaseHelper {
         );
       }
 
-      final int numOfPages = response.data["num_of_pages"];
+      final int numOfPages = response.data["data"]["totalPages"];
 
       final List<DataMap> taskDataList =
-          List<DataMap>.from(response.data["result"]);
+          List<DataMap>.from(response.data["data"]["items"]);
 
       List<ContractModel> posts = [];
       for (var element in taskDataList) {

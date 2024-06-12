@@ -36,7 +36,7 @@ const String kCancelRequestEndpoint = '/cancel';
 
 const String kGetUserEndpoint = '/user';
 
-const String kGetContractEndpoint = '/contract';
+const String kGetContractEndpoint = '/loan-contract';
 const String kGetMe = '/user/me';
 
 const String kGetBankEndpoint = '/bank';

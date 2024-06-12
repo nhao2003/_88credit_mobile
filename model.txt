@@ -1,0 +1,69 @@
+"id": "0ea0dc28-ac41-4f7d-a22c-7de7be412e54",
+"loanRequestId": "92516dc6-3aac-441a-8c4f-3ecf1df52107",
+"lenderId": "f12225f2-6c35-452f-8c39-8652f64e05c6",
+"lenderBankCardId": "833d1ff4-ae4a-4b34-8ce1-854fd955ca06",
+"borrowerId": "7c90e199-d3c7-4b50-8b08-7f8c40ab5412",
+"borrowerBankCardId": "afccb29d-3671-4090-b2f1-134aa42b3920",
+"loanReasonType": "shopping",
+"loanReason": "sun apple cat sad apple random banana sad sad banana random apple moon happy cat sad sun apple apple dog",
+"amount": 961427,
+"interestRate": 86,
+"tenureInMonths": 73,
+"overdueInterestRate": 50,
+"createdAt": "2024-03-02T01:16:12.652Z",
+"borrower": {
+    "id": "7c90e199-d3c7-4b50-8b08-7f8c40ab5412",
+    "email": "user7@example.com",
+    "firstName": "David",
+    "lastName": "Taylor",
+    "avatar": "https://picsum.photos/200/300?random=7"
+},
+"lender": {
+    "id": "f12225f2-6c35-452f-8c39-8652f64e05c6",
+    "email": "abc@abc.com",
+    "firstName": "John",
+    "lastName": "Cena",
+    "avatar": "https://picsum.photos/200/300?random=1"
+},
+"borrowerBankCard": {
+    "id": "afccb29d-3671-4090-b2f1-134aa42b3920",
+    "isPrimary": false,
+    "bankId": "fb70ae1c-3e81-4f7e-bd6f-81d353e51f9f",
+    "userId": "7c90e199-d3c7-4b50-8b08-7f8c40ab5412",
+    "cardNumber": "6688883323184830",
+    "branch": null,
+    "createdAt": "2023-12-24T05:49:47.714Z",
+    "updatedAt": "2024-06-03T13:01:40.295Z",
+    "deletedAt": null,
+    "bank": {
+        "id": "fb70ae1c-3e81-4f7e-bd6f-81d353e51f9f",
+        "name": "Ngân hàng Đại chúng TNHH Kasikornbank",
+        "code": "KBank",
+        "bin": "668888",
+        "shortName": "KBank",
+        "logo": "https://api.vietqr.io/img/KBANK.png",
+        "createdAt": "2024-06-02T08:46:44.218Z",
+        "updatedAt": "2024-06-02T08:46:44.218Z"
+    }
+},
+"lenderBankCard": {
+    "id": "833d1ff4-ae4a-4b34-8ce1-854fd955ca06",
+    "isPrimary": false,
+    "bankId": "c69cf1ac-2c0b-4f0e-9228-89883999a0b6",
+    "userId": "f12225f2-6c35-452f-8c39-8652f64e05c6",
+    "cardNumber": "9704564435875724",
+    "branch": null,
+    "createdAt": "2023-12-24T05:49:47.714Z",
+    "updatedAt": "2024-06-12T09:44:06.262Z",
+    "deletedAt": null,
+    "bank": {
+        "id": "c69cf1ac-2c0b-4f0e-9228-89883999a0b6",
+        "name": "Ngân hàng Công nghiệp Hàn Quốc - Chi nhánh TP. Hồ Chí Minh",
+        "code": "IBK - HCM",
+        "bin": "970456",
+        "shortName": "IBKHCM",
+        "logo": "https://api.vietqr.io/img/IBK.png",
+        "createdAt": "2024-06-02T08:46:44.218Z",
+        "updatedAt": "2024-06-02T08:46:44.218Z"
+    }
+}
