@@ -17,6 +17,7 @@ Future<void> initializeDependencies() async {
   await _initMedia();
   await _initRequest();
   await _initBank();
+  await _initUser();
 }
 
 Future<void> _initAuth() async {
@@ -327,6 +328,32 @@ Future<void> _initBank() async {
   sl.registerSingleton<GetPrimaryBankCardUseCase>(
     GetPrimaryBankCardUseCase(
       sl<BankRepository>(),
+    ),
+  );
+}
+
+Future<void> _initUser() async {
+  sl.registerSingleton<UserRemoteDataSrc>(
+    UserRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<UserRepository>(
+    UserRepositoryImpl(
+      sl<UserRemoteDataSrc>(),
+    ),
+  );
+
+  sl.registerSingleton<GetProfileUseCase>(
+    GetProfileUseCase(
+      sl<UserRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SearchUserUseCase>(
+    SearchUserUseCase(
+      sl<UserRepository>(),
     ),
   );
 }

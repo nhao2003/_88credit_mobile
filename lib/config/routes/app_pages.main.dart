@@ -184,6 +184,11 @@ class MyAppPages extends AppPages {
         page: const AddBankCardScreen(),
         bloc: BlocProvider(create: (context) => BankBloc()),
       ),
+      PageEntity(
+        path: AppRoutes.changeUser,
+        page: const ChangeUserScreen(),
+        bloc: BlocProvider(create: (context) => BankBloc()),
+      ),
     ];
   }
 }

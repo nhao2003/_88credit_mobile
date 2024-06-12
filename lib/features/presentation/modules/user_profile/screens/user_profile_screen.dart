@@ -238,11 +238,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         const SizedBox(width: 8),
                         SizedBox(
                           width: 80.wp,
-                          child: Text(
-                            "Tham gia ngày ${(user.createdAt!.toDMYString())}",
-                            style: AppTextStyles.medium14
-                                .colorEx(AppColors.grey500),
-                          ),
+                          child: user.createdAt != null
+                              ? Text(
+                                  "Tham gia ngày ${(user.createdAt!.toDMYString())}",
+                                  style: AppTextStyles.medium14
+                                      .colorEx(AppColors.grey500),
+                                )
+                              : const SizedBox(),
                         )
                       ],
                     ),
