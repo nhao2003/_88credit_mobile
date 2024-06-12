@@ -48,7 +48,10 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
     });
 
     on<UploadPortrait>((event, emit) {
-      emit(state.copyWith(urlImagePortrait: event.file.path));
+      emit(state.copyWith(
+        urlImagePortrait: event.file.path,
+        uploadPortraitstatus: UploadPortraitstatus.success,
+      ));
     });
   }
 }

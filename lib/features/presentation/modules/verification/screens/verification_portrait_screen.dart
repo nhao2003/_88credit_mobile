@@ -64,7 +64,7 @@ class VerificationPortraitScreen extends StatelessWidget {
               builder: (context, state) {
                 return ElevatedButton(
                   onPressed:
-                      state.uploadPortraittatus != UploadPortraittatus.loading
+                      state.uploadPortraitstatus != UploadPortraitstatus.loading
                           ? () {
                               Navigator.pushNamed(
                                   context, AppRoutes.verificationInfo);

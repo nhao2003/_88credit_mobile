@@ -246,57 +246,57 @@ class _FormInfomationsState extends State<FormInfomations> {
               },
             ),
             const SizedBox(height: 20),
-            BlocBuilder<VerificationBloc, VerificationState>(
-              builder: (context, state) {
-                return DropdownButtonFormField<String>(
-                  value: state.issuedBy,
-                  isExpanded: true,
-                  isDense: true,
-                  itemHeight: null,
-                  style:
-                      AppTextStyles.regular16.copyWith(color: AppColors.black),
-                  decoration: const InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-                    filled: true,
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                    ),
-                    hintText: "Chọn nơi cấp giấy tờ",
-                    labelText: "Chọn nơi cấp giấy tờ",
-                  ),
-                  items: issuedByList.map((value) {
-                    return DropdownMenuItem<String>(
-                      value: value, // ensure this is unique
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(value),
-                      ),
-                    );
-                  }).toList(),
-                  selectedItemBuilder: (BuildContext context) {
-                    return issuedByList.map<Widget>((item) {
-                      return Text(
-                        item,
-                        overflow: TextOverflow.ellipsis,
-                      );
-                    }).toList();
-                  },
-                  onChanged: (value) {
-                    // changeIssueBy(value!);
-                    context.read<VerificationBloc>().add(ChangeIssueBy(value!));
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return "Vui lòng chọn nơi cấp giấy tờ";
-                    }
-                    return null;
-                  },
-                );
-              },
-            ),
+            // BlocBuilder<VerificationBloc, VerificationState>(
+            //   builder: (context, state) {
+            //     return DropdownButtonFormField<String>(
+            //       value: state.issuedBy,
+            //       isExpanded: true,
+            //       isDense: true,
+            //       itemHeight: null,
+            //       style:
+            //           AppTextStyles.regular16.copyWith(color: AppColors.black),
+            //       decoration: const InputDecoration(
+            //         contentPadding:
+            //             EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            //         filled: true,
+            //         fillColor: Colors.white,
+            //         border: OutlineInputBorder(
+            //           borderSide: BorderSide.none,
+            //           borderRadius: BorderRadius.all(Radius.circular(10)),
+            //         ),
+            //         hintText: "Chọn nơi cấp giấy tờ",
+            //         labelText: "Chọn nơi cấp giấy tờ",
+            //       ),
+            //       items: issuedByList.map((value) {
+            //         return DropdownMenuItem<String>(
+            //           value: value, // ensure this is unique
+            //           child: Padding(
+            //             padding: const EdgeInsets.all(8.0),
+            //             child: Text(value),
+            //           ),
+            //         );
+            //       }).toList(),
+            //       selectedItemBuilder: (BuildContext context) {
+            //         return issuedByList.map<Widget>((item) {
+            //           return Text(
+            //             item,
+            //             overflow: TextOverflow.ellipsis,
+            //           );
+            //         }).toList();
+            //       },
+            //       onChanged: (value) {
+            //         // changeIssueBy(value!);
+            //         context.read<VerificationBloc>().add(ChangeIssueBy(value!));
+            //       },
+            //       validator: (value) {
+            //         if (value == null) {
+            //           return "Vui lòng chọn nơi cấp giấy tờ";
+            //         }
+            //         return null;
+            //       },
+            //     );
+            //   },
+            // ),
             const SizedBox(height: 20),
             TextFormField(
               key: const ValueKey('country'),

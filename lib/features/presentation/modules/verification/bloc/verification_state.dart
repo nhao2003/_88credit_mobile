@@ -2,13 +2,13 @@ part of 'verification_bloc.dart';
 
 enum UploadCardStatus { loading, success, failure }
 
-enum UploadPortraittatus { loading, success, failure }
+enum UploadPortraitstatus { loading, success, failure }
 
 enum UploadInfoStatus { loading, success, failure }
 
 final class VerificationState extends Equatable {
   final UploadCardStatus uploadCardStatus;
-  final UploadPortraittatus uploadPortraittatus;
+  final UploadPortraitstatus uploadPortraitstatus;
   final UploadInfoStatus uploadInfoStatus;
 
   final int activeStep;
@@ -29,7 +29,7 @@ final class VerificationState extends Equatable {
 
   const VerificationState({
     this.uploadCardStatus = UploadCardStatus.loading,
-    this.uploadPortraittatus = UploadPortraittatus.loading,
+    this.uploadPortraitstatus = UploadPortraitstatus.loading,
     this.uploadInfoStatus = UploadInfoStatus.loading,
     this.activeStep = 0,
     this.selectedRadio = 0,
@@ -46,7 +46,7 @@ final class VerificationState extends Equatable {
 
   VerificationState copyWith({
     UploadCardStatus? uploadCardStatus,
-    UploadPortraittatus? uploadPortraittatus,
+    UploadPortraitstatus? uploadPortraitstatus,
     UploadInfoStatus? uploadInfoStatus,
     int? activeStep,
     int? selectedRadio,
@@ -62,7 +62,7 @@ final class VerificationState extends Equatable {
   }) {
     return VerificationState(
       uploadCardStatus: uploadCardStatus ?? this.uploadCardStatus,
-      uploadPortraittatus: uploadPortraittatus ?? this.uploadPortraittatus,
+      uploadPortraitstatus: uploadPortraitstatus ?? this.uploadPortraitstatus,
       uploadInfoStatus: uploadInfoStatus ?? this.uploadInfoStatus,
       activeStep: activeStep ?? this.activeStep,
       selectedRadio: selectedRadio ?? this.selectedRadio,
@@ -82,7 +82,7 @@ final class VerificationState extends Equatable {
   @override
   List<Object> get props => [
         uploadCardStatus,
-        uploadPortraittatus,
+        uploadPortraitstatus,
         uploadInfoStatus,
         activeStep,
         selectedRadio,

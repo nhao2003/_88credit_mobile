@@ -374,3 +374,53 @@ Future<void> _initUser() async {
     ),
   );
 }
+
+Future<void> _initEkyc() async {
+  sl.registerSingleton<EkycRemoteDataSrc>(
+    EkycRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<EkycRepository>(
+    EkycRepositoryImpl(
+      sl<EkycRemoteDataSrc>(),
+    ),
+  );
+
+  sl.registerSingleton<InitRequestUseCase>(
+    InitRequestUseCase(
+      sl<EkycRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SendOcrFrontUseCase>(
+    SendOcrFrontUseCase(
+      sl<EkycRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SendOcrBackUseCase>(
+    SendOcrBackUseCase(
+      sl<EkycRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SendFaceUseCase>(
+    SendFaceUseCase(
+      sl<EkycRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SendVideoSefieUseCase>(
+    SendVideoSefieUseCase(
+      sl<EkycRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SubmitUseCase>(
+    SubmitUseCase(
+      sl<EkycRepository>(),
+    ),
+  );
+}
