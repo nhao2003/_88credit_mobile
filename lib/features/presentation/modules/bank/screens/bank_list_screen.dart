@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/features/domain/usecases/bank/get_all_banks.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../../../../../core/resources/pair.dart';
+import '../../../../../di/injection_container.dart';
 import '../../../../domain/entities/bank.dart';
 import '../../../globalwidgets/my_appbar.dart';
 import '../bloc/bank_bloc.dart';
@@ -63,9 +65,15 @@ class _BankListScreenState extends State<BankListScreen> {
     }
   }
 
+  Future<Pair<int, List<BankEntity>>> searchBank(String value, int page) async {
+    final GetAllbankUseCase getAllbankUseCase = sl<GetAllbankUseCase>();
+    final dataState = await getAllbankUseCase(params: Pair(value, page));
+    return dataState;
+  }
+
   Future<Pair<int, List<BankEntity>>> getListBanks(int page) async {
     assert(page >= 1);
-    final data = await bankController.searchBank(searchQuery.value, page);
+    final data = await searchBank(searchQuery, page);
     return data;
   }
 

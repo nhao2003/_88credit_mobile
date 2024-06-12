@@ -143,6 +143,10 @@ class _AddBankCardScreenState extends State<AddBankCardScreen> {
           // thêm ngân hàng ============================================
           BlocBuilder<BankBloc, BankState>(
             builder: (context, state) {
+              if (state.addBankCardStatus == AddBankCardStatus.success) {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              }
               return Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),

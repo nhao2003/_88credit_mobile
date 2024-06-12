@@ -9,16 +9,6 @@ sealed class BankEvent extends Equatable {
 
 class GetBankCard extends BankEvent {}
 
-class SearchBank extends BankEvent {
-  final String value;
-  final int page;
-
-  const SearchBank(this.value, this.page);
-
-  @override
-  List<Object> get props => [value, page];
-}
-
 class MarkAsPrimaryCard extends BankEvent {
   final String idCard;
 
@@ -47,10 +37,10 @@ class AddBankCard extends BankEvent {
 }
 
 class DeleteBankCard extends BankEvent {
-  final String idCard;
+  final BankCardEntity card;
 
-  const DeleteBankCard(this.idCard);
+  const DeleteBankCard(this.card);
 
   @override
-  List<Object> get props => [idCard];
+  List<Object> get props => [card];
 }

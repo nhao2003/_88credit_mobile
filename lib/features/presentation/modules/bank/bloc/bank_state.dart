@@ -1,25 +1,27 @@
 part of 'bank_bloc.dart';
 
-enum GetBankCardStatus { loading, success, error }
+enum GetBankCardStatus { init, loading, success, error }
 
-enum MarkAsPrimaryBankCardStatus { loading, success, error }
+enum MarkAsPrimaryBankCardStatus { init, loading, success, error }
 
-enum AddBankCardStatus { loading, success, error }
+enum AddBankCardStatus { init, loading, success, error }
 
-enum DeleteBankCardStatus { loading, success, error }
+enum DeleteBankCardStatus { init, loading, success, error }
 
 class BankState extends Equatable {
   final GetBankCardStatus getBankCardStatus;
   final List<BankCardEntity> listBankCards;
   final MarkAsPrimaryBankCardStatus markAsPrimaryBankCardStatus;
   final AddBankCardStatus addBankCardStatus;
+  final DeleteBankCardStatus deleteBankCardStatus;
   final BankEntity selectedBank;
 
   const BankState(
-      {this.getBankCardStatus = GetBankCardStatus.loading,
+      {this.getBankCardStatus = GetBankCardStatus.init,
       this.listBankCards = const [],
-      this.markAsPrimaryBankCardStatus = MarkAsPrimaryBankCardStatus.loading,
-      this.addBankCardStatus = AddBankCardStatus.loading,
+      this.markAsPrimaryBankCardStatus = MarkAsPrimaryBankCardStatus.init,
+      this.addBankCardStatus = AddBankCardStatus.init,
+      this.deleteBankCardStatus = DeleteBankCardStatus.init,
       this.selectedBank = const BankEntity.empty()});
 
   BankState copyWith(
@@ -27,6 +29,7 @@ class BankState extends Equatable {
       List<BankCardEntity>? listBankCards,
       MarkAsPrimaryBankCardStatus? markAsPrimaryBankCardStatus,
       AddBankCardStatus? addBankCardStatus,
+      DeleteBankCardStatus? deleteBankCardStatus,
       BankEntity? selectedBank}) {
     return BankState(
       getBankCardStatus: getBankCardStatus ?? this.getBankCardStatus,
@@ -34,6 +37,7 @@ class BankState extends Equatable {
       markAsPrimaryBankCardStatus:
           markAsPrimaryBankCardStatus ?? this.markAsPrimaryBankCardStatus,
       addBankCardStatus: addBankCardStatus ?? this.addBankCardStatus,
+      deleteBankCardStatus: deleteBankCardStatus ?? this.deleteBankCardStatus,
       selectedBank: selectedBank ?? this.selectedBank,
     );
   }
@@ -44,6 +48,7 @@ class BankState extends Equatable {
         listBankCards,
         markAsPrimaryBankCardStatus,
         addBankCardStatus,
+        deleteBankCardStatus,
         selectedBank,
       ];
 }
