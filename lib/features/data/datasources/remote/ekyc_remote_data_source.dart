@@ -8,6 +8,7 @@ import 'package:retrofit/dio.dart';
 import '../../../../config/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../di/injection_container.dart';
+import '../../models/back_card_info.dart';
 import '../local/authentication_local_data_source.dart';
 
 abstract class EkycRemoteDataSrc {
@@ -104,7 +105,49 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> sendOCRBack(String requestId, File image) async {
-    throw UnimplementedError();
+    var url = '$apiUrl$kOrcBackEndpoint/$requestId';
+    try {
+      print(url);
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+
+      String fileName = image.path.split('/').last;
+      print("filename: $fileName");
+
+      MultipartFile multipartFile =
+          await MultipartFile.fromFile(image.path, filename: fileName);
+
+      FormData formData = FormData.fromMap({
+        "file": multipartFile,
+        "title": "Ảnh sau cccd",
+        "description": "Ảnh sau cccd",
+      });
+
+      // Gửi yêu cầu đến server
+      final response = await client.post(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+        data: formData,
+      );
+
+      if (response.statusCode != HttpStatus.created) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      final request = BackCardInfo.fromJson(response.data["data"]);
+
+      print(request.toString());
+
+      return HttpResponse(null, response);
+    } catch (error) {
+      throw ErrorHelpers.handleException(error);
+    }
   }
 
   @override

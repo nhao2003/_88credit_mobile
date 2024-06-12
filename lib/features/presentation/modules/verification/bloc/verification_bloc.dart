@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:_88credit_mobile/core/resources/data_state.dart';
 import 'package:_88credit_mobile/core/resources/pair.dart';
 import 'package:_88credit_mobile/features/domain/usecases/ekyc/init_request_usecase.dart';
+import 'package:_88credit_mobile/features/domain/usecases/ekyc/send_ocr_back_usecase.dart';
 import 'package:_88credit_mobile/features/domain/usecases/ekyc/send_ocr_front_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -92,8 +93,25 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
     } else {
       emit(state.copyWith(
         urlImageCardBack: event.file.path,
-        uploadCardStatus: UploadCardStatus.success,
+        uploadCardStatus: UploadCardStatus.loading,
       ));
+
+      // upload image
+      print("Request id: ${state.requestId}");
+      print("File path: ${event.file.path}");
+      SendOcrBackUseCase sendOcrBackUseCase = sl<SendOcrBackUseCase>();
+      final result =
+          await sendOcrBackUseCase(params: Pair(state.requestId, event.file));
+
+      if (result is DataSuccess) {
+        emit(state.copyWith(
+          uploadCardStatus: UploadCardStatus.success,
+        ));
+      } else {
+        emit(state.copyWith(
+          uploadCardStatus: UploadCardStatus.failure,
+        ));
+      }
     }
   }
 }
