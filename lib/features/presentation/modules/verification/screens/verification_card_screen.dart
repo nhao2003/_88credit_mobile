@@ -20,6 +20,7 @@ class VerificationCardScreen extends StatefulWidget {
 class _VerificationCardScreenState extends State<VerificationCardScreen> {
   @override
   void initState() {
+    context.read<VerificationBloc>().add(InitStateEvent());
     context.read<VerificationBloc>().add(InitEkycEvent());
     super.initState();
   }
@@ -89,16 +90,18 @@ class _VerificationCardScreenState extends State<VerificationCardScreen> {
                 child: BlocBuilder<VerificationBloc, VerificationState>(
                   builder: (context, state) {
                     return ElevatedButton(
-                      onPressed:
-                          state.uploadCardStatus != UploadCardStatus.loading
-                              ? () {
-                                  Navigator.pushNamed(
-                                      context, AppRoutes.verificationPortrait);
-                                  context
-                                      .read<VerificationBloc>()
-                                      .add(const ChangeStepEvent(1));
-                                }
-                              : null,
+                      onPressed: state.uploadCardFrontStatus !=
+                                  UploadCardFrontStatus.loading &&
+                              state.uploadCardBackStatus !=
+                                  UploadCardBackStatus.loading
+                          ? () {
+                              Navigator.pushNamed(
+                                  context, AppRoutes.verificationPortrait);
+                              context
+                                  .read<VerificationBloc>()
+                                  .add(const ChangeStepEvent(1));
+                            }
+                          : null,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.green,
                         padding: const EdgeInsets.symmetric(vertical: 15),

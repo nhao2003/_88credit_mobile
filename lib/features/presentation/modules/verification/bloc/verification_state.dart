@@ -1,20 +1,25 @@
 part of 'verification_bloc.dart';
 
-enum InitEkycStatus { loading, success, failure }
+enum InitEkycStatus { init, loading, success, failure }
 
-enum UploadCardStatus { loading, success, failure }
+enum UploadCardFrontStatus { init, loading, success, failure }
 
-enum UploadPortraitstatus { loading, success, failure }
+enum UploadCardBackStatus { init, loading, success, failure }
 
-enum UploadInfoStatus { loading, success, failure }
+enum UploadPortraitstatus { init, loading, success, failure }
+
+enum UploadInfoStatus { init, loading, success, failure }
 
 final class VerificationState extends Equatable {
   final InitEkycStatus initEkycStatus;
-  final UploadCardStatus uploadCardStatus;
+  final UploadCardFrontStatus uploadCardFrontStatus;
+  final UploadCardBackStatus uploadCardBackStatus;
   final UploadPortraitstatus uploadPortraitstatus;
   final UploadInfoStatus uploadInfoStatus;
 
   final String requestId;
+  final FrontCardInfo frontCardInfo;
+  final BackCardInfo backCardInfo;
 
   final int activeStep;
   final int selectedRadio;
@@ -33,11 +38,14 @@ final class VerificationState extends Equatable {
   final bool isApprove;
 
   const VerificationState({
-    this.initEkycStatus = InitEkycStatus.loading,
-    this.uploadCardStatus = UploadCardStatus.loading,
-    this.uploadPortraitstatus = UploadPortraitstatus.loading,
-    this.uploadInfoStatus = UploadInfoStatus.loading,
+    this.initEkycStatus = InitEkycStatus.init,
+    this.uploadCardFrontStatus = UploadCardFrontStatus.init,
+    this.uploadCardBackStatus = UploadCardBackStatus.init,
+    this.uploadPortraitstatus = UploadPortraitstatus.init,
+    this.uploadInfoStatus = UploadInfoStatus.init,
     this.requestId = "",
+    this.frontCardInfo = const FrontCardInfo(),
+    this.backCardInfo = const BackCardInfo(),
     this.activeStep = 0,
     this.selectedRadio = 0,
     this.urlImageCardFront = "",
@@ -53,10 +61,13 @@ final class VerificationState extends Equatable {
 
   VerificationState copyWith({
     InitEkycStatus? initEkycStatus,
-    UploadCardStatus? uploadCardStatus,
+    UploadCardFrontStatus? uploadCardFrontStatus,
+    UploadCardBackStatus? uploadCardBackStatus,
     UploadPortraitstatus? uploadPortraitstatus,
     UploadInfoStatus? uploadInfoStatus,
     String? requestId,
+    FrontCardInfo? frontCardInfo,
+    BackCardInfo? backCardInfo,
     int? activeStep,
     int? selectedRadio,
     String? urlImageCardFront,
@@ -71,10 +82,14 @@ final class VerificationState extends Equatable {
   }) {
     return VerificationState(
       initEkycStatus: initEkycStatus ?? this.initEkycStatus,
-      uploadCardStatus: uploadCardStatus ?? this.uploadCardStatus,
+      uploadCardFrontStatus:
+          uploadCardFrontStatus ?? this.uploadCardFrontStatus,
+      uploadCardBackStatus: uploadCardBackStatus ?? this.uploadCardBackStatus,
       uploadPortraitstatus: uploadPortraitstatus ?? this.uploadPortraitstatus,
       uploadInfoStatus: uploadInfoStatus ?? this.uploadInfoStatus,
       requestId: requestId ?? this.requestId,
+      frontCardInfo: frontCardInfo ?? this.frontCardInfo,
+      backCardInfo: backCardInfo ?? this.backCardInfo,
       activeStep: activeStep ?? this.activeStep,
       selectedRadio: selectedRadio ?? this.selectedRadio,
       urlImageCardFront: urlImageCardFront ?? this.urlImageCardFront,
@@ -90,10 +105,34 @@ final class VerificationState extends Equatable {
     );
   }
 
+  const VerificationState.init()
+      : initEkycStatus = InitEkycStatus.init,
+        uploadCardFrontStatus = UploadCardFrontStatus.init,
+        uploadCardBackStatus = UploadCardBackStatus.init,
+        uploadPortraitstatus = UploadPortraitstatus.init,
+        uploadInfoStatus = UploadInfoStatus.init,
+        requestId = "",
+        frontCardInfo = const FrontCardInfo(),
+        backCardInfo = const BackCardInfo(),
+        activeStep = 0,
+        selectedRadio = 0,
+        urlImageCardFront = "",
+        urlImageCardBack = "",
+        isUploadCardFront = false,
+        isUploadCardBack = false,
+        urlImagePortrait = "",
+        typeIndetificationDocument = TypeIndetificationDocument.canCuocCongDan,
+        issuedBy = "",
+        isMale = true,
+        isApprove = false;
+
   @override
   List<Object> get props => [
         initEkycStatus,
-        uploadCardStatus,
+        uploadCardFrontStatus,
+        uploadCardBackStatus,
+        frontCardInfo,
+        backCardInfo,
         uploadPortraitstatus,
         uploadInfoStatus,
         requestId,

@@ -13,8 +13,9 @@ import '../local/authentication_local_data_source.dart';
 
 abstract class EkycRemoteDataSrc {
   Future<HttpResponse<String>> initEkycRequest();
-  Future<HttpResponse<void>> sendOCRFront(String requestId, File image);
-  Future<HttpResponse<void>> sendOCRBack(String requestId, File image);
+  Future<HttpResponse<FrontCardInfo>> sendOCRFront(
+      String requestId, File image);
+  Future<HttpResponse<BackCardInfo>> sendOCRBack(String requestId, File image);
   Future<HttpResponse<void>> sendFace(String requestId, File image);
   Future<HttpResponse<void>> sendVideoSefie(String requestId, File video);
   Future<HttpResponse<void>> submit(String requestId);
@@ -57,7 +58,8 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<void>> sendOCRFront(String requestId, File image) async {
+  Future<HttpResponse<FrontCardInfo>> sendOCRFront(
+      String requestId, File image) async {
     var url = '$apiUrl$kOrcFrontEndpoint/$requestId';
     try {
       print(url);
@@ -97,14 +99,15 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
       print(request.toString());
 
-      return HttpResponse(null, response);
+      return HttpResponse(request, response);
     } catch (error) {
       throw ErrorHelpers.handleException(error);
     }
   }
 
   @override
-  Future<HttpResponse<void>> sendOCRBack(String requestId, File image) async {
+  Future<HttpResponse<BackCardInfo>> sendOCRBack(
+      String requestId, File image) async {
     var url = '$apiUrl$kOrcBackEndpoint/$requestId';
     try {
       print(url);
@@ -144,7 +147,7 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
       print(request.toString());
 
-      return HttpResponse(null, response);
+      return HttpResponse(request, response);
     } catch (error) {
       throw ErrorHelpers.handleException(error);
     }

@@ -7,6 +7,8 @@ sealed class VerificationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitStateEvent extends VerificationEvent {}
+
 class InitEkycEvent extends VerificationEvent {}
 
 class ChangeStepEvent extends VerificationEvent {
@@ -34,11 +36,21 @@ class ChangeTypeIndetificationDocument extends VerificationEvent {
   List<Object> get props => [type];
 }
 
-class UploadImageFile extends VerificationEvent {
+class UploadFrontCardFile extends VerificationEvent {
   final File file;
   final bool typeImage;
 
-  const UploadImageFile(this.file, this.typeImage);
+  const UploadFrontCardFile(this.file, this.typeImage);
+
+  @override
+  List<Object> get props => [file, typeImage];
+}
+
+class UploadBackCardFile extends VerificationEvent {
+  final File file;
+  final bool typeImage;
+
+  const UploadBackCardFile(this.file, this.typeImage);
 
   @override
   List<Object> get props => [file, typeImage];

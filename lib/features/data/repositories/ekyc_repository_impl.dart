@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:_88credit_mobile/core/resources/data_state.dart';
 import 'package:_88credit_mobile/features/data/datasources/remote/ekyc_remote_data_source.dart';
+import 'package:_88credit_mobile/features/data/models/back_card_info.dart';
+import 'package:_88credit_mobile/features/data/models/front_card_info.dart';
 import 'package:dio/dio.dart';
 
 import '../../domain/repositories/ekyc_repository.dart';
@@ -50,7 +52,8 @@ class EkycRepositoryImpl implements EkycRepository {
   }
 
   @override
-  Future<DataState<void>> sendOCRBack(String requestId, File image) async {
+  Future<DataState<BackCardInfo>> sendOCRBack(
+      String requestId, File image) async {
     try {
       final response = await ekycRemoteDataSrc.sendOCRBack(requestId, image);
       if (response.response.statusCode == HttpStatus.created) {
@@ -69,7 +72,8 @@ class EkycRepositoryImpl implements EkycRepository {
   }
 
   @override
-  Future<DataState<void>> sendOCRFront(String requestId, File image) async {
+  Future<DataState<FrontCardInfo>> sendOCRFront(
+      String requestId, File image) async {
     try {
       final response = await ekycRemoteDataSrc.sendOCRFront(requestId, image);
       if (response.response.statusCode == HttpStatus.created) {

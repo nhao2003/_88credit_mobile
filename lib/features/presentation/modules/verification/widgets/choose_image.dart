@@ -76,7 +76,11 @@ class _ChooseImageState extends State<ChooseImage> {
   }
 
   Future<void> handelUploadIdCard(File file, bool isFront) async {
-    context.read<VerificationBloc>().add(UploadImageFile(file, isFront));
+    if (isFront) {
+      context.read<VerificationBloc>().add(UploadFrontCardFile(file, isFront));
+    } else {
+      context.read<VerificationBloc>().add(UploadBackCardFile(file, isFront));
+    }
   }
 
   void _pickImageFromCamera() async {
@@ -86,6 +90,16 @@ class _ChooseImageState extends State<ChooseImage> {
       _pickedImage = File(pickedImageFile.path);
       handelUploadIdCard(File(_pickedImage!.path), widget.typeImage);
       setState(() {});
+    }
+  }
+
+  bool checkIsLoading(VerificationState state) {
+    if (widget.typeImage) {
+      print("uploadCardFrontStatus: ${state.uploadCardFrontStatus}");
+      return state.uploadCardFrontStatus == UploadCardFrontStatus.loading;
+    } else {
+      print("uploadCardBackStatus: ${state.uploadCardBackStatus}");
+      return state.uploadCardBackStatus == UploadCardBackStatus.loading;
     }
   }
 
@@ -108,57 +122,73 @@ class _ChooseImageState extends State<ChooseImage> {
         children: [
           BlocBuilder<VerificationBloc, VerificationState>(
             builder: (context, state) {
-              return InkWell(
-                onTap: () => _showPicker(context),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(10),
+              return Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    height: 130,
+                    width: double.infinity,
+                    child: _pickedImage != null
+                        ? Image.file(
+                            _pickedImage!,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            fit: BoxFit.cover,
+                            getAssetImage(state.typeIndetificationDocument),
+                          ),
                   ),
-                  padding: const EdgeInsets.all(10),
-                  height: 130,
-                  width: double.infinity,
-                  child: _pickedImage != null
-                      ? Image.file(
-                          _pickedImage!,
-                          fit: BoxFit.cover,
-                        )
-                      : Image.asset(
-                          fit: BoxFit.cover,
-                          getAssetImage(state.typeIndetificationDocument),
-                        ),
-                ),
+                  // loading center image
+                  if (checkIsLoading(state))
+                    const Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                ],
               );
             },
           ),
           const SizedBox(height: 12),
-          InkWell(
-            onTap: () => _showPicker(context),
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              decoration: BoxDecoration(
-                color: AppColors.green,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.camera_alt,
-                      color: AppColors.white,
-                      size: 20,
+          BlocBuilder<VerificationBloc, VerificationState>(
+            builder: (context, state) {
+              return InkWell(
+                onTap:
+                    checkIsLoading(state) ? null : () => _showPicker(context),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  decoration: BoxDecoration(
+                    color: checkIsLoading(state)
+                        ? AppColors.grey500
+                        : AppColors.green,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.camera_alt,
+                          color: AppColors.white,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          widget.typeImage ? "Chụp mặt trước" : "Chụp mặt sau",
+                          style: AppTextStyles.bold14
+                              .copyWith(color: AppColors.white),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      widget.typeImage ? "Chụp mặt trước" : "Chụp mặt sau",
-                      style:
-                          AppTextStyles.bold14.copyWith(color: AppColors.white),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           )
         ],
       ),
