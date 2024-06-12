@@ -21,7 +21,7 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
     on<ChangeReceiver>((event, emit) {
       emit(state.copyWith(receiver: event.receiver));
     });
-    on<GetPrimaryBankCard>((event, emit) {});
+    on<GetPrimaryBankCard>(onGetPrimaryBankCard);
     on<PostRequest>((event, emit) {});
     on<ChangePortrait>((event, emit) {
       emit(state.copyWith(portrait: () => event.portrait));
@@ -69,16 +69,30 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
     getNewRequest(event, listMedia, senderPrimaryBankCard);
   }
 
+  Future<void> onGetPrimaryBankCard(
+      GetPrimaryBankCard event, Emitter<CreateRequestState> emit) async {
+    emit(state.copyWith(
+        getPrimaryBankCardStatus: GetPrimaryBankCardStatus.loading));
+    try {
+      final primaryBankCard = await getPrimaryBankCard();
+      emit(state.copyWith(
+        primaryBankCard: primaryBankCard,
+        getPrimaryBankCardStatus: GetPrimaryBankCardStatus.success,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+          getPrimaryBankCardStatus: GetPrimaryBankCardStatus.failure));
+    }
+  }
+
   GetPrimaryBankCardUseCase getPrimaryBankCardUseCase =
       sl<GetPrimaryBankCardUseCase>();
-
   Future<BankCardEntity> getPrimaryBankCard() async {
     final dataState = await getPrimaryBankCardUseCase();
-    final primaryBankCard = dataState;
-    if (primaryBankCard == null) {
+    if (dataState == null) {
       throw Exception("Primary bank card not found");
     }
-    return primaryBankCard;
+    return dataState;
   }
 
   Future<List<dynamic>> uploadImages() async {

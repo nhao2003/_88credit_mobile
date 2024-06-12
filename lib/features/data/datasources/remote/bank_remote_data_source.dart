@@ -227,6 +227,7 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
     String url = '$apiUrl$kGetPrimaryBankCardEndpoint';
 
     try {
+      print(url);
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -241,6 +242,8 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
             sendTimeout: const Duration(seconds: 10),
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
+
+      print(response);
 
       if (response.statusCode != HttpStatus.ok) {
         throw ApiException(

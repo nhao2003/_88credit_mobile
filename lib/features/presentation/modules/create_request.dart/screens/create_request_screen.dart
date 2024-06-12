@@ -33,6 +33,12 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
   final discriptionTextController = TextEditingController();
 
   @override
+  void initState() {
+    context.read<CreateRequestBloc>().add(const GetPrimaryBankCard());
+    super.initState();
+  }
+
+  @override
   void dispose() {
     loanAmountTextController.dispose();
     interestRateTextController.dispose();
