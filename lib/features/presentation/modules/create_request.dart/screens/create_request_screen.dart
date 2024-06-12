@@ -71,6 +71,8 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
       );
     }
 
+    print("upload request");
+
     context.read<CreateRequestBloc>().add(
           SendRequestEvent(
             description: discriptionTextController.text,
@@ -98,6 +100,15 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
         children: [
           BlocBuilder<CreateRequestBloc, CreateRequestState>(
               builder: (context, state) {
+            if (state.createRequestStatus == CreateRequestStatus.success) {
+              context.snackBar(
+                'Tạo yêu cầu thành công!',
+              );
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pop(context);
+              });
+            }
+
             return Form(
               key: requestFormKey,
               child: Column(

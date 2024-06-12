@@ -21,7 +21,12 @@ class UserEntity extends Equatable {
   final DateTime? bannedUtil;
   final String? banReason;
 
-  String get fullName => "$firstName $lastName";
+  String get fullName {
+    if (firstName == null && lastName == null) {
+      return "Không có dữ liệu";
+    }
+    return "$firstName $lastName";
+  }
 
   const UserEntity({
     this.id,

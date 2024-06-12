@@ -4,12 +4,16 @@ import 'package:_88credit_mobile/features/domain/entities/user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../core/resources/data_state.dart';
+import '../../../../../core/resources/pair.dart';
 import '../../../../../di/injection_container.dart';
 import '../../../../domain/entities/loan_request.dart';
 import '../../../../domain/enums/loan_reason_types.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
 import '../../../../domain/usecases/bank/get_primary_bank_card.dart';
+import '../../../../domain/usecases/contract/create_loan_request.dart';
+import '../../../../domain/usecases/media/upload_file.dart';
 
 part 'create_request_event.dart';
 part 'create_request_state.dart';
@@ -41,7 +45,7 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
   }
 
   UserEntity receiverDefault = UserEntity(
-    id: "7c90e199-d3c7-4b50-8b08-7f8c40ab5412",
+    id: "2f434eae-7b6d-4b5e-8c09-38f315173743",
     status: UserStatus.verified,
     isIdentityVerified: true,
     role: Role.user,
@@ -64,9 +68,25 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
     SendRequestEvent event,
     Emitter<CreateRequestState> emit,
   ) async {
-    final senderPrimaryBankCard = await getPrimaryBankCard();
-    final listMedia = await uploadImages();
-    getNewRequest(event, listMedia, senderPrimaryBankCard);
+    try {
+      emit(state.copyWith(status: CreateRequestStatus.loading));
+
+      CreateRequestsUseCase createRequestUseCase = sl<CreateRequestsUseCase>();
+      final listMedia = await uploadImages();
+      final request = getNewRequest(event, listMedia, state.primaryBankCard);
+      final dataState = await createRequestUseCase(params: request);
+
+      if (dataState is DataSuccess) {
+        emit(state.copyWith(status: CreateRequestStatus.success));
+      } else {
+        emit(state.copyWith(
+            status: CreateRequestStatus.failure,
+            failureString: dataState.error.toString()));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          status: CreateRequestStatus.failure, failureString: e.toString()));
+    }
   }
 
   Future<void> onGetPrimaryBankCard(
@@ -95,36 +115,55 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
     return dataState;
   }
 
-  Future<List<dynamic>> uploadImages() async {
+  Future<List<String>> uploadImages() async {
+    // UploadFileUseCase uploadUsecase = sl<UploadFileUseCase>();
+    // // check null
+    // if (state.portrait == null ||
+    //     state.idCardFrontPhoto == null ||
+    //     state.idCardBackPhoto == null ||
+    //     state.video == null) {
+    //   throw Exception("Some images are null");
+    // }
     // List responses = await Future.wait([
-    //   uploadImages(portrait.value!),
-    //   uploadImages(idCardFrontPhoto.value!),
-    //   uploadImages(idCardBackPhoto.value!),
-    //   uploadVideos(video.value!),
+    //   uploadUsecase(params: Pair(state.portrait!, "request")),
+    //   uploadUsecase(params: Pair(state.idCardFrontPhoto!, "request")),
+    //   uploadUsecase(params: Pair(state.idCardBackPhoto!, "request")),
+    //   // uploadUsecase(params: Pair(state.video!, "request")),
     // ]);
-    return [
-      ["https://picsum.photos/200/300?random=1"],
-      ["https://picsum.photos/200/300?random=2"],
-      ["https://picsum.photos/200/300?random=3"],
-      [
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-      ],
+    // List<String> urls = [];
+    // // if each response is success, return list of urls
+    // for (var response in responses) {
+    //   if (response is DataSuccess) {
+    //     urls.add(response.data!);
+    //   }
+    // }
+    // urls.add(
+    //     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+    List<String> urls = [
+      "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+      "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+      "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
     ];
+
+    return urls;
   }
 
-  Future<LoanRequestEntity> getNewRequest(SendRequestEvent event,
-      List<dynamic> listMedia, BankCardEntity senderPrimaryBankCard) async {
-    String portraitUrl = listMedia[0][0];
-    String idCardFrontPhotoUrl = listMedia[1][0];
-    String idCardBackPhotoUrl = listMedia[2][0];
-    String videoUrl = listMedia[3][0];
+  LoanRequestEntity getNewRequest(SendRequestEvent event,
+      List<dynamic> listMedia, BankCardEntity senderPrimaryBankCard) {
+    String portraitUrl = listMedia[0];
+    String idCardFrontPhotoUrl = listMedia[1];
+    String idCardBackPhotoUrl = listMedia[2];
+    String videoUrl = listMedia[3];
 
     final request = LoanRequestEntity(
       receiverId: receiverDefault.id,
+      receiver: receiverDefault,
       description: event.description,
       loanAmount: event.loanAmount,
       interestRate: event.interestRate,
       overdueInterestRate: event.overdueInterestRate,
+      loanTenureMonths: event.loanTenureMonths,
       loanReasonType: state.loanReasonType,
       loanReason: event.loanReason,
       videoConfirmationUrl: videoUrl,

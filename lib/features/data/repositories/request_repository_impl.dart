@@ -19,10 +19,12 @@ class RequestRepositoryImpl implements RequestRepository {
   @override
   Future<DataState<void>> createRequest(LoanRequestEntity request) async {
     try {
+      print(
+          'RequestRepositoryImpl.createRequest: ${LoanRequestModel.fromEntity(request)}');
       final httpResponse =
           await _dataSrc.createRequest(LoanRequestModel.fromEntity(request));
 
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.created) {
         return DataSuccess(httpResponse.data);
       } else {
         return DataFailed(

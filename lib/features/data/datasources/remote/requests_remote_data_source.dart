@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import '../../../../config/constants/constants.dart';
@@ -42,7 +44,9 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
   @override
   Future<HttpResponse<void>> createRequest(LoanRequestModel request) async {
     const url = '$apiUrl$kCreateRequestEndpoint';
+    print(request.toJson());
     try {
+      print(url);
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -52,7 +56,6 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
       }
 
       // Gửi yêu cầu đến server
-      print(request.toJson());
 
       final response = await client.post(
         url,
@@ -62,7 +65,9 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
         data: request.toJson(),
       );
 
-      if (response.statusCode != 200) {
+      print(response.data);
+
+      if (response.statusCode != HttpStatus.created) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
@@ -184,7 +189,7 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.ok) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
@@ -226,7 +231,7 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
             "rejectedReason": rejectedReason,
           });
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.ok) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,

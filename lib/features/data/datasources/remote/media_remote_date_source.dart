@@ -38,6 +38,8 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
     const url = '$apiUrl$kUploadMediaEndpoint';
     print(url);
     try {
+      print("Uploading media: ${media.path}");
+
       // authen
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -47,10 +49,28 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
       }
 
       String fileName = media.path.split('/').last;
+      print("filename: $fileName");
+
+      // Kiểm tra xem file có tồn tại không
+      bool fileExists = await media.exists();
+      if (!fileExists) {
+        throw Exception("File does not exist: ${media.path}");
+      }
+
+      // Tạo MultipartFile
+      MultipartFile multipartFile =
+          await MultipartFile.fromFile(media.path, filename: fileName);
+      print(
+          "MultipartFile: ${multipartFile.filename}, ${multipartFile.length}");
+
+      // Tạo FormData
       FormData formData = FormData.fromMap({
-        "file": await MultipartFile.fromFile(media.path, filename: fileName),
-        "folder": "/$folderName",
+        "file": multipartFile,
+        "folder": folderName ?? "",
       });
+
+      // In log chi tiết FormData
+      print("FormData: ${formData.fields}");
 
       final response = await client.post(
         url,
@@ -66,6 +86,8 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
           requestOptions: response.requestOptions,
         );
       }
+
+      print("Response: ${response.data["data"]}");
 
       final data = response.data["data"];
 

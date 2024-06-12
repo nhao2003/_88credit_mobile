@@ -143,4 +143,10 @@ class LoanRequestEntity extends Equatable {
       receiverBankCard: receiverBankCard ?? this.receiverBankCard,
     );
   }
+
+  // to string
+  @override
+  String toString() {
+    return 'LoanRequestEntity(id: $id, status: $status, senderId: $senderId, sender: $sender, receiverId: $receiverId, receiver: $receiver, description: $description, loanAmount: $loanAmount, interestRate: $interestRate, overdueInterestRate: $overdueInterestRate, loanTenureMonths: $loanTenureMonths, loanReasonType: $loanReasonType, loanReason: $loanReason, videoConfirmationUrl: $videoConfirmationUrl, portaitPhotoUrl: $portaitPhotoUrl, idCardFrontPhotoUrl: $idCardFrontPhotoUrl, idCardBackPhotoUrl: $idCardBackPhotoUrl, senderBankCardId: $senderBankCardId, receiverBankCardId: $receiverBankCardId, rejectedReason: $rejectedReason, createdAt: $createdAt, updatedAt: $updatedAt, deletedAt: $deletedAt, senderBankCard: $senderBankCard, receiverBankCard: $receiverBankCard)';
+  }
 }
