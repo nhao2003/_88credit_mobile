@@ -7,6 +7,15 @@ sealed class CreateRequestEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class ChangeCreateRequestStatus extends CreateRequestEvent {
+  final CreateRequestStatus status;
+
+  const ChangeCreateRequestStatus(this.status);
+
+  @override
+  List<Object> get props => [status];
+}
+
 class SendRequestEvent extends CreateRequestEvent {
   final String? description;
   final double? loanAmount;

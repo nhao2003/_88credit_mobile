@@ -22,6 +22,9 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
   CreateRequestBloc() : super(const CreateRequestState()) {
     on<CreateRequestEvent>((event, emit) {});
     on<SendRequestEvent>(_sendRequest);
+    on<ChangeCreateRequestStatus>((event, emit) {
+      emit(state.copyWith(status: event.status));
+    });
     on<ChangeReceiver>((event, emit) {
       emit(state.copyWith(receiver: event.receiver));
     });
@@ -116,35 +119,35 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
   }
 
   Future<List<String>> uploadImages() async {
-    // UploadFileUseCase uploadUsecase = sl<UploadFileUseCase>();
-    // // check null
-    // if (state.portrait == null ||
-    //     state.idCardFrontPhoto == null ||
-    //     state.idCardBackPhoto == null ||
-    //     state.video == null) {
-    //   throw Exception("Some images are null");
-    // }
-    // List responses = await Future.wait([
-    //   uploadUsecase(params: Pair(state.portrait!, "request")),
-    //   uploadUsecase(params: Pair(state.idCardFrontPhoto!, "request")),
-    //   uploadUsecase(params: Pair(state.idCardBackPhoto!, "request")),
-    //   // uploadUsecase(params: Pair(state.video!, "request")),
-    // ]);
-    // List<String> urls = [];
-    // // if each response is success, return list of urls
-    // for (var response in responses) {
-    //   if (response is DataSuccess) {
-    //     urls.add(response.data!);
-    //   }
-    // }
-    // urls.add(
-    //     "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
-    List<String> urls = [
-      "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
-      "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
-      "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
-      "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-    ];
+    UploadFileUseCase uploadUsecase = sl<UploadFileUseCase>();
+    // check null
+    if (state.portrait == null ||
+        state.idCardFrontPhoto == null ||
+        state.idCardBackPhoto == null ||
+        state.video == null) {
+      throw Exception("Some images are null");
+    }
+    List responses = await Future.wait([
+      uploadUsecase(params: Pair(state.portrait!, "request")),
+      uploadUsecase(params: Pair(state.idCardFrontPhoto!, "request")),
+      uploadUsecase(params: Pair(state.idCardBackPhoto!, "request")),
+      // uploadUsecase(params: Pair(state.video!, "request")),
+    ]);
+    List<String> urls = [];
+    // if each response is success, return list of urls
+    for (var response in responses) {
+      if (response is DataSuccess) {
+        urls.add(response.data!);
+      }
+    }
+    urls.add(
+        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+    // List<String> urls = [
+    //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+    //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+    //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+    //   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    // ];
 
     return urls;
   }

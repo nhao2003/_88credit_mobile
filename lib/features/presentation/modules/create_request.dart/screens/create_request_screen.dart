@@ -104,6 +104,8 @@ class _CreateRequestScreenState extends State<CreateRequestScreen> {
               context.snackBar(
                 'Tạo yêu cầu thành công!',
               );
+              context.read<CreateRequestBloc>().add(
+                  const ChangeCreateRequestStatus(CreateRequestStatus.initial));
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.pop(context);
               });
