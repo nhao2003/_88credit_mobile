@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import '../../../../config/constants/constants.dart';
@@ -58,8 +57,8 @@ class UserRemoteDataSrcImpl extends UserRemoteDataSrc {
 
   @override
   Future<HttpResponse<UserModel>> getProfile() async {
-    String url = '$apiUrl$kGetMe';
-    print(url);
+    String url = '$apiUrl$kGetUserEndpoint';
+
     try {
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
@@ -69,12 +68,20 @@ class UserRemoteDataSrcImpl extends UserRemoteDataSrc {
             message: 'Access token is null', statusCode: 505);
       }
 
+      String userId = localDataSrc.getUserIdFromToken();
+
+      url += '/$userId';
+
+      print(url);
+
       final response = await client.get(
         url,
         options: Options(
             sendTimeout: const Duration(seconds: 10),
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
+
+      print(response);
 
       if (response.statusCode != HttpStatus.ok) {
         throw ApiException(

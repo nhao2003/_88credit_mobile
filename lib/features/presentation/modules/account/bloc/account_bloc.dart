@@ -1,5 +1,6 @@
 import 'package:_88credit_mobile/core/errors/exceptions.dart';
 import 'package:_88credit_mobile/features/domain/usecases/authentication/sign_out.dart';
+import 'package:_88credit_mobile/features/domain/usecases/user/get_user_id_usercase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/resources/data_state.dart';
@@ -7,6 +8,7 @@ import '../../../../../di/injection_container.dart';
 import '../../../../domain/entities/user.dart';
 import '../../../../domain/enums/role.dart';
 import '../../../../domain/enums/user_status.dart';
+import '../../../../domain/usecases/user/get_profile.dart';
 
 part 'account_event.dart';
 part 'account_state.dart';
@@ -16,6 +18,34 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
     on<AccountEvent>((event, emit) {});
     on<AccountGetUser>(_onGetUser);
     on<SigoutEvent>(_onSignout);
+    on<GetUserProfile>(_onGetUserProfile);
+  }
+
+  Future _onGetUserProfile(
+    GetUserProfile event,
+    Emitter<AccountState> emit,
+  ) async {
+    emit(state.copyWith(getAccountStatus: GetAccountStatus.loading));
+    try {
+      GetProfileUseCase getUserProfile = sl<GetProfileUseCase>();
+      final user = await getUserProfile();
+      if (user == null) {
+        emit(state.copyWith(getAccountStatus: GetAccountStatus.failure));
+        return;
+      }
+      emit(
+        state.copyWith(
+          getAccountStatus: GetAccountStatus.success,
+          user: user,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          getAccountStatus: GetAccountStatus.failure,
+        ),
+      );
+    }
   }
 
   Future _onGetUser(

@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/features/domain/usecases/authentication/get_user_id.dart';
 import 'package:_88credit_mobile/features/domain/usecases/user/get_user_id_usercase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,10 +27,20 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     GetUserProfile event,
     Emitter<UserProfileState> emit,
   ) async {
-    emit(state.copyWith(getUserProfileStatus: GetUserProfileStatus.loading));
+    emit(state.copyWith(
+        getUserProfileStatus: GetUserProfileStatus.loading, isMe: false));
     try {
       GetUserByIdUsecase getUserByIdUsecase = sl<GetUserByIdUsecase>();
       final user = await getUserByIdUsecase(params: event.userId);
+
+      GetUserIdUseCase getUserIdUseCase = sl<GetUserIdUseCase>();
+      final userId = await getUserIdUseCase();
+      print('userId: $userId');
+      print('event.userId: ${event.userId}');
+
+      if (userId == event.userId) {
+        emit(state.copyWith(isMe: true));
+      }
       if (user == null) {
         emit(
           state.copyWith(

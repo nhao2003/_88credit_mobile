@@ -12,8 +12,21 @@ import '../../../globalwidgets/my_appbar.dart';
 import '../../../globalwidgets/not_identity_card.dart';
 import '../bloc/account_bloc.dart';
 
-class AccountScreen extends StatelessWidget {
+class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
+
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<AccountBloc>().add(GetUserProfile());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +80,7 @@ class AccountScreen extends StatelessWidget {
                               if (!state.isIdentity) const NotIdentityCard(),
                             ],
                           ),
-                    leading: state.getAccountStatus == GetAccountStatus.loading
+                    leading: state.getAccountStatus == GetAccountStatus.success
                         ? ClipRRect(
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(50)),

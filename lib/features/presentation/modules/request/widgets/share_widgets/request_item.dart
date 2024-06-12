@@ -26,7 +26,8 @@ class RequestItem extends StatelessWidget {
   }
 
   onTapAvatar(BuildContext context) {
-    Navigator.of(context).pushNamed(AppRoutes.userProfile);
+    Navigator.of(context)
+        .pushNamed(AppRoutes.userProfile, arguments: request.sender);
   }
 
   Widget _buildStars() {

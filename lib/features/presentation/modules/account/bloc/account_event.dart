@@ -7,6 +7,8 @@ sealed class AccountEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetUserProfile extends AccountEvent {}
+
 class AccountGetUser extends AccountEvent {}
 
 class SigoutEvent extends AccountEvent {}
