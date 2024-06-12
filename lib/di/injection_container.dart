@@ -1,4 +1,5 @@
 import 'package:_88credit_mobile/config/routes/app_pages.dart';
+import 'package:_88credit_mobile/features/domain/usecases/contract/pay_loan_request.dart';
 import 'package:_88credit_mobile/features/domain/usecases/user/get_user_id_usercase.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -42,6 +43,7 @@ import '../features/domain/usecases/bank/get_bank_cards.dart';
 import '../features/domain/usecases/bank/get_primary_bank_card.dart';
 import '../features/domain/usecases/bank/mark_as_primary_bank_card.dart';
 import '../features/domain/usecases/blog/get_blogs.dart';
+import '../features/domain/usecases/contract/cancel_request.dart';
 import '../features/domain/usecases/contract/confirm_request.dart';
 import '../features/domain/usecases/contract/create_loan_request.dart';
 import '../features/domain/usecases/contract/get_borrowing_contracts.dart';

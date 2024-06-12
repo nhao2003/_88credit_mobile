@@ -28,8 +28,8 @@ abstract class RequestRemoteDataSrc {
       int? page);
   Future<HttpResponse<void>> createRequest(LoanRequestModel request);
   Future<HttpResponse<void>> confirmRequest(LoanRequestModel request);
-  Future<HttpResponse<void>> rejectRequest(
-      LoanRequestModel request, String rejectedReason);
+  Future<HttpResponse<void>> rejectRequest(LoanRequestModel request);
+  Future<HttpResponse<void>> cancelRequest(LoanRequestModel request);
   Future<HttpResponse<TransactionModel>> payLoanRequest(String id);
 
   Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
@@ -169,8 +169,10 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> confirmRequest(LoanRequestModel request) async {
-    String url = '$apiUrl$kConfirmRequestEndpoint/${request.id}';
+    String url =
+        '$apiUrl$kGetRequestEndpoint/${request.id}$kConfirmRequestEndpoint';
     try {
+      print(url);
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -180,16 +182,17 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
       }
 
       // Gửi yêu cầu đến server
-      print(request.toJson());
 
-      final response = await client.patch(
+      final response = await client.post(
         url,
         options: Options(
             sendTimeout: const Duration(seconds: 10),
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
-      if (response.statusCode != HttpStatus.ok) {
+      print(response);
+
+      if (response.statusCode != HttpStatus.created) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
@@ -209,10 +212,11 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<void>> rejectRequest(
-      LoanRequestModel request, String rejectedReason) async {
-    String url = '$apiUrl$kRejectRequestEndpoint/${request.id}';
+  Future<HttpResponse<void>> rejectRequest(LoanRequestModel request) async {
+    String url =
+        '$apiUrl$kGetRequestEndpoint/${request.id}$kRejectRequestEndpoint';
     try {
+      print(url);
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -223,15 +227,57 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
 
       // Gửi yêu cầu đến server
 
-      final response = await client.patch(url,
-          options: Options(
-              sendTimeout: const Duration(seconds: 10),
-              headers: {'Authorization': 'Bearer $accessToken'}),
-          data: {
-            "rejectedReason": rejectedReason,
-          });
+      final response = await client.post(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      );
 
-      if (response.statusCode != HttpStatus.ok) {
+      print(response);
+
+      if (response.statusCode != HttpStatus.created) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+      return HttpResponse(null, response);
+    } on DioException catch (e) {
+      throw ApiException(
+        message: e.message ?? "Error when create post",
+        statusCode: e.response?.statusCode ?? 505,
+      );
+    } catch (error) {
+      throw ErrorHelpers.handleException(error);
+    }
+  }
+
+  @override
+  Future<HttpResponse<void>> cancelRequest(LoanRequestModel request) async {
+    String url =
+        '$apiUrl$kGetRequestEndpoint/${request.id}$kCancelRequestEndpoint';
+    try {
+      print(url);
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 505);
+      }
+
+      final response = await client.post(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      print(response);
+
+      if (response.statusCode != HttpStatus.created) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,

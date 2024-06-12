@@ -16,6 +16,8 @@ class CancelRequest extends RequestDetailEvent {
   List<Object> get props => [request];
 }
 
+class InitRequestState extends RequestDetailEvent {}
+
 class RejectRequest extends RequestDetailEvent {
   final LoanRequestEntity request;
 

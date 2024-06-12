@@ -15,6 +15,7 @@ final class RequestDetailState extends Equatable {
   final ConfirmStatus confirmStatus;
   final PaymentStatus paymentStatus;
   final LoanContractRequestStatus requestStatus;
+  final String failureMessage;
 
   const RequestDetailState({
     this.contract = const ContractEntity(),
@@ -23,6 +24,7 @@ final class RequestDetailState extends Equatable {
     this.confirmStatus = ConfirmStatus.initial,
     this.paymentStatus = PaymentStatus.initial,
     this.requestStatus = LoanContractRequestStatus.pending,
+    this.failureMessage = '',
   });
 
   RequestDetailState copyWith({
@@ -32,6 +34,7 @@ final class RequestDetailState extends Equatable {
     ConfirmStatus? confirmStatus,
     PaymentStatus? paymentStatus,
     LoanContractRequestStatus? requestStatus,
+    String? failureMessage,
   }) {
     return RequestDetailState(
       contract: contract ?? this.contract,
@@ -40,6 +43,7 @@ final class RequestDetailState extends Equatable {
       confirmStatus: confirmStatus ?? this.confirmStatus,
       paymentStatus: paymentStatus ?? this.paymentStatus,
       requestStatus: requestStatus ?? this.requestStatus,
+      failureMessage: failureMessage ?? this.failureMessage,
     );
   }
 
@@ -51,5 +55,6 @@ final class RequestDetailState extends Equatable {
         confirmStatus,
         paymentStatus,
         requestStatus,
+        failureMessage,
       ];
 }

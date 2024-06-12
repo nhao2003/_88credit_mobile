@@ -280,6 +280,18 @@ Future<void> _initRequest() async {
       sl<RequestRepository>(),
     ),
   );
+
+  sl.registerSingleton<PayLoanRequestUsecase>(
+    PayLoanRequestUsecase(
+      sl<RequestRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<CancelRequestUseCase>(
+    CancelRequestUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
 }
 
 Future<void> _initBank() async {

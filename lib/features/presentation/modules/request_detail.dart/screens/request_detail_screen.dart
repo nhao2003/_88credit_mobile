@@ -171,6 +171,22 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                           LoanContractRequestStatus.cancelled) {
                     return const SizedBox();
                   }
+                  if (state.cancelStatus == CancelStatus.failure) {
+                    context.snackBar(
+                      state.failureMessage,
+                      type: SnackBarType.error,
+                    );
+                  }
+                  if (state.cancelStatus == CancelStatus.success) {
+                    context.snackBar(
+                      "Hủy yêu cầu thành công",
+                      type: SnackBarType.success,
+                    );
+                    context.read<RequestDetailBloc>().add(InitRequestState());
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pop(context);
+                    });
+                  }
                   return BaseButton(
                     title: "Hủy yêu cầu",
                     colorButton: AppColors.red,

@@ -15,7 +15,9 @@ abstract class RequestRepository {
 
   Future<DataState<void>> confirmRequest(LoanRequestEntity request);
   Future<DataState<void>> rejectRequest(
-      LoanRequestEntity request, String reason);
+      LoanRequestEntity request);
+  Future<DataState<void>> cancelRequest(
+      LoanRequestEntity request);
   // management
   Future<DataState<Pair<int, List<LoanRequestEntity>>>> getRequestsStatus(
       RequestTypes requestTypes, LoanContractRequestStatus status, int? page);

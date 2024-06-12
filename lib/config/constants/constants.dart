@@ -29,9 +29,10 @@ const String kGetBlogEndpoint = '/blog';
 
 const String kGetRequestEndpoint = '/loan-request';
 const String kCreateRequestEndpoint = '/loan-request';
-const String kPayLoanRequestEndpoint = '/loan-request/lender-pay';
-const String kConfirmRequestEndpoint = '/loan-request/lender-accept';
-const String kRejectRequestEndpoint = '/loan-request/reject-request';
+const String kPayLoanRequestEndpoint = '/lender-pay';
+const String kConfirmRequestEndpoint = '/approve';
+const String kRejectRequestEndpoint = '/reject';
+const String kCancelRequestEndpoint = '/cancel';
 
 const String kGetUserEndpoint = '/user';
 

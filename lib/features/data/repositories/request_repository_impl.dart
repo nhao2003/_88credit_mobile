@@ -98,7 +98,7 @@ class RequestRepositoryImpl implements RequestRepository {
     try {
       final httpResponse = await _dataSrc.payLoanRequest(id);
 
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.created) {
         return DataSuccess(httpResponse.data);
       } else {
         return DataFailed(DioException(
@@ -119,7 +119,7 @@ class RequestRepositoryImpl implements RequestRepository {
       final httpResponse =
           await _dataSrc.confirmRequest(LoanRequestModel.fromEntity(request));
 
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.created) {
         return DataSuccess(httpResponse.data);
       } else {
         return DataFailed(
@@ -137,13 +137,35 @@ class RequestRepositoryImpl implements RequestRepository {
   }
 
   @override
-  Future<DataState<void>> rejectRequest(
-      LoanRequestEntity request, String reason) async {
+  Future<DataState<void>> rejectRequest(LoanRequestEntity request) async {
     try {
-      final httpResponse = await _dataSrc.rejectRequest(
-          LoanRequestModel.fromEntity(request), reason);
+      final httpResponse =
+          await _dataSrc.rejectRequest(LoanRequestModel.fromEntity(request));
 
-      if (httpResponse.response.statusCode == HttpStatus.ok) {
+      if (httpResponse.response.statusCode == HttpStatus.created) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<void>> cancelRequest(LoanRequestEntity request) async {
+    try {
+      final httpResponse =
+          await _dataSrc.cancelRequest(LoanRequestModel.fromEntity(request));
+
+      if (httpResponse.response.statusCode == HttpStatus.created) {
         return DataSuccess(httpResponse.data);
       } else {
         return DataFailed(
