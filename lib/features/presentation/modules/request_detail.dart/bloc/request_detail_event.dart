@@ -54,6 +54,15 @@ class PaymentRequest extends RequestDetailEvent {
   List<Object> get props => [request];
 }
 
+class MarkPaidRequest extends RequestDetailEvent {
+  final LoanRequestEntity request;
+
+  const MarkPaidRequest(this.request);
+
+  @override
+  List<Object> get props => [request];
+}
+
 class ChangeRequestStatus extends RequestDetailEvent {
   final LoanContractRequestStatus status;
 

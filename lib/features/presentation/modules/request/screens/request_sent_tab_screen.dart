@@ -55,7 +55,7 @@ class _RequestSentTabScreenState extends State<RequestSentTabScreen>
                 ),
               ),
               SizedBox(
-                width: 100.wp / 5,
+                width: 100.wp / 4,
                 child: const Tab(
                   text: "Chờ xác nhận",
                 ),

@@ -273,6 +273,17 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                     );
                   }
                   if (state.paymentStatus == PaymentStatus.success) {
+                    context
+                        .read<RequestDetailBloc>()
+                        .add(MarkPaidRequest(post));
+                  }
+                  if (state.markPaidStatus == MarkPaidStatus.failure) {
+                    context.snackBar(
+                      state.failureMessage,
+                      type: SnackBarType.error,
+                    );
+                  }
+                  if (state.markPaidStatus == MarkPaidStatus.success) {
                     context.snackBar(
                       "Thanh toán yêu cầu thành công",
                       type: SnackBarType.success,

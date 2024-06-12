@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../di/injection_container.dart';
 import '../../../../domain/enums/loan_contract_request_status.dart';
 import '../../../../domain/usecases/contract/confirm_request.dart';
+import '../../../../domain/usecases/contract/mark_paid_request.dart';
 import '../../../../domain/usecases/contract/pay_loan_request.dart';
 
 part 'request_detail_event.dart';
@@ -21,6 +22,7 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
     on<RejectRequest>(_rejectRequest);
     on<ConfirmRequest>(_confirmRequest);
     on<PaymentRequest>(_paymentRequest);
+    on<MarkPaidRequest>(_markPaidRequest);
     on<ChangeRequestStatus>(_changeRequestStatus);
     on<InitRequestState>((event, emit) {
       emit(state.copyWith(
@@ -28,6 +30,7 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
         rejectStatus: RejectStatus.initial,
         confirmStatus: ConfirmStatus.initial,
         paymentStatus: PaymentStatus.initial,
+        markPaidStatus: MarkPaidStatus.initial,
       ));
     });
   }
@@ -123,6 +126,30 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
     } catch (e) {
       emit(state.copyWith(
           paymentStatus: PaymentStatus.failure, failureMessage: e.toString()));
+    }
+  }
+
+  void _markPaidRequest(
+    MarkPaidRequest event,
+    Emitter<RequestDetailState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(markPaidStatus: MarkPaidStatus.loading));
+      final result =
+          await sl<MarkPaidRequestUseCase>().call(params: event.request);
+      if (result is DataSuccess) {
+        emit(state.copyWith(
+          markPaidStatus: MarkPaidStatus.success,
+        ));
+      } else {
+        emit(state.copyWith(
+            markPaidStatus: MarkPaidStatus.failure,
+            failureMessage: result.error.toString()));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          markPaidStatus: MarkPaidStatus.failure,
+          failureMessage: e.toString()));
     }
   }
 

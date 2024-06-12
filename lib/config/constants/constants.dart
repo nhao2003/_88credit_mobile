@@ -32,6 +32,7 @@ const String kPayLoanRequestEndpoint = '/pay';
 const String kCreateRequestEndpoint = '/loan-request';
 const String kConfirmRequestEndpoint = '/approve';
 const String kRejectRequestEndpoint = '/reject';
+const String kMarkPaidRequestEndpoint = '/mark-paid';
 const String kCancelRequestEndpoint = '/cancel';
 
 const String kGetUserEndpoint = '/user';

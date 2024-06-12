@@ -286,6 +286,12 @@ Future<void> _initRequest() async {
       sl<RequestRepository>(),
     ),
   );
+
+  sl.registerSingleton<MarkPaidRequestUseCase>(
+    MarkPaidRequestUseCase(
+      sl<RequestRepository>(),
+    ),
+  );
 }
 
 Future<void> _initBank() async {

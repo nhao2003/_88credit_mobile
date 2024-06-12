@@ -8,12 +8,15 @@ enum ConfirmStatus { initial, loading, success, failure }
 
 enum PaymentStatus { initial, loading, success, failure }
 
+enum MarkPaidStatus { initial, loading, success, failure }
+
 final class RequestDetailState extends Equatable {
   final ContractEntity contract;
   final CancelStatus cancelStatus;
   final RejectStatus rejectStatus;
   final ConfirmStatus confirmStatus;
   final PaymentStatus paymentStatus;
+  final MarkPaidStatus markPaidStatus;
   final LoanContractRequestStatus requestStatus;
   final String failureMessage;
 
@@ -23,6 +26,7 @@ final class RequestDetailState extends Equatable {
     this.rejectStatus = RejectStatus.initial,
     this.confirmStatus = ConfirmStatus.initial,
     this.paymentStatus = PaymentStatus.initial,
+    this.markPaidStatus = MarkPaidStatus.initial,
     this.requestStatus = LoanContractRequestStatus.pending,
     this.failureMessage = '',
   });
@@ -33,6 +37,7 @@ final class RequestDetailState extends Equatable {
     RejectStatus? rejectStatus,
     ConfirmStatus? confirmStatus,
     PaymentStatus? paymentStatus,
+    MarkPaidStatus? markPaidStatus,
     LoanContractRequestStatus? requestStatus,
     String? failureMessage,
   }) {
@@ -43,6 +48,7 @@ final class RequestDetailState extends Equatable {
       confirmStatus: confirmStatus ?? this.confirmStatus,
       paymentStatus: paymentStatus ?? this.paymentStatus,
       requestStatus: requestStatus ?? this.requestStatus,
+      markPaidStatus: markPaidStatus ?? this.markPaidStatus,
       failureMessage: failureMessage ?? this.failureMessage,
     );
   }
@@ -55,6 +61,7 @@ final class RequestDetailState extends Equatable {
         confirmStatus,
         paymentStatus,
         requestStatus,
+        markPaidStatus,
         failureMessage,
       ];
 }

@@ -182,6 +182,29 @@ class RequestRepositoryImpl implements RequestRepository {
   }
 
   @override
+  Future<DataState<void>> markPaidRequest(LoanRequestEntity request) async {
+    try {
+      final httpResponse =
+          await _dataSrc.markPaidRequest(LoanRequestModel.fromEntity(request));
+
+      if (httpResponse.response.statusCode == HttpStatus.created) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
   Future<DataState<Pair<int, List<ContractEntity>>>> getContracts(
       PostTypes type, int? page) async {
     try {
