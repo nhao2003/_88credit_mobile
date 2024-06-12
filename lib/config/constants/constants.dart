@@ -28,8 +28,8 @@ const String kCreateOrderEndpoint = '/membership-package/check-out';
 const String kGetBlogEndpoint = '/blog';
 
 const String kGetRequestEndpoint = '/loan-request';
+const String kPayLoanRequestEndpoint = '/pay';
 const String kCreateRequestEndpoint = '/loan-request';
-const String kPayLoanRequestEndpoint = '/lender-pay';
 const String kConfirmRequestEndpoint = '/approve';
 const String kRejectRequestEndpoint = '/reject';
 const String kCancelRequestEndpoint = '/cancel';

@@ -22,7 +22,7 @@ abstract class RequestRepository {
   Future<DataState<Pair<int, List<LoanRequestEntity>>>> getRequestsStatus(
       RequestTypes requestTypes, LoanContractRequestStatus status, int? page);
 
-  Future<DataState<TransactionEntity>> payLoanRequest(String id);
+  Future<DataState<String>> payLoanRequest(String id);
 
   // contract
   Future<DataState<Pair<int, List<ContractEntity>>>> getBorrowingContract(

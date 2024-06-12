@@ -164,6 +164,13 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
             // Button
             BlocBuilder<RequestDetailBloc, RequestDetailState>(
               builder: (context, state) {
+                void popScreen() {
+                  context.read<RequestDetailBloc>().add(InitRequestState());
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    Navigator.pop(context);
+                  });
+                }
+
                 // if received && != PAID REJECTED => Cancel
                 if (requestType == RequestTypes.sent) {
                   if (state.requestStatus == LoanContractRequestStatus.paid ||
@@ -182,10 +189,7 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                       "Hủy yêu cầu thành công",
                       type: SnackBarType.success,
                     );
-                    context.read<RequestDetailBloc>().add(InitRequestState());
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.pop(context);
-                    });
+                    popScreen();
                   }
                   return BaseButton(
                     title: "Hủy yêu cầu",
@@ -206,6 +210,34 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                 // if success => go to contract
 
                 if (state.requestStatus == LoanContractRequestStatus.pending) {
+                  if (state.rejectStatus == RejectStatus.failure) {
+                    context.snackBar(
+                      state.failureMessage,
+                      type: SnackBarType.error,
+                    );
+                  }
+                  if (state.rejectStatus == RejectStatus.success) {
+                    context.snackBar(
+                      "Từ chối yêu cầu thành công",
+                      type: SnackBarType.success,
+                    );
+                    popScreen();
+                  }
+
+                  if (state.confirmStatus == ConfirmStatus.failure) {
+                    context.snackBar(
+                      state.failureMessage,
+                      type: SnackBarType.error,
+                    );
+                  }
+                  if (state.confirmStatus == ConfirmStatus.success) {
+                    context.snackBar(
+                      "Đồng ý yêu cầu thành công",
+                      type: SnackBarType.success,
+                    );
+                    popScreen();
+                  }
+
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -215,7 +247,6 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                         width: 43.wp,
                         isLoading: state.rejectStatus == RejectStatus.loading,
                         onClick: () {
-                          // showCommentForm(context);
                           context
                               .read<RequestDetailBloc>()
                               .add(RejectRequest(post));
@@ -235,12 +266,28 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
                   );
                 }
                 if (state.requestStatus == LoanContractRequestStatus.approved) {
+                  if (state.paymentStatus == PaymentStatus.failure) {
+                    context.snackBar(
+                      state.failureMessage,
+                      type: SnackBarType.error,
+                    );
+                  }
+                  if (state.paymentStatus == PaymentStatus.success) {
+                    context.snackBar(
+                      "Thanh toán yêu cầu thành công",
+                      type: SnackBarType.success,
+                    );
+                    popScreen();
+                  }
                   return BaseButton(
                     title: "Thanh toán",
                     width: 100.wp,
                     isLoading: state.paymentStatus == PaymentStatus.loading,
                     onClick: () async {
                       // await controller.payContractFee(post);
+                      context
+                          .read<RequestDetailBloc>()
+                          .add(PaymentRequest(post));
                     },
                   );
                 }

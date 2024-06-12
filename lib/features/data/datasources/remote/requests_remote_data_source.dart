@@ -30,7 +30,7 @@ abstract class RequestRemoteDataSrc {
   Future<HttpResponse<void>> confirmRequest(LoanRequestModel request);
   Future<HttpResponse<void>> rejectRequest(LoanRequestModel request);
   Future<HttpResponse<void>> cancelRequest(LoanRequestModel request);
-  Future<HttpResponse<TransactionModel>> payLoanRequest(String id);
+  Future<HttpResponse<String>> payLoanRequest(String id);
 
   Future<HttpResponse<Pair<int, List<ContractModel>>>> getContracts(
       bool isLending, int? page);
@@ -146,8 +146,10 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<TransactionModel>> payLoanRequest(String id) {
-    var url = '$apiUrl$kPayLoanRequestEndpoint/$id';
+  Future<HttpResponse<String>> payLoanRequest(String id) {
+    var url = '$apiUrl$kGetRequestEndpoint/$id$kPayLoanRequestEndpoint';
+    print(url);
+
     AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
     String? accessToken = localDataSrc.getAccessToken();
     if (accessToken == null) {
@@ -155,13 +157,13 @@ class RequestRemoteDataSrcImpl implements RequestRemoteDataSrc {
           message: 'Access token is null', statusCode: 505);
     }
     return client
-        .patch(url,
+        .post(url,
             options: Options(
                 sendTimeout: const Duration(seconds: 10),
                 headers: {'Authorization': 'Bearer $accessToken'}))
         .then((value) {
-      return HttpResponse<TransactionModel>(
-          TransactionModel.fromJson(value.data["result"]), value);
+      print(value);
+      return HttpResponse<String>(value.data["data"]["zp_trans_token"], value);
     }).catchError((error) {
       throw ErrorHelpers.handleException(error);
     });

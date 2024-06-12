@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-
 import '../../../core/resources/data_state.dart';
 import '../../../core/resources/pair.dart';
 import '../../domain/entities/contract.dart';
 import '../../domain/entities/loan_request.dart';
-import '../../domain/entities/transaction.dart';
 import '../../domain/enums/loan_contract_request_status.dart';
 import '../../domain/enums/request_types.dart';
 import '../../domain/repositories/request_repository.dart';
@@ -94,7 +92,7 @@ class RequestRepositoryImpl implements RequestRepository {
   }
 
   @override
-  Future<DataState<TransactionEntity>> payLoanRequest(String id) async {
+  Future<DataState<String>> payLoanRequest(String id) async {
     try {
       final httpResponse = await _dataSrc.payLoanRequest(id);
 

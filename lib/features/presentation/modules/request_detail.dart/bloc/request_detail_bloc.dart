@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../di/injection_container.dart';
 import '../../../../domain/enums/loan_contract_request_status.dart';
 import '../../../../domain/usecases/contract/confirm_request.dart';
+import '../../../../domain/usecases/contract/pay_loan_request.dart';
 
 part 'request_detail_event.dart';
 part 'request_detail_state.dart';
@@ -19,6 +20,7 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
     on<CancelRequest>(_cancelRequest);
     on<RejectRequest>(_rejectRequest);
     on<ConfirmRequest>(_confirmRequest);
+    on<PaymentRequest>(_paymentRequest);
     on<ChangeRequestStatus>(_changeRequestStatus);
     on<InitRequestState>((event, emit) {
       emit(state.copyWith(
@@ -98,6 +100,29 @@ class RequestDetailBloc extends Bloc<RequestDetailEvent, RequestDetailState> {
     } catch (e) {
       emit(state.copyWith(
           confirmStatus: ConfirmStatus.failure, failureMessage: e.toString()));
+    }
+  }
+
+  void _paymentRequest(
+    PaymentRequest event,
+    Emitter<RequestDetailState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(paymentStatus: PaymentStatus.loading));
+      final result =
+          await sl<PayLoanRequestUsecase>().call(params: event.request.id);
+      if (result is DataSuccess) {
+        emit(state.copyWith(
+          paymentStatus: PaymentStatus.success,
+        ));
+      } else {
+        emit(state.copyWith(
+            paymentStatus: PaymentStatus.failure,
+            failureMessage: result.error.toString()));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+          paymentStatus: PaymentStatus.failure, failureMessage: e.toString()));
     }
   }
 

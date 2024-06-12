@@ -16,12 +16,13 @@ class PayLoanRequestUsecase implements UseCase<DataState<void>, String?> {
 
     final res = await _requestRepository.payLoanRequest(params);
     if (res is DataSuccess) {
-      String? zlpToken = res.data?.embedData?['zp_trans_token'];
+      String? zlpToken = res.data;
       if (zlpToken == null) {
         return DataFailed(
             Exception('Lỗi khi thanh toán. Vui lòng thử lại sau'));
       }
-      final status = await FlutterZaloPaySdk.payOrder(zpToken: zlpToken);
+      final status =
+          await FlutterZaloPaySdk.payOrder(zpToken: "ACwnm3RxBnT2BlF-YF9b6C9w");
       return DataSuccess(status);
     } else {
       return DataFailed(Exception('Lỗi khi thanh toán. Vui lòng thử lại sau'));
