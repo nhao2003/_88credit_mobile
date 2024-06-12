@@ -32,7 +32,7 @@ class BankCardModel extends BankCardEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      'bankId': bank!.id,
+      'bankCode': bank!.code,
       'cardNumber': cardNumber,
     };
   }

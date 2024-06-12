@@ -16,11 +16,11 @@ class BankScreen extends StatefulWidget {
 }
 
 class _BankScreenState extends State<BankScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   context.read<BankBloc>().add(GetBankCard());
-  // }
+  @override
+  void initState() {
+    super.initState();
+    context.read<BankBloc>().add(GetBankCard());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +50,10 @@ class _BankScreenState extends State<BankScreen> {
                         onTap: (bank) {
                           context
                               .read<BankBloc>()
-                              .add(ChangeSelectedBank(bank));
+                              .add(MarkAsPrimaryCard(bank));
                         },
-                        onDeleteCard: (idCard) {
-                          context.read<BankBloc>().add(DeleteBankCard(idCard));
+                        onDeleteCard: (card) {
+                          context.read<BankBloc>().add(DeleteBankCard(card));
                         },
                       ),
           );

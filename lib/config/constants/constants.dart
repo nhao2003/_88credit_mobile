@@ -41,7 +41,7 @@ const String kGetMe = '/user/me';
 const String kGetBankEndpoint = '/bank';
 const String kGetBankCardEndpoint = '/bank-card';
 const String kGetPrimaryBankCardEndpoint = '/bank-card/primary';
-const String kGetMarkPrimaryEndpoint = '/bank-card/:id/primary';
+const String kGetMarkPrimaryEndpoint = '/primary';
 
 const String kUploadMediaEndpoint = '/storage/upload';
 

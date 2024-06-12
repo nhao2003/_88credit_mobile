@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'config/constants/constants.dart';
 
 Future<void> main() async {
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.appTheme(),
         navigatorObservers: [appPages.routeObserver],
         onGenerateRoute: appPages.generateRouteSettings,
+        builder: EasyLoading.init(),
       ),
     );
   }

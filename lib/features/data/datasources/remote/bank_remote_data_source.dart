@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/dio.dart';
 import '../../../../config/constants/constants.dart';
@@ -25,31 +27,39 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
 
   @override
   Future<HttpResponse<Pair<int, List<BankModel>>>> getAllBanks(
-      String query, int page) {
-    String url = '$apiUrl$kGetBankEndpoint';
+      String query, int page) async {
+    String url = '$apiUrl$kGetBankEndpoint?take=100';
 
     if (query.trim().isNotEmpty) {
       url += '?search=$query';
     }
 
     try {
-      return client.get(url).then((response) {
-        List<BankModel> banks = [];
-        if (response.data['data'] != null) {
-          banks = (response.data['data'] as List<dynamic>? ?? [])
-              .map((e) => BankModel.fromJson(e))
-              .toList();
-        }
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 1000);
+      }
+      final response = await client.get(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      );
 
-        return HttpResponse<Pair<int, List<BankModel>>>(
-          Pair(1, banks),
-          response,
-        );
-      });
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+      List<BankModel> banks = [];
+      if (response.data['data']['items'] != null) {
+        banks = (response.data['data']['items'] as List<dynamic>? ?? [])
+            .map((e) => BankModel.fromJson(e))
+            .toList();
+      }
+
+      return HttpResponse<Pair<int, List<BankModel>>>(
+        Pair(1, banks),
+        response,
+      );
+    } catch (e) {
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -73,7 +83,7 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.ok) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
@@ -91,10 +101,8 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
         bankCards,
         response,
       );
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -103,6 +111,7 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
     String url = '$apiUrl$kGetBankCardEndpoint/$id$kGetMarkPrimaryEndpoint';
 
     try {
+      print(url);
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -111,14 +120,16 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
             message: 'Access token is null', statusCode: 505);
       }
 
-      final response = await client.put(
+      final response = await client.patch(
         url,
         options: Options(
             sendTimeout: const Duration(seconds: 10),
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
-      if (response.statusCode != 200) {
+      print(response);
+
+      if (response.statusCode != HttpStatus.ok) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
@@ -129,10 +140,8 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
         null,
         response,
       );
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -140,6 +149,7 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
   Future<HttpResponse<void>> addBankCard(BankCardModel bankCardModel) async {
     const url = '$apiUrl$kGetBankCardEndpoint';
     try {
+      print(url);
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? accessToken = localDataSrc.getAccessToken();
@@ -156,7 +166,8 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
         data: bankCardModel.toJson(),
       );
 
-      if (response.statusCode != 200) {
+      print(response);
+      if (response.statusCode != HttpStatus.created) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
@@ -170,10 +181,8 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
         message: e.message ?? "Error when create bank card",
         statusCode: e.response?.statusCode ?? 505,
       );
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -197,7 +206,7 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.ok) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
@@ -208,10 +217,8 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
         null,
         response,
       );
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw ErrorHelpers.handleException(e);
     }
   }
 
@@ -235,7 +242,7 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
             headers: {'Authorization': 'Bearer $accessToken'}),
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != HttpStatus.ok) {
         throw ApiException(
           message: response.data['message'],
           statusCode: response.statusCode!,
@@ -251,10 +258,8 @@ class BankRemoteDataSrcImpl extends BankRemoteDataSrc {
         bankCard,
         response,
       );
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
+    } catch (e) {
+      throw ErrorHelpers.handleException(e);
     }
   }
 }

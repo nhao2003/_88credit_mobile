@@ -84,7 +84,7 @@ class BankCardList extends StatelessWidget {
                 onTap: () {
                   // change card primary
                   if (!listBanks[index].isPrimary!) {
-                    onTap(listBanks[index].id!);
+                    onTap(listBanks[index].cardNumber!);
                   }
                 },
               ),

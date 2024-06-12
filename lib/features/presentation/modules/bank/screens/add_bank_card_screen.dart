@@ -142,10 +142,11 @@ class _AddBankCardScreenState extends State<AddBankCardScreen> {
           ),
           // thêm ngân hàng ============================================
           BlocBuilder<BankBloc, BankState>(
-            builder: (context, state) {
+            builder: (ctx, state) {
               if (state.addBankCardStatus == AddBankCardStatus.success) {
-                Navigator.pop(context);
-                Navigator.pop(context);
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  Navigator.pop(context);
+                });
               }
               return Padding(
                 padding:
@@ -156,9 +157,11 @@ class _AddBankCardScreenState extends State<AddBankCardScreen> {
                           ? null
                           : () {
                               // addBankCard();
-                              context.read<BankBloc>().add(AddBankCard(
-                                    cardNumberController.text,
-                                  ));
+                              context.read<BankBloc>().add(
+                                    AddBankCard(
+                                      cardNumberController.text,
+                                    ),
+                                  );
                             },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.green,

@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/config/routes/app_routes.dart';
 import 'package:_88credit_mobile/features/domain/usecases/bank/get_all_banks.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -164,6 +165,7 @@ class _BankListScreenState extends State<BankListScreen> {
                           context.read<BankBloc>().add(
                                 ChangeSelectedBank(listBanks[index]),
                               );
+                          Navigator.pushNamed(context, AppRoutes.addBankCard);
                         },
                       ),
                     );

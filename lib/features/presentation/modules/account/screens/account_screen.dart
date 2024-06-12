@@ -121,88 +121,88 @@ class AccountScreen extends StatelessWidget {
                 ),
               ),
               // purchase
-              BlocBuilder<AccountBloc, AccountState>(
-                builder: (context, state) {
-                  return ListTile(
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Gói dịch vụ',
-                          style: AppTextStyles.medium16,
-                        ),
-                        const SizedBox(height: 2),
-                        if (state.servicePack != 0)
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                              color: state.servicePack == 1
-                                  ? AppColors.green100
-                                  : state.servicePack == 2
-                                      ? AppColors.blue100
-                                      : AppColors.red100,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Text(
-                              state.servicePack == 1
-                                  ? "Gói cơ bản"
-                                  : state.servicePack == 2
-                                      ? "Gói chuyên nghiệp"
-                                      : "Gói doanh nghiệp",
-                              style: AppTextStyles.medium12
-                                  .colorEx(state.servicePack == 1
-                                      ? AppColors.green800
-                                      : state.servicePack == 2
-                                          ? AppColors.blue800
-                                          : AppColors.red),
-                            ),
-                          )
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pushNamed(AppRoutes.purchase);
-                    },
-                    leading: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Image.asset(
-                        Assets.archive,
-                        height: 25,
-                        color: AppColors.black,
-                      ),
-                    ),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      size: 18,
-                    ),
-                  );
-                },
-              ),
-              ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
-                title: Text(
-                  'Quản lý bài đăng',
-                  style: AppTextStyles.medium16,
-                ),
-                onTap: () {
-                  Navigator.of(context).pushNamed(AppRoutes.postManagement);
-                },
-                leading: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: Image.asset(
-                    Assets.chart,
-                    height: 25,
-                    color: AppColors.black,
-                  ),
-                ),
-                trailing: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 18,
-                ),
-              ),
+              // BlocBuilder<AccountBloc, AccountState>(
+              //   builder: (context, state) {
+              //     return ListTile(
+              //       contentPadding:
+              //           const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+              //       title: Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //           Text(
+              //             'Gói dịch vụ',
+              //             style: AppTextStyles.medium16,
+              //           ),
+              //           const SizedBox(height: 2),
+              //           if (state.servicePack != 0)
+              //             Container(
+              //               padding: const EdgeInsets.symmetric(
+              //                   horizontal: 8, vertical: 2),
+              //               decoration: BoxDecoration(
+              //                 color: state.servicePack == 1
+              //                     ? AppColors.green100
+              //                     : state.servicePack == 2
+              //                         ? AppColors.blue100
+              //                         : AppColors.red100,
+              //                 borderRadius: BorderRadius.circular(4),
+              //               ),
+              //               child: Text(
+              //                 state.servicePack == 1
+              //                     ? "Gói cơ bản"
+              //                     : state.servicePack == 2
+              //                         ? "Gói chuyên nghiệp"
+              //                         : "Gói doanh nghiệp",
+              //                 style: AppTextStyles.medium12
+              //                     .colorEx(state.servicePack == 1
+              //                         ? AppColors.green800
+              //                         : state.servicePack == 2
+              //                             ? AppColors.blue800
+              //                             : AppColors.red),
+              //               ),
+              //             )
+              //         ],
+              //       ),
+              //       onTap: () {
+              //         Navigator.of(context).pushNamed(AppRoutes.purchase);
+              //       },
+              //       leading: Padding(
+              //         padding: const EdgeInsets.symmetric(horizontal: 5),
+              //         child: Image.asset(
+              //           Assets.archive,
+              //           height: 25,
+              //           color: AppColors.black,
+              //         ),
+              //       ),
+              //       trailing: const Icon(
+              //         Icons.arrow_forward_ios_rounded,
+              //         size: 18,
+              //       ),
+              //     );
+              //   },
+              // ),
+              // ListTile(
+              //   contentPadding:
+              //       const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+              //   title: Text(
+              //     'Quản lý bài đăng',
+              //     style: AppTextStyles.medium16,
+              //   ),
+              //   onTap: () {
+              //     Navigator.of(context).pushNamed(AppRoutes.postManagement);
+              //   },
+              //   leading: Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 5),
+              //     child: Image.asset(
+              //       Assets.chart,
+              //       height: 25,
+              //       color: AppColors.black,
+              //     ),
+              //   ),
+              //   trailing: const Icon(
+              //     Icons.arrow_forward_ios_rounded,
+              //     size: 18,
+              //   ),
+              // ),
               ListTile(
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 2),

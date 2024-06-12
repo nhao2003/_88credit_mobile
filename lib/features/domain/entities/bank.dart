@@ -47,12 +47,12 @@ class BankEntity extends Equatable {
 
   // empty
   const BankEntity.empty()
-      : id = '',
-        name = '',
-        code = '',
-        bin = '',
-        shortName = '',
-        logo = '';
+      : id = '0593b930-7e79-4b1d-8166-63c85b349ccb',
+        name = 'Ngân hàng TMCP Hàng Hải',
+        code = 'MSB',
+        bin = '970426',
+        shortName = 'MSB',
+        logo = "https://api.vietqr.io/img/MSB.png";
 
   factory BankEntity.fromJson(Map<String, dynamic> json) {
     return BankEntity(

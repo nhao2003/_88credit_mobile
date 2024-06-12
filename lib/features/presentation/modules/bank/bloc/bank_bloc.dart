@@ -17,10 +17,12 @@ class BankBloc extends Bloc<BankEvent, BankState> {
   BankBloc() : super(const BankState()) {
     on<BankEvent>((event, emit) {});
     on<GetBankCard>(getBankCard);
-    on<MarkAsPrimaryCard>((event, emit) {});
-    on<ChangeSelectedBank>((event, emit) {});
-    on<AddBankCard>((event, emit) {});
-    on<DeleteBankCard>((event, emit) {});
+    on<MarkAsPrimaryCard>(markAsPrimaryCard);
+    on<ChangeSelectedBank>((event, emit) {
+      emit(state.copyWith(selectedBank: event.bank));
+    });
+    on<AddBankCard>(addBankCard);
+    on<DeleteBankCard>(deleteBankCard);
   }
 
   // get bank card
@@ -64,6 +66,7 @@ class BankBloc extends Bloc<BankEvent, BankState> {
   Future<void> addBankCard(AddBankCard event, Emitter<BankState> emit) async {
     emit(state.copyWith(addBankCardStatus: AddBankCardStatus.loading));
     try {
+      print("Card number: ${event.cardNumber}");
       await addBankCardUseCase(
           params: createBankCardEntity(state.selectedBank, event.cardNumber));
       emit(state.copyWith(
