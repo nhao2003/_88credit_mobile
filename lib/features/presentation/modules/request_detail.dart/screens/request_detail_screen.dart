@@ -61,6 +61,8 @@ class _RequestDetailScreenState extends State<RequestDetailScreen> {
     post = param[0] as LoanRequestEntity;
     requestType = param[1] as RequestTypes;
 
+    print("Post video: ${post.videoConfirmationUrl}");
+
     context.read<RequestDetailBloc>().add(ChangeRequestStatus(post.status!));
 
     return Scaffold(

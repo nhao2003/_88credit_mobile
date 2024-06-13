@@ -1,3 +1,4 @@
+import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -11,58 +12,39 @@ class VideoCard extends StatefulWidget {
 }
 
 class _VideoCardState extends State<VideoCard> {
-  late VideoPlayerController _controller;
+  late VideoPlayerController videoPlayerController;
+  late CustomVideoPlayerController _customVideoPlayerController;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl));
-
-    _controller.addListener(() {
-      setState(() {});
-    });
-    _controller.setLooping(true);
-    _controller.initialize().then((_) => setState(() {}));
-    _controller.play();
+    videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
+      widget.videoUrl,
+    ))
+      ..initialize().then((value) => setState(() {}));
+    _customVideoPlayerController = CustomVideoPlayerController(
+      context: context,
+      videoPlayerController: videoPlayerController,
+    );
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _customVideoPlayerController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _controller.value.isInitialized
-        ? AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                VideoPlayer(_controller),
-                _ControlsOverlay(controller: _controller),
-                VideoProgressIndicator(_controller, allowScrubbing: true),
-              ],
-            ),
-          )
-        : Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              border: Border.fromBorderSide(BorderSide(color: Colors.grey)),
-            ),
-            height: 200,
-            child: const Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
+    return CustomVideoPlayer(
+        customVideoPlayerController: _customVideoPlayerController);
   }
 }
 
 class _ControlsOverlay extends StatelessWidget {
   const _ControlsOverlay({required this.controller});
 
-  static const List<Duration> _exampleCaptionOffsets = <Duration>[
+  static const List<Duration> exampleCaptionOffsets = <Duration>[
     Duration(seconds: -10),
     Duration(seconds: -3),
     Duration(seconds: -1, milliseconds: -500),
@@ -73,7 +55,7 @@ class _ControlsOverlay extends StatelessWidget {
     Duration(seconds: 3),
     Duration(seconds: 10),
   ];
-  static const List<double> _examplePlaybackRates = <double>[
+  static const List<double> examplePlaybackRates = <double>[
     0.25,
     0.5,
     1.0,
@@ -122,7 +104,7 @@ class _ControlsOverlay extends StatelessWidget {
             },
             itemBuilder: (BuildContext context) {
               return <PopupMenuItem<Duration>>[
-                for (final Duration offsetDuration in _exampleCaptionOffsets)
+                for (final Duration offsetDuration in exampleCaptionOffsets)
                   PopupMenuItem<Duration>(
                     value: offsetDuration,
                     child: Text('${offsetDuration.inMilliseconds}ms'),
@@ -151,7 +133,7 @@ class _ControlsOverlay extends StatelessWidget {
             },
             itemBuilder: (BuildContext context) {
               return <PopupMenuItem<double>>[
-                for (final double speed in _examplePlaybackRates)
+                for (final double speed in examplePlaybackRates)
                   PopupMenuItem<double>(
                     value: speed,
                     child: Text('${speed}x'),

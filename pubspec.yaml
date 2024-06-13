@@ -134,7 +134,7 @@ dependencies:
   path_provider: ^2.1.1
 
   # video player
-  video_player: ^2.8.1
+  appinio_video_player: ^1.1.0
 
   # loading
   flutter_easyloading: ^3.0.5

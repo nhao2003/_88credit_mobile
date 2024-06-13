@@ -131,7 +131,7 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
       uploadUsecase(params: Pair(state.portrait!, "request")),
       uploadUsecase(params: Pair(state.idCardFrontPhoto!, "request")),
       uploadUsecase(params: Pair(state.idCardBackPhoto!, "request")),
-      // uploadUsecase(params: Pair(state.video!, "request")),
+      uploadUsecase(params: Pair(state.video!, "request")),
     ]);
     List<String> urls = [];
     // if each response is success, return list of urls
@@ -140,14 +140,14 @@ class CreateRequestBloc extends Bloc<CreateRequestEvent, CreateRequestState> {
         urls.add(response.data!);
       }
     }
-    urls.add(
-        "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
-    // List<String> urls = [
-    //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
-    //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
-    //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
-    //   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-    // ];
+    // urls.add(
+    //     "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4");
+    // // List<String> urls = [
+    // //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+    // //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+    // //   "https://res.cloudinary.com/devfdx8fs/image/upload/v1718199726/request/qu9kaniipj5ywejdkjow.jpg",
+    // //   "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    // // ];
 
     return urls;
   }
