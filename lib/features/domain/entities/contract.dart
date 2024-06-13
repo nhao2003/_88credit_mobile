@@ -12,7 +12,6 @@ class ContractEntity extends Equatable {
   final String? borrowerBankCardId;
   final LoanReasonTypes? loanReasonType;
   final String? loanReason;
-  final String? transactionHash;
   final double? amount;
   final double? interestRate;
   final int? tenureInMonths;
@@ -31,7 +30,6 @@ class ContractEntity extends Equatable {
     this.borrowerId,
     this.borrowerBankCardId,
     this.loanReasonType,
-    this.transactionHash,
     this.loanReason,
     this.amount,
     this.interestRate,
@@ -54,7 +52,6 @@ class ContractEntity extends Equatable {
         borrowerBankCardId,
         loanReasonType,
         loanReason,
-        transactionHash,
         amount,
         interestRate,
         tenureInMonths,
@@ -76,7 +73,6 @@ class ContractEntity extends Equatable {
     String? borrowerId,
     UserEntity? borrower,
     String? borrowerBankCardId,
-    String? transactionHash,
     LoanReasonTypes? loanReasonType,
     String? loanReason,
     double? amount,
@@ -97,7 +93,6 @@ class ContractEntity extends Equatable {
       borrowerBankCardId: borrowerBankCardId ?? this.borrowerBankCardId,
       loanReasonType: loanReasonType ?? this.loanReasonType,
       loanReason: loanReason ?? this.loanReason,
-      transactionHash: transactionHash ?? this.transactionHash,
       amount: amount ?? this.amount,
       interestRate: interestRate ?? this.interestRate,
       tenureInMonths: tenureInMonths ?? this.tenureInMonths,

@@ -7,14 +7,12 @@ import '../../../../../../config/theme/text_styles.dart';
 class LoanAmountCard extends StatelessWidget {
   final String? contractId;
   final double loanAmount;
-  final String? hash;
   final double interestAmount;
   final double serviceCharge;
 
   const LoanAmountCard({
     this.contractId,
     required this.loanAmount,
-    this.hash,
     required this.interestAmount,
     required this.serviceCharge,
     super.key,
@@ -35,29 +33,6 @@ class LoanAmountCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          if (hash != null)
-            Column(
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                      width: widthItem,
-                      child: Text(
-                        "Mã hash:",
-                        style: AppTextStyles.regular12.colorEx(AppColors.black),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        hash!,
-                        style: AppTextStyles.bold12.colorEx(AppColors.orange),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-              ],
-            ),
           if (contractId != null)
             Column(
               children: [

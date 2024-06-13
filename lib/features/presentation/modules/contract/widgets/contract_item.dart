@@ -137,28 +137,6 @@ class ContractItem extends StatelessWidget {
                             SizedBox(
                               width: widthItem,
                               child: Text(
-                                "Mã hash:",
-                                style: AppTextStyles.regular12
-                                    .colorEx(AppColors.black),
-                              ),
-                            ),
-                            Expanded(
-                              child: Text(
-                                contract.transactionHash ?? "Không xác định",
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: AppTextStyles.bold12
-                                    .colorEx(AppColors.orange),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: widthItem,
-                              child: Text(
                                 "Số tiền:",
                                 style: AppTextStyles.regular12
                                     .colorEx(AppColors.black),

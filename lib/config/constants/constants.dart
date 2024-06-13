@@ -1,5 +1,5 @@
 const ipMobile = "192.168.221.225";
-const ipLocal = "192.168.91.53";
+const ipLocal = "192.168.1.220";
 const isIPMobile = false;
 const ipConfig = isIPMobile ? ipMobile : ipLocal;
 
