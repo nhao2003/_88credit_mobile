@@ -7,6 +7,7 @@ import 'package:_88credit_mobile/features/domain/usecases/ekyc/init_request_usec
 import 'package:_88credit_mobile/features/domain/usecases/ekyc/send_face_usecase.dart';
 import 'package:_88credit_mobile/features/domain/usecases/ekyc/send_ocr_back_usecase.dart';
 import 'package:_88credit_mobile/features/domain/usecases/ekyc/send_ocr_front_usecase.dart';
+import 'package:_88credit_mobile/features/domain/usecases/ekyc/submit_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -72,6 +73,8 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
     on<UploadPortrait>(_handleUploadPortrail);
 
     on<InitEkycEvent>(_initEkyc);
+
+    on<SubmitEkyc>(_submit);
   }
 
   Future _initEkyc(InitEkycEvent event, Emitter<VerificationState> emit) async {
@@ -160,6 +163,29 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
     } else {
       emit(state.copyWith(
         uploadPortraitstatus: UploadPortraitstatus.failure,
+      ));
+    }
+  }
+
+  Future _submit(SubmitEkyc event, Emitter<VerificationState> emit) async {
+    emit(state.copyWith(submtiStatus: SubmtiStatus.loading));
+
+    try {
+      // submit
+      SubmitUseCase submitUseCase = sl<SubmitUseCase>();
+      final result = await submitUseCase(params: state.requestId);
+
+      if (result is DataSuccess) {
+        emit(state.copyWith(submtiStatus: SubmtiStatus.success));
+      } else {
+        emit(state.copyWith(
+            submtiStatus: SubmtiStatus.failure,
+            failureMessage: result.error.toString()));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        submtiStatus: SubmtiStatus.failure,
+        failureMessage: e.toString(),
       ));
     }
   }

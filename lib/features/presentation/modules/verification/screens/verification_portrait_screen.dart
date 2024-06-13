@@ -1,3 +1,4 @@
+import 'package:_88credit_mobile/core/extensions/buildcontext_ex.dart';
 import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
@@ -69,17 +70,43 @@ class _VerificationPortraitScreenState
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: BlocBuilder<VerificationBloc, VerificationState>(
               builder: (context, state) {
+                if (state.submtiStatus == SubmtiStatus.success) {
+                  context.snackBar("Xác minh thành công");
+                } else if (state.submtiStatus == SubmtiStatus.failure) {
+                  context.snackBar(state.failureMessage,
+                      type: SnackBarType.error);
+                }
+
                 return ElevatedButton(
                   onPressed:
-                      state.uploadPortraitstatus == UploadPortraitstatus.success
-                          ? () {
-                              Navigator.pushNamed(
-                                  context, AppRoutes.verificationInfo);
-                              context
-                                  .read<VerificationBloc>()
-                                  .add(const ChangeStepEvent(2));
-                            }
-                          : null,
+                      state.uploadPortraitstatus != UploadPortraitstatus.success
+                          ? null
+                          : state.submtiStatus == SubmtiStatus.success
+                              ? () {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.verificationInfo);
+                                  context
+                                      .read<VerificationBloc>()
+                                      .add(const ChangeStepEvent(2));
+                                }
+                              : state.submtiStatus == SubmtiStatus.loading
+                                  ? null
+                                  : () {
+                                      context
+                                          .read<VerificationBloc>()
+                                          .add(SubmitEkyc());
+                                    },
+                  // return ElevatedButton(
+                  //   onPressed:
+                  //       state.uploadPortraitstatus == UploadPortraitstatus.success
+                  //           ? () {
+                  //               Navigator.pushNamed(
+                  //                   context, AppRoutes.verificationInfo);
+                  //               context
+                  //                   .read<VerificationBloc>()
+                  //                   .add(const ChangeStepEvent(2));
+                  //             }
+                  //           : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.green,
                     padding: const EdgeInsets.symmetric(vertical: 15),
@@ -91,7 +118,9 @@ class _VerificationPortraitScreenState
                     ),
                   ),
                   child: Text(
-                    'Kiểm tra ảnh chân dung',
+                    state.submtiStatus == SubmtiStatus.success
+                        ? 'Tiếp tục'
+                        : 'Kiểm tra ảnh chân dung',
                     style: AppTextStyles.bold14.colorEx(AppColors.white),
                   ),
                 );

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:_88credit_mobile/features/data/models/user.dart';
 import '../../../core/utils/validate_utils.dart';
 import '../../domain/entities/contract.dart';
@@ -12,6 +14,7 @@ class ContractModel extends ContractEntity {
     super.lenderBankCardId,
     super.borrowerId,
     super.borrowerBankCardId,
+    super.transactionHash,
     super.loanReasonType,
     super.loanReason,
     super.amount,
@@ -36,6 +39,7 @@ class ContractModel extends ContractEntity {
       loanReasonType: json['loanReasonType'] != null
           ? LoanReasonTypes.parse(json['loanReasonType'])
           : null,
+      transactionHash: json['transactionHash'] ?? generateRandomHexString(),
       loanReason: json['loanReason'],
       amount: ValidateUtils.toDoubleJson(json['amount']),
       interestRate: ValidateUtils.toDoubleJson(json['interestRate']),
@@ -85,6 +89,7 @@ class ContractModel extends ContractEntity {
       borrowerId: entity.borrowerId,
       borrowerBankCardId: entity.borrowerBankCardId,
       loanReasonType: entity.loanReasonType,
+      transactionHash: entity.transactionHash,
       loanReason: entity.loanReason,
       amount: entity.amount,
       interestRate: entity.interestRate,
@@ -97,4 +102,10 @@ class ContractModel extends ContractEntity {
       borrowerBankCard: entity.borrowerBankCard,
     );
   }
+}
+
+String generateRandomHexString() {
+  const chars = '0123456789abcdefghijklmnopqrstuvwxyz';
+  Random rand = Random.secure();
+  return '0x${List.generate(64, (index) => chars[rand.nextInt(36)]).join('')}';
 }

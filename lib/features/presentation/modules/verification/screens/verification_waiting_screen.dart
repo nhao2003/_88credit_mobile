@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
@@ -13,8 +14,16 @@ class VerificationWaitingScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: AppBar(
-        title: const Text("Đang chờ xác minh"),
-      ),
+          title: const Text("Đang chờ xác minh"),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                AppRoutes.bottomBar,
+                (Route<dynamic> route) => false,
+              );
+            },
+          )),
       body: Container(
         decoration: BoxDecoration(
           color: AppColors.white,

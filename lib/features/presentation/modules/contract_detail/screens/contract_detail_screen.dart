@@ -93,6 +93,7 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
             LoanAmountCard(
               contractId: post.id,
               loanAmount: post.amount!,
+              hash: post.transactionHash,
               interestAmount: 50000,
               serviceCharge: 10000,
             ),

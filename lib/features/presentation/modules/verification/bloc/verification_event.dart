@@ -65,6 +65,8 @@ class UploadPortrait extends VerificationEvent {
   List<Object> get props => [file];
 }
 
+class SubmitEkyc extends VerificationEvent {}
+
 class ChangeIssueBy extends VerificationEvent {
   final String issuedBy;
 

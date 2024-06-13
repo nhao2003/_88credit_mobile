@@ -100,7 +100,8 @@ class _FormInfomationsState extends State<FormInfomations> {
                   readOnly: true,
                   controller: nameTC,
                   maxLines: 1,
-                  style: AppTextStyles.regular16,
+                  style:
+                      AppTextStyles.regular16.copyWith(color: AppColors.black),
                   decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -137,7 +138,8 @@ class _FormInfomationsState extends State<FormInfomations> {
                   readOnly: true,
                   controller: genderTC,
                   maxLines: 1,
-                  style: AppTextStyles.regular16,
+                  style:
+                      AppTextStyles.regular16.copyWith(color: AppColors.black),
                   decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -155,7 +157,8 @@ class _FormInfomationsState extends State<FormInfomations> {
                   readOnly: true,
                   controller: nationalityTC,
                   maxLines: 1,
-                  style: AppTextStyles.regular16,
+                  style:
+                      AppTextStyles.regular16.copyWith(color: AppColors.black),
                   decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -173,7 +176,8 @@ class _FormInfomationsState extends State<FormInfomations> {
                   readOnly: true,
                   controller: originLocationTC,
                   maxLines: 1,
-                  style: AppTextStyles.regular16,
+                  style:
+                      AppTextStyles.regular16.copyWith(color: AppColors.black),
                   decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -191,7 +195,8 @@ class _FormInfomationsState extends State<FormInfomations> {
                   readOnly: true,
                   controller: recentLocationTC,
                   maxLines: 1,
-                  style: AppTextStyles.regular16,
+                  style:
+                      AppTextStyles.regular16.copyWith(color: AppColors.black),
                   decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -210,7 +215,8 @@ class _FormInfomationsState extends State<FormInfomations> {
                   readOnly: true,
                   controller: issuePlaceTC,
                   maxLines: 1,
-                  style: AppTextStyles.regular16,
+                  style:
+                      AppTextStyles.regular16.copyWith(color: AppColors.black),
                   decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -229,7 +235,8 @@ class _FormInfomationsState extends State<FormInfomations> {
                   readOnly: true,
                   controller: featuresTC,
                   maxLines: 1,
-                  style: AppTextStyles.regular16,
+                  style:
+                      AppTextStyles.regular16.copyWith(color: AppColors.black),
                   decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),
@@ -247,7 +254,8 @@ class _FormInfomationsState extends State<FormInfomations> {
                   readOnly: true,
                   controller: issueDateTC,
                   maxLines: 1,
-                  style: AppTextStyles.regular16,
+                  style:
+                      AppTextStyles.regular16.copyWith(color: AppColors.black),
                   decoration: const InputDecoration(
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 15, horizontal: 15),

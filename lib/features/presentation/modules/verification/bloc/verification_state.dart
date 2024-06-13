@@ -10,12 +10,15 @@ enum UploadPortraitstatus { init, loading, success, failure }
 
 enum UploadInfoStatus { init, loading, success, failure }
 
+enum SubmtiStatus { init, loading, success, failure }
+
 final class VerificationState extends Equatable {
   final InitEkycStatus initEkycStatus;
   final UploadCardFrontStatus uploadCardFrontStatus;
   final UploadCardBackStatus uploadCardBackStatus;
   final UploadPortraitstatus uploadPortraitstatus;
   final UploadInfoStatus uploadInfoStatus;
+  final SubmtiStatus submtiStatus;
 
   final String requestId;
   final FrontCardInfo frontCardInfo;
@@ -37,12 +40,15 @@ final class VerificationState extends Equatable {
 
   final bool isApprove;
 
+  final String failureMessage;
+
   const VerificationState({
     this.initEkycStatus = InitEkycStatus.init,
     this.uploadCardFrontStatus = UploadCardFrontStatus.init,
     this.uploadCardBackStatus = UploadCardBackStatus.init,
     this.uploadPortraitstatus = UploadPortraitstatus.init,
     this.uploadInfoStatus = UploadInfoStatus.init,
+    this.submtiStatus = SubmtiStatus.init,
     this.requestId = "",
     this.frontCardInfo = const FrontCardInfo(),
     this.backCardInfo = const BackCardInfo(),
@@ -57,6 +63,7 @@ final class VerificationState extends Equatable {
     this.issuedBy = "",
     this.isMale = true,
     this.isApprove = false,
+    this.failureMessage = "",
   });
 
   VerificationState copyWith({
@@ -65,6 +72,7 @@ final class VerificationState extends Equatable {
     UploadCardBackStatus? uploadCardBackStatus,
     UploadPortraitstatus? uploadPortraitstatus,
     UploadInfoStatus? uploadInfoStatus,
+    SubmtiStatus? submtiStatus,
     String? requestId,
     FrontCardInfo? frontCardInfo,
     BackCardInfo? backCardInfo,
@@ -79,6 +87,7 @@ final class VerificationState extends Equatable {
     String? issuedBy,
     bool? isMale,
     bool? isApprove,
+    String? failureMessage,
   }) {
     return VerificationState(
       initEkycStatus: initEkycStatus ?? this.initEkycStatus,
@@ -87,6 +96,7 @@ final class VerificationState extends Equatable {
       uploadCardBackStatus: uploadCardBackStatus ?? this.uploadCardBackStatus,
       uploadPortraitstatus: uploadPortraitstatus ?? this.uploadPortraitstatus,
       uploadInfoStatus: uploadInfoStatus ?? this.uploadInfoStatus,
+      submtiStatus: submtiStatus ?? this.submtiStatus,
       requestId: requestId ?? this.requestId,
       frontCardInfo: frontCardInfo ?? this.frontCardInfo,
       backCardInfo: backCardInfo ?? this.backCardInfo,
@@ -102,6 +112,7 @@ final class VerificationState extends Equatable {
       issuedBy: issuedBy ?? this.issuedBy,
       isMale: isMale ?? this.isMale,
       isApprove: isApprove ?? this.isApprove,
+      failureMessage: failureMessage ?? this.failureMessage,
     );
   }
 
@@ -111,6 +122,7 @@ final class VerificationState extends Equatable {
         uploadCardBackStatus = UploadCardBackStatus.init,
         uploadPortraitstatus = UploadPortraitstatus.init,
         uploadInfoStatus = UploadInfoStatus.init,
+        submtiStatus = SubmtiStatus.init,
         requestId = "",
         frontCardInfo = const FrontCardInfo(),
         backCardInfo = const BackCardInfo(),
@@ -124,13 +136,15 @@ final class VerificationState extends Equatable {
         typeIndetificationDocument = TypeIndetificationDocument.canCuocCongDan,
         issuedBy = "",
         isMale = true,
-        isApprove = false;
+        isApprove = false,
+        failureMessage = "";
 
   @override
   List<Object> get props => [
         initEkycStatus,
         uploadCardFrontStatus,
         uploadCardBackStatus,
+        uploadPortraitstatus,
         frontCardInfo,
         backCardInfo,
         uploadPortraitstatus,
@@ -147,5 +161,6 @@ final class VerificationState extends Equatable {
         issuedBy,
         isMale,
         isApprove,
+        failureMessage,
       ];
 }

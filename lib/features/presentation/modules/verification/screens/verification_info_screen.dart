@@ -2,6 +2,7 @@ import 'package:_88credit_mobile/core/extensions/integer_ex.dart';
 import 'package:_88credit_mobile/core/extensions/textstyle_ex.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../bloc/verification_bloc.dart';
@@ -54,7 +55,8 @@ class VerificationInfoScreen extends StatelessWidget {
                     onPressed:
                         state.uploadInfoStatus != UploadInfoStatus.loading
                             ? () {
-                                // finishVerification();
+                                Navigator.of(context)
+                                    .pushNamed(AppRoutes.verificationWaiting);
                               }
                             : null,
                     style: ElevatedButton.styleFrom(

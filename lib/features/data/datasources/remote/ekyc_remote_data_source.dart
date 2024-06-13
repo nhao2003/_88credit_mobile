@@ -206,6 +206,33 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> submit(String requestId) async {
-    throw UnimplementedError();
+    final url = '$apiUrl$kSubmitRequestEndpoint/$requestId';
+    try {
+      print(url);
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+
+      // Gửi yêu cầu đến server
+      final response = await client.post(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+
+      if (response.statusCode != HttpStatus.created) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      print("Submit ekyc: " + response.data);
+
+      return HttpResponse(null, response);
+    } catch (error) {
+      throw ErrorHelpers.handleException(error);
+    }
   }
 }

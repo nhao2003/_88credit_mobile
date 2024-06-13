@@ -1,6 +1,6 @@
-const ipMobile = "192.168.80.225";
-const ipLocal = "172.17.9.176";
-const isIPMobile = true;
+const ipMobile = "192.168.221.225";
+const ipLocal = "192.168.91.53";
+const isIPMobile = false;
 const ipConfig = isIPMobile ? ipMobile : ipLocal;
 
 const String apiDevUrl = "http://$ipConfig";
@@ -52,6 +52,7 @@ const String kOrcFrontEndpoint = '/ekyc/ocr/front-image';
 const String kOrcBackEndpoint = '/ekyc/ocr/back-image';
 const String kFaceEndpoint = '/ekyc/face';
 const String kAddFaceEndpoint = '/add-face';
+const String kSubmitRequestEndpoint = '/ekyc/request/submit';
 
 const minMoney = 1000;
 const maxMoney = 1000000000;
