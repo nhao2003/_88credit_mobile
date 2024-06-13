@@ -118,9 +118,9 @@ class _AccountScreenState extends State<AccountScreen> {
                   style: AppTextStyles.medium16,
                 ),
                 onTap: () {
-                  // Navigator.of(context).pushNamed(AppRoutes.verificationCard);
-                  Navigator.of(context)
-                      .pushNamed(AppRoutes.verificationPortrait);
+                  Navigator.of(context).pushNamed(AppRoutes.verificationCard);
+                  // Navigator.of(context)
+                  //     .pushNamed(AppRoutes.verificationPortrait);
                 },
                 leading: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5),
