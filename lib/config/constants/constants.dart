@@ -47,11 +47,12 @@ const String kGetMarkPrimaryEndpoint = '/primary';
 
 const String kUploadMediaEndpoint = '/storage/upload';
 
-const String kInitEkycEndpoint = '/ekyc/request';
-const String kOrcFrontEndpoint = '/ekyc/ocr/front-image';
-const String kOrcBackEndpoint = '/ekyc/ocr/back-image';
-const String kFaceEndpoint = '/ekyc/face';
-const String kAddFaceEndpoint = '/add-face';
+const String kInitEkycEndpoint = '/request/latest';
+const String kOrcEndpoint = '/ocr';
+const String kFrontEndpoint = '/front-id-card';
+const String kBackEndpoint = '/back-id-card';
+const String kFaceEndpoint = '/face';
+const String kAddFaceEndpoint = '/add';
 const String kSubmitRequestEndpoint = '/ekyc/request/submit';
 
 const minMoney = 1000;

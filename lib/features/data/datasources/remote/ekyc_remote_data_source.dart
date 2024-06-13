@@ -28,7 +28,7 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
   @override
   Future<HttpResponse<String>> initEkycRequest() async {
-    const url = '$apiUrl$kInitEkycEndpoint';
+    const url = '$apiUrl:5000$kInitEkycEndpoint';
     try {
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
@@ -60,7 +60,7 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
   @override
   Future<HttpResponse<FrontCardInfo>> sendOCRFront(
       String requestId, File image) async {
-    var url = '$apiUrl$kOrcFrontEndpoint/$requestId';
+    var url = '$apiUrl:5000$kOrcEndpoint/$requestId$kFrontEndpoint';
     try {
       print(url);
       // get access token
@@ -108,7 +108,7 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
   @override
   Future<HttpResponse<BackCardInfo>> sendOCRBack(
       String requestId, File image) async {
-    var url = '$apiUrl$kOrcBackEndpoint/$requestId';
+    var url = '$apiUrl:5000$kOrcEndpoint/$requestId$kBackEndpoint';
     try {
       print(url);
       // get access token
@@ -155,7 +155,7 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> sendFace(String requestId, File image) async {
-    var url = '$apiUrl$kFaceEndpoint/$requestId$kAddFaceEndpoint';
+    var url = '$apiUrl:5000$kFaceEndpoint/$requestId$kAddFaceEndpoint';
     try {
       print(url);
       // get access token
@@ -206,7 +206,7 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> submit(String requestId) async {
-    final url = '$apiUrl$kSubmitRequestEndpoint/$requestId';
+    final url = '$apiUrl:5000$kSubmitRequestEndpoint/$requestId';
     try {
       print(url);
       // get access token
