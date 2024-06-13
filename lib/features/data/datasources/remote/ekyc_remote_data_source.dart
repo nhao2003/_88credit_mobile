@@ -228,7 +228,7 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
         );
       }
 
-      print("Submit ekyc: " + response.data);
+      print("Submit ekyc: $response");
 
       return HttpResponse(null, response);
     } catch (error) {

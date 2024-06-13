@@ -147,7 +147,7 @@ final class VerificationState extends Equatable {
         uploadPortraitstatus,
         frontCardInfo,
         backCardInfo,
-        uploadPortraitstatus,
+        submtiStatus,
         uploadInfoStatus,
         requestId,
         activeStep,

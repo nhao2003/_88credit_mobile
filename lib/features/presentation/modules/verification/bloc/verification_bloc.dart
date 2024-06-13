@@ -175,7 +175,10 @@ class VerificationBloc extends Bloc<VerificationEvent, VerificationState> {
       SubmitUseCase submitUseCase = sl<SubmitUseCase>();
       final result = await submitUseCase(params: state.requestId);
 
+      print(result);
+
       if (result is DataSuccess) {
+        print("Submit success");
         emit(state.copyWith(submtiStatus: SubmtiStatus.success));
       } else {
         emit(state.copyWith(

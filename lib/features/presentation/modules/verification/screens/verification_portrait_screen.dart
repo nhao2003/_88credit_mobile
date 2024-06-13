@@ -71,11 +71,14 @@ class _VerificationPortraitScreenState
             child: BlocBuilder<VerificationBloc, VerificationState>(
               builder: (context, state) {
                 if (state.submtiStatus == SubmtiStatus.success) {
-                  context.snackBar("Xác minh thành công");
+                  // context.snackBar("Xác minh thành công");
                 } else if (state.submtiStatus == SubmtiStatus.failure) {
                   context.snackBar(state.failureMessage,
                       type: SnackBarType.error);
                 }
+
+                print(state.uploadPortraitstatus);
+                print(state.submtiStatus);
 
                 return ElevatedButton(
                   onPressed:
