@@ -1,31 +1,30 @@
-import 'package:_88credit_mobile/features/domain/enums/message_types.dart';
 import 'package:equatable/equatable.dart';
 
 class MessageEntity extends Equatable {
   final String id;
-  final String conversationId;
+  final String? conversation;
   final String senderId;
-  final MessageTypes contentType;
   final Map<String, dynamic> content;
-  final DateTime sentAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   const MessageEntity({
     required this.id,
-    required this.conversationId,
+    this.conversation,
     required this.senderId,
-    required this.contentType,
     required this.content,
-    required this.sentAt,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   @override
   List<Object?> get props => [
         id,
-        conversationId,
+        conversation,
         senderId,
-        contentType,
         content,
-        sentAt,
+        createdAt,
+        updatedAt,
       ];
 
   bool get isMine => senderId == 'me';

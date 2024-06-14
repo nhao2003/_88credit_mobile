@@ -8,6 +8,8 @@ import 'package:_88credit_mobile/features/presentation/modules/call/bloc/call_bl
 import 'package:_88credit_mobile/features/presentation/modules/call/screens/call_video_sceen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/call/screens/connect_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/call/screens/login_call_page.dart';
+import 'package:_88credit_mobile/features/presentation/modules/chat/screens/chat_detail_screen.dart';
+import 'package:_88credit_mobile/features/presentation/modules/chat/screens/chat_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/chat_bot/screens/chat_bot_screen.dart';
 import 'package:_88credit_mobile/features/presentation/modules/create_request.dart/bloc/create_request_bloc.dart';
 import 'package:_88credit_mobile/features/presentation/modules/create_request.dart/screens/change_user_screen.dart';
@@ -26,6 +28,7 @@ import 'package:_88credit_mobile/features/presentation/modules/verification/scre
 import 'package:_88credit_mobile/features/presentation/modules/verification/screens/verification_portrait_screen.dart';
 import '../../core/resources/base_app_pages.dart';
 import '../../features/presentation/modules/blogs/screens/blog_screen.dart';
+import '../../features/presentation/modules/chat/bloc/chat_bloc.dart';
 import '../../features/presentation/modules/chat_bot/bloc/chat_bot_bloc.dart';
 import '../../features/presentation/modules/contract/screens/contract_screen.dart';
 import '../../features/presentation/modules/contract_detail/screens/contract_detail_screen.dart';

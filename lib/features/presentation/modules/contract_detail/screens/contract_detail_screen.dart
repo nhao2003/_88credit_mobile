@@ -147,15 +147,15 @@ class _ContractDetailScreenState extends State<ContractDetailScreen> {
               description: post.loanReason!,
             ),
             const SizedBox(height: 20),
-            if (!isPurchase)
-              BaseButton(
-                title: "Xem bản PDF",
-                width: 100.wp,
-                isLoading: false,
-                onClick: () {
-                  navToPdfScreen(post);
-                },
-              ),
+            // if (!isPurchase)
+            //   BaseButton(
+            //     title: "Xem bản PDF",
+            //     width: 100.wp,
+            //     isLoading: false,
+            //     onClick: () {
+            //       navToPdfScreen(post);
+            //     },
+            //   ),
           ],
         ),
       ),

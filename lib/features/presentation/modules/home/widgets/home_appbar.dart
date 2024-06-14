@@ -56,7 +56,8 @@ class HomeAppbar extends StatelessWidget {
                 state.unreadMessCount == 0
                     ? GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed(AppRoutes.loginCall);
+                          // Navigator.of(context).pushNamed(AppRoutes.loginCall);
+                          Navigator.of(context).pushNamed(AppRoutes.chat);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(right: 12),
@@ -65,7 +66,7 @@ class HomeAppbar extends StatelessWidget {
                       )
                     : GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushNamed(AppRoutes.loginCall);
+                          Navigator.of(context).pushNamed(AppRoutes.chat);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(right: 15),

@@ -189,6 +189,16 @@ class MyAppPages extends AppPages {
         page: const ChangeUserScreen(),
         bloc: BlocProvider(create: (context) => BankBloc()),
       ),
+      PageEntity(
+        path: AppRoutes.chat,
+        page: ChatScreen(),
+        bloc: BlocProvider(create: (context) => ChatBloc()),
+      ),
+      PageEntity(
+        path: AppRoutes.chatDetail,
+        page: const ChatDetailScreen(),
+        bloc: BlocProvider(create: (context) => ChatBloc()),
+      ),
     ];
   }
 }

@@ -1,6 +1,6 @@
-const ipMobile = "192.168.221.225";
+const ipMobile = "192.168.122.53";
 const ipLocal = "192.168.1.220";
-const isIPMobile = false;
+const isIPMobile = true;
 const ipConfig = isIPMobile ? ipMobile : ipLocal;
 
 const String apiDevUrl = "http://$ipConfig";
@@ -53,7 +53,7 @@ const String kFrontEndpoint = '/front-id-card';
 const String kBackEndpoint = '/back-id-card';
 const String kFaceEndpoint = '/face';
 const String kAddFaceEndpoint = '/add';
-const String kSubmitRequestEndpoint = '/ekyc/request/submit';
+const String kSubmitRequestEndpoint = '/submit';
 
 const minMoney = 1000;
 const maxMoney = 1000000000;

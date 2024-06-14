@@ -19,6 +19,7 @@ Future<void> initializeDependencies() async {
   await _initBank();
   await _initUser();
   await _initEkyc();
+  await _initChat();
 }
 
 Future<void> _initAuth() async {
@@ -423,5 +424,17 @@ Future<void> _initEkyc() async {
     SubmitUseCase(
       sl<EkycRepository>(),
     ),
+  );
+}
+
+Future<void> _initChat() async {
+  sl.registerSingleton<ConversationRemoteDataSource>(
+    ConversationRemoteDataSourceImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<ConversationRepository>(
+    ConversationRepositoryImpl(sl<ConversationRemoteDataSource>()),
   );
 }

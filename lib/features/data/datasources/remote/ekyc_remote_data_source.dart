@@ -206,7 +206,7 @@ class EkycRemoteDataSrcImpl implements EkycRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> submit(String requestId) async {
-    final url = '$apiUrl:5000$kSubmitRequestEndpoint/$requestId';
+    final url = '$apiUrl:5000/request/$requestId$kSubmitRequestEndpoint';
     try {
       print(url);
       // get access token

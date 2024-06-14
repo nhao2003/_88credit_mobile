@@ -73,7 +73,7 @@ class _VerificationPortraitScreenState
                 if (state.submtiStatus == SubmtiStatus.success) {
                   // context.snackBar("Xác minh thành công");
                 } else if (state.submtiStatus == SubmtiStatus.failure) {
-                  context.snackBar(state.failureMessage,
+                  context.snackBar("Xác minh thất bại",
                       type: SnackBarType.error);
                 }
 
